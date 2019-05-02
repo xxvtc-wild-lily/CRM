@@ -277,7 +277,7 @@
                     <td>照片：</td>
                     <td>
                                            只能上传<span style="color:red;"><b>一寸(295px*413px)</b></span>
-                        ,不大于<span style="color:red;"><b>2MB</b></span>的
+                                            ,不大于<span style="color:red;"><b>2MB</b></span>的
                         <span style="color:red;"><b>.jpg</b></span>或<span style="color:red;"><b>.png</b></span>
                                            类型图片<br/>
                         <input type="file" id="e_photo" style="width:200px;height:" onchange="fileChange(this)">
