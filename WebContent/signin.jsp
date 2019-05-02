@@ -18,18 +18,21 @@
 </style>
 <script type="text/javascript">
     $(function(){
-    	$("#signInPanel").panel({
-    		closable:false,
-    		collapsible:false,
-    		minimizable:false,
-    		maximizable:false
-    	})
+    	
     })
+    
+    function signIn() {
+    	alert("登录");
+    }
+    
+    function forgetPassword() {
+    	alert("忘记密码");
+    }
 </script>
 </head>
 <body>
     <div style="width:600px;margin:150px 500px;">
-	    <div class="easyui-panel" id="signInPanel" style="width:500px;height:300px;padding:10px;text-align:center; overflow:hidden;">
+	    <div class="easyui-panel" id="signInPanel" style="width:500px;height:300px;padding:10px;text-align:center;overflow:hidden;">
 	        <span><h3>欢迎使用CRM客户管理系统</h3></span>
 	        <form id="signInForm">
 	            <table id="signInTable" style="margin:30px auto;">
@@ -51,16 +54,19 @@
                             <input type="checkbox" class="easyui-tooltip" title="7天免登录"  style="margin-left:90px;margin-top:5px;" />记住我
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td></td>
                         <td>
-                            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-help'" style="margin-left:70px;margin-top:5px;">忘记密码?</a>
+                            
                         </td>
-                    </tr>
+                    </tr> -->
 	            </table>
-	            <div style="margin-left:20px;">
+	            <div style="margin-left:60px;">
 	                <a href="javascript:void(0);" type="button" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="signIn()">登录</a>
 	            </div>
+	            <div style="margin-left:140px;margin-top:20px;">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-help'" onclick="forgetPassword()">忘记密码?</a>
+                </div>
 	        </form>
 	    </div>
     </div>
