@@ -21,8 +21,40 @@
     	
     })
     
+    // 登录的方法
     function signIn() {
-    	alert("登录");
+    	var e_loginName = $("#e_loginName").val();
+    	var e_passWord = $("#e_passWord").val();
+    	var verifyCode = $("#verifyCode").val();
+    	
+    	if(e_loginName != null && e_loginName != "" && e_loginName != undefined) {
+    		if(e_passWord != null && e_passWord != "" && e_passWord != undefined) {
+    			if(verifyCode != null && verifyCode != "" && verifyCode != undefined) {
+    				// 验证图片验证码是否正确
+    				$.post("verifiAction",{
+    					verifyCode:verifyCode
+    				},function(res){
+    					if(res==1){
+    						
+    					}else{
+    						$.messager.alert("提示","验证码错误，请重新输入！","error");
+    						// 获取验证码图片元素
+    						var verifyCodeImage = document.getElementById("verifyCodeImage");
+    						// 执行click以触发更换图片操作
+    						verifyCodeImage.click();
+    					}
+    				},"json")
+    				
+    			} else {
+    				$.messager.alert("提示","验证码不能为空！","error");
+    			}
+    		} else {
+    			$.messager.alert("提示","密码不能为空！","error");
+    		}
+    	} else {
+    		$.messager.alert("提示","用户名不能为空！","error");
+    	}
+    	
     }
     
     function forgetPassword() {
@@ -45,28 +77,30 @@
 	                <tr>
 	                    <td>密码：</td>
 	                    <td>
-	                        <input type="text" id="e_passWord" class="easyui-passwordbox" />
+	                        <input type="text" class="easyui-passwordbox" id="e_passWord" />
 	                    </td>
 	                </tr>
 	                <tr>
-                        <td></td>
+                        <td align="right">
+                            <img src="checkCode" width="110" height="34" id="verifyCodeImage" onclick="this.src=this.src+'?'">
+                        </td>
                         <td>
-                            <input type="checkbox" class="easyui-tooltip" title="7天免登录"  style="margin-left:90px;margin-top:5px;" />记住我
+                            <input class="easyui-textbox" type="text" id="verifyCode" name="verifyCode" prompt="请输入验证码" maxlength="4">
                         </td>
                     </tr>
-                    <!-- <tr>
+	                <tr>
                         <td></td>
                         <td>
-                            
+                            <input type="checkbox" class="easyui-tooltip" name="passLogin" title="7天免登录"  style="margin-left:90px;margin-top:5px;" />记住我
                         </td>
-                    </tr> -->
+                    </tr>
 	            </table>
 	            <div style="margin-left:60px;">
 	                <a href="javascript:void(0);" type="button" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="signIn()">登录</a>
 	            </div>
-	            <div style="margin-left:140px;margin-top:20px;">
+	            <!-- <div style="margin-left:140px;margin-top:20px;">
                     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-help'" onclick="forgetPassword()">忘记密码?</a>
-                </div>
+                </div> -->
 	        </form>
 	    </div>
     </div>
