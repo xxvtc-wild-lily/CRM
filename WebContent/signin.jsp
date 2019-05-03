@@ -26,6 +26,7 @@
     	var e_loginName = $("#e_loginName").val();
     	var e_passWord = $("#e_passWord").val();
     	var verifyCode = $("#verifyCode").val();
+    	var passLogin = $("input[type='checkbox']").is(':checked');
     	
     	if(e_loginName != null && e_loginName != "" && e_loginName != undefined) {
     		if(e_passWord != null && e_passWord != "" && e_passWord != undefined) {
@@ -35,7 +36,10 @@
     					verifyCode:verifyCode
     				},function(res){
     					if(res==1){
-    						
+    						// 判断是否勾选7天免登录
+    						if(passLogin) {
+    							
+    						}
     					}else{
     						$.messager.alert("提示","验证码错误，请重新输入！","error");
     						// 获取验证码图片元素
@@ -91,7 +95,7 @@
 	                <tr>
                         <td></td>
                         <td>
-                            <input type="checkbox" class="easyui-tooltip" name="passLogin" title="7天免登录"  style="margin-left:90px;margin-top:5px;" />记住我
+                            <input type="checkbox" class="easyui-tooltip" id="passLogin" title="7天免登录"  style="margin-left:90px;margin-top:5px;" />记住我
                         </td>
                     </tr>
 	            </table>
