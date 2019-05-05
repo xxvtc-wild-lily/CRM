@@ -102,9 +102,9 @@
 	            <div style="margin-left:60px;">
 	                <a href="javascript:void(0);" type="button" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="signIn()">登录</a>
 	            </div>
-	            <!-- <div style="margin-left:140px;margin-top:20px;">
+	            <div style="margin-left:140px;margin-top:20px;">
                     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-help'" onclick="forgetPassword()">忘记密码?</a>
-                </div> -->
+                </div>
 	        </form>
 	    </div>
     </div>
