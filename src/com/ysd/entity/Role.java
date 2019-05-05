@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Role {
-	private Integer r_id;
-	private String r_name;
+	private Integer r_id;	//角色编号
+	private String r_name;  //角色名称
 	
 	private RoleModules roleModules;
 
