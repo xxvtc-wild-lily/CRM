@@ -32,7 +32,7 @@ public class SignUpServiceImpl implements SignUpService {
 		do {
 			e_fingerprintNum=PasswordUtil.randomFingerprintNumber();
 			i=signUpMapper.selectIsHaveSameFingerprintNum(e_fingerprintNum);
-			e_passWord=PasswordUtil.generate(e_fingerprintNum, e_fingerprintNum);
+			e_passWord=PasswordUtil.generate(employee.getE_passWord(), e_fingerprintNum);
 		} while (i>0);
 		
 		employee.setE_fingerprintNum(e_fingerprintNum);
