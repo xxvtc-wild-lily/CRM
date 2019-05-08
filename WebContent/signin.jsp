@@ -27,23 +27,47 @@
     	var e_passWord = $("#e_passWord").val();
     	var verifyCode = $("#verifyCode").val();
     	var passLogin = $("input[type='checkbox']").is(':checked');
+    	// 是否记住密码的判断值
+    	var checkStatus = 0;
+    	// 获取验证码图片元素
+        var verifyCodeImage = document.getElementById("verifyCodeImage");
     	
-    	if(e_loginName != null && e_loginName != "" && e_loginName != undefined) {
-    		if(e_passWord != null && e_passWord != "" && e_passWord != undefined) {
-    			if(verifyCode != null && verifyCode != "" && verifyCode != undefined) {
+    	if (e_loginName != null && e_loginName != "" && e_loginName != undefined) {
+    		if (e_passWord != null && e_passWord != "" && e_passWord != undefined) {
+    			if (verifyCode != null && verifyCode != "" && verifyCode != undefined) {
     				// 验证图片验证码是否正确
     				$.post("verifiAction",{
     					verifyCode:verifyCode
     				},function(res){
-    					if(res==1){
-    						// 判断是否勾选7天免登录
-    						if(passLogin) {
-    							
+    					if (res==1){
+    						// 判断是否勾选7天免登录，赋值给勾选状态，然后传给后台进行判断
+    						if (passLogin) {
+    							checkStatus = 1;
+    						} else {
+    							checkStatus = 0;
     						}
-    					}else{
+    						// 登录的post提交
+    						$.post("signin",{
+    							e_loginName:e_loginName,
+    							e_passWord:e_passWord,
+    							checkStatus:checkStatus
+    						},function (res) {
+    							if (res.loginStatusCode == 1) {
+    								$.messager.alert("提示","登陆成功！","info");
+    							} else if (res.loginStatusCode == 2) {
+    								$.messager.alert("提示","用户名不存在！","error");
+    								verifyCodeImage.click();
+    							} else if (res.loginStatusCode == 3) {
+    								$.messager.alert("提示","密码错误，剩余尝试次数："+res.lastLoginChance,"error");
+    								verifyCodeImage.click();
+    							} else if (res.loginStatusCode == 4) {
+    								$.messager.alert("提示","账号已锁定！","error");
+    								verifyCodeImage.click();
+    							}
+    						},"json")
+    						
+    					} else {
     						$.messager.alert("提示","验证码错误，请重新输入！","error");
-    						// 获取验证码图片元素
-    						var verifyCodeImage = document.getElementById("verifyCodeImage");
     						// 执行click以触发更换图片操作
     						verifyCodeImage.click();
     					}
@@ -102,9 +126,9 @@
 	            <div style="margin-left:60px;">
 	                <a href="javascript:void(0);" type="button" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="signIn()">登录</a>
 	            </div>
-	            <div style="margin-left:140px;margin-top:20px;">
+	            <!-- <div style="margin-left:140px;margin-top:20px;">
                     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-help'" onclick="forgetPassword()">忘记密码?</a>
-                </div>
+                </div> -->
 	        </form>
 	    </div>
     </div>
