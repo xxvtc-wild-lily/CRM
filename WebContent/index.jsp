@@ -13,7 +13,7 @@
 </head>
 <body class="easyui-layout">
     <div data-options="region:'north',border:false" style="height:60px;padding:10px">
-        north
+        north never fotger!!!
     </div>
     <div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:0px;">
         west
