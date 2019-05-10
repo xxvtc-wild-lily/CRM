@@ -20,12 +20,12 @@
 			method:'post',
 			pagination:true,
 			singleSelect:true,
-			toolbar:"#tar",
+			toolbar:"#tb",
 			queryParams:{
-				id:$("#id").val(),
-				name:$("#name").val(),
-				age:$("#age").val(),
-				birthday:$("#birthday").val()
+				e_loginName:$("#e_loginName").val(),
+				in_e_createTime:$("#in_e_createTime").val(),
+				en_e_createTime:$("#en_e_createTime").val(),
+				e_isLockOut:$("#e_isLockOut").val()
 			}
 		});
 	}
@@ -72,7 +72,7 @@
 	<div id="tb">
 		<form  id="tabfrm" class="easyui-form">
 	        <label for="name">用户名:</label>   
-	        <input class="easyui-validatebox" type="text"  id="e_id" data-options="required:true" />   
+	        <input class="easyui-validatebox" type="text"  id="e_loginName" data-options="required:true" />   
 	        
 	        <label for="name">创建时间:</label>   
 	        <input class="easyui-validatebox" type="text"  id="in_e_createTime" data-options="required:true" />~
