@@ -9,12 +9,6 @@
 			<if test="employee.e_loginName != null and employee.e_loginName != ''">
 				and e_loginName like "%"#{employee.e_loginName}"%"
 			</if>
-			<if test="employee.e_sex != null and employee.e_sex != ''">
-				and e_sex=#{employee.e_sex}
-			</if>
-			<if test="employee.e_age != null and employee.e_age != ''">
-				and e_age=#{employee.e_age}
-			</if>
 			<if test="employee.e_createTime != null and employee.e_createTime != ''">
 				and e_createTime=#{employee.e_createTime,jdbcType=TIMESTAMP}
 			</if>
@@ -22,6 +16,10 @@
 				and e_createTime &gt;=#{employee.e_inCompanyTime,jdbcType=TIMESTAMP}
 				and e_createTime &lt;=#{employee.e_leaveCompanyTime,jdbcType=TIMESTAMP} 
 			</if>
+			<if test="employee.e_isLockOut != null and employee.e_isLockOut != ''">
+				and e_isLockOut=#{employee.e_isLockOut}
+			</if>
+			 
 		</where>
 		limit #{page},#{pageSize}
 	</select>
@@ -31,12 +29,6 @@
 			<if test="employee.e_loginName != null and employee.e_loginName != ''">
 				and e_loginName like "%"#{employee.e_loginName}"%"
 			</if>
-			<if test="employee.e_sex != null and employee.e_sex != ''">
-				and e_sex=#{employee.e_sex}
-			</if>
-			<if test="employee.e_age != null and employee.e_age != ''">
-				and e_age=#{employee.e_age}
-			</if>
 			<if test="employee.e_createTime != null and employee.e_createTime != ''">
 				and e_createTime=#{employee.e_createTime,jdbcType=TIMESTAMP}
 			</if>
@@ -44,6 +36,10 @@
 				and e_createTime &gt;=#{employee.e_inCompanyTime,jdbcType=TIMESTAMP}
 				and e_createTime &lt;=#{employee.e_leaveCompanyTime,jdbcType=TIMESTAMP} 
 			</if>
+			<if test="employee.e_isLockOut != null and employee.e_isLockOut != ''">
+				and e_isLockOut=#{employee.e_isLockOut}
+			</if>
+			
 		</where>
 	</select>
 </mapper>

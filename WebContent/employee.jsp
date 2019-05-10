@@ -72,16 +72,15 @@
 	<div id="tb">
 		<form  id="tabfrm" class="easyui-form">
 	        <label for="name">用户名:</label>   
-	        <input class="easyui-validatebox" type="text"  id="id" data-options="required:true" />   
+	        <input class="easyui-validatebox" type="text"  id="e_id" data-options="required:true" />   
 	        
-	        <label for="name">签到状态:</label>   
-	        <input class="easyui-validatebox" type="text"  id="name" data-options="required:true" />   
-			
-	        <label for="name">员工年龄:</label>   
-	        <input class="easyui-validatebox" type="text"  id="age" data-options="required:true" />   
-			
 	        <label for="name">创建时间:</label>   
-	        <input class="easyui-validatebox" type="text"  id="birthday" data-options="required:true" />   
+	        <input class="easyui-validatebox" type="text"  id="in_e_createTime" data-options="required:true" />~
+	        <input class="easyui-validatebox" type="text"  id="en_e_createTime" data-options="required:true" />    
+			
+	        <label for="name">是否锁定:</label>   
+	        <input class="easyui-validatebox" type="text"  id="e_isLockOut" data-options="required:true" />   
+			
 	    	  
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 		</form>

@@ -11,14 +11,26 @@ public class Fenye<T> {
 	private List<T> rows;
 	
 	private Employee employee;
-	/*
-	 * private String e_loginName;
-	 * 
-	 * public String getE_loginName() { return e_loginName; }
-	 * 
-	 * public void setE_loginName(String e_loginName) { this.e_loginName =
-	 * e_loginName; }
-	 */
+	//创建时间
+	private String in_e_createTime;
+	private String en_e_createTime;
+	
+
+	public String getIn_e_createTime() {
+		return in_e_createTime;
+	}
+
+	public void setIn_e_createTime(String in_e_createTime) {
+		this.in_e_createTime = in_e_createTime;
+	}
+
+	public String getEn_e_createTime() {
+		return en_e_createTime;
+	}
+
+	public void setEn_e_createTime(String en_e_createTime) {
+		this.en_e_createTime = en_e_createTime;
+	}
 
 	public Employee getEmployee() {
 		return employee;
