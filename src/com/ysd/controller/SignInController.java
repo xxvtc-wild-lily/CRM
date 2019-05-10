@@ -3,6 +3,7 @@ package com.ysd.controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -47,7 +48,7 @@ public class SignInController {
     
     // 登录的方法
     @RequestMapping(value="/signin",method=RequestMethod.POST)
-    public String signin(Model model,HttpServletRequest request,Employee employee) {
+    public String signin(Model model,HttpServletRequest request,HttpServletResponse response,Employee employee) {
         
         // 处理传过来的登录名、密码
         employee.setE_loginName(request.getParameter("e_loginName"));
@@ -56,6 +57,8 @@ public class SignInController {
         HttpSession session =request.getSession();
         String verificationCode = (String)session.getAttribute("randomcode_key");
         String verifyCode = request.getParameter("verifyCode");
+        // 获取是否记住密码的值
+        String passLogin = request.getParameter("passLogin");
         
         // 距离账号锁定剩余的机会
         Integer lastLoginChance = 3;
@@ -94,6 +97,25 @@ public class SignInController {
                         signInService.updateLastLoginTime(employee);
                         // 登陆成功后将错误次数归零
                         signInService.updatePwdWrongTimeWhenSuccess(employee);
+                        
+                        // 判断是否将用户名密码赋给cookie的操作
+                        if (passLogin != null) {
+                            // 记住密码
+                            
+                            // 把账号存入Cookie且名字为loginName
+                            Cookie loginName = new Cookie("loginName", employee.getE_loginName());
+                            // 设置过期时间（以秒为单位）
+                            loginName.setMaxAge(20);
+                            // 设置添加到根路径下
+                            loginName.setPath("/");
+                            //添加Cookie
+                            response.addCookie(loginName);
+                            // 以下操作同上
+                            Cookie password = new Cookie("password", employee.getE_passWord());
+                            password.setMaxAge(20);
+                            password.setPath("/");
+                            response.addCookie(password);
+                        }
                         
                         return "redirect:index.jsp";
                     }

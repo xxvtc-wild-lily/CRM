@@ -20,7 +20,13 @@
 </style>
 <script type="text/javascript">
     $(function(){
-    	
+    	if("${cookie.loginName.value}"!=''&&"${cookie.password.value}"!=''){
+            $("[name='e_loginName']").val("${cookie.loginName.value}");
+            $("[name='e_passWord']").val("${cookie.password.value}");
+            $("[name='verifyCode']").val("${randomcode_key}");
+            // 这个事件可以触发登录的点击事件
+            $('#signin').trigger("click");
+        }
     })
     
     // ajax登录的方法
@@ -121,7 +127,7 @@
 	                <tr>
                         <td></td>
                         <td>
-                            <input type="checkbox" class="easyui-tooltip" id="passLogin" title="7天免登录"  style="margin-left:90px;margin-top:5px;" />记住我
+                            <input type="checkbox" class="easyui-tooltip" name="passLogin" id="passLogin" title="7天免登录"  style="margin-left:90px;margin-top:5px;" />记住我
                         </td>
                     </tr>
 	            </table>
@@ -129,7 +135,7 @@
 	               <b>${msg }</b>
                 </div>
 	            <div style="margin-left:40px">
-	               <input type="submit" value="登录"/>
+	               <input type="submit" id="signin" value="登录"/>
 	            </div>
 	            <!-- <div style="margin-left:140px;margin-top:20px;">
                     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-help'" onclick="forgetPassword()">忘记密码?</a>
