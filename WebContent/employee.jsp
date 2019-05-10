@@ -20,13 +20,13 @@
 			method:'post',
 			pagination:true,
 			singleSelect:true,
-			/* toolbar:"#tar",
+			toolbar:"#tar",
 			queryParams:{
 				id:$("#id").val(),
 				name:$("#name").val(),
 				age:$("#age").val(),
 				birthday:$("#birthday").val()
-			} */
+			}
 		});
 	}
 	function formattercaozuo(value,row,index){
@@ -35,9 +35,8 @@
 	}
 	function formatterimg(value,row,index){
 		if(value != null && value != ''){
-			return "<img style='width:30px,height:30px' src='image/"+value+"'>"
+			return "<img style='width:40px;height:50px;' src='image/"+value+"'>"
 		}
-		
 	}
 </script>
 </head>
@@ -70,5 +69,22 @@
 			</tr>
 		</thead>
 	</table>
+	<div id="tb">
+		<form  id="tabfrm" class="easyui-form">
+	        <label for="name">用户名:</label>   
+	        <input class="easyui-validatebox" type="text"  id="id" data-options="required:true" />   
+	        
+	        <label for="name">签到状态:</label>   
+	        <input class="easyui-validatebox" type="text"  id="name" data-options="required:true" />   
+			
+	        <label for="name">员工年龄:</label>   
+	        <input class="easyui-validatebox" type="text"  id="age" data-options="required:true" />   
+			
+	        <label for="name">创建时间:</label>   
+	        <input class="easyui-validatebox" type="text"  id="birthday" data-options="required:true" />   
+	    	  
+			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
+		</form>
+	</div>
 </body>
 </html>
