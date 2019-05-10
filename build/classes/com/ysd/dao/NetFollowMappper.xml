@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ysd.dao.NetFollowMappper">
-    <select id="">
-    	
+    <select id="selectNetFollow" parameterType="pagin" resultType="student">
+    	select n.n_id,n.n_stuId,n.n_stuName,n.n_followTime,n.n_nextFollowTime,n.n_context,e.e_id,e.e_loginName,s.s_id,s.s_name
+		from netfollow n INNER JOIN employee e ON n.e_id=e.e_id INNER JOIN student s on n.n_stuId = s.s_id
+		limit #{page},#{pageSize}
     </select>
     
-    <select id="">
-    	
+    <select id="selectAllNetFollowCount" parameterType="pagin" resultType="int">
+    	select count(n_id) from netfollow limit #{page},#{pageSize}
     </select>
+    
     
 </mapper>
