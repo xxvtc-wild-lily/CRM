@@ -12,9 +12,9 @@
 			<if test="employee.e_createTime != null and employee.e_createTime != ''">
 				and e_createTime=#{employee.e_createTime,jdbcType=TIMESTAMP}
 			</if>
-			<if test="employee.e_inCompanyTime != null and employee.e_inCompanyTime != '' and employee.e_leaveCompanyTime != null and employee.e_leaveCompanyTime != ''">
-				and e_createTime &gt;=#{employee.e_inCompanyTime,jdbcType=TIMESTAMP}
-				and e_createTime &lt;=#{employee.e_leaveCompanyTime,jdbcType=TIMESTAMP} 
+			<if test="in_e_createTime != null and in_e_createTime != '' and en_e_createTime != null and en_e_createTime != ''">
+				and e_createTime &gt;=#{en_e_createTime,jdbcType=TIMESTAMP}
+				and e_createTime &lt;=#{in_e_createTime,jdbcType=TIMESTAMP} 
 			</if>
 			<if test="employee.e_isLockOut != null and employee.e_isLockOut != ''">
 				and e_isLockOut=#{employee.e_isLockOut}
@@ -32,9 +32,9 @@
 			<if test="employee.e_createTime != null and employee.e_createTime != ''">
 				and e_createTime=#{employee.e_createTime,jdbcType=TIMESTAMP}
 			</if>
-			<if test="employee.e_inCompanyTime != null and employee.e_inCompanyTime != '' and employee.e_leaveCompanyTime != null and employee.e_leaveCompanyTime != ''">
-				and e_createTime &gt;=#{employee.e_inCompanyTime,jdbcType=TIMESTAMP}
-				and e_createTime &lt;=#{employee.e_leaveCompanyTime,jdbcType=TIMESTAMP} 
+			<if test="in_e_createTime != null and in_e_createTime != '' and en_e_createTime != null and en_e_createTime != ''">
+				and e_createTime &gt;=#{en_e_createTime,jdbcType=TIMESTAMP}
+				and e_createTime &lt;=#{in_e_createTime,jdbcType=TIMESTAMP} 
 			</if>
 			<if test="employee.e_isLockOut != null and employee.e_isLockOut != ''">
 				and e_isLockOut=#{employee.e_isLockOut}
