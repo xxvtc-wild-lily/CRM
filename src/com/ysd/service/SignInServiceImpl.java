@@ -83,4 +83,13 @@ public class SignInServiceImpl implements SignInService {
         
         return i;
     }
+
+    @Override
+    public Integer updatePwdWrongTimeWhenSuccess(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = signInMapper.updatePwdWrongTimeWhenSuccess(employee);
+        
+        return i;
+    }
 }

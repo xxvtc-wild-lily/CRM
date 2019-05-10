@@ -45,4 +45,8 @@
         update employee set e_lastLoginTime = now() where e_loginName = #{e_loginName}
     </update>
     
+    <update id="updatePwdWrongTimeWhenSuccess" parameterType="employee">
+        update employee set e_pwdWrongTime = 0 where e_loginName = #{e_loginName}
+    </update>
+    
 </mapper>

@@ -1,8 +1,6 @@
 package com.ysd.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.ysd.entity.Employee;
 import com.ysd.service.SignInService;
 import com.ysd.util.PasswordUtil;
@@ -96,9 +91,9 @@ public class SignInController {
                         // 没有锁定的判断
                         
                         // 设置最后登录时间为当前时间
-                        Integer updateLastLoginTime = signInService.updateLastLoginTime(employee);
-                        
-                        System.out.println("密码输入正确！==============================");
+                        signInService.updateLastLoginTime(employee);
+                        // 登陆成功后将错误次数归零
+                        signInService.updatePwdWrongTimeWhenSuccess(employee);
                         
                         return "redirect:index.jsp";
                     }
@@ -106,7 +101,7 @@ public class SignInController {
                 } else {
                     
                     // 密码错误后更改错误次数
-                    Integer k = signInService.updatePwdWrongTime(employee);
+                    signInService.updatePwdWrongTime(employee);
                     // 查询目前的错误次数
                     lastLoginChance = signInService.selectPwdWrongTime(employee);
                     // 获取剩下的尝试机会
@@ -117,7 +112,7 @@ public class SignInController {
                     // 如果错误次数等于3次，就锁定账户
                     if (lastLoginChance == 0) {
                         // 修改锁定状态为锁定，修改锁定时间为当前时间
-                        Integer lockEmployee = signInService.updateEmployeeIsLockOut(employee);
+                        signInService.updateEmployeeIsLockOut(employee);
                         model.addAttribute("msg","该账号已锁定！");
                     } else if (lastLoginChance < 0) {
                         // 超过3次尝试次数
