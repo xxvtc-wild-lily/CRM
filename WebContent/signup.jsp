@@ -130,6 +130,7 @@
         var e_retypePassWord = $("#e_retypePassWord").val();
         var e_protectMTel = $("#e_protectMTel").val();
         var e_protectEmail = $("#e_protectEmail").val();
+        
         // 判断手机号的正则表达式
         var regMTel=/^[1][3,4,5,7,8][0-9]{9}$/;
         // 判断邮箱的正则表达式
@@ -140,86 +141,98 @@
             && e_passWord != "" && e_passWord != null && e_passWord != undefined 
             && e_retypePassWord != "" && e_retypePassWord != null && e_retypePassWord != undefined 
             && e_protectMTel != "" && e_protectMTel != null && e_protectMTel != undefined 
-            && e_protectEmail != "" && e_protectEmail != null && e_protectEmail != undefined){
+            && e_protectEmail != "" && e_protectEmail != null && e_protectEmail != undefined) {
         	
-        	if(e_passWord==e_retypePassWord) {
-	            // 判断手机号是否正确
-	            if (regMTel.test(e_protectMTel)) {
-	                // 判断邮箱是否正确
-	                if (regEmail.test(e_protectEmail)) {
-	                    // 拿到选中的性别，如果没有则为undefined
-	                    var e_sex = $('input[name="e_sex"]:checked').val();
-	                    var e_age = $("#e_age").val();
-	                    // 获取拿到的file
-	                    var e_photo = $("#e_photo").get(0).files[0];
-	                    // 声明FormData对象用来传值
-	                    var formData=new FormData();
-	                    formData.append("e_loginName",e_loginName);
-	                    formData.append("e_passWord",e_passWord);
-	                    formData.append("e_protectMTel",e_protectMTel);
-	                    formData.append("e_protectEmail",e_protectEmail);
-	                    formData.append("e_sex",e_sex);
-	                    formData.append("e_age",e_age);
-	                    formData.append("e_photo",e_photo);
-	                    
-	                    // 判断用户是否选择图片
-	                    if (e_photo != undefined) {
-	                        // 选择的ajax
-	                        $.ajax({
-	                            url:"insertSignUpEmployeeHaveImage",
-	                            type:"post",
-	                            data:formData,
-	                            async:false,
-	                            contentType:false,
-	                            processData:false,
-	                            success:function(res){
-	                                if (res == 0){
-	                                    $.messager.alert("提示","注册成功！","info");
-	                                } else if(res == 1){
-	                                    $.messager.alert("提示","注册失败！（原因：图片名重复，请再试一次）","error");
-	                                } else if(res == 2){
-	                                    $.messager.alert("提示","注册失败！","error");
-	                                } else if(res == 3){
-	                                    $.messager.alert("提示","注册失败（原因：登录名已存在，请再输入一个不同的）！","error");
-	                                }
-	                            },
-	                            error:function(res){
-	                                $.messager.alert("提示","注册失败！","error");
-	                            }
-	                        })
-	                    } else {
-	                        // 未选择的ajax
-	                        $.ajax({
-	                            url:"insertSignUpEmployeeNotHaveImage",
-	                            type:"post",
-	                            data:{
-	                                e_loginName:e_loginName,
-	                                e_passWord:e_passWord,
-	                                e_sex:e_sex,
-	                                e_age:e_age
-	                            },
-	                            success:function(res){
-	                                if(res>0) {
-	                                    $.messager.alert("提示","注册成功！","info");
-	                                } else if (res == -1) {
-	                                    $.messager.alert("提示","注册失败（原因：登录名已存在，请重新输入一个不同的）！","error");
-	                                } else {
-	                                     $.messager.alert("提示","注册失败！","error");
-	                                }
-	                            },
-	                            error:function(res){
-	                                $.messager.alert("提示","注册失败！","error");
-	                            }
-	                        })
-	                    }
-	                } else {
-	                    $.messager.alert("提示","请输入正确的邮箱！","error");
-	                }
-	            } else {
-	                $.messager.alert("提示","请输入正确的手机号！","error");
-	            }
+        	// 判断输入的密码是否为6位或以上
+        	if (e_passWord.length >= 6) {
+        		// 判断两次输入的密码是否一致
+	        	if (e_passWord==e_retypePassWord) {
+		            // 判断手机号是否正确
+		            if (regMTel.test(e_protectMTel)) {
+		                // 判断邮箱是否正确
+		                if (regEmail.test(e_protectEmail)) {
+		                    // 拿到选中的性别，如果没有则为undefined
+		                    var e_sex = $('input[name="e_sex"]:checked').val();
+		                    var e_age = $("#e_age").val();
+		                    
+		                    // 判断年龄是否在18~100岁之间
+		                    if (e_age >=18 && e_age<=100) {
+			                    // 获取拿到的file
+			                    var e_photo = $("#e_photo").get(0).files[0];
+			                    // 声明FormData对象用来传值
+			                    var formData=new FormData();
+			                    formData.append("e_loginName",e_loginName);
+			                    formData.append("e_passWord",e_passWord);
+			                    formData.append("e_protectMTel",e_protectMTel);
+			                    formData.append("e_protectEmail",e_protectEmail);
+			                    formData.append("e_sex",e_sex);
+			                    formData.append("e_age",e_age);
+			                    formData.append("e_photo",e_photo);
+			                    
+			                    // 判断用户是否选择图片
+			                    if (e_photo != undefined) {
+			                        // 选择图片的ajax
+			                        $.ajax({
+			                            url:"insertSignUpEmployeeHaveImage",
+			                            type:"post",
+			                            data:formData,
+			                            async:false,
+			                            contentType:false,
+			                            processData:false,
+			                            success:function(res){
+			                                if (res == 0){
+			                                    $.messager.alert("提示","注册成功！","info");
+			                                } else if(res == 1){
+			                                    $.messager.alert("提示","注册失败！（原因：图片名重复，请再试一次）","error");
+			                                } else if(res == 2){
+			                                    $.messager.alert("提示","注册失败！","error");
+			                                } else if(res == 3){
+			                                    $.messager.alert("提示","注册失败（原因：登录名已存在，请再输入一个不同的）！","error");
+			                                }
+			                            },
+			                            error:function(res){
+			                                $.messager.alert("提示","注册失败！","error");
+			                            }
+			                        })
+			                    } else {
+			                        // 未选择图片的ajax
+			                        $.ajax({
+			                            url:"insertSignUpEmployeeNotHaveImage",
+			                            type:"post",
+			                            data:{
+			                                e_loginName:e_loginName,
+			                                e_passWord:e_passWord,
+			                                e_sex:e_sex,
+			                                e_age:e_age
+			                            },
+			                            success:function(res){
+			                                if(res>0) {
+			                                    $.messager.alert("提示","注册成功！","info");
+			                                } else if (res == -1) {
+			                                    $.messager.alert("提示","注册失败（原因：登录名已存在，请重新输入一个不同的）！","error");
+			                                } else {
+			                                     $.messager.alert("提示","注册失败！","error");
+			                                }
+			                            },
+			                            error:function(res){
+			                                $.messager.alert("提示","注册失败！","error");
+			                            }
+			                        })
+			                    }
+		                    } else {
+		                    	$.messager.alert("提示","年龄应在18~100岁之间！","error");
+		                    }
+		                } else {
+		                    $.messager.alert("提示","请输入正确的邮箱！","error");
+		                }
+		            } else {
+		                $.messager.alert("提示","请输入正确的手机号！","error");
+		            }
+	        	} else {
+	        		$.messager.alert("提示","两次输入的密码不一致！","error");
+	        	}
         	} else {
-        		$.messager.alert("提示","两次输入的密码不一致！","error");
+        		$.messager.alert("提示","密码至少为6位！","error");
         	}
         } else {
             $.messager.alert("提示","请填入必输项！","error");
@@ -247,7 +260,7 @@
                 </tr>
                 <tr>
                     <td>登录密码：</td>
-                    <td><input type="password" class="easyui-textbox validatebox" id="e_passWord" style="width:200px" required="required"></td>
+                    <td><input type="password" class="easyui-textbox validatebox" id="e_passWord" style="width:200px" required="required"><span>&nbsp;密码应为6位及以上</span></td>
                 </tr>
                 <tr>
                     <td>确认密码：</td>

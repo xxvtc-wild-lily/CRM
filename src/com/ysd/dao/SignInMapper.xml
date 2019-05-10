@@ -2,4 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ysd.dao.SignInMapper">
     
+    <select id="selectIsHaveSameLoginName" parameterType="employee" resultType="_int">
+        select count(e_loginName) from employee where e_loginName = #{e_loginName}
+    </select>
+    
+    <select id="selectFingerprintNumByLoginName" parameterType="employee" resultType="string">
+        select e_fingerprintNum from employee where e_loginName = #{e_loginName}
+    </select>
+    
+    <select id="selectIsPasswordRight" parameterType="employee" resultType="_int">
+        select count(1) from employee where e_loginName = #{e_loginName} and e_passWord = #{e_passWord}
+    </select>
+    
+    <update id="updatePwdWrongTime" parameterType="employee">
+        update employee set e_pwdWrongTime=
+		(case
+		when e_pwdWrongTime>0 then e_pwdWrongTime+1
+		else 1
+		end)
+		where e_loginName = #{e_loginName}
+    </update>
+    
+    <select id="selectPwdWrongTime" parameterType="employee" resultType="_int">
+        select e_pwdWrongTime from employee where e_loginName = #{e_loginName}
+    </select>
+    
+    <update id="updateEmployeeIsLockOut" parameterType="employee">
+        update employee set e_isLockOut=
+		(case
+		when e_isLockOut>0 then 1
+		else 1
+		end),
+		e_lockTime = now()
+		where e_loginName = #{e_loginName}
+    </update>
+    
+    <select id="selectIsEmployeeLockOut" parameterType="employee" resultType="_int">
+        select ifnull(e_isLockOut,0) from employee where e_loginName = #{e_loginName}
+    </select>
+    
+    <update id="updateLastLoginTime" parameterType="employee">
+        update employee set e_lastLoginTime = now() where e_loginName = #{e_loginName}
+    </update>
+    
 </mapper>
