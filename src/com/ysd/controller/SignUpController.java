@@ -35,7 +35,7 @@ public class SignUpController {
 		// 判断是否有重名的
 		if (isSame==0) {
 			// 判断保存路径
-			String filePath = "F:\\第四学期\\CRM\\WebContent\\image";
+			String filePath = "D:\\GithubRepository\\CRM\\WebContent\\image";
 			// 拿到图片名
 			String fileName = file.getOriginalFilename();
 			// 给图片重起一个名字
