@@ -117,7 +117,10 @@ public class SignInController {
                             response.addCookie(password);
                         }
                         
-                        return "redirect:index.jsp";
+                        // 将登录信息赋到session里避免拦截
+                        session.setAttribute("employee",employee);
+                        
+                        return "redirect:/view/index.jsp";
                     }
                     
                 } else {
@@ -153,6 +156,6 @@ public class SignInController {
             model.addAttribute("msg","验证码输入错误！");
         }
         
-        return "signin";
+        return "/view/signin";
     }
 }
