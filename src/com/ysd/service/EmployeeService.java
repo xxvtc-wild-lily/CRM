@@ -5,4 +5,6 @@ import com.ysd.entity.Fenye;
 
 public interface EmployeeService {
 	Fenye<Employee> selectEmployeeAll(Fenye<Employee> fenye);
+	Integer insertEmployee(Employee employee);
+	Integer deleteEmployee(Integer e_id);
 }

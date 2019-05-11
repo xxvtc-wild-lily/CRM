@@ -39,7 +39,18 @@
 			<if test="employee.e_isLockOut != null and employee.e_isLockOut != ''">
 				and e_isLockOut=#{employee.e_isLockOut}
 			</if>
-			
 		</where>
 	</select>
+	<insert id="insertEmployee" parameterType="employee">
+		insert into employee(e_loginName,e_passWord,e_isLockOut,e_lastLoginTime,e_createTime,
+		e_pwdWrongTime,e_lockTime,e_protectEmail,e_protectMTel,e_fingerprintNum,e_liveAddress,
+		e_sex,e_age,e_photo,e_isMarry,e_fromAddress,e_eduStatus,e_weiXin,e_inCompanyTime) 
+		values(#{e_loginName},#{e_passWord},#{e_isLockOut},#{e_lastLoginTime},#{e_createTime},
+		#{e_pwdWrongTime},#{e_lockTime},#{e_protectEmail},#{e_protectMTel},#{e_fingerprintNum},
+		#{e_liveAddress},#{e_sex},#{e_age},#{e_photo},#{e_isMarry},#{e_fromAddress},#{e_eduStatus},
+		#{e_weiXin},#{e_inCompanyTime})
+	</insert>
+	<delete id="deleteEmployee" parameterType="int">
+		delete from employee where e_id=#{e_id}
+	</delete>
 </mapper>

@@ -27,7 +27,9 @@
 				en_e_createTime:$("#en_e_createTime").val(),
 				e_isLockOut:$("#e_isLockOut").val()
 			}
+		
 		});
+		$('#tabfrm').form('clear');
 	}
 	function formattercaozuo(value,row,index){
 		
@@ -37,6 +39,23 @@
 		if(value != null && value != ''){
 			return "<img style='width:40px;height:50px;' src='image/"+value+"'>"
 		}
+	}
+	function deleteEmployee(index){
+		var data=$("#empTab").datagrid("getData");
+		var row=data.rows[index];
+		$.messager.confirm('确认','您确认想要删除吗？',function(r){    
+		    if (r){    
+		          $.post("deleteEmployee",{e_id:row.e_id},function(res){
+		        	  if(res>0){
+		        		  $("#empTab").datagrid("reload");
+		        		  $.messager.alert('确认','删除成功');
+		        	  }else{
+		        		  $.messager.alert('确认','删除失败');
+		        	  }
+		          },"json")  
+		    }    
+		});  
+
 	}
 </script>
 </head>
@@ -72,17 +91,19 @@
 	<div id="tb">
 		<form  id="tabfrm" class="easyui-form">
 	        <label for="name">用户名:</label>   
-	        <input class="easyui-validatebox" type="text"  id="e_loginName" data-options="required:true" />   
+	        <input class="easyui-validatebox" type="text"  id="e_loginName"/>   
 	        
 	        <label for="name">创建时间:</label>   
-	        <input class="easyui-validatebox" type="text"  id="in_e_createTime" data-options="required:true" />~
-	        <input class="easyui-validatebox" type="text"  id="en_e_createTime" data-options="required:true" />    
+	        <input class="easyui-validatebox" type="text"  id="in_e_createTime"/>~
+	        <input class="easyui-validatebox" type="text"  id="en_e_createTime"/>    
 			
-	        <label for="name">是否锁定:</label>   
-	        <input class="easyui-validatebox" type="text"  id="e_isLockOut" data-options="required:true" />   
-			
-	    	  
+	       <!--  <label for="name">是否锁定:</label>
+	        <label class="bui-radios-label">    
+ 			<input type="radio" name="e_isLockOut" id="e_isLockOut" value="e_isLockOut"/><i class="bui-radios"></i>是
+ 			<input type="radio" name="e_isLockOut" id="e_isLockOut" value="e_isLockOut"/><i class="bui-radios"></i>否
+	    	</label> -->
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
+			<a href="javascript:void(0)" onclick="addEmployee()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
 		</form>
 	</div>
 </body>

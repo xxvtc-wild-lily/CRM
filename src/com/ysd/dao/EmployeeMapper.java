@@ -10,4 +10,8 @@ public interface EmployeeMapper {
 	List<Employee> selectEmployeeAll(Fenye<Employee> fenye);
 	
 	Integer selectEmployeeCount(Fenye<Employee> fenye);
+	
+	Integer insertEmployee(Employee employee);
+	
+	Integer deleteEmployee(Integer e_id);
 }
