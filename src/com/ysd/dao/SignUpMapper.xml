@@ -7,8 +7,8 @@
     </select>
     
     <insert id="insertSignUpEmployee" parameterType="employee">
-        insert into employee(e_loginName,e_passWord,e_protectEmail,e_protectMTel,e_sex,e_age,e_photo,e_fingerprintNum) 
-        values(#{e_loginName},#{e_passWord},#{e_protectEmail},#{e_protectMTel},#{e_sex},#{e_age},#{e_photo},#{e_fingerprintNum});
+        insert into employee(e_loginName,e_passWord,e_createTime,e_protectEmail,e_protectMTel,e_sex,e_age,e_photo,e_fingerprintNum,e_inCompanyTime) 
+        values(#{e_loginName},#{e_passWord},now(),#{e_protectEmail},#{e_protectMTel},#{e_sex},#{e_age},#{e_photo},#{e_fingerprintNum},now());
     </insert>
     
     <select id="selectIsHaveSameFingerprintNum" parameterType="string" resultType="_int">

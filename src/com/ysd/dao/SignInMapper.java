@@ -59,4 +59,12 @@ public interface SignInMapper {
      * @return 受影响的行数
      */
     Integer updateLastLoginTime(Employee employee);
+    
+    /**
+     * 登录成功后将用户的密码错误次数重设为0
+     * @param employee 包含员工信息的员工类
+     * @return 受影响的行数
+     */
+    Integer updatePwdWrongTimeWhenSuccess(Employee employee);
+    
 }

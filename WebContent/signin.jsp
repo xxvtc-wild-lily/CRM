@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,11 +20,17 @@
 </style>
 <script type="text/javascript">
     $(function(){
-    	
+    	if("${cookie.loginName.value}"!=''&&"${cookie.password.value}"!=''){
+            $("[name='e_loginName']").val("${cookie.loginName.value}");
+            $("[name='e_passWord']").val("${cookie.password.value}");
+            $("[name='verifyCode']").val("${randomcode_key}");
+            // 这个事件可以触发登录的点击事件
+            $('#signin').trigger("click");
+        }
     })
     
-    // 登录的方法
-    function signIn() {
+    // ajax登录的方法
+    /* function signIn() {
     	var e_loginName = $("#e_loginName").val();
     	var e_passWord = $("#e_passWord").val();
     	var verifyCode = $("#verifyCode").val();
@@ -83,7 +91,7 @@
     		$.messager.alert("提示","用户名不能为空！","error");
     	}
     	
-    }
+    } */
     
     function forgetPassword() {
     	alert("忘记密码");
@@ -94,18 +102,18 @@
     <div style="width:600px;margin:150px 500px;">
 	    <div class="easyui-panel" id="signInPanel" style="width:500px;height:300px;padding:10px;text-align:center;overflow:hidden;">
 	        <span><h3>欢迎使用CRM客户管理系统</h3></span>
-	        <form id="signInForm">
-	            <table id="signInTable" style="margin:30px auto;">
+	        <form id="signInForm" action="signin" method="post">
+	            <table id="signInTable" style="margin-top:30px;margin-left:90px;">
 	                <tr>
 	                    <td>登录名：</td>
 	                    <td>
-	                        <input type="text" class="easyui-textbox" id="e_loginName" data-options="iconCls:'icon-man'" />
+	                        <input type="text" class="easyui-textbox" name="e_loginName" id="e_loginName" data-options="iconCls:'icon-man'" />
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>密码：</td>
 	                    <td>
-	                        <input type="text" class="easyui-passwordbox" id="e_passWord" />
+	                        <input type="text" class="easyui-passwordbox"  name="e_passWord" id="e_passWord" />
 	                    </td>
 	                </tr>
 	                <tr>
@@ -119,12 +127,15 @@
 	                <tr>
                         <td></td>
                         <td>
-                            <input type="checkbox" class="easyui-tooltip" id="passLogin" title="7天免登录"  style="margin-left:90px;margin-top:5px;" />记住我
+                            <input type="checkbox" class="easyui-tooltip" name="passLogin" id="passLogin" title="7天免登录"  style="margin-left:90px;margin-top:5px;" />记住我
                         </td>
                     </tr>
 	            </table>
-	            <div style="margin-left:60px;">
-	                <a href="javascript:void(0);" type="button" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="signIn()">登录</a>
+	            <div style="margin-left:40px;height:25px;">
+	               <b>${msg }</b>
+                </div>
+	            <div style="margin-left:40px">
+	               <input type="submit" id="signin" value="登录"/>
 	            </div>
 	            <!-- <div style="margin-left:140px;margin-top:20px;">
                     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-help'" onclick="forgetPassword()">忘记密码?</a>

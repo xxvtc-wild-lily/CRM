@@ -20,5 +20,7 @@
     </div>
     <div data-options="region:'south',border:false" style="height:50px;padding:10px;">south region</div>
     <div data-options="region:'center',title:'Center'"></div>
+<body>
+
 </body>
 </html>

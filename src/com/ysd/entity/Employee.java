@@ -4,33 +4,33 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Employee {
-	private Integer e_id;
-	private String e_loginName;
-	private String e_passWord;
-	private Integer e_isLockOut;
-	private String e_lastLoginTime;
-	private String e_createTime;
-	private Integer e_pwdWrongTime;
-	private String e_lockTime;
-	private String e_protectEmail;
-	private String e_protectMTel;
-	private String e_fingerprintNum;
-	private String e_liveAddress;
-	private Integer e_sex;
-	private Integer e_age;
-	private String e_photo;
-	private Integer e_isMarry;
-	private String e_fromAddress;
-	private String e_eduStatus;
-	private String e_weiXin;
-	private String e_inCompanyTime;
-	private String e_leaveCompanyTime;
-	private String e_ext1;
-	private String e_ext2;
-	private String e_ext3;
-	private Integer e_ext4;
-	private Integer e_ext5;
-	private Integer e_ext6;
+	private Integer e_id;			//编号
+	private String e_loginName;		//登录名
+	private String e_passWord;		//密码
+	private Integer e_isLockOut;	//是否锁定
+	private String e_lastLoginTime;	//最后一次登录时间
+	private String e_createTime;	//创建时间
+	private Integer e_pwdWrongTime;	//密码错误次数
+	private String e_lockTime;		//被锁定时间
+	private String e_protectEmail;	//密保邮箱
+	private String e_protectMTel;	//密保手机号
+	private String e_fingerprintNum;//指纹码
+	private String e_liveAddress;	//员工现住址
+	private Integer e_sex;			//员工性别
+	private Integer e_age;			//员工年龄
+	private String e_photo;			//员工照片
+	private Integer e_isMarry;		//是否结婚
+	private String e_fromAddress;	//员工籍贯
+	private String e_eduStatus;		//学历状态
+	private String e_weiXin;		//员工微信
+	private String e_inCompanyTime;	//入职时间
+	private String e_leaveCompanyTime;//离职时间
+	private String e_ext1;			//
+	private String e_ext2;			//
+	private String e_ext3;			//
+	private Integer e_ext4;			//
+	private Integer e_ext5;			//
+	private Integer e_ext6;			//
 	
 	private EmployeeRole employeeRole;
 
