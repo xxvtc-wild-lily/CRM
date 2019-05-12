@@ -21,6 +21,21 @@ public class RoleController {
 			String selectRoleAll = roleservice.selectRoleAll();
 			System.out.println(selectRoleAll);
 			return selectRoleAll;
+		}
+		@RequestMapping(value="/addrol",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer insertRoll(Role role) {
+			
+			return roleservice.insetRole(role);
 			
 		}
+		
+		@RequestMapping(value="/deleterole",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer deleteRoles(String roles) {
+			
+			return roleservice.deleteRolesById(roles);
+			
+		}
+		
 }
