@@ -42,10 +42,6 @@ public class EmployeeController {
 	@RequestMapping(value="/updateEmployee",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer updateEmployee(Employee employee) {
-		System.out.println(employeeService.updateEmployee(employee));
-		System.out.println(employeeService.updateEmployee(employee));
-		System.out.println(employeeService.updateEmployee(employee));
-		System.out.println(employeeService.updateEmployee(employee));
 		return employeeService.updateEmployee(employee);
 	}
 }
