@@ -5,11 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<link rel="stylesheet" href="js/jquery-easyui-1.7.0/themes/icon.css">
-<script type="text/javascript" src="js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
+<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
     $(function(){
         $("#signUpDialog").dialog({
@@ -155,73 +155,79 @@
 		                    var e_sex = $('input[name="e_sex"]:checked').val();
 		                    var e_age = $("#e_age").val();
 		                    
-		                    // 判断年龄是否在18~100岁之间
-		                    if (e_age >=18 && e_age<=100) {
-			                    // 获取拿到的file
-			                    var e_photo = $("#e_photo").get(0).files[0];
-			                    // 声明FormData对象用来传值
-			                    var formData=new FormData();
-			                    formData.append("e_loginName",e_loginName);
-			                    formData.append("e_passWord",e_passWord);
-			                    formData.append("e_protectMTel",e_protectMTel);
-			                    formData.append("e_protectEmail",e_protectEmail);
-			                    formData.append("e_sex",e_sex);
-			                    formData.append("e_age",e_age);
-			                    formData.append("e_photo",e_photo);
-			                    
-			                    // 判断用户是否选择图片
-			                    if (e_photo != undefined) {
-			                        // 选择图片的ajax
-			                        $.ajax({
-			                            url:"insertSignUpEmployeeHaveImage",
-			                            type:"post",
-			                            data:formData,
-			                            async:false,
-			                            contentType:false,
-			                            processData:false,
-			                            success:function(res){
-			                                if (res == 0){
-			                                    $.messager.alert("提示","注册成功！","info");
-			                                } else if(res == 1){
-			                                    $.messager.alert("提示","注册失败！（原因：图片名重复，请再试一次）","error");
-			                                } else if(res == 2){
-			                                    $.messager.alert("提示","注册失败！","error");
-			                                } else if(res == 3){
-			                                    $.messager.alert("提示","注册失败（原因：登录名已存在，请再输入一个不同的）！","error");
-			                                }
-			                            },
-			                            error:function(res){
-			                                $.messager.alert("提示","注册失败！","error");
-			                            }
-			                        })
-			                    } else {
-			                        // 未选择图片的ajax
-			                        $.ajax({
-			                            url:"insertSignUpEmployeeNotHaveImage",
-			                            type:"post",
-			                            data:{
-			                                e_loginName:e_loginName,
-			                                e_passWord:e_passWord,
-			                                e_sex:e_sex,
-			                                e_age:e_age
-			                            },
-			                            success:function(res){
-			                                if(res>0) {
-			                                    $.messager.alert("提示","注册成功！","info");
-			                                } else if (res == -1) {
-			                                    $.messager.alert("提示","注册失败（原因：登录名已存在，请重新输入一个不同的）！","error");
-			                                } else {
-			                                     $.messager.alert("提示","注册失败！","error");
-			                                }
-			                            },
-			                            error:function(res){
-			                                $.messager.alert("提示","注册失败！","error");
-			                            }
-			                        })
-			                    }
-		                    } else {
-		                    	$.messager.alert("提示","年龄应在18~100岁之间！","error");
+		                    if (e_age != null && e_age != "" && e_age != " " && e_age != undefined) {
+		                    	 // 判断年龄是否在18~100岁之间
+	                            if (e_age >=18 && e_age<=100) {
+	                                e_age = $("#e_age").val();
+	                            } else {
+	                                $.messager.alert("提示","年龄应在18~100岁之间！","error");
+	                                return;
+	                            }
 		                    }
+		                    
+		                    // 获取拿到的file
+                            var e_photo = $("#e_photo").get(0).files[0];
+                            // 声明FormData对象用来传值
+                            var formData=new FormData();
+                            formData.append("e_loginName",e_loginName);
+                            formData.append("e_passWord",e_passWord);
+                            formData.append("e_protectMTel",e_protectMTel);
+                            formData.append("e_protectEmail",e_protectEmail);
+                            formData.append("e_sex",e_sex);
+                            formData.append("e_age",e_age);
+                            formData.append("e_photo",e_photo);
+                            
+                            // 判断用户是否选择图片
+                            if (e_photo != undefined) {
+                                // 选择图片的ajax
+                                $.ajax({
+                                    url:"../insertSignUpEmployeeHaveImage",
+                                    type:"post",
+                                    data:formData,
+                                    async:false,
+                                    contentType:false,
+                                    processData:false,
+                                    success:function(res){
+                                        if (res == 0){
+                                            $.messager.alert("提示","注册成功！","info");
+                                        } else if(res == 1){
+                                            $.messager.alert("提示","注册失败！（原因：图片名重复，请再试一次）","error");
+                                        } else if(res == 2){
+                                            $.messager.alert("提示","注册失败！","error");
+                                        } else if(res == 3){
+                                            $.messager.alert("提示","注册失败（原因：登录名已存在，请再输入一个不同的）！","error");
+                                        }
+                                    },
+                                    error:function(res){
+                                        $.messager.alert("提示","注册失败！","error");
+                                    }
+                                })
+                            } else {
+                                // 未选择图片的ajax
+                                $.ajax({
+                                    url:"../insertSignUpEmployeeNotHaveImage",
+                                    type:"post",
+                                    data:{
+                                        e_loginName:e_loginName,
+                                        e_passWord:e_passWord,
+                                        e_sex:e_sex,
+                                        e_age:e_age
+                                    },
+                                    success:function(res){
+                                        if(res>0) {
+                                            $.messager.alert("提示","注册成功！","info");
+                                        } else if (res == -1) {
+                                            $.messager.alert("提示","注册失败（原因：登录名已存在，请重新输入一个不同的）！","error");
+                                        } else {
+                                             $.messager.alert("提示","注册失败！","error");
+                                        }
+                                    },
+                                    error:function(res){
+                                        $.messager.alert("提示","注册失败！","error");
+                                    }
+                                })
+                            }
+		                    
 		                } else {
 		                    $.messager.alert("提示","请输入正确的邮箱！","error");
 		                }

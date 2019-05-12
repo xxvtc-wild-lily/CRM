@@ -5,11 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<link rel="stylesheet" href="js/jquery-easyui-1.7.0/themes/icon.css">
-<script type="text/javascript" src="js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
+<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 </head>
 <body class="easyui-layout">
     <div data-options="region:'north',border:false" style="height:60px;padding:10px">
