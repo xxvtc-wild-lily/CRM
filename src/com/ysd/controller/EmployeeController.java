@@ -38,4 +38,14 @@ public class EmployeeController {
 	public Integer deleteEmployee(Integer e_id) {
 		return employeeService.deleteEmployee(e_id);
 	}
+	
+	@RequestMapping(value="/updateEmployee",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer updateEmployee(Employee employee) {
+		System.out.println(employeeService.updateEmployee(employee));
+		System.out.println(employeeService.updateEmployee(employee));
+		System.out.println(employeeService.updateEmployee(employee));
+		System.out.println(employeeService.updateEmployee(employee));
+		return employeeService.updateEmployee(employee);
+	}
 }

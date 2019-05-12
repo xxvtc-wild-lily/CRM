@@ -7,4 +7,5 @@ public interface EmployeeService {
 	Fenye<Employee> selectEmployeeAll(Fenye<Employee> fenye);
 	Integer insertEmployee(Employee employee);
 	Integer deleteEmployee(Integer e_id);
+	Integer updateEmployee(Employee employee);
 }

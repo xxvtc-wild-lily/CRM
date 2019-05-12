@@ -43,12 +43,39 @@ pageContext.setAttribute("path",request.getContextPath());
 			return "<img style='width:40px;height:50px;' src='../image/"+value+"'>"
 		}
 	}
+	function addEmployee(){
+		$("#addDialog").dialog("open");
+	}
+	function add(){
+		var e_loginName=$("#e_loginName").val();
+		var e_passWord=$("#e_passWord").val();
+		var e_protectEmail=$("#e_protectEmail").val();
+		var e_protectMTel=$("#e_protectMTel").val();
+		var e_fingerprintNum=$("#e_fingerprintNum").val();
+		$.post("../insertEmployee",{
+			e_loginName:e_loginName,
+			e_passWord:e_passWord,
+			e_protectEmail:e_protectEmail,
+			e_protectMTel:e_protectMTel,
+			e_fingerprintNum:e_fingerprintNum
+		},function(res){
+			if(res>0){
+				$.messager.alert("提示","添加成功！","info");
+				$("#addDialog").dialog("close");
+				$("#empTab").datagrid("reload");
+			}else{
+				$.messager.alert("提示","添加失败！","error");
+			}
+		},"json");
+		$('#addForm').form('clear');
+	}
+
 	function deleteEmployee(index){
 		var data=$("#empTab").datagrid("getData");
 		var row=data.rows[index];
 		$.messager.confirm('确认','您确认想要删除吗？',function(r){    
 		    if (r){    
-		          $.post("deleteEmployee",{e_id:row.e_id},function(res){
+		          $.post("../deleteEmployee",{e_id:row.e_id},function(res){
 		        	  if(res>0){
 		        		  $("#empTab").datagrid("reload");
 		        		  $.messager.alert('确认','删除成功');
@@ -58,7 +85,29 @@ pageContext.setAttribute("path",request.getContextPath());
 		          },"json")  
 		    }    
 		});  
-
+	}
+	function updateEmployee(index){
+		var data=$("#empTab").datagrid("getData");
+		var row=data.rows[index];
+		$('#updateForm').form('load',row);
+		$("#updateDialog").dialog("open");
+	}
+	function saveUpdat(){
+		$.post("../updateEmployee",{
+			e_loginName:$("#updatee_loginName").val(),
+			e_passWord:$("#updatee_passWord").val(),
+			e_protectEmail:$("#updatee_protectEmail").val(),
+			e_protectMTel:$("#updatee_protectMTel").val(),
+			e_fingerprintNum:$("#updatee_fingerprintNum").val()
+		},function(res){
+			if(res>0){
+				$.messager.alert("提示","修改成功！","info");
+				$("#updateDialog").dialog("close");
+				$("#empTabg").datagrid("reload");
+			}else{
+				$.messager.alert("提示","修改失败！","error");
+			}
+		},"json")
 	}
 </script>
 </head>
@@ -100,14 +149,76 @@ pageContext.setAttribute("path",request.getContextPath());
 	        <input class="easyui-validatebox" type="text"  id="in_e_createTime"/>~
 	        <input class="easyui-validatebox" type="text"  id="en_e_createTime"/>    
 			
-	       <!--  <label for="name">是否锁定:</label>
-	        <label class="bui-radios-label">    
- 			<input type="radio" name="e_isLockOut" id="e_isLockOut" value="e_isLockOut"/><i class="bui-radios"></i>是
- 			<input type="radio" name="e_isLockOut" id="e_isLockOut" value="e_isLockOut"/><i class="bui-radios"></i>否
-	    	</label> -->
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0)" onclick="addEmployee()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
 		</form>
+	</div>
+	
+	<div id="addDialog" class="easyui-dialog" title="创建" style="width:400px;height:600px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+		<form id="addForm" method="post">   
+			<table>
+			    <tr>
+			        <td><label>登录名：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_loginName" name="e_loginName" data-options="required:true"/></td>
+			    </tr>
+			    <tr>
+			        <td><label>密码：</label></td>
+			        <td><input class="easyui-textbox" type="password" id="e_passWord" name="e_passWord" data-options="required:true"/></td>
+			    </tr>
+			    <tr>
+			        <td><label>密保邮箱：</label></td>
+			        <td><input class= "easyui-datebox" type= "text" id="e_protectEmail" name="e_protectEmail" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>密保手机号：</label></td>
+			        <td><input class="easyui-textbox" type="text" name="e_protectMTel" id="e_protectMTel" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>指纹码：</label></td>
+			        <td><input class="easyui-textbox" type="text" name="e_fingerprintNum" id="e_fingerprintNum" /></td>
+			    </tr>
+			    <tr>
+			    	<td><a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="add()">确定</a></td>
+			    </tr>
+		    </table>
+		</form>  
+	</div>
+	<div id="updateDialog" class="easyui-dialog" title="修改" data-options="modal:true,closed:true,
+			buttons:[{
+				text:'保存',
+				handler:function(){saveUpdat();}
+			},{
+				text:'关闭',
+				handler:function(){closeUpdat();}
+			}]">  
+		<form id="updateForm" method="post">   
+			<table>
+				<tr>
+					<td><label>编号：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updatee_id" name="e_id" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>登录名：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updatee_loginName" name="e_loginName" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>密码：</label></td>
+			        <td><input class="easyui-textbox" type="password" id="updatee_passWord" name="e_passWord" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>密保邮箱：</label></td>
+			        <td><input class= "easyui-textbox" type= "text" id="updatee_protectEmail" name="e_protectEmail" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>密保手机号：</label></td>
+			        <td><input class="easyui-textbox" type="text" name="updatee_protectMTel" id="e_protectMTel" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>指纹码：</label></td>
+			        <td><input class="easyui-textbox" type="text" name="updatee_fingerprintNum" id="e_fingerprintNum" /></td>
+			    </tr>
+		    </table>
+		</form>  
 	</div>
 </body>
 </html>

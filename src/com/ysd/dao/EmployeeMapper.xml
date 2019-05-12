@@ -42,15 +42,33 @@
 		</where>
 	</select>
 	<insert id="insertEmployee" parameterType="employee">
-		insert into employee(e_loginName,e_passWord,e_isLockOut,e_lastLoginTime,e_createTime,
-		e_pwdWrongTime,e_lockTime,e_protectEmail,e_protectMTel,e_fingerprintNum,e_liveAddress,
-		e_sex,e_age,e_photo,e_isMarry,e_fromAddress,e_eduStatus,e_weiXin,e_inCompanyTime) 
-		values(#{e_loginName},#{e_passWord},#{e_isLockOut},#{e_lastLoginTime},#{e_createTime},
-		#{e_pwdWrongTime},#{e_lockTime},#{e_protectEmail},#{e_protectMTel},#{e_fingerprintNum},
-		#{e_liveAddress},#{e_sex},#{e_age},#{e_photo},#{e_isMarry},#{e_fromAddress},#{e_eduStatus},
-		#{e_weiXin},#{e_inCompanyTime})
+		insert into employee(e_loginName,e_passWord,e_protectEmail,e_protectMTel,e_fingerprintNum) 
+		values(#{e_loginName},#{e_passWord},#{e_protectEmail},#{e_protectMTel},#{e_fingerprintNum})
 	</insert>
 	<delete id="deleteEmployee" parameterType="int">
 		delete from employee where e_id=#{e_id}
 	</delete>
+	<update id="updateEmployee" parameterType="employee">
+		update employee
+		<set>
+			<if test="e_loginName != null and e_loginName != ''">
+			   	e_loginName=#{e_loginName},
+			</if>
+			<if test="e_passWord != null and e_passWord != ''">
+				e_passWord=#{e_passWord},
+			</if>
+			<if test="e_protectEmail != null and e_protectEmail != ''">
+				e_protectEmail=#{e_protectEmail},
+			</if>
+			<if test="e_protectMTel != null and e_protectMTel != ''">
+				e_protectMTel=#{e_protectMTel},
+			</if>
+			<if test="e_fingerprintNum != null and e_fingerprintNum != ''">
+				e_fingerprintNum=#{e_fingerprintNum}
+			</if>
+		</set>
+		<where>
+			e_id=#{e_id}
+		</where>
+	</update>
 </mapper>

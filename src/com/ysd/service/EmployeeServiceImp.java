@@ -35,4 +35,11 @@ public class EmployeeServiceImp implements EmployeeService {
 		return employeeMapper.deleteEmployee(e_id);
 	}
 
+	@Override
+	public Integer updateEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		System.out.println(employeeMapper.updateEmployee(employee));
+		return employeeMapper.updateEmployee(employee);
+	}
+
 }

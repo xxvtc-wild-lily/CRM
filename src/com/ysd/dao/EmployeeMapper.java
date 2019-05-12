@@ -14,4 +14,6 @@ public interface EmployeeMapper {
 	Integer insertEmployee(Employee employee);
 	
 	Integer deleteEmployee(Integer e_id);
+	
+	Integer updateEmployee(Employee employee);
 }
