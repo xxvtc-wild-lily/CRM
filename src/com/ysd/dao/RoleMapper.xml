@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ysd.dao.RoleMapper">
+		<resultMap type="role" id="roles">
+				<id column="r_id" property="id"/>
+				<result column="r_name" property="text"/>
+	    </resultMap>
+		<select id="selectRoleAll" resultMap="roles">
+				select r_id ,r_name  from role
+		</select>
+</mapper>
