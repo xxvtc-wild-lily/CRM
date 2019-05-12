@@ -1,5 +1,8 @@
 package com.ysd.entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Student {
 	private Integer s_id;			//学生编号
 	private String s_name;			//学生姓名

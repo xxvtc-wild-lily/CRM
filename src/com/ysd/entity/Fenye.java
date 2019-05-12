@@ -15,7 +15,52 @@ public class Fenye<T> {
 	private String in_e_createTime;
 	private String en_e_createTime;
 	
+	private Student student;
+	private Asker asker;
+	
+	
+	public Asker getAsker() {
+		return asker;
+	}
 
+	public void setAsker(Asker asker) {
+		this.asker = asker;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	//咨询师
+	private Integer a_id;
+	private String a_name;
+	
+	public Integer getA_id() {
+		return a_id;
+	}
+
+	public void setA_id(Integer a_id) {
+		this.a_id = a_id;
+	}
+
+	public String getA_name() {
+		return a_name;
+	}
+
+	public void setA_name(String a_name) {
+		this.a_name = a_name;
+	}
+	
+	
+	
+	
+	
+	
+	
 	public String getIn_e_createTime() {
 		return in_e_createTime;
 	}
@@ -32,6 +77,14 @@ public class Fenye<T> {
 		this.en_e_createTime = en_e_createTime;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 	public Employee getEmployee() {
 		return employee;
 	}
@@ -39,6 +92,12 @@ public class Fenye<T> {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
+	
+	
+	
+	
+	
+	
 	
 	public Integer getPage() {
 		return page;
