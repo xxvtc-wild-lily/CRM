@@ -4,9 +4,27 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Role {
-	private Integer r_id;
-	private String r_name;
+	private Integer r_id;	//角色编号
+	private String r_name;  //角色名称
+	private Integer id;
+	private String text;
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
 	private RoleModules roleModules;
 
 	public Integer getR_id() {
