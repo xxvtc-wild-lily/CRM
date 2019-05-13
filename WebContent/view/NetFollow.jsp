@@ -76,6 +76,7 @@ function formattersfhf(value,row,index) {
 		回访情况：
 				 <label for="name" style="width:140px">是否回访:</label>  
 			    		<select style="width:140px" id="ispay" class="easyui-combobox">
+			    			<option >--请选择--</option>
 				    		<option >已回访</option>
 				    		<option >未回访</option>
 				    	</select>
