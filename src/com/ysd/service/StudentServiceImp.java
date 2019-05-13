@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ysd.dao.StudentMapper;
 import com.ysd.entity.Fenye;
+import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
 @Service
 public class StudentServiceImp implements StudentService {
@@ -16,12 +17,12 @@ public class StudentServiceImp implements StudentService {
 	
 	
 	@Override
-	public Fenye<Student> selectStudentAll(Fenye<Student> fenye) {
-		List<Student> selectStudentAll = studentMapper.selectStudentAll(fenye);
-		Integer selectStudentCount = studentMapper.selectStudentCount(fenye);
-		fenye.setTotal(selectStudentCount);
-		fenye.setRows(selectStudentAll);
-		return fenye;
+	public Pagination<Student> selectStudentAll(Pagination<Student> pagination) {
+		List<Student> selectStudentAll = studentMapper.selectStudentAll(pagination);
+		Integer selectStudentCount = studentMapper.selectStudentCount(pagination);
+		pagination.setTotal(selectStudentCount);
+		pagination.setRows(selectStudentAll);
+		return pagination;
 	}
 
 	@Override
@@ -41,5 +42,6 @@ public class StudentServiceImp implements StudentService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

@@ -1,10 +1,10 @@
 package com.ysd.service;
 
 
-import com.ysd.entity.Fenye;
+import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
 public interface StudentService {
-	Fenye<Student> selectStudentAll(Fenye<Student> fenye);
+	Pagination<Student> selectStudentAll(Pagination<Student> pagination);
 	
 	Integer insertStudent(Student student);
 	

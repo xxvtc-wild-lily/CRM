@@ -2,13 +2,13 @@ package com.ysd.dao;
 
 import java.util.List;
 
-import com.ysd.entity.Fenye;
+import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
 
 public interface StudentMapper {
-	List<Student> selectStudentAll(Fenye<Student> fenye);
+	List<Student> selectStudentAll(Pagination<Student> pagination);
 	
-	Integer selectStudentCount(Fenye<Student> fenye);
+	Integer selectStudentCount(Pagination<Student> pagination);
 	
 	Integer insertStudent(Student student);
 	

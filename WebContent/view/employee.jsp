@@ -160,23 +160,23 @@
 			<table>
 			    <tr>
 			        <td><label>登录名：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adde_loginName" name="adde_loginName" data-options="required:true"/></td>
+			        <td><input class="easyui-textbox" type="text" id="adde_loginName" name="e_loginName" data-options="required:true"/></td>
 			    </tr>
 			    <tr>
 			        <td><label>密码：</label></td>
-			        <td><input class="easyui-textbox" type="password" id="adde_passWord" name="adde_passWord" data-options="required:true"/></td>
+			        <td><input class="easyui-textbox" type="password" id="adde_passWord" name="e_passWord" data-options="required:true"/></td>
 			    </tr>
 			    <tr>
 			        <td><label>密保邮箱：</label></td>
-			        <td><input class= "easyui-textbox" type= "text" id="adde_protectEmail" name="adde_protectEmail" /></td>
+			        <td><input class= "easyui-textbox" type= "text" id="adde_protectEmail" name="e_protectEmail" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>密保手机号：</label></td>
-			        <td><input class="easyui-textbox" type="text" name="adde_protectMTel" id="adde_protectMTel" /></td>
+			        <td><input class="easyui-textbox" type="text" id="adde_protectMTel" name="e_protectMTel" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>指纹码：</label></td>
-			        <td><input class="easyui-textbox" type="text" name="adde_fingerprintNum" id="adde_fingerprintNum" /></td>
+			        <td><input class="easyui-textbox" type="text" id="adde_fingerprintNum" name="e_fingerprintNum" /></td>
 			    </tr>
 			    <tr>
 			    	<td><a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="add()">确定</a></td>
@@ -212,11 +212,11 @@
 			    </tr>
 			    <tr>
 			        <td><label>密保手机号：</label></td>
-			        <td><input class="easyui-textbox" type="text" name="updatee_protectMTel" id="e_protectMTel" /></td>
+			        <td><input class="easyui-textbox" type="text" id="updatee_protectMTel" name="e_protectMTel" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>指纹码：</label></td>
-			        <td><input class="easyui-textbox" type="text" name="updatee_fingerprintNum" id="e_fingerprintNum" /></td>
+			        <td><input class="easyui-textbox" type="text" id="updatee_fingerprintNum" name="e_fingerprintNum" /></td>
 			    </tr>
 		    </table>
 		</form>  

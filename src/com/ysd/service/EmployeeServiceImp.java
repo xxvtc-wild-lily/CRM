@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ysd.dao.EmployeeMapper;
 import com.ysd.entity.Employee;
-import com.ysd.entity.Fenye;
+import com.ysd.entity.Pagination;
 @Service
 public class EmployeeServiceImp implements EmployeeService {
 	
@@ -15,12 +15,12 @@ public class EmployeeServiceImp implements EmployeeService {
 	private EmployeeMapper employeeMapper;
 	
 	@Override
-	public Fenye<Employee> selectEmployeeAll(Fenye<Employee> fenye) {
-		List<Employee> selectEmployeeAll = employeeMapper.selectEmployeeAll(fenye);
-		Integer selectEmployeeCount = employeeMapper.selectEmployeeCount(fenye);
-		fenye.setRows(selectEmployeeAll);
-		fenye.setTotal(selectEmployeeCount);
-		return fenye;
+	public Pagination<Employee> selectEmployeeAll(Pagination<Employee> pagination) {
+		List<Employee> selectEmployeeAll = employeeMapper.selectEmployeeAll(pagination);
+		Integer selectEmployeeCount = employeeMapper.selectEmployeeCount(pagination);
+		pagination.setRows(selectEmployeeAll);
+		pagination.setTotal(selectEmployeeCount);
+		return pagination;
 	}
 
 	@Override
@@ -40,5 +40,7 @@ public class EmployeeServiceImp implements EmployeeService {
 		// TODO Auto-generated method stub
 		return employeeMapper.updateEmployee(employee);
 	}
+
+	
 
 }

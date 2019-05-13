@@ -3,13 +3,13 @@ package com.ysd.dao;
 import java.util.List;
 
 import com.ysd.entity.Employee;
-import com.ysd.entity.Fenye;
+import com.ysd.entity.Pagination;
 
 public interface EmployeeMapper {
 	
-	List<Employee> selectEmployeeAll(Fenye<Employee> fenye);
+	List<Employee> selectEmployeeAll(Pagination<Employee> pagination);
 	
-	Integer selectEmployeeCount(Fenye<Employee> fenye);
+	Integer selectEmployeeCount(Pagination<Employee> pagination);
 	
 	Integer insertEmployee(Employee employee);
 	

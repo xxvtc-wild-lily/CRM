@@ -52,7 +52,7 @@
 		<result column="a_id" property="asker.a_id"/>
 		<result column="a_name" property="asker.a_name"/>
 	</resultMap>
-	<select id="selectStudentAll" parameterType="fenye" resultMap="resultStu">
+	<select id="selectStudentAll" parameterType="pagination" resultMap="resultStu">
 		select s.*,a.a_name from student s inner join asker a on s.s_askerId=a.a_id
 		<where>
 			<if test="student.s_id != null and student.s_id != ''">
@@ -87,7 +87,7 @@
 		</where>
 		limit #{page},#{pageSize}
 	</select>
-	<select id="selectStudentCount" parameterType="fenye" resultType="int">
+	<select id="selectStudentCount" parameterType="pagination" resultType="int">
 		select count(s.s_id) from student s inner join asker a on s.s_askerId=a.a_id
 		<where>
 			<if test="student.s_id != null and student.s_id != ''">
