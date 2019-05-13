@@ -9,6 +9,9 @@ public class Pagination {
 	private Integer pageSize;
 	private Integer total;
 	private List<NetFollow> rows;
+	
+	
+	
 	public Integer getPage() {
 		return page;
 	}

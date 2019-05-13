@@ -50,7 +50,6 @@
 				<th data-options="field:'s_comeSite',title:'来源网站'  "></th>
 				<th data-options="field:'s_sourceKeyWord',title:'来源关键词'  "></th>
 				<th data-options="field:'s_address',title:'地址'  "></th>
-				<th data-options="field:'s_askerId',title:'咨询师'  "></th>
 				<th data-options="field:'s_QQ',title:'QQ' "></th>
 				<th data-options="field:'s_weiXin',title:'微信'  "></th>
 				<th data-options="field:'s_remarks',title:'在线备注'  "></th>
