@@ -20,9 +20,18 @@
 			method:'post',
 			pagination:true,
 			singleSelect:true,
-			
+			toolbar:"#studentTb",
+			queryParams:{
+				s_name:$("#s_name").val(),
+				s_phone:$("#s_phone").val(),
+				a_name:$("#a_name").val(),
+				s_isPay:$("#s_isPay").val(),
+				s_isValid:$("#s_isValid").val(),
+				s_QQ:$("#s_QQ").val(),
+				s_createTime:$("#s_createTime").val()
+			}
 		});
-		
+		$('#tabfrm').form('clear');
 	}
 	function formattercaozuo(value,row,index){
 		
@@ -81,14 +90,26 @@
 			</tr>
 		</thead>
 	</table>
-	<!-- <div id="studentTb">
+	<div id="studentTb">
 		<form  id="tabfrm" class="easyui-form">
 	        <label for="name">姓名:</label>   
-	        <input class="easyui-validatebox" type="text"  id="s_name"/>   
+	        <input class="easyui-textbox" type="text"  id="s_name"/>  
+	        <label for="name">电话:</label>   
+	        <input class="easyui-textbox" type="text"  id="s_phone"/>
+	        <label for="name">咨询师:</label>   
+	        <input class="easyui-textbox" type="text"  id="a_name"/>
+	        <label for="name">是否付费:</label>   
+	        <input class="easyui-textbox" type="text"  id="s_isPay"/> 
+	        <label for="name">是否有效:</label>   
+	        <input class="easyui-textbox" type="text"  id="s_isValid"/> 
+	        <label for="name">QQ:</label>   
+	        <input class="easyui-textbox" type="text"  id="s_QQ"/> 
+	         <label for="name">创建时间:</label>   
+	        <input class="easyui-datebox" type="text"  id="s_createTime"/>
 	        
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
-			<a href="javascript:void(0)" onclick="addEmployee()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
+			<a href="javascript:void(0)" onclick="addStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
 		</form>
-	</div> -->
+	</div>
 </body>
 </html>

@@ -11,7 +11,6 @@ public interface EmployeeMapper {
 	
 	Integer selectEmployeeCount(Pagination<Employee> pagination);
 	
-	Integer insertEmployee(Employee employee);
 	
 	Integer deleteEmployee(Integer e_id);
 	

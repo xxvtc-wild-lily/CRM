@@ -41,10 +41,6 @@
 			</if>
 		</where>
 	</select>
-	<insert id="insertEmployee" parameterType="employee">
-		insert into employee(e_loginName,e_passWord,e_protectEmail,e_protectMTel,e_fingerprintNum) 
-		values(#{e_loginName},#{e_passWord},#{e_protectEmail},#{e_protectMTel},#{e_fingerprintNum})
-	</insert>
 	<delete id="deleteEmployee" parameterType="int">
 		delete from employee where e_id=#{e_id}
 	</delete>
