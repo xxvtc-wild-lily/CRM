@@ -20,6 +20,10 @@ public class NetFollow {
 	private Integer n_ext4;
 	private Integer n_ext5;
 	private Integer n_ext6;
+	
+	private Employee employee;
+	private Student student;
+	
 	public Integer getN_id() {
 		return n_id;
 	}
@@ -115,6 +119,18 @@ public class NetFollow {
 	}
 	public void setN_ext6(Integer n_ext6) {
 		this.n_ext6 = n_ext6;
+	}
+	public Employee getEmployee() {
+		return employee;
+	}
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+	public Student getStudent() {
+		return student;
+	}
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 	
 }
