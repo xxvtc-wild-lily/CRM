@@ -38,4 +38,13 @@ public class RoleController {
 			
 		}
 		
+		
+		@RequestMapping(value="/updates",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer updateRole(Role role) {
+			
+			return roleservice.updateRoles(role);
+			
+		}
+		
 }

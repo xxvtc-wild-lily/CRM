@@ -37,5 +37,10 @@ public class RoleServiceImpl implements RoleService {
 		}
 		return o;
 	}
+	@Override
+	public Integer updateRoles(Role role) {
+		
+		return rolemapper.updateRole(role);
+	}
 
 }
