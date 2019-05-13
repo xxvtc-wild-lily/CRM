@@ -21,5 +21,11 @@ public interface RoleMapper {
 		 * @param id
 		 * @return
 		 */
-		Integer deleteRole(Integer id);
+		Integer deleteRole(Integer r_id);
+		/**
+		 * 根据id修改数据
+		 * @param role
+		 * @return
+		 */
+		Integer updateRole(Role role);
 }

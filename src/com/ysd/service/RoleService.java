@@ -21,4 +21,10 @@ public interface RoleService {
 		 * @return
 		 */
 		Integer deleteRolesById(String roles);
+		/**
+		 * 根据id修改角色
+		 * @param role
+		 * @return
+		 */
+		Integer updateRoles(Role role);
 }

@@ -14,4 +14,7 @@
 		<delete id="deleteRole" parameterType="int">
 				delete from role where r_id=#{id}
 		</delete>
+		<update id="updateRole" parameterType="role">
+				update role set r_name=#{r_name} where r_id=#{r_id}
+		</update>
 </mapper>

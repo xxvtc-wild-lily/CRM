@@ -15,12 +15,38 @@
 		$('#tt').tree({    
 		    url: "../role",
 		    method : "post",
-		    checkbox:true
+		    checkbox:true,
+		    onDblClick: function(node){// 在用户双击的时候提示
+				$("#up").form("load", node);
+				$("#updates").dialog("open");
+			}
+
 		});  
 	})
 	function update(){
-		
+		var nodes = $("#tt").tree('getChecked',['checked','indeterminate']);//获取选中的值
+		$("#up").form("load", {
+			id:nodes[0].id,
+			text:nodes[0].text
+		});
+		$("#updates").dialog("open");
 	}
+	//修改数据
+	function uprole(){
+		$.post("../updates",{
+			r_id:$("#r_id").val(),
+			r_name:$("#r_name").val()
+		},function(res){
+			if(res){
+				$("#tt").tree("reload");
+				$("#updates").dialog("close");
+				return $.messager.alert("提示", "修改成功");
+			}else{
+				return $.messager.alert("提示", "修改失败");
+			}
+		})
+	}
+	//点击添加按钮打开添加对话框
 	function add(){
 		$("#addtree").dialog("open");
 	}
@@ -38,7 +64,7 @@
 			}
 		})
 	}
-	
+	//删除角色
 	function deletes(){
 		var nodes = $("#tt").tree('getChecked',['checked','indeterminate']);//获取选中的值
 		var s = "";
@@ -65,24 +91,39 @@
 				}
 		});
 	}
+	
+	
+	
 </script>
 </head>
-<body>	
-		<div  style="width:500px">
-			<div data-options="region:'north',border:false" style="height:30px;padding:10px">
-       			<a href="javascript:void(0)"   onclick="update()">编辑</a>
-       			<a href="javascript:void(0)"   onclick="deletes()">删除</a>
-       			<a href="javascript:void(0)"   onclick="add()">添加</a>
-    		</div>
-    		<div data-options="region:'center',title:'Center'">
+<body class="easyui-layout">	
+		<!-- 工具栏 -->
+		<div data-options="region:'north',border:false" style="height:40px;padding:10px">
+       			<a href="javascript:void(0)"  class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="update()">修改</a>
+       			<a href="javascript:void(0)"  class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="deletes()">删除</a>
+       			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="add()">添加角色</a>
+    	</div>
+    		<div data-options="region:'center',title:'角色'">
     				<ul id="tt"></ul>
     		</div>
-		</div>
+    	<!-- 添加对话框 -->
 		<div id="addtree" class="easyui-dialog" data-options="resizable:true,modal:true,closed:true">
 			<form id="xg" class="easyui-form">
 				<label for="name">角色名称:</label> 
 				<input class="easyui-textbox" type="text" id="rname"/>
-				<a href="javascript:void(0)"   onclick="addrole()">添加</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'"  onclick="addrole()">添加</a>
+			</form>
+		</div>
+		
+		<!-- 修改对话框 -->
+		<div id="updates" class="easyui-dialog" data-options="resizable:true,modal:true,closed:true">
+			<form id="up" class="easyui-form">
+				<div style="display: none">
+					<input class="easyui-textbox" type="text" id="r_id" name="id" />
+				</div>
+				<label for="name">角色名称:</label> 
+				<input class="easyui-textbox" type="text" id="r_name" name="text"/>
+				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'"  onclick="uprole()">修改</a>
 			</form>
 		</div>
 </body>
