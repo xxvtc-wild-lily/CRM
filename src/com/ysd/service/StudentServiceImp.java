@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ysd.dao.StudentMapper;
-import com.ysd.entity.Fenye;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
 @Service

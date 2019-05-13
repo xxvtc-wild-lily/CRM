@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysd.entity.Employee;
-import com.ysd.entity.Fenye;
+
 import com.ysd.entity.Pagination;
 import com.ysd.service.EmployeeService;
 
