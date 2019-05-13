@@ -29,11 +29,7 @@ public class EmployeeController {
 		pagination=employeeService.selectEmployeeAll(pagination);
 		return pagination;
 	}
-	@RequestMapping(value="/insertEmployee",method=RequestMethod.POST)
-	@ResponseBody
-	public Integer insertEmployee(Employee employee) {
-		return employeeService.insertEmployee(employee);
-	}
+	
 	@RequestMapping(value="/deleteEmployee",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer deleteEmployee(Integer e_id) {

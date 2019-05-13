@@ -23,11 +23,6 @@ public class EmployeeServiceImp implements EmployeeService {
 		return pagination;
 	}
 
-	@Override
-	public Integer insertEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return employeeMapper.insertEmployee(employee);
-	}
 
 	@Override
 	public Integer deleteEmployee(Integer e_id) {

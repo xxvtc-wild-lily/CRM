@@ -40,27 +40,7 @@
 			return "<img style='width:40px;height:50px;' src='../image/"+value+"'>"
 		}
 	}
-	function addEmployee(){
-		$("#addDialog").dialog("open");
-	}
-	function add(){
-		$.post("../insertEmployee",{
-			e_loginName:$("#adde_loginName").val(),
-			e_passWord:$("#adde_passWord").val(),
-			e_protectEmail:$("#adde_protectEmail").val(),
-			e_protectMTel:$("#adde_protectMTel").val(),
-			e_fingerprintNum:$("#adde_fingerprintNum").val()
-		},function(res){
-			if(res>0){
-				$.messager.alert("提示","添加成功！","info");
-				$("#addDialog").dialog("close");
-				$("#empTab").datagrid("reload");
-			}else{
-				$.messager.alert("提示","添加失败！","error");
-			}
-		},"json")
-		$('#addForm').form('clear');
-	}
+
 
 	function deleteEmployee(index){
 		var data=$("#empTab").datagrid("getData");
@@ -139,11 +119,11 @@
 	<div id="tb">
 		<form  id="tabfrm" class="easyui-form">
 	        <label for="name">用户名:</label>   
-	        <input class="easyui-validatebox" type="text"  id="e_loginName"/>   
+	        <input class="easyui-textbox" type="text"  id="e_loginName"/>   
 	        
 	        <label for="name">创建时间:</label>   
-	        <input class="easyui-validatebox" type="text"  id="in_e_createTime"/>~
-	        <input class="easyui-validatebox" type="text"  id="en_e_createTime"/>    
+	        <input class="datebox" type="text"  id="in_e_createTime"/>~
+	        <input class="datebox" type="text"  id="en_e_createTime"/>    
 			
 	       <!--  <label for="name">是否锁定:</label>
 	        <label class="bui-radios-label">    
@@ -155,35 +135,6 @@
 		</form>
 	</div>
 	
-	<div id="addDialog" class="easyui-dialog" title="创建" style="width:400px;height:400px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
-		<form id="addForm" method="post">   
-			<table>
-			    <tr>
-			        <td><label>登录名：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adde_loginName" name="e_loginName" data-options="required:true"/></td>
-			    </tr>
-			    <tr>
-			        <td><label>密码：</label></td>
-			        <td><input class="easyui-textbox" type="password" id="adde_passWord" name="e_passWord" data-options="required:true"/></td>
-			    </tr>
-			    <tr>
-			        <td><label>密保邮箱：</label></td>
-			        <td><input class= "easyui-textbox" type= "text" id="adde_protectEmail" name="e_protectEmail" /></td>
-			    </tr>
-			    <tr>
-			        <td><label>密保手机号：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adde_protectMTel" name="e_protectMTel" /></td>
-			    </tr>
-			    <tr>
-			        <td><label>指纹码：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adde_fingerprintNum" name="e_fingerprintNum" /></td>
-			    </tr>
-			    <tr>
-			    	<td><a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="add()">确定</a></td>
-			    </tr>
-		    </table>
-		</form>  
-	</div>
 	<div id="updateDialog" class="easyui-dialog" title="修改" data-options="modal:true,closed:true,
 			buttons:[{
 				text:'保存',
