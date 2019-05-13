@@ -49,6 +49,14 @@ public class Student {
 	private Integer s_ext4;			//
 	private Integer s_ext5;			//
 	private Integer s_ext6;			//
+	private Asker asker;
+	
+	public Asker getAsker() {
+		return asker;
+	}
+	public void setAsker(Asker asker) {
+		this.asker = asker;
+	}
 	public Integer getS_id() {
 		return s_id;
 	}

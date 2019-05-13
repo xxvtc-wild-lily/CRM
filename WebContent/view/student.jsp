@@ -28,6 +28,10 @@
 		
 		return "<a href='javascript:void(0)' onclick='updateStudent("+index+")'>修改</a>  <a href='javascript:void(0)' onclick='deleteStudent("+index+")'>删除</a>"
 	}
+	
+	function a_name(value,row,index){
+		return row.asker.a_name;
+	}
 </script>
 </head>
 <body>
@@ -37,6 +41,7 @@
 				<th data-options="field:'s_id',title:'编号'  "></th>
 				<th data-options="field:'s_name',title:'姓名'  "></th>
 				<th data-options="field:'s_age',title:'年龄'  "></th>
+				<th data-options="field:'a_name',title:'咨询师'  ,formatter:a_name"></th>
 				<th data-options="field:'s_sex',title:'性别'  "></th>
 				<th data-options="field:'s_phone',title:'电话'  "></th>
 				<th data-options="field:'s_eduStatus',title:'学历状态'  "></th>
@@ -46,7 +51,7 @@
 				<th data-options="field:'s_sourceKeyWord',title:'来源关键词'  "></th>
 				<th data-options="field:'s_address',title:'地址'  "></th>
 				<th data-options="field:'s_askerId',title:'咨询师'  "></th>
-				<th data-options="field:'s_QQ',title:'QQ'  "></th>
+				<th data-options="field:'s_QQ',title:'QQ' "></th>
 				<th data-options="field:'s_weiXin',title:'微信'  "></th>
 				<th data-options="field:'s_remarks',title:'在线备注'  "></th>
 				<th data-options="field:'s_createTime',title:'创建时间'  "></th>

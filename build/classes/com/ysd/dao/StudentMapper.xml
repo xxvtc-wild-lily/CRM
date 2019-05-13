@@ -49,76 +49,16 @@
 		<result column="s_ext4" property="s_ext4"/>
 		<result column="s_ext5" property="s_ext5"/>
 		<result column="s_ext6" property="s_ext6"/>
-		<!-- asker -->
-		<association property="asker">
-			<id column="a_id" property="a_id"/>
-			<result column="a_name" property="a_name"/>
-		</association>
+		<result column="a_id" property="asker.a_id"/>
+		<result column="a_name" property="asker.a_name"/>
 	</resultMap>
-	<select id="selectStudentAll" parameterType="fenye" resultType="student">
-		select * from student 
-		<where>
-			<if test="student.s_id != null and student.s_id != ''">
-				and s_id =#{student.s_id}
-			</if>
-			<if test=" student.s_name != null and student.s_name != ''">
-				and s_name like "%"#{student.s_name}"%"
-			</if>
-			<if test="student.s_phone != null and student.s_phone != ''">
-				and s_phone =#{student.s_phone}
-			</if>
-			<if test="asker.a_id != null and asker.a_id != ''">
-				and s_askerId =#{asker.a_id}
-			</if>
-			<if test="student.s_isPay != null and student.s_isPay != ''">
-				and s_isPay =#{student.s_isPay}
-			</if>
-			<if test="student.s_isValid != null and student.s_isValid != ''">
-				and s_isValid =#{student.s_isValid}
-			</if>
-			<if test="student.s_isReturnVisit != null and student.s_isReturnVisit != ''">
-				and s_isReturnVisit =#{student.s_isReturnVisit}
-			</if>
-			<if test=" student.s_QQ != null and student.s_QQ != ''">
-				and s_QQ =#{student.s_QQ}
-			</if>
-			<if test="student.s_createTime != null and student.s_createTime != ''">
-				and s_createTime =#{student.s_createTime}
-			</if>		
-		</where>
+	<select id="selectStudentAll" parameterType="fenye" resultMap="resultStu">
+		select s.*,a.a_name from student s inner join asker a on s.s_askerId=a.a_id
+		
 		limit #{page},#{pageSize}
 	</select>
 	<select id="selectStudentCount" parameterType="fenye" resultType="int">
-		select count(s_id) from student 
-		<where>
-			<if test="student.s_id != null and student.s_id != ''">
-				and s_id =#{student.s_id}
-			</if>
-			<if test=" student.s_name != null and student.s_name != ''">
-				and s_name like "%"#{student.s_name}"%"
-			</if>
-			<if test="student.s_phone != null and student.s_phone != ''">
-				and s_phone =#{student.s_phone}
-			</if>
-			<if test="asker.a_id != null and asker.a_id != ''">
-				and s_askerId =#{asker.a_id}
-			</if>
-			<if test="student.s_isPay != null and student.s_isPay != ''">
-				and s_isPay =#{student.s_isPay}
-			</if>
-			<if test="student.s_isValid != null and student.s_isValid != ''">
-				and s_isValid =#{student.s_isValid}
-			</if>
-			<if test="student.s_isReturnVisit != null and student.s_isReturnVisit != ''">
-				and s_isReturnVisit =#{student.s_isReturnVisit}
-			</if>
-			<if test=" student.s_QQ != null and student.s_QQ != ''">
-				and s_QQ =#{student.s_QQ}
-			</if>
-			<if test="student.s_createTime != null and student.s_createTime != ''">
-				and s_createTime =#{student.s_createTime}
-			</if>		
-		</where>
+		select count(s.s_id) from student s inner join asker a on s.s_askerId=a.a_id
 	</select>
 </mapper>
 
