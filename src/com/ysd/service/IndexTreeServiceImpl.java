@@ -7,41 +7,20 @@ import org.springframework.stereotype.Service;
 
 import com.ysd.dao.IndexTreeMapper;
 import com.ysd.entity.Employee;
-import com.ysd.entity.EmployeeRole;
 import com.ysd.entity.Modules;
-import com.ysd.entity.RoleModules;
 
 @Service
 public class IndexTreeServiceImpl implements IndexTreeService {
     
     @Autowired
-    private IndexTreeMapper indexTreeMapper;
+    private IndexTreeMapper IndexTreeMapper;
 
     @Override
-    public List<EmployeeRole> selectAllRoleByLoginName(Employee employee) {
+    public List<Modules> selectEmployeeAllModules(Employee employee) {
         // TODO Auto-generated method stub
         
-        List<EmployeeRole> list = indexTreeMapper.selectAllRoleByLoginName(employee);
+        List<Modules> list = IndexTreeMapper.selectEmployeeAllModules(employee);
         
         return list;
     }
-
-    @Override
-    public List<RoleModules> selectAllRoleModulesByRoleId(Integer r_id) {
-        // TODO Auto-generated method stub
-        
-        List<RoleModules> list = indexTreeMapper.selectAllRoleModulesByRoleId(r_id);
-        
-        return list;
-    }
-
-    @Override
-    public Modules selectAllModulesByMid(Integer m_id) {
-        // TODO Auto-generated method stub
-        
-        Modules list = indexTreeMapper.selectAllModulesByMid(m_id);
-        
-        return list;
-    }
-    
 }
