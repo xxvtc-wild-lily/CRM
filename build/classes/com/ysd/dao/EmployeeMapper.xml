@@ -16,7 +16,7 @@
 				and e_createTime &gt; =#{en_e_createTime,jdbcType=TIMESTAMP}
 				and e_createTime &lt; =#{in_e_createTime,jdbcType=TIMESTAMP} 
 			</if>
-			<if test="employee.e_isLockOut != null and employee.e_isLockOut != ''">
+			<if test="employee.e_isLockOut != null">
 				and e_isLockOut=#{employee.e_isLockOut}
 			</if>
 			 
@@ -36,7 +36,7 @@
 				and e_createTime &gt;=#{en_e_createTime,jdbcType=TIMESTAMP}
 				and e_createTime &lt;=#{in_e_createTime,jdbcType=TIMESTAMP} 
 			</if>
-			<if test="employee.e_isLockOut != null and employee.e_isLockOut != ''">
+			<if test="employee.e_isLockOut != null">
 				and e_isLockOut=#{employee.e_isLockOut}
 			</if>
 		</where>
