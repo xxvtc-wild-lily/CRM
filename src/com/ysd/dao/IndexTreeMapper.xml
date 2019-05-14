@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ysd.dao.IndexTreeMapper">
+    
+    <select id="selectAllRoleByLoginName" parameterType="employee" resultType="employeeRole">
+        select r_id from employeerole where
+        e_id = (select e_id from employee where e_loginName = #{e_loginName})
+    </select>
+    
+    <select id="selectAllRoleModulesByRoleId" parameterType="_int" resultType="roleModules">
+        select m_id from rolemodules where r_id = #{r_id}
+    </select>
+    
+    <select id="selectAllModulesByMid" parameterType="_int" resultType="modules">
+        select m.m_id,m.m_name,m.m_parentId,m.m_path,m.m_weight from modules m where m.m_id = #{m_id}
+    </select>
+    
+</mapper>
