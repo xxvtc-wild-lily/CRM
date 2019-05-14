@@ -27,7 +27,7 @@ public class StudentServiceImp implements StudentService {
 	@Override
 	public Integer insertStudent(Student student) {
 		// TODO Auto-generated method stub
-		return null;
+		return studentMapper.insertStudent(student);
 	}
 
 	@Override
