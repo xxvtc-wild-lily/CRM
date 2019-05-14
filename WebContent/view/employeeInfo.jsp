@@ -11,34 +11,20 @@
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
+
 	
+
 	
-	
-	/* function saveemployeeInfo(){
-		$.post("../updateEmployee",{
-			e_id:$("#e_id").val(),
-			e_loginName:$("#e_loginName").val(),
-			e_passWord:$("#e_passWord").val(),
-			e_protectEmail:$("#e_protectEmail").val(),
-			e_protectMTel:$("#e_protectMTel").val(),
-			e_fingerprintNum:$("#e_fingerprintNum").val()
-		},function(res){
-			
-			if(res>0){
-				$.messager.alert("提示","编辑成功！","info");
-				$("#updateDialog").dialog("close");
-				$("#empTabg").datagrid("reload");
-			}else{
-				$.messager.alert("提示","编辑失败！","error");
-				
-			}
-		},"json")
-	} */
 </script>
 </head>
 <body>
-	<div id="updateDialog" class="easyui-dialog" title="修改" data-options="modal:true,closed:true">  
-		<form action="">
+
+		
+
+
+
+<div id="updateDialog" > 
+		<form id="fom" name="fom" action="">
 	
 
 				编号：<input class="easyui-textbox" data-options="disabled:true" type="text" id="e_id" name="e_id" /><br/>

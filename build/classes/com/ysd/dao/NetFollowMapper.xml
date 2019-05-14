@@ -4,16 +4,13 @@
 	
     <select id="selectNetFollow" parameterType="pagination" resultType="netFollow">
    		select n.n_id,n.n_stuId,n.n_stuName,n.n_followTime,n.n_nextFollowTime,n.n_context,e.e_id,e.e_loginName,s.s_id,s.s_name,s_isReturnVisit
-		from 
-		netfollow n INNER JOIN employee e ON n.e_id=e.e_id 
+		from netfollow n INNER JOIN employee e ON n.e_id=e.e_id 
 		INNER JOIN student s on n.n_stuId = s.s_id
 		<where>
 			<if test="n_stuName!=null and n_stuName!=''">
 				and n.n_stuName like "%"#{n_stuName}"%"
 			</if>
-			<if test="e_id=!null and e_id!=''">
-				and e.e_id=#{e_id}
-			</if>
+			
 			<!-- 时间条件 -->
 			<if test="startn_followTime != null and startn_followTime != ''">
 				and n.startn_followTime &gt; =#{startn_followTime}
@@ -39,11 +36,11 @@
     		<result property="n_followTime" column="n_followTime"/>
     		<result property="n_nextFollowTime" column="n_nextFollowTime"/>
     		<result property="n_context" column="n_context"/>
-    		
     		<association property="employee" javaType="employee">
     			<id property="e_id" column="e_id"/>
     			<result property="e_loginName" column="e_loginName"/>
     		</association>
+    		
     		<association property="student" javaType="student">
     			<id property="s_id" column="s_id"/>
     			<result property="s_name" column="s_name"/>
@@ -58,9 +55,7 @@
 			<if test="n_stuName!=null and n_stuName!=''">
 				and n.n_stuName like "%"#{n_stuName}"%"
 			</if>
-			<if test="e_id=!null and e_id!=''">
-				and e.e_id=#{e_id}
-			</if>
+			
 			<!-- 时间条件 -->
 			<if test="startn_followTime != null and startn_followTime != ''">
 				and n.startn_followTime &gt; =#{startn_followTime}
@@ -77,6 +72,11 @@
 			</if>
 		</where>
     </select>
+    
+    <insert id="insertNetFollow" parameterType="netFollow">
+    	insert into netfollow(n_stuId,n_stuName,n_followTime,n_nextFollowTime,n_context,e_id,n_followType,n_createTime,n_followStatus)
+    			     values(#{n_stuId},#{n_stuName},#{n_followTime},#{n_nextFollowTime},#{n_context},#{e_id},#{n_followType},#{n_createTime},#{n_followStatus})
+    </insert>
     
     
 </mapper>

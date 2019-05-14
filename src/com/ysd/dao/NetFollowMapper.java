@@ -16,14 +16,14 @@ public interface NetFollowMapper {
 	 * @param pagin
 	 * @return
 	 */
-	List<NetFollow> selectNetFollow(Pagination pagin);
+	List<NetFollow> selectNetFollow(Pagination<NetFollow> pagin);
 	
 	/**
 	 * 查询跟踪记录条数
 	 * @param pagin
 	 * @return
 	 */
-	Integer selectAllNetFollowCount(Pagination pagin);
+	Integer selectAllNetFollowCount(Pagination<NetFollow> pagin);
 	
 	/**
 	 * 添加跟踪记录

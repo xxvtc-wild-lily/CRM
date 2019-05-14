@@ -41,6 +41,10 @@
 	function a_name(value,row,index){
 		return row.asker.a_name;
 	}
+	
+	function daddStudent(){
+		$('#win').window('open');
+	}
 </script>
 </head>
 <body>
@@ -106,10 +110,20 @@
 	        <input class="easyui-textbox" type="text"  id="s_QQ"/> 
 	         <label for="name">创建时间:</label>   
 	        <input class="easyui-datebox" type="text"  id="s_createTime"/>
-	        
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0)" onclick="addStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
+			<a id="dtdz" href="javascript:void(0)" onclick="daddStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">动态的增</a>
 		</form>
+	</div>
+	
+	
+	<div id="win" class="easyui-window" title="My Window" data-options="closed:true" style="width:600px;height:400px"   
+        data-options="iconCls:'icon-save'">   
+	    <div class="easyui-layout" data-options="fit:true">   
+	           <input class="easyui-textbox" data-options="" style="width:180px" ><br/>
+	           <a href="javascript:void(0)" onclick="savedongtai()" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">保存</a>
+	            
+	    </div>   
 	</div>
 </body>
 </html>
