@@ -33,7 +33,7 @@ public class StudentServiceImp implements StudentService {
 	@Override
 	public Integer deleteStudent(Integer s_id) {
 		// TODO Auto-generated method stub
-		return null;
+		return studentMapper.deleteStudent(s_id);
 	}
 
 	@Override
