@@ -101,8 +101,42 @@
 		var data = $("#empTab").datagrid("getData");
 		var row = data.rows[index];
 		var e_loginName = row.e_loginName;
+		var e_id = row.e_id;
+		
+		// 加载所有角色的datalist
+		$("#allRoleDatalist").datalist({ 
+		    url:"../getAllRole",
+		    singleSelect:false,
+		    textFormatter:function (value,row,index) {
+		    	return row.r_name;
+		    },
+		    onClickRow:function (index,row) {
+		    	if (row.text == null) {
+		    		row.text = "checked";
+		    		row.id = e_id;
+		    	} else {
+		    		row.text = null;
+		    	}
+		    	
+		    }
+		});
+		// 加载员工已有角色的datalist
+		$("#employeeRoleDatalist").datalist({ 
+            url:"../getEmployeeRole",
+            queryParams:{
+                e_loginName:e_loginName
+            },
+            singleSelect:false,
+            textFormatter:function (value,row,index) {
+                return row.r_name;
+            }
+        });
 		
 		$("#updateRoleDialog").dialog("open");
+	}
+	
+	function removeRoleToEmployee() {
+		
 	}
 	
 </script>
@@ -194,8 +228,26 @@
 		</form>  
 	</div>
 	
-	<div class="easyui-dialog" id="updateRoleDialog" title="修改用户角色" style="width:400px;height:200px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true"> 
-	   
+	<div class="easyui-dialog" id="updateRoleDialog" title="修改用户角色" style="width:auto;height:auto;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	   <!-- <div id="allRoleDatalist" style="width:150px;float:left;"></div>
+	   <button>》》</button>
+	   <button>《《</button>
+	   <div id="employeeRoleDatalist" style="width:150px;float:right;"></div> -->
+	   <table>
+	        <tr>
+	            <td>所有角色</td>
+	            <td></td>
+	            <td>用户拥有的角色</td>
+	        </tr>
+		    <tr>
+		        <td><div id="allRoleDatalist" style="height:200px;width:200px;"></div></td>
+		        <td>
+		            <button id="dl_add" class="easyui-linkbutton" style="width:50px;margin:5px;" onclick="removeRoleToEmployee()">>|</button><br />
+		            <button id="dl_remove" class="easyui-linkbutton" style="width:50px;margin:5px;" onclick="removeEmployeeToAll()">|<</button>
+		        </td>
+		        <td><div id="employeeRoleDatalist" style="height:200px;width:200px;"></div></td>
+		    </tr>
+	   </table>
     </div>
 	
 </body>
