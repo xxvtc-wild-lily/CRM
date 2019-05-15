@@ -25,7 +25,7 @@ public class ModuleServiceImpl implements ModuleService {
 	    //将集合转换为json输出到页面  
 	    Gson gson = new Gson();  
 	    String json = gson.toJson(treeGridList); 
-	    
+	    treeGridList.clear();
 		return json;
 	}
 	public List<Modules> selectModuleFid() {
@@ -40,12 +40,11 @@ public class ModuleServiceImpl implements ModuleService {
 	public String selectModuleRole(int id) {
 		List<RoleModules> lists = modulemapper.selectByRoleId(id);
 		List<Modules> list = modulemapper.selectModulesAll();
-		System.out.println(lists.toString()+"dd");
 		createTreeGridTree(list,0,lists);    
 	    //将集合转换为json输出到页面  
 	    Gson gson = new Gson();  
 	    String json = gson.toJson(treeGridList); 
-	    
+	    treeGridList.clear();
 		return json;
 	}
 		/** 
@@ -64,14 +63,7 @@ public class ModuleServiceImpl implements ModuleService {
 		        map.put("id", list.get(i).getM_id());       //id  
 		        map.put("text", list.get(i).getM_name());     //角色名  
 		        map.put("m_path", list.get(i).getM_path());     //路径
-		        for(int o=0;o<lists.size();o++) {
-		        	if(list.get(i).getM_id()==lists.get(o).getM_id()) {
-		        		System.out.println(lists.get(o).getM_id()+"ss");
-		        		map.put("checked", true);
-		        	}else {
-		        		map.put("checked", false);
-		        	}
-		        }
+				/* map.put("state", "closed"); */    //是否展开
 		        map.put("children", createTreeGridChildren(list, role.getM_id(),lists));  
 		    }  
 		    if (map != null) {
@@ -95,21 +87,23 @@ public class ModuleServiceImpl implements ModuleService {
 		for (int j = 0; j < list.size(); j++) {  
 		    Map<String, Object> map = null;  
 		    Modules treeChild = (Modules) list.get(j);  
-		    if (treeChild.getM_parentId().equals(fid)) {  
+		    if (treeChild.getM_parentId()==(fid)) {  
 		        map = new HashMap<String, Object>();  
 		        //这里无所谓怎么转都行，因为在页面easyUI插件treeGrid提供了数据转换的columns属性，具体看相关的js代码  
 		        map.put("id", list.get(j).getM_id());       //id
 		       
 		        map.put("text", list.get(j).getM_name());     //角色名
 		        map.put("m_path", list.get(j).getM_path());     //路径
+		        boolean xuanzhong=true;
 		        for(int o=0;o<lists.size();o++) {
 		        	if(list.get(j).getM_id()==lists.get(o).getM_id()) {
-		        		System.out.println(lists.get(o).getM_id());
-		        		map.put("checked", true);
+		        		xuanzhong=true;
+		        		break;
 		        	}else {
-		        		map.put("checked", false);
+		        		xuanzhong=false;
 		        	}
 		        }
+		        map.put("checked", xuanzhong);//是否选中
 		        map.put("children", createTreeGridChildren(list, treeChild.getM_id(),lists));  
 		    }  
 		      

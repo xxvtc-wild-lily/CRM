@@ -128,6 +128,8 @@
 		});
 	}
 	var ridsss=null;
+	var addid=null;
+	var deleteid=null;
 	function addModule(index){
 		var data = $("#dg").datagrid("getRows");
 		ridsss=data[index].r_id;
@@ -138,10 +140,18 @@
 		$('#dd').tree({    
 		    url: "../modules",
 		    method : "post",
-		    queryParams:{
+		    checkbox : true,
+		    lines : true,
+		    animate : true,
+		    state : "close",
+		    queryParams : {
 		    	mid:ridsss
 		    },
-		    checkbox:true
+		    onCheck:function(node,checked){
+		    	alert(node+"ddd");
+		    	alert(checked+"sss");
+		    }
+		    
 		});
 		/* $.post("../module",{
 			rid:data[index].r_id
