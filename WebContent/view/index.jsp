@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -21,20 +24,46 @@
     	    queryParams:{
     	    	e_loginName:"${employee.e_loginName}",
     	    	e_passWord:"${employee.e_passWord}"
+    	    },
+    	    onClick:function(node) {
+    	    	var title = node.text;
+    	    	var url = node.attribute;
+    	    	var flag = $("#indexTab").tabs("exists", title);
+    	    	var isLeaf = $("#tree").tree("isLeaf", node.target); //是否是叶子节点
+                if(isLeaf) { //只有叶子节点才会在选项卡中创建选项页（每个选项页对应1个功能）
+                    if(!flag) {
+                        $("#indexTab").tabs("add", { //在选项卡中，创建1个选项页
+                            title: title, //选项卡中，选项页的标题（在同一个选项卡中，选项页需要保持一致）。
+                            closable: true,
+                            content: "<iframe style='width:1200px;height:600px;' src='" + ${path }/+url + "'/>" //此处做了调整，推荐使用iframe的方式实现
+                            });
+                    } else {
+                        $("#indexTab").tabs("select", title); //直接选中title对应的选项卡
+                    }
+                }
     	    }
     	});
     })
+    
 </script>
 </head>
 <body class="easyui-layout">
-    <div data-options="region:'north',border:false" style="height:60px;padding:10px">
-        north never fotger!!!
+    <div data-options="region:'north',border:false" style="height:120px;padding:10px">
+        <div style="font-size:20px;">
+                欢迎使用CRM管理系统<br/>
+                用户名：${employee.e_loginName }<br/>
+         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">安全退出</a>
+        </div>
     </div>
-    <div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:0px;">
+    <div data-options="region:'west',split:true,title:'West'" style="width:170px;padding:0px;">
         <ul id="tree"></ul>
     </div>
     <div data-options="region:'south',border:false" style="height:50px;padding:10px;">south region</div>
-    <div data-options="region:'center',title:'Center'"></div>
+    <div data-options="region:'center',title:'Center'">
+        <div id="indexTab" class="easyui-tabs" style="width:auto;height:auto;">
+            
+        </div>
+    </div>
 <body>
 
 </body>
