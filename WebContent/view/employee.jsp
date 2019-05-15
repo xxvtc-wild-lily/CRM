@@ -33,7 +33,7 @@
 	}
 	function formattercaozuo(value,row,index){
 		
-		return "<a href='javascript:void(0)' onclick='updateEmployee("+index+")'>修改</a>  <a href='javascript:void(0)' onclick='deleteEmployee("+index+")'>删除</a>"
+		return "<a href='javascript:void(0)' onclick='updateEmployee("+index+")'>修改</a>  <a href='javascript:void(0)' onclick='deleteEmployee("+index+")'>删除</a>  <a href='javascript:void(0)' onclick='openUpdateRoleDialog("+index+")'>修改角色</a>"
 	}
 	function formatterimg(value,row,index){
 		if(value != null && value != ''){
@@ -41,7 +41,16 @@
 		}
 	}
 	function formattersfsd(value,row,index) {
-		return value==0? '未锁定':'已锁定';
+		var e_isLockOut = row.e_isLockOut;
+		var status = "";
+		if (e_isLockOut == null) {
+			status = "未锁定"
+		} else if (e_isLockOut == 0) {
+			status = "未锁定"
+		} else {
+			status = "已锁定"
+		}
+		return status;
 	} 
 
 	function deleteEmployee(index){
@@ -87,6 +96,14 @@
 			}
 		},"json")
 	}
+	
+	function openUpdateRoleDialog(index) {
+		var data = $("#empTab").datagrid("getData");
+		var row = data.rows[index];
+		var e_loginName = row.e_loginName;
+		alert(e_loginName);
+	}
+	
 </script>
 </head>
 <body>
