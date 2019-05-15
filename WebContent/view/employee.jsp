@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -86,9 +86,48 @@
 		var data = $("#empTab").datagrid("getData");
 		var row = data.rows[index];
 		var e_loginName = row.e_loginName;
+		var e_id = row.e_id;
+		
+		// 加载所有角色的datalist
+		$("#allRoleDatalist").datalist({ 
+		    url:"../getAllRole",
+		    singleSelect:false,
+		    textFormatter:function (value,row,index) {
+		    	return row.r_name;
+		    },
+		    onClickRow:function (index,row) {
+		    	if (row.text == null) {
+		    		row.text = "checked";
+		    		row.id = e_id;
+		    	} else {
+		    		row.text = null;
+		    	}
+		    	
+		    }
+		});
+		// 加载员工已有角色的datalist
+		$("#employeeRoleDatalist").datalist({ 
+            url:"../getEmployeeRole",
+            queryParams:{
+                e_loginName:e_loginName
+            },
+            singleSelect:false,
+            textFormatter:function (value,row,index) {
+                return row.r_name;
+            },
+            onClickRow:function (index,row) {
+            	if (row.text == null) {
+                    row.text = "checked";
+                    row.id = e_id;
+                } else {
+                    row.text = null;
+                }
+            }
+        });
 		
 		$("#updateRoleDialog").dialog("open");
 	}
+
 	function detail(index){
 		var data=$("#empTab").datagrid("getData");
     	var row=data.rows[index];
@@ -98,6 +137,95 @@
 	function detailClose(){
 		$("#detailDialog").dialog("close");
 	}
+	
+	// 给用户添加角色的方法
+	function removeRoleToEmployee() {
+		// 查询到选中的用户角色
+        var roleData  = $('#allRoleDatalist').datalist("getSelections");
+        // 查询用户已有的角色
+        var employeeData = $("#employeeRoleDatalist").datalist("getData");
+        var arr = "";
+        
+        // 判断必须选择角色
+        if (JSON.stringify(roleData) != "[]") {
+            // 判断用户的已有的角色不能为空
+            if (employeeData.total != 0) {
+                for (var i = 0;i < roleData.length;i++) {
+                	var a = 0;
+                    for (var j = 0;j < employeeData.total;j++) {
+                        if (roleData[i].r_id != employeeData.rows[j].r_id) {
+                        	a ++;
+                        }
+                    }
+                    // 如果本次循环的角色id与用户拥有的都不一样，说明用户没有此id，遂添加进数组
+                    if(a==employeeData.total){
+                    	arr += roleData[i].r_id +","
+                    }
+                }
+            } else {
+                // 用户没有角色的判断
+                
+                // 循环拿到选中的角色id
+                for (var i = 0;i < roleData.length;i++) {
+                    arr += roleData[i].r_id +","
+                }
+            }
+        } else {
+            // 没有选择添加的角色的判断
+            $.messager.alert("提示","请至少选择一项！","error");
+        }
+        
+        // 如果数组里没有任何东西就说明全部拥有
+        if (arr == "") {
+        	$.messager.alert("提示","所选角色以拥有！","error");
+        } else {
+        	$.post("../removeRoleToEmployee",{
+                arr:arr,
+                e_id:roleData[0].id
+            },function(res){
+                if (res > 0) {
+                    $.messager.alert("提示","添加成功！","info");
+                    $("#employeeRoleDatalist").datalist("reload");
+                    $("#allRoleDatalist").datagrid("clearSelections");
+                    $("#employeeRoleDatalist").datagrid("clearSelections");
+                }
+            },"json")
+        }
+        
+	}
+	
+	// 去除用户角色的方法
+	function removeEmployeeToAll() {
+		var empRole  = $('#employeeRoleDatalist').datalist("getSelections");
+		
+		var arr = "";
+		
+		if (JSON.stringify(empRole) != "[]") {
+			for (var i = 0;i < empRole.length;i++) {
+				arr += empRole[i].r_id +",";
+			}
+		} else {
+			// 没有选择添加的角色的判断
+            $.messager.alert("提示","请至少选择一项！","error");
+		}
+		
+		// 如果数组里没有任何东西就说明全部拥有
+        if (arr != "") {
+        	$.post("../removeEmployeeToAll",{
+                arr:arr,
+                e_id:empRole[0].id
+            },function(res){
+                if (res > 0) {
+                    $.messager.alert("提示","移除角色成功！","info");
+                    $("#employeeRoleDatalist").datalist("reload");
+                    $("#allRoleDatalist").datagrid("clearSelections");
+                    $("#employeeRoleDatalist").datagrid("clearSelections");
+                }
+            },"json")
+        }
+		
+	}
+	
 </script>
 </head>
 <body>
@@ -178,8 +306,26 @@
 		</form>  
 	</div>
 	
-	<div class="easyui-dialog" id="updateRoleDialog" title="修改用户角色" style="width:400px;height:200px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true"> 
-	   
+	<div class="easyui-dialog" id="updateRoleDialog" title="修改用户角色" style="width:auto;height:auto;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	   <!-- <div id="allRoleDatalist" style="width:150px;float:left;"></div>
+	   <button>》》</button>
+	   <button>《《</button>
+	   <div id="employeeRoleDatalist" style="width:150px;float:right;"></div> -->
+	   <table>
+	        <tr>
+	            <td>所有角色</td>
+	            <td></td>
+	            <td>用户拥有的角色</td>
+	        </tr>
+		    <tr>
+		        <td><div id="allRoleDatalist" style="height:200px;width:200px;"></div></td>
+		        <td>
+		            <button id="dl_add" class="easyui-linkbutton" style="width:50px;margin:5px;" onclick="removeRoleToEmployee()">>|</button><br />
+		            <button id="dl_remove" class="easyui-linkbutton" style="width:50px;margin:5px;" onclick="removeEmployeeToAll()">|<</button>
+		        </td>
+		        <td><div id="employeeRoleDatalist" style="height:200px;width:200px;"></div></td>
+		    </tr>
+	   </table>
     </div>
 	<div id="detailDialog" class="easyui-dialog" title="查看信息" style="width:400px;height:400px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
 		<form id="detailForm" method="post">   

@@ -65,4 +65,22 @@
 			e_id=#{e_id}
 		</where>
 	</update>
+	
+	<select id="selectAllRole" resultType="role">
+	   select r.* from role r 
+	</select>
+	
+	<select id="selectEmployeeRoleByName" parameterType="employee" resultType="role">
+	   select r.* from employee e inner join employeerole er on e.e_id = er.e_id inner join role r on er.r_id = r.r_id
+	   where e.e_loginName = #{e_loginName}
+	</select>
+	
+	<insert id="insertRoleForEmployee" parameterType="employeeRole">
+	   insert into employeerole(e_id,r_id) values(#{e_id},#{r_id})
+	</insert>
+	
+	<delete id="deleteRoleForEmployee" parameterType="employeeRole">
+	   delete from employeerole where e_id = #{e_id} and r_id = #{r_id}
+	</delete>
+	
 </mapper>

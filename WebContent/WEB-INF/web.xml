@@ -51,13 +51,13 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   
-  <!-- <filter>
+  <filter>
     <filter-name>LoginFilter</filter-name>
     <filter-class>com.ysd.util.LoginFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>LoginFilter</filter-name>
     <url-pattern>/view/*</url-pattern>
-  </filter-mapping> -->
+  </filter-mapping>
   
 </web-app>

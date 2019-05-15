@@ -1,7 +1,11 @@
-package com.ysd.dao;
+package com.ysd.controller;
 
 import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,5 +29,22 @@ public class IndexTreeController {
         List<HashMap<String, Object>> tree = indexTree.getTree(employee);
         
         return tree;
+    }
+    
+    @RequestMapping(value="/safeSignOut",method=RequestMethod.POST)
+    @ResponseBody
+    public String safeSignOut(HttpServletRequest request,HttpServletResponse response) {
+        
+        request.getSession().invalidate();
+        
+        Cookie[] cookies=request.getCookies();
+
+        for(Cookie cookie: cookies){
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        }
+        
+        return "1";
     }
 }

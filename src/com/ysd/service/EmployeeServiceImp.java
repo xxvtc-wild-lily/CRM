@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.ysd.dao.EmployeeMapper;
 import com.ysd.entity.Employee;
+import com.ysd.entity.EmployeeRole;
 import com.ysd.entity.Pagination;
+import com.ysd.entity.Role;
 @Service
 public class EmployeeServiceImp implements EmployeeService {
 	
@@ -36,6 +38,44 @@ public class EmployeeServiceImp implements EmployeeService {
 		return employeeMapper.updateEmployee(employee);
 	}
 
-	
 
+    @Override
+    public List<Role> selectAllRole() {
+        // TODO Auto-generated method stub
+        
+        List<Role> list = employeeMapper.selectAllRole();
+        
+        return list;
+    }
+
+
+    @Override
+    public List<Role> selectEmployeeRoleByName(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        List<Role> list = employeeMapper.selectEmployeeRoleByName(employee);
+        
+        return list;
+    }
+
+
+    @Override
+    public Integer insertRoleForEmployee(EmployeeRole employeeRole) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeMapper.insertRoleForEmployee(employeeRole);
+        
+        return i;
+    }
+
+
+    @Override
+    public Integer deleteRoleForEmployee(EmployeeRole employeeRole) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeMapper.deleteRoleForEmployee(employeeRole);
+        
+        return i;
+    }
+    
 }
