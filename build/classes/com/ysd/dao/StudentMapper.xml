@@ -125,5 +125,72 @@
 		insert into student(s_name,s_sex,s_age,s_askerId,s_phone,s_eduStatus,s_perStatus,s_comeWay,s_comeSite,s_sourceKeyWord,s_QQ,s_weiXin,s_isReport,s_remarks) 
 		values(#{s_name},#{s_sex},#{s_age},#{s_askerId},#{s_phone},#{s_eduStatus},#{s_perStatus},#{s_comeWay},#{s_comeSite},#{s_sourceKeyWord},#{s_QQ},#{s_weiXin},#{s_isReport},#{s_remarks})
 	</insert>
+	<delete id="deleteStudent" parameterType="int">
+		delete from student where s_id=#{s_id} 
+	</delete>
+	<update id="updateStudent" parameterType="student">
+		update student s join asker a on s.s_askerId=a.a_id
+		<set>
+			
+			<if test="s_name != null and s_name != ''">
+				s.s_name = #{s_name},
+			</if>
+			<if test="s_age != null and s_age != ''">
+				s.s_age = #{s_age},
+			</if>
+			<if test="s_sex != null">
+				s.s_sex = #{s_sex},
+			</if>
+			<if test="s_phone != null and s_phone != ''">
+				s.s_phone = #{s_phone},
+			</if>
+			<if test="s_eduStatus != null">
+				s.s_eduStatus = #{s_eduStatus},
+			</if>
+			<if test="s_perStatus != null and s_perStatus != ''">
+				s.s_perStatus = #{s_perStatus},
+			</if>
+			<if test="s_comeWay != null and s_comeWay != ''">
+				s.s_comeWay = #{s_comeWay},
+			</if>
+			<if test="s_comeSite != null and s_comeSite != ''">
+				s.s_comeSite = #{s_comeSite},
+			</if>
+			<if test="s_sourceKeyWord != null and s_sourceKeyWord != ''">
+				s.s_sourceKeyWord = #{s_sourceKeyWord},
+			</if>
+			
+			<if test="s_address != null and s_address != ''">
+				s.s_address = #{s_address},
+			</if>
+			<if test="s_fromPart != null and s_fromPart != ''">
+				s.s_fromPart = #{s_fromPart},
+			</if>
+			<if test="s_QQ != null and s_QQ != ''">
+				s.s_QQ = #{s_QQ},
+			</if>
+			<if test="s_weiXin != null and s_weiXin != ''">
+				s.s_weiXin = #{s_weiXin},
+			</if>
+			
+			<if test="s_isReport != null">
+				s.s_isReport = #{s_isReport},
+			</if>
+			<if test="s_focus != null and s_focus != ''">
+				s.s_focus = #{s_focus},
+			</if>
+			<if test="asker != null and asker != ''">
+				<if test="a_name != null ">
+					a.a_name = #{a_name},
+				</if>
+			</if>
+			<if test="s_importEmployee != null and s_importEmployee != ''">
+				s.s_importEmployee = #{s_importEmployee}
+			</if>	
+		</set>
+		<where>
+			s.s_id=#{s_id}
+		</where>
+	</update>
 </mapper>
 

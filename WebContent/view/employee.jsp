@@ -89,12 +89,15 @@
 			if(res>0){
 				$.messager.alert("提示","修改成功！","info");
 				$("#updateDialog").dialog("close");
-				$("#empTabg").datagrid("reload");
+				$("#empTab").datagrid("reload");
 			}else{
 				$.messager.alert("提示","修改失败！","error");
 				
 			}
 		},"json")
+	}
+	function closeUpdat(){
+		$("#updateDialog").dialog("close");
 	}
 	
 	function openUpdateRoleDialog(index) {
@@ -113,25 +116,17 @@
 			<tr>
 				<th data-options="field:'e_id',title:'编号'  "></th>
 				<th data-options="field:'e_loginName',title:'登录名'  "></th>
-				<th data-options="field:'e_passWord',title:'密码'  "></th>
+				<th data-options="field:'e_passWord',title:'密码'  ,width:100 "></th>
 				<th data-options="field:'e_isLockOut',title:'是否锁定'  ,formatter:formattersfsd"></th>
 				<th data-options="field:'e_lastLoginTime',title:'最后一次登录时间'  "></th>
 				<th data-options="field:'e_createTime',title:'创建时间'  "></th>
-				<th data-options="field:'e_pwdWrongTime',title:'密码错误次数'  "></th>
-				<th data-options="field:'e_lockTime',title:'被锁定时间'  "></th>
 				<th data-options="field:'e_protectEmail',title:'密保邮箱'  "></th>
 				<th data-options="field:'e_protectMTel',title:'密保手机号'  " ></th>
 				<th data-options="field:'e_fingerprintNum',title:'指纹码'  "></th>
-				<th data-options="field:'e_liveAddress',title:'员工现住址'  "></th>
 				<th data-options="field:'e_sex',title:'员工性别'  "></th>
 				<th data-options="field:'e_age',title:'员工年龄'  "></th>
 				<th data-options="field:'e_photo',title:'员工照片' , formatter:formatterimg"></th>
-				<th data-options="field:'e_isMarry',title:'是否结婚'  "></th>
-				<th data-options="field:'e_fromAddress',title:'员工籍贯'  "></th>
-				<th data-options="field:'e_eduStatus',title:'学历状态'  "></th>
-				<th data-options="field:'e_weiXin',title:'员工微信'  "></th>
 				<th data-options="field:'e_inCompanyTime',title:'入职时间'  "></th>
-				<th data-options="field:'e_leaveCompanyTime',title:'离职时间'  "></th>
 				<th data-options="field:'caozuo',title:'操作',formatter:formattercaozuo"></th>
 			</tr>
 		</thead>
@@ -152,7 +147,6 @@
 			    <option value="1">已锁定</option>     
 			</select>
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
-			<a href="javascript:void(0)" onclick="addEmployee()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
 		</form>
 	</div>
 	
@@ -168,11 +162,11 @@
 			<table>
 				<tr>
 					<td><label>编号：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updatee_id" name="e_id" /></td>
+			        <td><input class="easyui-textbox" type="text" id="updatee_id" name="e_id" data-options="disabled:true" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>登录名：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updatee_loginName" name="e_loginName" /></td>
+			        <td><input class="easyui-textbox" type="text" id="updatee_loginName" name="e_loginName" data-options="disabled:true" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>密码：</label></td>

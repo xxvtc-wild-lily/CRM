@@ -29,4 +29,17 @@ public class StudentController {
 	public Integer insertStudent(Student student) {
 		return studentService.insertStudent(student);
 	}
+	
+	@RequestMapping(value="/deleteStudent",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer deleteStudent(Integer s_id) {
+		return studentService.deleteStudent(s_id);
+		
+	}
+	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer updateStudent(Student student) {
+		return studentService.updateStudent(student);
+		
+	}
 }

@@ -73,6 +73,7 @@
 				<th data-options="field:'s_QQ',title:'QQ' "></th>
 				<th data-options="field:'s_weiXin',title:'微信'  "></th>
 				<th data-options="field:'s_remarks',title:'在线备注'  "></th>
+				<th data-options="field:'s_createTime',title:'创建时间'  "></th>
 				<th data-options="field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx"></th>
 				<th data-options="field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf "></th>
 				<th data-options="field:'s_isPay',title:'是否付费'  ,formatter:formattersfff"></th>

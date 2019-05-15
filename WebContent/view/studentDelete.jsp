@@ -49,6 +49,24 @@
 		function formattersfyx(value,row,index) {
 			return value==0? '无效':'有效';
 		} 
+		
+		function deleteStudent(index){
+			var data=$("#stuTab").datagrid("getData");
+			var row=data.rows[index];
+			$.messager.confirm('确认','您确认想要删除吗？',function(r){    
+			    if (r){    
+			          $.post("../deleteStudent",{s_id:row.s_id},function(res){
+			        	  if(res>0){
+			        		  $("#stuTab").datagrid("reload");
+			        		  $.messager.alert('确认','删除成功');
+			        	  }else{
+			        		  $.messager.alert('确认','删除失败');
+			        	  }
+			          },"json")  
+			    }    
+			});  
+
+		}
 	</script>
 </head>
 <body>
@@ -69,6 +87,7 @@
 				<th data-options="field:'s_QQ',title:'QQ' "></th>
 				<th data-options="field:'s_weiXin',title:'微信'  "></th>
 				<th data-options="field:'s_remarks',title:'在线备注'  "></th>
+				<th data-options="field:'s_createTime',title:'创建时间'  "></th>
 				<th data-options="field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx"></th>
 				<th data-options="field:'s_isReturnVisit',title:'是否回访'  "></th>
 				<th data-options="field:'s_isPay',title:'是否付费'  ,formatter:formattersfff"></th>
@@ -88,14 +107,14 @@
 	        <label for="name">是否付费:</label>
 	        <select id="s_isPay" class="easyui-combobox" style="width:100px;">   
 			    <option value="">--请选择--</option>   
-			    <option value="0">否</option>   
-			    <option value="1">是</option>     
+			    <option value="0">未付费</option>   
+			    <option value="1">已付费</option>     
 			</select>  
 	        <label for="name">是否有效:</label>   
 	        <select id="s_isValid" class="easyui-combobox" style="width:100px;">   
 			    <option value="">--请选择--</option>   
-			    <option value="0">否</option>   
-			    <option value="1">是</option>     
+			    <option value="0">无效</option>   
+			    <option value="1">有效</option>     
 			</select>
 	        <label for="name">QQ:</label>   
 	        <input class="easyui-textbox" type="text"  id="s_QQ"/> &ensp;

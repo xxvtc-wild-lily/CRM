@@ -78,9 +78,11 @@
 			}
 		},"json")
 		
-		$("addForm").form("clear");
+		$("#addForm").form("clear");
 	}
-	
+	function addClose(){
+		$("#addDialog").dialog("close");
+	}
 	function formattresex(value,row,index) {
 		return value==0? '女':'男';
 	}
@@ -105,6 +107,7 @@
 				<th data-options="field:'s_QQ',title:'QQ' "></th>
 				<th data-options="field:'s_weiXin',title:'微信'  "></th>
 				<th data-options="field:'s_remarks',title:'在线备注'  "></th>
+				<th data-options="field:'s_createTime',title:'创建时间'  "></th>
 				<th data-options="field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx"></th>
 				<th data-options="field:'s_isReturnVisit',title:'是否回访'  "></th>
 				<th data-options="field:'s_isPay',title:'是否付费'  ,formatter:formattersfff"></th>
@@ -170,10 +173,11 @@
 			        <td>
 			        	<select class="easyui-combobox" style="width:100px;" id="adds_askerId" name="s_askerId">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">1</option> 
-						    <option value="1">2</option>
-						    <option value="2">3</option>
-						    <option value="3">4</option>    
+						    <option value="0">1234</option> 
+						    <option value="1">12345</option>
+						    <option value="2">1231231</option>
+						    <option value="3">12312311</option> 
+						    <option value="4">123123123131</option>    
 						</select>
 			        </td>
 			    </tr>
