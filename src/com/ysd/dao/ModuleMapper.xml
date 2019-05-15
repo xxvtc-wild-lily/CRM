@@ -4,4 +4,13 @@
 		<select id="selectModulesAll" resultType="modules">
 				select * from modules
 		</select>
+		<select id="selectModuleByparentId" resultType="modules">
+				select * from modules where m_parentId=0
+		</select>
+		<insert id="addModule" parameterType="modules">
+			insert into modules (m_name,m_parentId,m_path) values(#{m_name},#{m_parentId},#{m_path})
+		</insert>
+		<select id="selectByRoleId" parameterType="int" resultType="rolemodules">
+				select m_id from rolemodules where r_id=#{id}
+		</select>
 </mapper>

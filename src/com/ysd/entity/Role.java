@@ -8,7 +8,16 @@ public class Role {
 	private String r_name;  //角色名称
 	private Integer id;
 	private String text;
+	private Integer mid;
 	
+	public Integer getMid() {
+		return mid;
+	}
+
+	public void setMid(Integer mid) {
+		this.mid = mid;
+	}
+
 	public Integer getId() {
 		return id;
 	}

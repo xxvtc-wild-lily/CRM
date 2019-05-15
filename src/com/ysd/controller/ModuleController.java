@@ -19,9 +19,26 @@ public class ModuleController {
 		@RequestMapping(value="/module",method=RequestMethod.POST)
 		@ResponseBody
 		public String selectModuleAll(){
-		
-
-			return moduleservice.selectModuleAll();
+			return moduleservice.selectModuleAll();	
+		}
+		@RequestMapping(value="/moduleByfid",method=RequestMethod.POST)
+		@ResponseBody
+		public List<Modules> selectModuleFids(){
+			return moduleservice.selectModuleFid();	
+		}
+		@RequestMapping(value="/addmodule",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer addModules(Modules modules) {
 			
+			return moduleservice.addModules(modules);
+			
+		}
+		
+		
+		
+		@RequestMapping(value="/modules",method=RequestMethod.POST)
+		@ResponseBody
+		public String selectModuleAlls(Integer mid){
+			return moduleservice.selectModuleRole(mid);	
 		}
 }
