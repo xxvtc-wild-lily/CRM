@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ysd.dao.StudentMapper">
+	<resultMap type="student" id="resultStu">
+		<id column="s_id" property="s_id"/>
+		<result column="s_name" property="s_name"/>
+		<result column="s_age" property="s_age"/>
+		<result column="s_sex" property="s_sex"/>
+		<result column="s_phone" property="s_phone"/>
+		<result column="s_eduStatus" property="s_eduStatus"/>
+		<result column="s_perStatus" property="s_perStatus"/>
+		<result column="s_comeWay" property="s_comeWay"/>
+		<result column="s_comeSite" property="s_comeSite"/>
+		<result column="s_sourceKeyWord" property="s_sourceKeyWord"/>
+		<result column="s_address" property="s_address"/>
+		<result column="s_QQ" property="s_QQ"/>
+		<result column="s_weiXin" property="s_weiXin"/>
+		<result column="s_remarks" property="s_remarks"/>
+		<result column="s_createTime" property="s_createTime"/>
+		<result column="s_learnForward" property="s_learnForward"/>
+		<result column="s_isValid" property="s_isValid"/>
+		<result column="s_record" property="s_record"/>
+		<result column="s_isReturnVisit" property="s_isReturnVisit"/>
+		<result column="s_firstVisitTime" property="s_firstVisitTime"/>
+		<result column="s_isHome" property="s_isHome"/>
+		<result column="s_homeTime" property="s_homeTime"/>
+		<result column="s_lostReason" property="s_lostReason"/>
+		<result column="s_isPay" property="s_isPay"/>
+		<result column="s_payTime" property="s_payTime"/>
+		<result column="s_payMoney" property="s_payMoney"/>
+		<result column="s_isReturnMoney" property="s_isReturnMoney"/>
+		<result column="s_isInClass" property="s_isInClass"/>
+		<result column="s_inClassTime" property="s_inClassTime"/>
+		<result column="s_inClassRemarks" property="s_inClassRemarks"/>
+		<result column="s_askerRemarks" property="s_askerRemarks"/>
+		<result column="s_fromPart" property="s_fromPart"/>
+		<result column="s_focus" property="s_focus"/>
+		<result column="s_isReport" property="s_isReport"/>
+		<result column="s_importEmployee" property="s_importEmployee"/>
+		<result column="s_returnMoneyReason" property="s_returnMoneyReason"/>
+		<result column="s_preMoney" property="s_preMoney"/>
+		<result column="s_preMoneyTime" property="s_preMoneyTime"/>
+		<result column="s_ext1" property="s_ext1"/>
+		<result column="s_ext2" property="s_ext2"/>
+		<result column="s_ext3" property="s_ext3"/>
+		<result column="s_ext4" property="s_ext4"/>
+		<result column="s_ext5" property="s_ext5"/>
+		<result column="s_ext6" property="s_ext6"/>
+		<result column="a_id" property="asker.a_id"/>
+		<result column="a_name" property="asker.a_name"/>
+	</resultMap>
+	<select id="selectStudentAll" parameterType="pagination" resultMap="resultStu">
+		select s.*,a.a_name from student s inner join asker a on s.s_askerId=a.a_id
+		<where>
+			<if test="student.s_id != null and student.s_id != ''">
+				and s.s_id =#{student.s_id}
+			</if>
+			<if test=" student.s_name != null and student.s_name != ''">
+				and s.s_name like "%"#{student.s_name}"%"
+			</if>
+			<if test="student.s_phone != null and student.s_phone != ''">
+				and s.s_phone like "%"#{student.s_phone}"%"
+			</if>
+			<if test="asker != null ">
+				<if test="asker.a_name != null and asker.a_name != ''">
+					and a.a_name like "%"#{asker.a_name}"%"
+				</if>
+			</if>
+			<if test="student.s_isPay != null">
+				and s.s_isPay =#{student.s_isPay}
+			</if>
+			<if test="student.s_isValid != null">
+				and s.s_isValid =#{student.s_isValid}
+			</if>
+			<if test="student.s_isReturnVisit != null and student.s_isReturnVisit != ''">
+				and s.s_isReturnVisit =#{student.s_isReturnVisit}
+			</if>
+			<if test=" student.s_QQ != null and student.s_QQ != ''">
+				and s.s_QQ like "%"#{student.s_QQ}"%"
+			</if>
+			<if test="student.s_createTime != null and student.s_createTime != ''">
+				and s.s_createTime =#{student.s_createTime}
+			</if>		
+		</where>
+		limit #{page},#{pageSize}
+	</select>
+	<select id="selectStudentCount" parameterType="pagination" resultType="int">
+		select count(s.s_id) from student s inner join asker a on s.s_askerId=a.a_id
+		<where>
+			<if test="student.s_id != null and student.s_id != ''">
+				and s.s_id =#{student.s_id}
+			</if>
+			<if test=" student.s_name != null and student.s_name != ''">
+				and s.s_name like "%"#{student.s_name}"%"
+			</if>
+			<if test="student.s_phone != null and student.s_phone != ''">
+				and s.s_phone like "%"#{student.s_phone}"%"
+			</if>
+			<if test="asker != null and asker != ''">
+				<if test="asker.a_name != null and asker.a_name != ''">
+					and a.a_name like "%"#{asker.a_name}"%"
+				</if>
+			</if>
+			<if test="student.s_isPay != null ">
+				and s.s_isPay =#{student.s_isPay}
+			</if>
+			<if test="student.s_isValid != null">
+				and s.s_isValid =#{student.s_isValid}
+			</if>
+			<if test="student.s_isReturnVisit != null and student.s_isReturnVisit != ''">
+				and s.s_isReturnVisit =#{student.s_isReturnVisit}
+			</if>
+			<if test=" student.s_QQ != null and student.s_QQ != ''">
+				and s.s_QQ like "%"#{student.s_QQ}"%"
+			</if>
+			<if test="student.s_createTime != null and student.s_createTime != ''">
+				and s.s_createTime =#{student.s_createTime}
+			</if>		
+		</where>
+	</select>
+	<insert id="insertStudent" parameterType="student">
+		insert into student(s_name,s_sex,s_age,s_askerId,s_phone,s_eduStatus,s_perStatus,s_comeWay,s_comeSite,s_sourceKeyWord,s_QQ,s_weiXin,s_isReport,s_remarks) 
+		values(#{s_name},#{s_sex},#{s_age},#{s_askerId},#{s_phone},#{s_eduStatus},#{s_perStatus},#{s_comeWay},#{s_comeSite},#{s_sourceKeyWord},#{s_QQ},#{s_weiXin},#{s_isReport},#{s_remarks})
+	</insert>
+</mapper>
+

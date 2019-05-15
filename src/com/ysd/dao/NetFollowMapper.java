@@ -1,0 +1,48 @@
+package com.ysd.dao;
+
+import java.util.List;
+
+import com.ysd.entity.NetFollow;
+import com.ysd.entity.Pagination;
+import com.ysd.entity.Student;
+
+public interface NetFollowMapper {
+	
+	
+	
+	
+	/**
+	 * ·ÖÒ³²éÑ¯¸ú×Ù¼ÇÂ¼
+	 * @param pagin
+	 * @return
+	 */
+	List<NetFollow> selectNetFollow(Pagination pagin);
+	
+	/**
+	 * ²éÑ¯¸ú×Ù¼ÇÂ¼ÌõÊý
+	 * @param pagin
+	 * @return
+	 */
+	Integer selectAllNetFollowCount(Pagination pagin);
+	
+	/**
+	 * Ìí¼Ó¸ú×Ù¼ÇÂ¼
+	 * @param NetFollow
+	 * @return
+	 */
+	Integer insertNetFollow(NetFollow netfollow);
+	
+	/**
+	 * ÐÞ¸Ä¸ú×Ù¼ÇÂ¼
+	 * @param NetFollow
+	 * @return
+	 */
+	Integer updateNetFollow(NetFollow netfollow);
+	
+	/**
+	 * É¾³ý¸ú×Ù¼ÇÂ¼
+	 * @param n_id
+	 * @return
+	 */
+	Integer deleteNetFollow(Integer n_id);
+}
