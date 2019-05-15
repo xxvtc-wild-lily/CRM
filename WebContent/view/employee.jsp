@@ -40,7 +40,9 @@
 			return "<img style='width:40px;height:50px;' src='../image/"+value+"'>"
 		}
 	}
-
+	function formattersfsd(value,row,index) {
+		return value==0? '未锁定':'已锁定';
+	} 
 
 	function deleteEmployee(index){
 		var data=$("#empTab").datagrid("getData");
@@ -94,7 +96,7 @@
 				<th data-options="field:'e_id',title:'编号'  "></th>
 				<th data-options="field:'e_loginName',title:'登录名'  "></th>
 				<th data-options="field:'e_passWord',title:'密码'  "></th>
-				<th data-options="field:'e_isLockOut',title:'是否锁定'  "></th>
+				<th data-options="field:'e_isLockOut',title:'是否锁定'  ,formatter:formattersfsd"></th>
 				<th data-options="field:'e_lastLoginTime',title:'最后一次登录时间'  "></th>
 				<th data-options="field:'e_createTime',title:'创建时间'  "></th>
 				<th data-options="field:'e_pwdWrongTime',title:'密码错误次数'  "></th>
@@ -122,14 +124,15 @@
 	        <input class="easyui-textbox" type="text"  id="e_loginName"/>   
 	        
 	        <label for="name">创建时间:</label>   
-	        <input class="datebox" type="text"  id="in_e_createTime"/>~
-	        <input class="datebox" type="text"  id="en_e_createTime"/>    
+	        <input class="easyui-datebox" type="text"  id="in_e_createTime"/>~
+	        <input class="easyui-datebox" type="text"  id="en_e_createTime"/>    
 			
-	       <!--  <label for="name">是否锁定:</label>
-	        <label class="bui-radios-label">    
- 			<input type="radio" name="e_isLockOut" id="e_isLockOut" value="e_isLockOut"/><i class="bui-radios"></i>是
- 			<input type="radio" name="e_isLockOut" id="e_isLockOut" value="e_isLockOut"/><i class="bui-radios"></i>否
-	    	</label> -->
+	       	<label for="name">是否锁定:</label>
+	        <select id="e_isLockOut" class="easyui-combobox" style="width:100px;">   
+			    <option value="">--请选择--</option>   
+			    <option value="0">未锁定</option>   
+			    <option value="1">已锁定</option>     
+			</select>
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0)" onclick="addEmployee()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
 		</form>

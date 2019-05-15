@@ -24,5 +24,9 @@ public class StudentController {
 		pagination=studentService.selectStudentAll(pagination);		
 		return pagination;
 	} 
-	
+	@RequestMapping(value="/insertStudent",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer insertStudent(Student student) {
+		return studentService.insertStudent(student);
+	}
 }
