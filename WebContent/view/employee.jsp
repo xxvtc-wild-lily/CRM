@@ -101,7 +101,8 @@
 		var data = $("#empTab").datagrid("getData");
 		var row = data.rows[index];
 		var e_loginName = row.e_loginName;
-		alert(e_loginName);
+		
+		$("#updateRoleDialog").dialog("open");
 	}
 	
 </script>
@@ -192,5 +193,10 @@
 		    </table>
 		</form>  
 	</div>
+	
+	<div class="easyui-dialog" id="updateRoleDialog" title="修改用户角色" style="width:400px;height:200px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true"> 
+	   
+    </div>
+	
 </body>
 </html>
