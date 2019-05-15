@@ -125,5 +125,8 @@
 		insert into student(s_name,s_sex,s_age,s_askerId,s_phone,s_eduStatus,s_perStatus,s_comeWay,s_comeSite,s_sourceKeyWord,s_QQ,s_weiXin,s_isReport,s_remarks) 
 		values(#{s_name},#{s_sex},#{s_age},#{s_askerId},#{s_phone},#{s_eduStatus},#{s_perStatus},#{s_comeWay},#{s_comeSite},#{s_sourceKeyWord},#{s_QQ},#{s_weiXin},#{s_isReport},#{s_remarks})
 	</insert>
+	<delete id="deleteStudent" parameterType="int">
+		delete from student where s_id=#{s_id}
+	</delete>
 </mapper>
 

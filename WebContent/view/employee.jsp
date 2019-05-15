@@ -25,7 +25,7 @@
 				e_loginName:$("#e_loginName").val(),
 				in_e_createTime:$("#in_e_createTime").val(),
 				en_e_createTime:$("#en_e_createTime").val(),
-				e_isLockOut:$("#e_isLockOut").val()
+				e_isLockOut:$("#e_isLockOut").combobox("getValue")
 			}
 		
 		});
@@ -99,21 +99,13 @@
 				<th data-options="field:'e_isLockOut',title:'是否锁定'  ,formatter:formattersfsd"></th>
 				<th data-options="field:'e_lastLoginTime',title:'最后一次登录时间'  "></th>
 				<th data-options="field:'e_createTime',title:'创建时间'  "></th>
-				<th data-options="field:'e_pwdWrongTime',title:'密码错误次数'  "></th>
-				<th data-options="field:'e_lockTime',title:'被锁定时间'  "></th>
 				<th data-options="field:'e_protectEmail',title:'密保邮箱'  "></th>
 				<th data-options="field:'e_protectMTel',title:'密保手机号'  " ></th>
 				<th data-options="field:'e_fingerprintNum',title:'指纹码'  "></th>
-				<th data-options="field:'e_liveAddress',title:'员工现住址'  "></th>
 				<th data-options="field:'e_sex',title:'员工性别'  "></th>
 				<th data-options="field:'e_age',title:'员工年龄'  "></th>
 				<th data-options="field:'e_photo',title:'员工照片' , formatter:formatterimg"></th>
-				<th data-options="field:'e_isMarry',title:'是否结婚'  "></th>
-				<th data-options="field:'e_fromAddress',title:'员工籍贯'  "></th>
-				<th data-options="field:'e_eduStatus',title:'学历状态'  "></th>
-				<th data-options="field:'e_weiXin',title:'员工微信'  "></th>
 				<th data-options="field:'e_inCompanyTime',title:'入职时间'  "></th>
-				<th data-options="field:'e_leaveCompanyTime',title:'离职时间'  "></th>
 				<th data-options="field:'caozuo',title:'操作',formatter:formattercaozuo"></th>
 			</tr>
 		</thead>

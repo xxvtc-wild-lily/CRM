@@ -35,7 +35,7 @@
 	}
 	function formattercaozuo(value,row,index){
 		
-		return "<a href='javascript:void(0)' onclick='updateStudent("+index+")'>修改</a> <a href='javascript:void(0)' onclick='updateStudent("+index+")'>修改</a>  <a href='javascript:void(0)' onclick='deleteStudent("+index+")'>删除</a>"
+		return "<a href='javascript:void(0)' onclick='updateStudent("+index+")'>查看</a> <a href='javascript:void(0)' onclick='updateStudent("+index+")'>修改</a>  <a href='javascript:void(0)' onclick='deleteStudent("+index+")'>删除</a>"
 	}
 	
 	function formattera_name(value,row,index){

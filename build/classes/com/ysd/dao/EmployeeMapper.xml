@@ -9,12 +9,11 @@
 			<if test="employee.e_loginName != null and employee.e_loginName != ''">
 				and e_loginName like "%"#{employee.e_loginName}"%"
 			</if>
-			<if test="employee.e_createTime != null and employee.e_createTime != ''">
-				and e_createTime=#{employee.e_createTime,jdbcType=TIMESTAMP}
+			<if test="in_e_createTime != null and in_e_createTime != '' ">
+				and e_createTime &gt;= #{in_e_createTime}
 			</if>
-			<if test="in_e_createTime != null and in_e_createTime != '' and en_e_createTime != null and en_e_createTime != ''">
-				and e_createTime &gt; =#{en_e_createTime,jdbcType=TIMESTAMP}
-				and e_createTime &lt; =#{in_e_createTime,jdbcType=TIMESTAMP} 
+			<if test="en_e_createTime != null and en_e_createTime != ''">
+				and e_createTime &lt;= #{en_e_createTime} 
 			</if>
 			<if test="employee.e_isLockOut != null">
 				and e_isLockOut=#{employee.e_isLockOut}
