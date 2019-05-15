@@ -16,16 +16,7 @@ $(function(){
 })
 
 function init() {
-	var ispay=$("#ispay").combobox('getValue');
-	if(ispay=="--请选择--"){
-		ispay='';
-	}
-	if(ispay=="已回访"){
-		ispay='1';
-	}
-	if(ispay=="未回访"){
-		ispay='0';
-	}
+	
 	
 	$('#dg').datagrid({
 	    url:'../NetFollowSer',
@@ -37,7 +28,7 @@ function init() {
 	    	 n_stuName:$("#n_stuName").val(),
 	    	 startn_followTime:$("#startn_followTime").val(),
 	    	 endn_followTime:$("#endn_followTime").val(),
-	    	 s_isReturnVisit:$("#s_isReturnVisit").val(),
+	    	 s_isReturnVisit:$("#ispay").combobox('getValue'),
 	    	 n_followType:$("#n_followType").val()
 		    },
 	     columns:[[
@@ -47,6 +38,7 @@ function init() {
 	        {field:'n_followTime',title:'跟踪时间',width:100},
 	        {field:'n_nextFollowTime',title:'下次跟踪时间',width:100},
 	        {field:'n_context',title:'跟踪内容',width:100},
+	        {field:'n_followType',title:'跟踪方式',width:100},
 	        {field:'e_id',title:'员工id',width:100},
 	        {field:'e_loginName',title:'登录名',width:100},
 	        {field:'s_id',title:'学生编号',width:100},
@@ -68,7 +60,13 @@ function formattercaozuo(value,row,index){
 	return "  <a href='javascript:void(0)' onclick='lookNetFollow("+index+")'>查看</a> "
 }
 function formattersfhf(value,row,index) {
-	return value==0? '未回访':'已回访';
+	var status = "";
+	if (row.student.s_isReturnVisit == "0") {
+		status = "未回访";
+	} else {
+		status = "已回访"
+	}
+	return status;
 } 
 
 function addnetfollow(){
@@ -76,7 +74,7 @@ function addnetfollow(){
 }
 
 function addsave(){
-	alert(123);
+
 	$.post("../insertNetFollow",{
 		n_stuId:$("#n_stuIdq").val(),
 		n_stuName:$("#n_stuNameq").val(),
@@ -89,16 +87,17 @@ function addsave(){
 		n_followStatus:$("#n_followStatusq").val()
 		
 	},function(res){
-		alert(123);
+		
 		if(res>0){
 			$.messager.alert("提示","添加成功！！！","info");
-			$("win").dialog("close");
-			$("#win").datagrid("reload");
+			$("#win").dialog("close");
+			$("#dg").datagrid("reload");
+			
 		}else{
 			$.messager.alert("提示","添加失败！！！","error");
 		}
 	},"json")
-	$("addsave").form("clear");
+	$("#win").form("clear");
 } 
 </script>
 </head>
@@ -111,10 +110,11 @@ function addsave(){
 				跟踪开始时间：<input class= "easyui-datebox" name="aage" id="startn_followTime" style="width:180px">-跟踪结束时间：<input class= "easyui-datebox" name="aage" id="endn_followTime" style="width:180px">
 				回访情况：
 						 <label for="name" style="width:140px"></label>  
-					    		<select style="width:140px" id="ispay" class="easyui-combobox">
-					    			<option >--请选择--</option>
-						    		<option >已回访</option>
-						    		<option >未回访</option>
+					    		<select style="width:140px" id="ispay" name="s_isReturnVisit" class="easyui-combobox">
+					    			<option value="">--请选择--</option>
+					    			<option value="0">未回访</option>
+						    		<option value="1">已回访</option>
+						    		
 						    	</select>
 						    <div> 
 				跟踪方式：<input class="easyui-textbox" name="aname" id="n_followType" style="width:180px">
@@ -123,7 +123,7 @@ function addsave(){
 	
 		</div>
 		
-		<div id="looknet" class="easyui-dialog" title="修改" data-options="modal:true,closed:true,
+		<div id="looknet" class="easyui-dialog" title="查看" data-options="modal:true,closed:true,
 			buttons:[{
 				text:'关闭',
 				handler:function(){closeUpdat();}
@@ -132,43 +132,43 @@ function addsave(){
 			<table>
 				<tr>
 					<td><label>学生ID：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="n_stuId" name="n_stuId" /></td>
+			        <td><input class="easyui-textbox" data-options='disabled:true' type="text" id="n_stuId" name="n_stuId" /></td>
 			    </tr>
 			    <tr>
 					<td><label>学生姓名：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="n_stuName" name="n_stuName" /></td>
+			        <td><input class="easyui-textbox"data-options='disabled:true' type="text" id="n_stuName" name="n_stuName" /></td>
 			    </tr>
 			    <tr>
 					<td><label>跟踪时间：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="n_followTime" name="n_followTime" /></td>
+			        <td><input class="easyui-textbox"data-options='disabled:true' type="text" id="n_followTime" name="n_followTime" /></td>
 			    </tr>
 			    <tr>
 					<td><label>下次跟踪时间：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="n_nextFollowTime" name="n_nextFollowTime" /></td>
+			        <td><input class="easyui-textbox"data-options='disabled:true' type="text" id="n_nextFollowTime" name="n_nextFollowTime" /></td>
 			    </tr>
 			    <tr>
 					<td><label>跟踪内容：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="n_context" name="n_context" /></td>
+			        <td><input class="easyui-textbox"data-options='disabled:true' type="text" id="n_context" name="n_context" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>员工id：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="e_id" name="e_id" /></td>
+			        <td><input class="easyui-textbox"data-options='disabled:true' type="text" id="e_id" name="e_id" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>登录名：</label></td>
-			        <td><input class="easyui-textbox" type="password" id="e_loginName" name="e_loginName" /></td>
+			        <td><input class="easyui-textbox"data-options='disabled:true' type="password" id="e_loginName" name="e_loginName" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>学生编号：</label></td>
-			        <td><input class= "easyui-textbox" type= "text" id="s_id" name="s_id" /></td>
+			        <td><input class= "easyui-textbox"data-options='disabled:true' type= "text" id="s_id" name="s_id" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>学生姓名：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="s_name" name="s_name" /></td>
+			        <td><input class="easyui-textbox"data-options='disabled:true' type="text" id="s_name" name="s_name" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>是否回访：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="s_isReturnVisit" name="s_isReturnVisit" /></td>
+			        <td><input class="easyui-textbox" data-options='disabled:true' type="text" id="s_isReturnVisit" name="s_isReturnVisit" /></td>
 			    </tr>
 		    </table>
 		</form>  
@@ -176,7 +176,7 @@ function addsave(){
 		
 		
 	<!-- --添加日志- -->
-	<div id="win" class="easyui-window" title="My Window" data-options="closed:true" style="width:600px;height:400px"   
+	<div id="win" class="easyui-window" title="添加" data-options="closed:true" style="width:600px;height:400px"   
         data-options="iconCls:'icon-save'">   
 	    <div class="easyui-layout" data-options="fit:true">   
 		             学生编号：<input id="n_stuIdq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>

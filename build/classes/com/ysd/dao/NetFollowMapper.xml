@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ysd.dao.NetFollowMapper">
 	
-    <select id="selectNetFollow" parameterType="pagination" resultType="netFollow">
-   		select n.n_id,n.n_stuId,n.n_stuName,n.n_followTime,n.n_nextFollowTime,n.n_context,e.e_id,e.e_loginName,s.s_id,s.s_name,s_isReturnVisit
+    <select id="selectNetFollow" parameterType="pagination" resultMap="netFollowMap">
+   		select n.n_id,n.n_stuId,n.n_stuName,n.n_followTime,n.n_nextFollowTime,n.n_context,n.n_followType,e.e_id,e.e_loginName,s.s_id,s.s_name,s_isReturnVisit
 		from netfollow n INNER JOIN employee e ON n.e_id=e.e_id 
 		INNER JOIN student s on n.n_stuId = s.s_id
 		<where>
@@ -13,11 +13,11 @@
 			
 			<!-- 时间条件 -->
 			<if test="startn_followTime != null and startn_followTime != ''">
-				and n.startn_followTime &gt; =#{startn_followTime}
+				and n.n_followTime &gt;= #{startn_followTime}
 			</if>
 			
 			<if test="endn_followTime != null and endn_followTime != ''">
-				and n.endn_followTime &lt; =#{endn_followTime}
+				and n.n_followTime &lt;= #{endn_followTime}
 			</if>
 			<if test="s_isReturnVisit!=null and s_isReturnVisit!=''">
 				and s.s_isReturnVisit=#{s_isReturnVisit}
@@ -29,13 +29,14 @@
 		limit #{page},#{pageSize}
 		
     </select>
-    	<resultMap type="netFollow" id="netFollow">
+    	<resultMap type="netFollow" id="netFollowMap">
     		<id property="n_id" column="n_id"/>
     		<result property="n_stuId" column="n_stuId"/>
     		<result property="n_stuName" column="n_stuName"/>
     		<result property="n_followTime" column="n_followTime"/>
     		<result property="n_nextFollowTime" column="n_nextFollowTime"/>
     		<result property="n_context" column="n_context"/>
+    		<result property="n_followType" column="n_followType"/>
     		<association property="employee" javaType="employee">
     			<id property="e_id" column="e_id"/>
     			<result property="e_loginName" column="e_loginName"/>
@@ -44,6 +45,7 @@
     		<association property="student" javaType="student">
     			<id property="s_id" column="s_id"/>
     			<result property="s_name" column="s_name"/>
+    			<result property="s_isReturnVisit" column="s_isReturnVisit"/>
     		</association>
     	</resultMap>
     <select id="selectAllNetFollowCount" parameterType="pagination" resultType="int">
@@ -58,11 +60,11 @@
 			
 			<!-- 时间条件 -->
 			<if test="startn_followTime != null and startn_followTime != ''">
-				and n.startn_followTime &gt; =#{startn_followTime}
+				and n.n_followTime &gt;= #{startn_followTime}
 			</if>
 			
 			<if test="endn_followTime != null and endn_followTime != ''">
-				and n.endn_followTime &lt; =#{endn_followTime}
+				and n.n_followTime &lt;= #{endn_followTime}
 			</if>
 			<if test="s_isReturnVisit!=null and s_isReturnVisit!=''">
 				and s.s_isReturnVisit=#{s_isReturnVisit}
