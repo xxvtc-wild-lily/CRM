@@ -35,6 +35,7 @@ pageContext.setAttribute("path",request.getContextPath());
                         $("#indexTab").tabs("add", { //在选项卡中，创建1个选项页
                             title: title, //选项卡中，选项页的标题（在同一个选项卡中，选项页需要保持一致）。
                             closable: true,
+                            fit:true,
                             content: "<iframe style='width:1200px;height:600px;' src='" + ${path }/+url + "'/>" //此处做了调整，推荐使用iframe的方式实现
                             });
                     } else {
@@ -45,6 +46,27 @@ pageContext.setAttribute("path",request.getContextPath());
     	});
     })
     
+    // 安全退出的方法
+    function safeSignOut() {
+    	$.messager.confirm("确认对话框","您想要退出该系统吗？",function(r){
+    	    if (r){
+    	    	$.ajax({
+    	    		url: "../safeSignOut",
+    	    		async:false,
+    	    		method:"post",
+    	    		success:function(res) {
+    	    			if (res == "1") {
+    	    				window.location.reload();
+    	    			} else {
+    	    				$.messager.alert("提示","退出失败！","error");
+    	    			}
+    	    			
+    	    		}
+    	    	});
+    	    }
+    	});
+    }
+    
 </script>
 </head>
 <body class="easyui-layout">
@@ -52,7 +74,7 @@ pageContext.setAttribute("path",request.getContextPath());
         <div style="font-size:20px;">
                 欢迎使用CRM管理系统<br/>
                 用户名：${employee.e_loginName }<br/>
-         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">安全退出</a>
+         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="safeSignOut()">安全退出</a>
         </div>
     </div>
     <div data-options="region:'west',split:true,title:'West'" style="width:170px;padding:0px;">
