@@ -15,6 +15,7 @@ public class NetFollowServiceImpl implements NetFollowService {
 	@Override
 	public  Pagination<NetFollow> selectNetFollow(Pagination<NetFollow> pagin) {
 		List<NetFollow> selectNetFollow = netMapper.selectNetFollow(pagin);
+		System.out.println(selectNetFollow);
 		Integer selectAllNetFollowCount = netMapper.selectAllNetFollowCount(pagin);
 		pagin.setRows(selectNetFollow);
 		pagin.setTotal(selectAllNetFollowCount);

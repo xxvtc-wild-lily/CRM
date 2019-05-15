@@ -39,11 +39,11 @@ function init() {
 	        {field:'n_nextFollowTime',title:'下次跟踪时间',width:100},
 	        {field:'n_context',title:'跟踪内容',width:100},
 	        {field:'n_followType',title:'跟踪方式',width:100},
-	        {field:'e_id',title:'员工id',width:100},
-	        {field:'e_loginName',title:'登录名',width:100},
-	        {field:'s_id',title:'学生编号',width:100},
-	        {field:'s_name',title:'学生姓名',width:100},
-	        {field:'s_isReturnVisit',title:'是否回访',width:100,formatter:formattersfhf},
+	        {field:'employee.e_id',title:'员工id',width:100},
+	        {field:'employee.e_loginName',title:'登录名',width:100},
+	        {field:'student.s_id',title:'学生编号',width:100},
+	        {field:'student.s_name',title:'学生姓名',width:100},
+	        {field:'student.s_isReturnVisit',title:'是否回访',width:100,formatter:formattersfhf},
 	        {field:'caozuo',title:'操作',width:100,formatter:formattercaozuo}
 	     
 	    ]]
