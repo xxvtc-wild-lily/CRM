@@ -33,7 +33,7 @@
 	}
 	function formattercaozuo(value,row,index){
 		
-		return "<a href='javascript:void(0)' onclick='updateEmployee("+index+")'>修改</a>  <a href='javascript:void(0)' onclick='deleteEmployee("+index+")'>删除</a>  <a href='javascript:void(0)' onclick='openUpdateRoleDialog("+index+")'>修改角色</a>"
+		return "<a href='javascript:void(0)' onclick='detail("+index+")'>查看</a> <a href='javascript:void(0)' onclick='updateEmployee("+index+")'>修改</a> <a href='javascript:void(0)' onclick='openUpdateRoleDialog("+index+")'>修改角色</a>"
 	}
 	function formatterimg(value,row,index){
 		if(value != null && value != ''){
@@ -52,24 +52,6 @@
 		}
 		return status;
 	} 
-
-	function deleteEmployee(index){
-		var data=$("#empTab").datagrid("getData");
-		var row=data.rows[index];
-		$.messager.confirm('确认','您确认想要删除吗？',function(r){    
-		    if (r){    
-		          $.post("../deleteEmployee",{e_id:row.e_id},function(res){
-		        	  if(res>0){
-		        		  $("#empTab").datagrid("reload");
-		        		  $.messager.alert('确认','删除成功');
-		        	  }else{
-		        		  $.messager.alert('确认','删除失败');
-		        	  }
-		          },"json")  
-		    }    
-		});  
-
-	}
 	function updateEmployee(index){
 		var data=$("#empTab").datagrid("getData");
 		var row=data.rows[index];
@@ -107,7 +89,15 @@
 		
 		$("#updateRoleDialog").dialog("open");
 	}
-	
+	function detail(index){
+		var data=$("#empTab").datagrid("getData");
+    	var row=data.rows[index];
+    	$("#detailForm").form("load",row);
+    	$("#detailDialog").dialog("open");
+	}
+	function detailClose(){
+		$("#detailDialog").dialog("close");
+	}
 </script>
 </head>
 <body>
@@ -191,6 +181,98 @@
 	<div class="easyui-dialog" id="updateRoleDialog" title="修改用户角色" style="width:400px;height:200px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true"> 
 	   
     </div>
-	
+	<div id="detailDialog" class="easyui-dialog" title="查看信息" style="width:400px;height:400px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+		<form id="detailForm" method="post">   
+			<table>
+			    <tr>
+			        <td><label>编号：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_id" name="e_id" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>登录名：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_loginName" name="e_loginName" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>密码：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_passWord" name="e_passWord" /></td>
+			    </tr> 
+			    <tr>
+			        <td><label>是否锁定：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_isLockOut" name="e_isLockOut" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>最后一次登录时间：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_lastLoginTime" name="e_lastLoginTime" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>创建时间：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_createTime" name="e_createTime" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>密码错误次数：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_pwdWrongTime" name="e_pwdWrongTime" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>被锁定时间：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_lockTime" name="e_lockTime" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>密保邮箱：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_protectEmail" name="e_protectEmail" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>密保手机号：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_protectMTel" name="e_protectMTel" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>指纹码：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_fingerprintNum" name="e_fingerprintNum" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>员工现住址：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_liveAddress" name="e_liveAddress" /></td>
+			    </tr><tr>
+			        <td><label>员工性别：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_sex" name="e_sex" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>员工年龄：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_age" name="e_age" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>员工照片：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_photo" name="e_photo" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>是否结婚：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_isMarry" name="e_isMarry" /></td>
+			    </tr> 
+			    <tr>
+			        <td><label>员工籍贯：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_fromAddress" name="e_fromAddress" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>学历状态：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_eduStatus" name="e_eduStatus" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>员工微信：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_weiXin" name="e_weiXin" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>入职时间：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_inCompanyTime" name="e_inCompanyTime" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>离职时间：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="e_leaveCompanyTime" name="e_leaveCompanyTime" /></td>
+			    </tr>
+			    <tr>
+			    	<td></td>
+			        <td><a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="detailClose()" style="width:100px">关闭</a></td>
+			    </tr>
+		    </table>
+		</form>  
+	</div>
 </body>
 </html>
