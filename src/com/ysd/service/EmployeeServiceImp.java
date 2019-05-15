@@ -67,5 +67,15 @@ public class EmployeeServiceImp implements EmployeeService {
         
         return i;
     }
+
+
+    @Override
+    public Integer deleteRoleForEmployee(EmployeeRole employeeRole) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeMapper.deleteRoleForEmployee(employeeRole);
+        
+        return i;
+    }
     
 }

@@ -38,4 +38,11 @@ public interface EmployeeMapper {
 	 */
 	Integer insertRoleForEmployee(EmployeeRole employeeRole);
 	
+	/**
+	 * 根据用户id删除角色
+	 * @param employeeRole 包含删除信息的用户角色类
+	 * @return 受影响的行数
+	 */
+	Integer deleteRoleForEmployee(EmployeeRole employeeRole);
+	
 }

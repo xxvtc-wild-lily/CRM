@@ -81,4 +81,8 @@
 	   insert into employeerole(e_id,r_id) values(#{e_id},#{r_id})
 	</insert>
 	
+	<delete id="deleteRoleForEmployee" parameterType="employeeRole">
+	   delete from employeerole where e_id = #{e_id} and r_id = #{r_id}
+	</delete>
+	
 </mapper>

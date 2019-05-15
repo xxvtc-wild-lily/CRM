@@ -82,4 +82,18 @@ public class EmployeeController {
 	    return code;
 	}
 	
+	@RequestMapping(value="/removeEmployeeToAll",method=RequestMethod.POST)
+    @ResponseBody
+    public Integer removeEmployeeToAll(@RequestParam("arr") String arr,EmployeeRole employeeRole) {
+        
+        String[] ridArr = arr.split(",");
+        Integer code = 0;
+        for (int i = 0;i < ridArr.length;i++) {
+            employeeRole.setR_id(Integer.parseInt(ridArr[i]));
+            code = employeeService.deleteRoleForEmployee(employeeRole);
+        }
+        
+        return code;
+    }
+	
 }
