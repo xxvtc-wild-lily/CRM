@@ -11,71 +11,64 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.ysd.dao.ModuleMapper;
 import com.ysd.entity.Modules;
+import com.ysd.entity.RoleModules;
+import com.ysd.util.RoleModuleUtil;
 @Service
 public class ModuleServiceImpl implements ModuleService {
 	//存放转换后数据的集合              
-	static List<Map<String,Object>> treeGridList  =new ArrayList<Map<String,Object>>(); 
+	static List<Map<String,Object>> treeGridList  =new ArrayList<Map<String,Object>>();
+	/*
+	 * @Autowired private RoleModuleUtil roleModuleutil;
+	 */
 	@Autowired
 	private ModuleMapper modulemapper;
-	@Override
+	//查询所有模块
 	public String selectModuleAll() {
 		List<Modules> list = modulemapper.selectModulesAll();
-		createTreeGridTree(list,0);  
-	      
+		treeGridList =RoleModuleUtil.createTreeGridTree(list,0); 
 	    //将集合转换为json输出到页面  
 	    Gson gson = new Gson();  
-	    String json = gson.toJson(treeGridList);  
+	    String json = gson.toJson(treeGridList); 
+	    treeGridList.clear();
 		return json;
 	}
-	 
-		/** 
-		* 将角色封装成树开始 
-		* @param list 
-		* @param fid 父id 
-		*/  
-		private static void createTreeGridTree(List<Modules> list, Integer fid) {  
-		for (int i = 0; i < list.size(); i++) {  
-		    Map<String, Object> map = null;  
-		    Modules role = (Modules) list.get(i);  
-		    if (role.getM_parentId()==0) {  
-		        map = new HashMap<String, Object>();  
-		        //这里无所谓怎么转都行，因为在页面easyUI插件treeGrid提供了数据转换的columns属性，具体看相关的js代码  
-		        map.put("id", list.get(i).getM_id());       //id  
-		        map.put("name", list.get(i).getM_name());     //角色名  
-		        map.put("m_path", list.get(i).getM_path());     //路径
-		        map.put("children", createTreeGridChildren(list, role.getM_id()));  
-		    }  
-		    if (map != null)  
-		        treeGridList.add(map);  
-		}  
-		}  
+	//查询父模块
+	public List<Modules> selectModuleFid() {
 		
+		return modulemapper.selectModuleByparentId();
+	} 
+	//添加子模块
+	public Integer addModules(Modules modules) {	
+		return modulemapper.addModule(modules);
+	}
+	//根据角色id选择已有模块
+	public String selectModuleRole(int id) {
+		List<RoleModules> lists = modulemapper.selectByRoleId(id);
+		List<Modules> list = modulemapper.selectModulesAll();
+		treeGridList = RoleModuleUtil.createTreeGridTree(list,0,lists);    
+	    //将集合转换为json输出到页面  
+	    Gson gson = new Gson();  
+	    String json = gson.toJson(treeGridList); 
+	    treeGridList.clear();
+		return json;
+	}
+	//根据id删除模块
+	public Integer deleteModeById(Integer id) {
+		return modulemapper.deleteModuleById(id);
+	}
+	//根据父id删除父模块及子模块
+	public Integer deleteMoFuById(Integer id) {
+		modulemapper.deleteMoByFuId(id);
 		
+		return modulemapper.deleteModuleById(id);
+	}
+	//根据ID查询模块
+	public Modules selectModuById(Integer id) {
 		
-		
-		/** 
-		* 递归设置role树 
-		* @param list 
-		* @param fid 
-		* @return 
-		*/  
-		private static List<Map<String, Object>> createTreeGridChildren(List<Modules> list, Integer fid) {  
-		List<Map<String, Object>> childList = new ArrayList<Map<String, Object>>();  
-		for (int j = 0; j < list.size(); j++) {  
-		    Map<String, Object> map = null;  
-		    Modules treeChild = (Modules) list.get(j);  
-		    if (treeChild.getM_parentId().equals(fid)) {  
-		        map = new HashMap<String, Object>();  
-		        //这里无所谓怎么转都行，因为在页面easyUI插件treeGrid提供了数据转换的columns属性，具体看相关的js代码  
-		        map.put("id", list.get(j).getM_id());       //id  
-		        map.put("name", list.get(j).getM_name());     //角色名
-		        map.put("m_path", list.get(j).getM_path());     //路径
-		        map.put("children", createTreeGridChildren(list, treeChild.getM_id()));  
-		    }  
-		      
-		    if (map != null)  
-		        childList.add(map);  
-		}  
-		return childList;  
-		}  
+		return modulemapper.selectModuleById(id);
+	}
+	//根据id修改模块
+	public Integer updataModuleById(Modules modules) {
+		return modulemapper.updateModuleById(modules);
+	}		
 }

@@ -4,4 +4,39 @@
 		<select id="selectModulesAll" resultType="modules">
 				select * from modules
 		</select>
+		<select id="selectModuleByparentId" resultType="modules">
+				select * from modules where m_parentId=0
+		</select>
+		<insert id="addModule" parameterType="modules">
+			insert into modules (m_name,m_parentId,m_weight) values(#{m_name},#{m_parentId},#{m_weight})
+		</insert>
+		<select id="selectByRoleId" parameterType="int" resultType="rolemodules">
+				select m_id from rolemodules where r_id=#{id}
+		</select>
+		<delete id="deleteModuleById" parameterType="int">
+				delete from modules where m_id=#{id}
+		</delete>
+		<delete id="deleteMoByFuId" parameterType="int">
+				delete from modules where m_parentId=#{id}
+		</delete>
+		<select id="selectModuleById" parameterType="int" resultType="modules">
+				select * from modules where m_id=#{id}
+		</select>
+		<update id="updateModuleById" parameterType="modules">
+				update modules
+					<set>
+						<if test="m_name != null and m_name != ''">
+						   	m_name=#{m_name},
+						</if>
+						<if test="m_path != null and m_path != ''">
+						   	m_path=#{m_path},
+						</if>
+						<if test="m_weight != null and m_weight != ''">
+						   	m_weight=#{m_weight},
+						</if>
+					</set>
+					<where>
+						m_id=#{m_id}
+					</where>
+		</update>
 </mapper>

@@ -5,8 +5,13 @@
 				<id column="r_id" property="id"/>
 				<result column="r_name" property="text"/>
 	    </resultMap>
-		<select id="selectRoleAll" resultMap="roles">
+		<select id="selectRoleAll" parameterType="pagination" resultType="role">
 				select r_id ,r_name  from role
+				limit #{page},#{pageSize}
+		</select>
+		<select id="selectRoleCount" parameterType="pagination" resultType="int">
+				select count(1)  from role
+				limit #{page},#{pageSize}
 		</select>
 		<insert id="insertRole" parameterType="role">
 				insert into role (r_name) values(#{r_name})
@@ -17,4 +22,13 @@
 		<update id="updateRole" parameterType="role">
 				update role set r_name=#{r_name} where r_id=#{r_id}
 		</update>
+		<insert id="addrolemodule" parameterType="role">
+					insert into rolemodules (r_id,m_id) values(#{r_id},#{mid})
+		</insert>
+		<select id="selectName" resultType="role">
+				select r_name from role
+		</select>
+		<delete id="deleteRoleModuleById" parameterType="int">
+				delete from rolemodules where m_id=#{id}
+		</delete>
 </mapper>
