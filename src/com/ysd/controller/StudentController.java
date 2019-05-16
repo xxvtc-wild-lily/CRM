@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysd.entity.Pagination;
@@ -26,8 +27,21 @@ public class StudentController {
 	} 
 	@RequestMapping(value="/insertStudent",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer insertStudent(Student student) {
-		return studentService.insertStudent(student);
+	public Integer insertStudent(Student student,@RequestParam(value="isAutoAllot") boolean isAutoAllot) {
+	    
+	    Integer i = 0;
+	    
+	    // 判断是否自动分量
+	    if(isAutoAllot) {
+	        
+	        
+	        
+	    } else {
+	        i = studentService.insertStudent(student);
+	    }
+	    
+		return i;
+		// 
 	}
 	
 	@RequestMapping(value="/deleteStudent",method=RequestMethod.POST)

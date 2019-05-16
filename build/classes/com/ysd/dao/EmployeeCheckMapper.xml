@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ysd.dao.EmployeeCheckMapper">
+
+    <resultMap type="employeeCheck" id="employeeCheckMap">
+        <id column="ec_id" property="ec_id" />
+        <result column="e_name" property="e_name"/>
+        <result column="ec_checkInTime" property="ec_checkInTime"/>
+        <result column="ec_checkOutTime" property="ec_checkOutTime"/>
+        <result column="ec_checkStatus" property="ec_checkStatus"/>
+        
+        <association property="employee" javaType="employee">
+            <id column="e_id" property="e_id" />
+	        <result column="e_loginName" property="e_loginName" />
+	        <result column="e_sex" property="e_sex" />
+	        <result column="e_age" property="e_age" />
+	        <result column="e_protectEmail" property="e_protectEmail" />
+	        <result column="e_protectMTel" property="e_protectMTel" />
+	        <result column="e_photo" property="e_photo" />
+        </association>
+        
+    </resultMap>
+    
+    <select id="selectAllEmployeeCheck" parameterType="pagination" resultMap="employeeCheckMap">
+        select e.*,ec.* from employee e left join employeecheck ec on e.e_loginName = ec.e_name
+        <where>
+            <if test="e_name != null and e_name !=''">
+                and ec.e_name like "%"#{e_name}"%"
+            </if>
+            <if test="startCheckInTime != null and startCheckInTime !=''">
+                and ec.ec_checkInTime &gt;= #{startCheckInTime}
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime !=''">
+                and ec.ec_checkInTime &lt;= #{endCheckInTime}
+            </if>
+        </where>
+        limit #{page},#{pageSize}
+    </select>
+    
+    <select id="selectAllEmployeeCheckCount" parameterType="pagination" resultType="_int">
+        select count(1) from employee e left join employeecheck ec on e.e_loginName = ec.e_name
+        <where>
+            <if test="e_name != null and e_name !=''">
+                and ec.e_name like "%"#{e_name}"%"
+            </if>
+            <if test="ec_checkStatus != null and ec_checkStatus !=''">
+                and ec.ec_checkStatus = #{ec_checkStatus}
+            </if>
+            <if test="startCheckInTime != null and startCheckInTime !=''">
+                and ec.ec_checkInTime &gt;= #{startCheckInTime}
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime !=''">
+                and ec.ec_checkInTime &lt;= #{endCheckInTime}
+            </if>
+        </where>
+    </select>
+    
+</mapper>

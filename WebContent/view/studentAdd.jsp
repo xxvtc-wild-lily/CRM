@@ -53,11 +53,14 @@
 	}
 	
 	function addSave(){
+		var isAutoAllot = $("#isAuto").is(":checked");
+		
 		$.post("../insertStudent",{
 			s_name:$("#adds_name").val(),
 			s_sex:$("#adds_sex").combobox("getValue"),
 			s_age:$("#adds_age").val(),
 			s_askerId:$("#adds_askerId").val(),
+			isAutoAllot:isAutoAllot,
 			s_phone:$("#adds_phone").val(),
 			s_eduStatus:$("#adds_eduStatus").combobox("getValue"),
 			s_perStatus:$("#adds_perStatus").val(),
@@ -67,7 +70,7 @@
 			s_QQ:$("#adds_QQ").val(),
 			s_weiXin:$("#adds_weiXin").val(),
 			s_isReport:$("#adds_isReport").val(),
-			s_remarks:$("#adds_remarks").val()	
+			s_remarks:$("#adds_remarks").val()
 		},function(res){
 			if(res>0){
 				$.messager.alert("提示","添加成功！！！","info");
@@ -187,6 +190,7 @@
 						    <option value="3">12312311</option> 
 						    <option value="4">123123123131</option>    
 						</select>
+						<input type="checkbox" id="isAuto" />自动分配
 			        </td>
 			    </tr>
 			    <tr>
