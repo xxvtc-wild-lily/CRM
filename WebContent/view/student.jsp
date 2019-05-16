@@ -65,9 +65,13 @@
 </script>
 </head>
 <body>
-	<table id="stuTab" class="easyui-datagrid">
+	<!-- <table id="stuTab" class="easyui-datagrid">
+		<thead>
+			<tr> -->
+	<table id="stuTab" class="easyui-datagrid" data-options="fitColumns:true,checkbox: true" >  
 		<thead>
 			<tr>
+			
 				<th data-options="field:'s_id',title:'编号'  "></th>
 				<th data-options="field:'s_name',title:'姓名'  "></th>
 				<th data-options="field:'s_age',title:'年龄'  "></th>
@@ -117,6 +121,8 @@
 	        <input class="easyui-datebox" type="text"  id="s_createTime"/>
 	        
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
+			<a href="javascript:void(0);" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
+			
 		</form>
 	</div>
 	<div id="detailDialog" class="easyui-dialog" title="查看信息"  style="width:400px; height:400px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
@@ -285,4 +291,59 @@
 		</form>
 	</div>
 </body>
+<script type="text/javascript">
+
+	
+	
+	
+	function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
+		//如果jsondata不是对象，那么json.parse将分析对象中的json字符串。
+		var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData)
+				: JSONData;
+		var CSV = '';
+		//在第一行拼接标题
+		CSV += ReportTitle + '\r\n\n';
+		//产生数据标头
+		if (ShowLabel) {
+			var row = "";
+			//此循环将从数组的第一个索引中提取标签
+			for ( var index in arrData[0]) {
+				//现在将每个值转换为字符串和逗号分隔
+				row += index + ',';
+			}
+			row = row.slice(0, -1);
+			//添加带换行符的标签行
+			CSV += row + '\r\n';
+		}
+		//第一个循环是提取每一行
+		for (var i = 0; i < arrData.length; i++) {
+			var row = "";
+			for ( var index in arrData[i]) {
+				row += '"' + arrData[i][index] + '",';
+			}
+			row.slice(0, row.length - 1);
+			CSV += row + '\r\n';
+		}
+		if (CSV == '') {
+			alert("Invalid data");
+			return;
+		}
+		var fileName = "我的学生_";
+		fileName += ReportTitle.replace(/ /g, "_");
+		var uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURI(CSV);
+		var link = document.createElement("a");
+		link.href = uri;
+		link.style = "visibility:hidden";
+		link.download = fileName + ".csv";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}
+	$("#btnExport").click(function() {
+		var data = JSON.stringify($('#stuTab').datagrid('getData').rows);
+		if (data == '')
+			return;
+		JSONToCSVConvertor(data, "数据信息", true);
+	});
+</script>
 </html>

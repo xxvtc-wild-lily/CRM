@@ -47,7 +47,9 @@
 	function formattersfyx(value,row,index) {
 		return value==0? '无效':'有效';
 	} 
-	
+	function formattersfhf(value,row,index) {
+		return value==0? '未回访':'已回访';
+	}
 	function addStudent(){
 		$("#addDialog").dialog("open");
 	}
@@ -117,7 +119,7 @@
 				<th data-options="field:'s_remarks',title:'在线备注'  "></th>
 				<th data-options="field:'s_createTime',title:'创建时间'  "></th>
 				<th data-options="field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx"></th>
-				<th data-options="field:'s_isReturnVisit',title:'是否回访'  "></th>
+				<th data-options="field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf"></th>
 				<th data-options="field:'s_isPay',title:'是否付费'  ,formatter:formattersfff"></th>
 				<th data-options="field:'s_isReport',title:'是否报备'  "></th>
 				<th data-options="field:'caozuo',title:'操作',formatter:formattercaozuo"></th>
