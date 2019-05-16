@@ -41,10 +41,12 @@
 		sname.push(row.r_name);//向数组中添加元素  
 		return row.r_name;
 	}
+	var upname;
 	function update(index){
 		var data = $("#dg").datagrid("getData");
 		var row = data.rows[index];
 		$("#up").form("load", row);
+		upname=$("#r_name").val();
 		$("#updates").dialog({
 			buttons : [ {
 				text : '保存',
@@ -63,10 +65,18 @@
 	}
 	//修改数据
 	function uprole(){
-		var name=$("#r_name").val();
+		var xianyouname=new Array();  
 		for(var i=0;i<sname.length;i++){
-			if(name==sname[i]){
-				alert("名称已存在")
+			if(upname==sname[i]){
+				
+			}else{
+				xianyouname.push(sname[i]);
+			}		
+			}
+		var name=$("#r_name").val();
+		for(var i=0;i<xianyouname.length;i++){
+			if(name==xianyouname[i]){
+				return $.messager.alert("提示", "名字已存在");
 				return false;
 			}
 		}
@@ -81,7 +91,8 @@
 			}else{
 				return $.messager.alert("提示", "修改失败");
 			}
-		})
+		},"json")
+		sname=[];
 	}
 	//点击添加按钮打开添加对话框
 	function add(){
@@ -92,7 +103,7 @@
 		var name=$("#rname").val();
 		for(var i=0;i<sname.length;i++){
 			if(name==sname[i]){
-				alert("名称已存在")
+				return $.messager.alert("提示", "名字已存在");
 				return false;
 			}
 		}
@@ -106,7 +117,9 @@
 			}else{
 				return $.messager.alert("提示", "添加失败");
 			}
-		}) 
+		},"json");
+		$("#xg").form("clear");
+		sname=[];
 	}
 	//删除角色
 	function deletes(index){
@@ -121,11 +134,12 @@
 						$("#dg").datagrid("reload");
 						return $.messager.alert("提示", "删除成功");
 					}else{
-						return $.messager.alert("提示", "删除失败");
+						return $.messager.alert("提示", "有员工拥有该角色删除失败");
 					}
-				})
+				},"json")
 				}
 		});
+		sname=[];
 	}
 	var ridsss=null;
 	function addModule(index){
@@ -193,7 +207,6 @@
 				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'"  onclick="addrole()">添加</a>
 			</form>
 		</div>
-		
 		<!-- 修改对话框 -->
 		<div id="updates" class="easyui-dialog" data-options="resizable:true,modal:true,closed:true">
 			<form id="up" class="easyui-form">
@@ -204,10 +217,10 @@
 				<input class="easyui-textbox" type="text" id="r_name" name="r_name"/>
 			</form>
 		</div>
-		<!-- 添加权限 -->
-		<div id="moduless" class="easyui-dialog" style="width:300px" data-options="resizable:true,modal:true,closed:true">
+		<!-- 修改权限 -->
+		<div id="moduless" class="easyui-dialog" style="width:300px;height:500px;overflow:scroll;" data-options="resizable:true,modal:true,closed:true,top:50">
     				<ul id="dd"></ul>
-    				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'"  onclick="addmo()">添加</a>
+    				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'"  onclick="addmo()">修改</a>
     	</div>
 </body>
 </html>

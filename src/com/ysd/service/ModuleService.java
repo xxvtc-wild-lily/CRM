@@ -22,10 +22,16 @@ public interface ModuleService {
 		 */
 		List<Modules> selectModuleFid();
 		/**
-		 * 添加模块
+		 * 添加子模块
 		 * @return
 		 */
 		Integer addModules(Modules modules);
+		/**
+		 * 添加父模块
+		 * @param modules
+		 * @return
+		 */
+		Integer addModuleFu(Modules modules);
 		/**
 		 * 根据id删除模块
 		 * @param id

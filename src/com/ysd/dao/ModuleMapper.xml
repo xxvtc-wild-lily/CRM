@@ -10,6 +10,9 @@
 		<insert id="addModule" parameterType="modules">
 			insert into modules (m_name,m_parentId,m_weight) values(#{m_name},#{m_parentId},#{m_weight})
 		</insert>
+		<insert id="addModuleFu" parameterType="modules">
+			insert into modules (m_name,m_parentId) values(#{m_name},0)
+		</insert>
 		<select id="selectByRoleId" parameterType="int" resultType="rolemodules">
 				select m_id from rolemodules where r_id=#{id}
 		</select>
@@ -19,6 +22,9 @@
 		<delete id="deleteMoByFuId" parameterType="int">
 				delete from modules where m_parentId=#{id}
 		</delete>
+		<select id="selectrolemodule" parameterType="int" resultType="int">
+				select count(1) from rolemodules where m_id=#{id}
+		</select>
 		<select id="selectModuleById" parameterType="int" resultType="modules">
 				select * from modules where m_id=#{id}
 		</select>

@@ -34,6 +34,12 @@ public interface ModuleMapper {
 		 */
 		List<RoleModules> selectByRoleId(Integer id);
 		/**
+		 * 根据模块id查询拥有该模块的角色个数
+		 * @param id
+		 * @return
+		 */
+		Integer selectrolemodule(Integer id);
+		/**
 		 * 根据id删除模块
 		 * @param id
 		 * @return
@@ -57,4 +63,10 @@ public interface ModuleMapper {
 		 * @return
 		 */
 		Integer updateModuleById(Modules modules);
+		/**
+		 * 添加父模块
+		 * @param name
+		 * @return
+		 */
+		Integer addModuleFu(Modules modules);
 }
