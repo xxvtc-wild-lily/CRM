@@ -77,5 +77,45 @@ public class EmployeeServiceImp implements EmployeeService {
         
         return i;
     }
+
+
+    @Override
+    public Integer updateEmployeePassword(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeMapper.updateEmployeePassword(employee);
+        
+        return i;
+    }
+
+
+    @Override
+    public String selectFingerprintNumByLoginName(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        String fingerprintNum = employeeMapper.selectFingerprintNumByLoginName(employee);
+        
+        return fingerprintNum;
+    }
+
+
+    @Override
+    public Integer updateEmployeeLock(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeMapper.updateEmployeeLock(employee);
+        
+        return i;
+    }
+
+
+    @Override
+    public Integer updateEmployeeUnLock(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeMapper.updateEmployeeUnLock(employee);
+        
+        return i;
+    }
     
 }

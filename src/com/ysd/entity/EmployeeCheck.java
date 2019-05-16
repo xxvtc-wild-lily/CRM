@@ -1,5 +1,8 @@
 package com.ysd.entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class EmployeeCheck {
 	private Integer ec_id;
 	private Integer e_id;
@@ -14,6 +17,9 @@ public class EmployeeCheck {
 	private Integer ec_ext4;
 	private Integer ec_ext5;
 	private Integer ec_ext6;
+	
+	private Employee employee;
+	
 	public Integer getEc_id() {
 		return ec_id;
 	}
@@ -92,6 +98,20 @@ public class EmployeeCheck {
 	public void setEc_ext6(Integer ec_ext6) {
 		this.ec_ext6 = ec_ext6;
 	}
-	
+    public Employee getEmployee() {
+        return employee;
+    }
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+    
+    @Override
+    public String toString() {
+        return "EmployeeCheck [ec_id=" + ec_id + ", e_id=" + e_id + ", e_name=" + e_name + ", ec_checkInTime="
+                + ec_checkInTime + ", ec_checkOutTime=" + ec_checkOutTime + ", ec_checkStatus=" + ec_checkStatus
+                + ", ec_isCancel=" + ec_isCancel + ", ec_ext1=" + ec_ext1 + ", ec_ext2=" + ec_ext2 + ", ec_ext3="
+                + ec_ext3 + ", ec_ext4=" + ec_ext4 + ", ec_ext5=" + ec_ext5 + ", ec_ext6=" + ec_ext6 + ", employee="
+                + employee + "]";
+    }
 	
 }

@@ -33,7 +33,7 @@
 	}
 	function formattercaozuo(value,row,index){
 		
-		return "<a href='javascript:void(0)' onclick='detail("+index+")'>查看</a> <a href='javascript:void(0)' onclick='deleteEmployee("+index+")'>删除</a>  <a href='javascript:void(0)' onclick='openUpdateRoleDialog("+index+")'>修改角色</a>"
+		return "<a href='javascript:void(0)' onclick='detail("+index+")'>查看</a> <a href='javascript:void(0)' onclick='deleteEmployee("+index+")'>删除</a> <a href='javascript:void(0)' onclick='openResertPasswordDialog("+index+")'>重置密码</a> <a href='javascript:void(0)' onclick='lockEmployee("+index+")'>锁定用户</a> <a href='javascript:void(0)' onclick='unlockEmployee("+index+")'>解锁用户</a>"
 	}
 	function formatterimg(value,row,index){
 		if(value != null && value != ''){
@@ -52,6 +52,19 @@
 		}
 		return status;
 	} 
+	
+	function formatterSex (value,row,index) {
+        var sex = "";
+        if (row.e_sex == "0") {
+            sex = "女";
+        } else if (row.e_sex == "1") {
+            sex = "男";
+        } else {
+            sex = "未填";
+        }
+        
+        return sex;
+    }
 
 	function deleteEmployee(index){
 		var data=$("#empTab").datagrid("getData");
@@ -70,14 +83,6 @@
 		});  
 
 	}
-	
-	function openUpdateRoleDialog(index) {
-		var data = $("#empTab").datagrid("getData");
-		var row = data.rows[index];
-		var e_loginName = row.e_loginName;
-		
-		$("#updateRoleDialog").dialog("open");
-	}
 	function detail(index){
 		var data=$("#empTab").datagrid("getData");
     	var row=data.rows[index];
@@ -87,6 +92,73 @@
 	function detailClose(){
 		$("#detailDialog").dialog("close");
 	}
+	
+	function openResertPasswordDialog (index) {
+		var data=$("#empTab").datagrid("getData");
+        var row=data.rows[index];
+        var e_loginName = row.e_loginName;
+        
+        $.messager.confirm("确认对话框","您确定要重置密码吗？（重置后的密码为：“ysd123”）", function(r){
+            if (r){
+            	$.post("../resertPassword",{
+            		e_loginName:e_loginName
+            		},function(res){
+            			if (res > 0) {
+                            $.messager.alert("提示","重置密码成功！","info");
+                        } else {
+                            $.messager.alert("提示","重置密码失败！","info");
+                        }
+            		},"json")
+            }
+        });
+        
+	}
+	
+	// 将用户状态更改为锁定的方法
+	function lockEmployee(index) {
+		var data = $("#empTab").datagrid("getData");
+        var row = data.rows[index];
+        var isLock = row.e_isLockOut;
+        var e_loginName = row.e_loginName;
+        
+        if (isLock == "1") {
+        	$.messager.alert("提示","该用户已经锁定，无需再锁定！","info");
+        } else {
+        	$.post("../setEmployeeLock",{
+        		e_loginName:e_loginName
+        	},function(res){
+        		if (res > 0) {
+        			$.messager.alert("提示","该用户已锁定！","info");
+        			$("#empTab").datagrid("reload");
+        		} else {
+        			$.messager.alert("提示","用户锁定失败！","error");
+        		}
+        	},"json")
+        }
+	}
+	
+	// 将用户锁定状态更改为未锁定的方法
+	function unlockEmployee(index) {
+        var data = $("#empTab").datagrid("getData");
+        var row = data.rows[index];
+        var isLock = row.e_isLockOut;
+        var e_loginName = row.e_loginName;
+        
+        if (isLock == "0" || isLock == null) {
+            $.messager.alert("提示","该用户未锁定，无需再解锁！","info");
+        } else {
+            $.post("../setEmployeeUnLock",{
+                e_loginName:e_loginName
+            },function(res){
+                if (res > 0) {
+                    $.messager.alert("提示","该用户已解锁！","info");
+                    $("#empTab").datagrid("reload");
+                } else {
+                    $.messager.alert("提示","用户解锁失败！","error");
+                }
+            },"json")
+        }
+    }
 </script>
 </head>
 <body>
@@ -95,14 +167,12 @@
 			<tr>
 				<th data-options="field:'e_id',title:'编号'  "></th>
 				<th data-options="field:'e_loginName',title:'登录名'  "></th>
-				<th data-options="field:'e_passWord',title:'密码'  ,width:100 "></th>
 				<th data-options="field:'e_isLockOut',title:'是否锁定'  ,formatter:formattersfsd"></th>
 				<th data-options="field:'e_lastLoginTime',title:'最后一次登录时间'  "></th>
 				<th data-options="field:'e_createTime',title:'创建时间'  "></th>
 				<th data-options="field:'e_protectEmail',title:'密保邮箱'  "></th>
 				<th data-options="field:'e_protectMTel',title:'密保手机号'  " ></th>
-				<th data-options="field:'e_fingerprintNum',title:'指纹码'  "></th>
-				<th data-options="field:'e_sex',title:'员工性别'  "></th>
+				<th data-options="field:'e_sex',title:'员工性别'  ,formatter:formatterSex"></th>
 				<th data-options="field:'e_age',title:'员工年龄'  "></th>
 				<th data-options="field:'e_photo',title:'员工照片' , formatter:formatterimg"></th>
 				<th data-options="field:'e_inCompanyTime',title:'入职时间'  "></th>
@@ -139,17 +209,9 @@
 			}]">  
 		<form id="updateForm" method="post">   
 			<table>
-				<tr>
-					<td><label>编号：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updatee_id" name="e_id" data-options="disabled:true" /></td>
-			    </tr>
 			    <tr>
 			        <td><label>登录名：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="updatee_loginName" name="e_loginName" data-options="disabled:true" /></td>
-			    </tr>
-			    <tr>
-			        <td><label>密码：</label></td>
-			        <td><input class="easyui-textbox" type="password" id="updatee_passWord" name="e_passWord" /></td>
 			    </tr>
 			    <tr>
 			        <td><label>密保邮箱：</label></td>
@@ -158,10 +220,6 @@
 			    <tr>
 			        <td><label>密保手机号：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="updatee_protectMTel" name="e_protectMTel" /></td>
-			    </tr>
-			    <tr>
-			        <td><label>指纹码：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updatee_fingerprintNum" name="e_fingerprintNum" /></td>
 			    </tr>
 		    </table>
 		</form>  
@@ -181,10 +239,6 @@
 			        <td><label>登录名：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="e_loginName" name="e_loginName" /></td>
 			    </tr>
-			    <tr>
-			        <td><label>密码：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="e_passWord" name="e_passWord" /></td>
-			    </tr> 
 			    <tr>
 			        <td><label>是否锁定：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="e_isLockOut" name="e_isLockOut" /></td>
@@ -214,10 +268,6 @@
 			        <td><input class="easyui-textbox" type="text" id="e_protectMTel" name="e_protectMTel" /></td>
 			    </tr>
 			    <tr>
-			        <td><label>指纹码：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="e_fingerprintNum" name="e_fingerprintNum" /></td>
-			    </tr>
-			    <tr>
 			        <td><label>员工现住址：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="e_liveAddress" name="e_liveAddress" /></td>
 			    </tr><tr>
@@ -230,7 +280,7 @@
 			    </tr>
 			    <tr>
 			        <td><label>员工照片：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="e_photo" name="e_photo" /></td>
+			        <td><input class="easyui-textbox" type="text" id="e_photo"  /></td>
 			    </tr>
 			    <tr>
 			        <td><label>是否结婚：</label></td>

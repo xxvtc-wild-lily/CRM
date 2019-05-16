@@ -67,6 +67,48 @@ pageContext.setAttribute("path",request.getContextPath());
     	});
     }
     
+    function register() {
+    	var e_loginName = ${employee.e_loginName}
+    	
+    	$.post("../register",{
+    		e_loginName:e_loginName
+    	},function(res){
+    		if (res == "1") {
+    			$.messager.alert("提示","您今天已经签到过了！","error");
+    		} else if (res == "2") {
+    			$.messager.alert("提示","当前不在签到时间内！","error");
+    		} else if (res == "3") {
+    			$.messager.alert("提示","签到成功！","info");
+    		} else if (res == "4") {
+    			$.messager.alert("提示","签到失败！","info");
+    		}
+    	},"json")
+    }
+    
+    function signBack() {
+    	var e_loginName = ${employee.e_loginName}
+    	
+    	$.messager.confirm("确认对话框","您确认要签退吗？", function(r){
+    	    if (r){
+    	    	$.post("../signBack",{
+    	            e_loginName:e_loginName
+    	        },function(res){
+    	            if (res == "1") {
+    	                $.messager.alert("提示","您今天目前尚未签到！","error");
+    	            } else if (res == "2") {
+    	                $.messager.alert("提示","您今天已经签退过了！","error");
+    	            } else if (res == "3") {
+    	                $.messager.alert("提示","当前不在签退时间内！","error");
+    	            } else if (res == "4") {
+    	                $.messager.alert("提示","签退成功！","info");
+    	            } else if (res == "5") {
+    	                $.messager.alert("提示","签退失败！","error");
+    	            }
+    	        },"json")
+    	    }
+    	});
+    }
+    
 </script>
 </head>
 <body class="easyui-layout">
@@ -74,6 +116,8 @@ pageContext.setAttribute("path",request.getContextPath());
         <div style="font-size:20px;">
                 欢迎使用CRM管理系统<br/>
                 用户名：${employee.e_loginName }<br/>
+         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="register()">签到</a>
+         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="signBack()">签退</a>
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="safeSignOut()">安全退出</a>
         </div>
     </div>
