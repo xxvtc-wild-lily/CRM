@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 @Component
 public class Pagination<T> {
+	
 	private Integer page;
 	private Integer pageSize;
 	private Integer total;
@@ -16,12 +17,14 @@ public class Pagination<T> {
 	private String en_e_createTime;
 	private Student student;
 	private Asker asker;
+	
 	private String n_stuName;
 	private Integer e_id;
 	private String startn_followTime;
 	private String endn_followTime;
 	private String s_isReturnVisit;
 	private String n_followType;
+	
 	public Integer getPage() {
 		return page;
 	}
@@ -111,6 +114,14 @@ public class Pagination<T> {
 	}
 	public void setN_followType(String n_followType) {
 		this.n_followType = n_followType;
+	}
+	@Override
+	public String toString() {
+		return "Pagination [page=" + page + ", pageSize=" + pageSize + ", total=" + total + ", rows=" + rows
+				+ ", employee=" + employee + ", in_e_createTime=" + in_e_createTime + ", en_e_createTime="
+				+ en_e_createTime + ", student=" + student + ", asker=" + asker + ", n_stuName=" + n_stuName + ", e_id="
+				+ e_id + ", startn_followTime=" + startn_followTime + ", endn_followTime=" + endn_followTime
+				+ ", s_isReturnVisit=" + s_isReturnVisit + ", n_followType=" + n_followType + "]";
 	}
 	
 	
