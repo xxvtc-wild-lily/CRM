@@ -49,6 +49,7 @@
 		    });
 	}
 	//父节点的操作
+	var upfuname
 	function menuHandler(item){
 		if(item.name=="add"){
 			$("#inserts").dialog("open");
@@ -61,11 +62,13 @@
 				mid:jeidian
 			},function(res){
 				$("#ups").form("load", res);
+				upfuname=$("#m_names").val();
 				$("#updatefu").dialog("open");
 			},"json");
 		}
 	}
 	//子节点操作
+	var namess
 	function menuHandlers(item){
 		if(item.name=="dels"){
 			deletejd();
@@ -76,32 +79,32 @@
 			},function(res){
 				$("#up").form("load", res);
 				$("#updates").dialog("open");
+				namess=$("#m_name").val();
 			},"json");
+			
 		}
 	}
 	//修改子节点
 	function uprole(){
-		var ddd=[];
-		var namess=$("#m_name").val();
+		var xianyouname=new Array();  
+		
 		for(var i=0;i<zname.length;i++){
 			if(namess==zname[i].text){
 				
 			}else{
-				ddd.push(zname[i].text);
+				xianyouname.push(zname[i].text);
 			}		
 			}
-		alert(ddd)
-		for(var i=0;i<zname.length;i++){
-			
-			/* str.replace(/Microsoft/, "W3School") */
-			if(namess==ddd[i]){
-				alert("名称已存在")
+		var namesss=$("#m_name").val();
+		for(var j=0;j<xianyouname.length;j++){
+			if(namesss==xianyouname[j]){
+				return $.messager.alert("提示", "名字已存在");
 				return false;
 			}
 		}
 		$.post("../updatemobyid",{
 			m_id : $("#m_id").val(),
-			m_name : namess,
+			m_name : namesss,
 			m_path : $("#m_path").val(),
 			m_weight: $("#m_weight").val()
 		},function(res){
@@ -116,9 +119,27 @@
 	}
 	//修改父节点
 	function uproles(){
+		var fujeidian=$("#dd").tree("getRoots");
+		var xianyoufuname=new Array();
+		alert(upfuname)
+		for(var i=0;i<fujeidian.length;i++){
+			if(upfuname==fujeidian[i].text){
+				
+			}else{
+				xianyoufuname.push(fujeidian[i].text);
+			}		
+			}
+		alert(xianyoufuname)
+		var upfunames=$("#m_names").val();
+		for(var j=0;j<xianyoufuname.length;j++){
+			if(upfunames==xianyoufuname[j]){
+				return $.messager.alert("提示", "名字已存在");
+				return false;
+			}
+		}
 		$.post("../updatemobyid",{
 			m_id : $("#m_ids").val(),
-			m_name : $("#m_names").val()
+			m_name : upfunames
 		},function(res){
 			if(res>0){
 				$("#dd").tree("reload");
@@ -140,7 +161,7 @@
 						$("#dd").tree("reload");
 						return $.messager.alert("提示", "删除成功");
 					}else{
-						return $.messager.alert("提示", "删除失败");
+						return $.messager.alert("提示", "有角色拥有该权限删除失败");
 					}
 				})
 				}
@@ -157,7 +178,7 @@
 						$("#dd").tree("reload");
 						return $.messager.alert("提示", "删除成功");
 					}else{
-						return $.messager.alert("提示", "删除失败");
+						return $.messager.alert("提示", "有角色拥有该权限删除失败");
 					}
 				})
 				}
@@ -168,7 +189,7 @@
 		var namess=$("#m_namess").val();
 			for(var i=0;i<zname.length;i++){
 				if(namess==zname[i].text){
-					alert("名称已存在")
+					return $.messager.alert("提示", "名字已存在");
 					return false;
 				}
 			}
@@ -184,12 +205,40 @@
 			}else{
 				return $.messager.alert("提示", "添加失败");
 			}
-		})
+		},"json")
 		$("#in").form("clear");
+	}
+	function addfu(){
+		$("#insertfu").dialog("open");
+	}
+	//添加父节点
+	function insertfu(){
+		var fujeidian=$("#dd").tree("getRoots");
+		var namefu=$("#m_namefus").val();
+		for(var i=0;i<fujeidian.length;i++){
+			if(namefu==fujeidian[i].text){
+				return $.messager.alert("提示", "名字已存在");
+				return false;
+			}
+		}
+		$.post("../addfu",{
+			m_name:namefu
+		},function(res){
+			if(res>0){
+				$("#dd").tree("reload");
+				$("#insertfu").dialog("close");
+				return $.messager.alert("提示", "添加成功");
+			}else{
+				return $.messager.alert("提示", "添加失败");
+			}
+		},"json");
+		$("#infu").form("clear");
 	}
 </script>
 </head>
-<body>	<!-- 父节点工具栏 -->
+<body>	
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'"  onclick="addfu()">添加父模块</a>
+		<!-- 父节点工具栏 -->
 		<div id="mm" class="easyui-menu" data-options="onClick:menuHandler" style="width:160px;">
 			<div data-options="iconCls:'icon-add',name:'add'">追加</div>
 			<div data-options="iconCls:'icon-edit',name:'edit'">修改</div>
@@ -229,7 +278,7 @@
 			</form>
 		</div>
 		
-		<!-- 添加对话框 -->
+		<!-- 添加子节点对话框 -->
 		<div id="inserts" class="easyui-dialog" data-options="resizable:true,modal:true,closed:true">
 			<form id="in" class="easyui-form">
 				<label for="name">名称:</label> 
@@ -237,6 +286,14 @@
 				<label for="name">权重:</label> 
 				<input class="easyui-textbox" type="text" id="m_weightss" data-options="required:true" /><br>
 				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'"  onclick="inserts()">添加模块</a>
+			</form>
+		</div>
+		<!-- 添加父节点对话框 -->
+		<div id="insertfu" class="easyui-dialog" data-options="resizable:true,modal:true,closed:true">
+			<form id="infu" class="easyui-form">
+				<label for="name">名称:</label> 
+				<input class="easyui-textbox" type="text" id="m_namefus" data-options="required:true"/><br>
+				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'"  onclick="insertfu()">添加模块</a>
 			</form>
 		</div>
 		

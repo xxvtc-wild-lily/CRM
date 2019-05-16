@@ -22,6 +22,9 @@
 		<update id="updateRole" parameterType="role">
 				update role set r_name=#{r_name} where r_id=#{r_id}
 		</update>
+		<select id="selectroleree" parameterType="int" resultType="int">
+				select count(1) from employeerole where r_id=#{id}
+		</select>
 		<insert id="addrolemodule" parameterType="role">
 					insert into rolemodules (r_id,m_id) values(#{r_id},#{mid})
 		</insert>
@@ -30,5 +33,8 @@
 		</select>
 		<delete id="deleteRoleModuleById" parameterType="int">
 				delete from rolemodules where m_id=#{id}
+		</delete>
+		<delete id="deleteModuleByRoleId" parameterType="int">
+				delete from rolemodules where r_id=#{id}
 		</delete>
 </mapper>

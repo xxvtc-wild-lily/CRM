@@ -36,12 +36,24 @@ public interface RoleMapper {
 		 */
 		Integer updateRole(Role role);
 		/**
+		 * 根据角色id查看拥有该角色的员工个数
+		 * @param id
+		 * @return
+		 */
+		Integer selectroleree(Integer id);
+		/**
 		 * 根据角色ID添加权限
 		 * @param rid
 		 * @param mid
 		 * @return
 		 */
 		Integer addrolemodule(Role role);
+		/**
+		 * 根据角色ID删除角色拥有的模块
+		 * @param id
+		 * @return
+		 */
+		Integer deleteModuleByRoleId(Integer id);
 		/**
 		 * 根据模块id删除权限
 		 * @param rid

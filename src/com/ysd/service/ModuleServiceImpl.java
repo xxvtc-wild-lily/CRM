@@ -54,13 +54,30 @@ public class ModuleServiceImpl implements ModuleService {
 	}
 	//根据id删除模块
 	public Integer deleteModeById(Integer id) {
-		return modulemapper.deleteModuleById(id);
+		Integer geshu=0;
+		Integer selectrolemodule = modulemapper.selectrolemodule(id);
+		if(selectrolemodule>0) { 
+			geshu=0; 
+			}else 
+			{ 
+				modulemapper.deleteModuleById(id); 
+				geshu=1;
+			}
+		return geshu;
 	}
 	//根据父id删除父模块及子模块
 	public Integer deleteMoFuById(Integer id) {
-		modulemapper.deleteMoByFuId(id);
-		
-		return modulemapper.deleteModuleById(id);
+		Integer geshu=0;
+		Integer selectrolemodule = modulemapper.selectrolemodule(id);
+		if(selectrolemodule>0) { 
+			geshu=0; 
+			}else 
+			{ 
+				modulemapper.deleteMoByFuId(id);
+				modulemapper.deleteModuleById(id);
+				geshu=1;
+			}
+		return geshu;
 	}
 	//根据ID查询模块
 	public Modules selectModuById(Integer id) {
@@ -70,5 +87,10 @@ public class ModuleServiceImpl implements ModuleService {
 	//根据id修改模块
 	public Integer updataModuleById(Modules modules) {
 		return modulemapper.updateModuleById(modules);
+	}
+	//添加父模块
+	public Integer addModuleFu(Modules modules) {
+		// TODO Auto-generated method stub
+		return modulemapper.addModuleFu(modules);
 	}		
 }

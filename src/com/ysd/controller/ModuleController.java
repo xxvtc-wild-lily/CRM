@@ -55,5 +55,10 @@ public class ModuleController {
 		public Integer updataModuById(Modules modules) {
 			return moduleservice.updataModuleById(modules);
 		}
+		@RequestMapping(value="/addfu",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer addModuleFu(Modules modules) {
+			return moduleservice.addModuleFu(modules);
+		}
 		
 }

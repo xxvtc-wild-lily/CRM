@@ -36,7 +36,15 @@ public class RoleServiceImpl implements RoleService {
 	}
 	@Override
 	public Integer deleteRolesById(Integer rid) {
-		return rolemapper.deleteRole(rid);
+		Integer geshu=0;
+		Integer selectroleree = rolemapper.selectroleree(rid);
+		if(selectroleree>0) {
+			geshu=0;
+		}else {
+			rolemapper.deleteRole(rid);
+			geshu=1;
+		}
+		return geshu;
 	}
 	@Override
 	public Integer updateRoles(Role role) {
@@ -45,34 +53,17 @@ public class RoleServiceImpl implements RoleService {
 	}
 	@Override
 	public Integer addrolemodule(String r_id,String mid) {
-		Integer o=0;
 		String[] lists=null;
 		roless.setR_id(Integer.parseInt(r_id));
 		Integer r=roless.getR_id();
-		 List<RoleModules> selectByRoleId = modulemapper.selectByRoleId(r);
+		rolemapper.deleteModuleByRoleId(r);
 		lists=mid.split(",");
 		Integer s=0;
-			for(int j=0;j<lists.length;j++) {
-				roless.setMid(Integer.parseInt(lists[j]));
-				if(selectByRoleId!=null) {
-					for(int w=0;w<selectByRoleId.size();w++) {
-						if(Integer.parseInt(lists[j])!=selectByRoleId.get(w).getM_id()) {
-							s=rolemapper.addrolemodule(roless);
-						}else if(Integer.parseInt(lists[j])==selectByRoleId.get(w).getM_id()) {
-							s=0;
-						}else{
-							s=rolemapper.deleteRoleModuleById(selectByRoleId.get(w).getM_id());
-						}	
-					}
-				}else {
-					s=rolemapper.addrolemodule(roless);
-				}
-				
-				if(s==1) {
-					o=1;
-				}
-		}
-		return o;
+		for(int j=0;j<lists.length;j++) {
+			roless.setMid(Integer.parseInt(lists[j]));
+			s=rolemapper.addrolemodule(roless);
+			}
+		return s;
 	}
 	@Override
 	public List<Role> selectName() {
