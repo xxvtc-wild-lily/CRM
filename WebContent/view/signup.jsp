@@ -284,8 +284,8 @@
                     <td>性别：</td>
                     <td>
                         <!-- <input class="easyui-textbox" id="e_sex" style="width:200px"> -->
-                        <input name="e_sex" id="e_sex" type="radio" value="0" />男
-                        <input name="e_sex" id="e_sex" type="radio" value="1" />女
+                        <input name="e_sex" id="e_sex" type="radio" value="1" />男
+                        <input name="e_sex" id="e_sex" type="radio" value="0" />女
                     </td>
                 </tr>
                 <tr>

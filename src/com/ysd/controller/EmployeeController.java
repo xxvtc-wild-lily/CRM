@@ -16,6 +16,7 @@ import com.ysd.entity.EmployeeRole;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Role;
 import com.ysd.service.EmployeeService;
+import com.ysd.util.PasswordUtil;
 
 @Controller
 public class EmployeeController {
@@ -94,6 +95,36 @@ public class EmployeeController {
         }
         
         return code;
+    }
+	
+	@RequestMapping(value="/resertPassword",method=RequestMethod.POST)
+    @ResponseBody
+    public Integer resertPassword(Employee employee) {
+	    
+	    String fingerpringNum = employeeService.selectFingerprintNumByLoginName(employee);
+	    String MD5Password = PasswordUtil.generate("ysd123", fingerpringNum);
+	    employee.setE_passWord(MD5Password);
+	    Integer i = employeeService.updateEmployeePassword(employee);
+        
+        return i;
+    }
+	
+	@RequestMapping(value="/setEmployeeLock",method=RequestMethod.POST)
+    @ResponseBody
+    public Integer setEmployeeLock(Employee employee) {
+	    
+	    Integer i = employeeService.updateEmployeeLock(employee);
+        
+        return i;
+    }
+	
+	@RequestMapping(value="/setEmployeeUnLock",method=RequestMethod.POST)
+    @ResponseBody
+    public Integer setEmployeeUnLock(Employee employee) {
+        
+        Integer i = employeeService.updateEmployeeUnLock(employee);
+        
+        return i;
     }
 	
 }
