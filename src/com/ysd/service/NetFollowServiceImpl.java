@@ -13,24 +13,25 @@ public class NetFollowServiceImpl implements NetFollowService {
 	@Autowired
 	private NetFollowMapper netMapper;
 	@Override
-	public Pagination selectNetFollow(Pagination pagin) {
+	public  Pagination<NetFollow> selectNetFollow(Pagination<NetFollow> pagin) {
 		List<NetFollow> selectNetFollow = netMapper.selectNetFollow(pagin);
+		System.out.println(selectNetFollow);
 		Integer selectAllNetFollowCount = netMapper.selectAllNetFollowCount(pagin);
 		pagin.setRows(selectNetFollow);
 		pagin.setTotal(selectAllNetFollowCount);
 		return pagin;
 	}
-
 	@Override
-	public Integer selectAllNetFollowCount(Pagination pagin) {
+	public Integer selectAllNetFollowCount(Pagination<NetFollow> pagin) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public Integer insertNetFollow(NetFollow netfollow) {
-		// TODO Auto-generated method stub
-		return null;
+		return netMapper.insertNetFollow(netfollow);
 	}
+
+	
 
 }

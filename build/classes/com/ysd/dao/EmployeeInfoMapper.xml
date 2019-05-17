@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysd.dao.EmployeeInfoMapper">
+	
+	<select id="selectEmployeeInfo" parameterType="employee" resultType="employee"> 
+		select *
+		from employee
+		where e_loginName=#{e_loginName}
+		
+	</select>
+</mapper>

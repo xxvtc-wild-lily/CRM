@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ysd.entity.NetFollow;
 import com.ysd.entity.Pagination;
 import com.ysd.service.NetFollowService;
 
@@ -14,16 +15,20 @@ import com.ysd.service.NetFollowService;
 public class NetFollowController {
 	@Autowired
 	private NetFollowService netServlet;
-	@Autowired
-	private Pagination pagin;
-	@RequestMapping(value="/NetFollowService",method=RequestMethod.POST)
+	@RequestMapping(value="/NetFollowSer",method=RequestMethod.POST)
 	@ResponseBody
-	public Pagination init(@RequestParam(value="rows") Integer pageSize,Integer page,Integer rows) {
-		pagin.setPage((page-1)*rows);
-		pagin.setPageSize(rows);
+	public Pagination<NetFollow> init(@RequestParam(value="rows") Integer pageSize,Pagination<NetFollow> pagin) {
+		pagin.setPageSize(pageSize);
+		pagin.setPage((pagin.getPage()-1)*pagin.getPageSize());
+				
 		pagin=netServlet.selectNetFollow(pagin);
+		
 		return pagin;
 		
 	}
-	
+	@RequestMapping(value="/insertNetFollow",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer insertNetFollow(NetFollow netfollow) {
+		return netServlet.insertNetFollow(netfollow);
+	}
 }
