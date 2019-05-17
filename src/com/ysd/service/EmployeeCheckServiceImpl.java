@@ -36,4 +36,22 @@ public class EmployeeCheckServiceImpl implements EmployeeCheckService {
         
         return i;
     }
+
+    @Override
+    public List<EmployeeCheck> selectAllNotCheckEmployee(Pagination<EmployeeCheck> pagination) {
+        // TODO Auto-generated method stub
+        
+        List<EmployeeCheck> list = employeeCheckMapper.selectAllNotCheckEmployee(pagination);
+        
+        return list;
+    }
+
+    @Override
+    public Integer selectAllNotCheckEmployeeCount(Pagination<EmployeeCheck> pagination) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeCheckMapper.selectAllNotCheckEmployeeCount(pagination);
+        
+        return i;
+    }
 }

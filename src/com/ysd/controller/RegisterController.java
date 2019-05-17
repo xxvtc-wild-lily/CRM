@@ -46,8 +46,8 @@ public class RegisterController {
         calendar.set(Calendar.HOUR_OF_DAY, 22);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        Date TwentyTwo = calendar.getTime();
-        String ec_checkOutTime = format.format(TwentyTwo);
+        Date twentyTwo = calendar.getTime();
+        String ec_checkOutTime = format.format(twentyTwo);
         
         // 获取当前时间
         Date date = new Date();
@@ -65,9 +65,11 @@ public class RegisterController {
         // 如果等于0说明今天没签到
         if (isTodayCheckIn == 0) {
             // 判断当前时间是否在今天0时至晚22时
-            if (zero.getTime() <= date.getTime() && date.getTime() <= TwentyTwo.getTime()) {
+            if (zero.getTime() <= date.getTime() && date.getTime() <= twentyTwo.getTime()) {
                 // 添加用户签到记录
                 Integer j = registerService.insertEmployeeCheck(employee);
+                // 更改用户签到状态
+                registerService.updateEmployeeCheckStatus(employee);
                 // 如果大于0签到成功
                 if (j > 0) {
                     statusCode = 3;
@@ -134,14 +136,16 @@ public class RegisterController {
         Integer isTodayCheckIn = registerService.selectIsTodayHaveCheckIn(employeeCheck);
         // 不等于0说明已经签到了
         if (isTodayCheckIn != 0) {
+            employeeCheck.setEc_ext1(ec_checkInTime);
             // 查询今天是否已经签退
             Integer isTodayCheckOut = registerService.selectIsTodayHaveCheckOut(employeeCheck);
             // 没有查询到说明还未签退
             if (isTodayCheckOut == 0) {
                 //如果大于晚6点并且小于晚10点才能签退
-                if (Eighteen.getTime() > date.getTime() && date.getTime() < TwentyTwo.getTime()) {
+                if (Eighteen.getTime() < date.getTime() && date.getTime() < TwentyTwo.getTime()) {
                     // 修改今天的签到记录，加上签退时间
                     Integer j = registerService.updateEmployeeCheck(employee);
+                    registerService.updateEmployeeCheckOutStatus(employee);
                     // 如果大于0就修改成功
                     if (j > 0) {
                         statusCode = 4;
