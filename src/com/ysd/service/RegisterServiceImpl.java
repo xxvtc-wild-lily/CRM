@@ -48,4 +48,22 @@ public class RegisterServiceImpl implements RegisterService {
         
         return i;
     }
+    
+    @Override
+    public Integer updateEmployeeCheckStatus(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = registerMapper.updateEmployeeCheckStatus(employee);
+        
+        return i;
+    }
+
+    @Override
+    public Integer updateEmployeeCheckOutStatus(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = registerMapper.updateEmployeeCheckOutStatus(employee);
+        
+        return i;
+    }
 }

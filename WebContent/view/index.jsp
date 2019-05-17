@@ -68,7 +68,7 @@ pageContext.setAttribute("path",request.getContextPath());
     }
     
     function register() {
-    	var e_loginName = ${employee.e_loginName}
+    	var e_loginName = '${employee.e_loginName}'
     	
     	$.post("../register",{
     		e_loginName:e_loginName
@@ -86,7 +86,7 @@ pageContext.setAttribute("path",request.getContextPath());
     }
     
     function signBack() {
-    	var e_loginName = ${employee.e_loginName}
+    	var e_loginName = '${employee.e_loginName}'
     	
     	$.messager.confirm("确认对话框","您确认要签退吗？", function(r){
     	    if (r){

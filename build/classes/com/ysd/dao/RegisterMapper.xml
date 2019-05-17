@@ -13,13 +13,21 @@
     
     <select id="selectIsTodayHaveCheckOut" parameterType="employeeCheck" resultType="_int">
         select count(1) from employeecheck
-        where ec_checkOutTime &lt; #{ec_checkOutTime} and e_name = #{e_name}
+        where ec_checkOutTime &lt; #{ec_checkOutTime} and #{ec_ext1} &lt; NOW() and e_name = #{e_name}
     </select>
     
     <update id="updateEmployeeCheck" parameterType="employee">
         update employeecheck
         set ec_checkOutTime = now()
         where e_name = #{e_loginName}
+    </update>
+    
+    <update id="updateEmployeeCheckStatus" parameterType="employee">
+        update employee set e_ext4 = 1 where e_loginName = #{e_loginName}
+    </update>
+    
+    <update id="updateEmployeeCheckOutStatus" parameterType="employee">
+        update employee set e_ext4 = 2 where e_loginName = #{e_loginName}
     </update>
     
 </mapper>
