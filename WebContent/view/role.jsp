@@ -158,11 +158,7 @@
 		    state : "close",
 		    queryParams : {
 		    	mid:ridsss
-		    },
-		    onCheck:function(node,checked){
-		    	
 		    }
-		    
 		});
 		$("#moduless").dialog("open");
 	}
