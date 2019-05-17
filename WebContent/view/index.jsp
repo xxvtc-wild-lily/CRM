@@ -36,7 +36,7 @@ pageContext.setAttribute("path",request.getContextPath());
                             title: title, //选项卡中，选项页的标题（在同一个选项卡中，选项页需要保持一致）。
                             closable: true,
                             fit:true,
-                            content: "<iframe style='width:1200px;height:600px;' src='" + ${path }/+url + "'/>" //此处做了调整，推荐使用iframe的方式实现
+                            content: "<iframe style='width:1360px;height:577px;' src='" + ${path }/+url + "'/>" //此处做了调整，推荐使用iframe的方式实现
                             });
                     } else {
                         $("#indexTab").tabs("select", title); //直接选中title对应的选项卡
@@ -112,10 +112,9 @@ pageContext.setAttribute("path",request.getContextPath());
 </script>
 </head>
 <body class="easyui-layout">
-    <div data-options="region:'north',border:false" style="height:120px;padding:10px">
+    <div data-options="region:'north',border:false" style="height:50px;padding:10px">
         <div style="font-size:20px;">
-                欢迎使用CRM管理系统<br/>
-                用户名：${employee.e_loginName }<br/>
+                欢迎${employee.e_loginName }使用CRM管理系统
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="register()">签到</a>
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="signBack()">签退</a>
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="safeSignOut()">安全退出</a>
@@ -124,9 +123,8 @@ pageContext.setAttribute("path",request.getContextPath());
     <div data-options="region:'west',split:true,title:'West'" style="width:170px;padding:0px;">
         <ul id="tree"></ul>
     </div>
-    <div data-options="region:'south',border:false" style="height:50px;padding:10px;">south region</div>
-    <div data-options="region:'center',title:'Center'">
-        <div id="indexTab" class="easyui-tabs" style="width:auto;height:auto;">
+    <div data-options="region:'center',title:'Center'" style="width:1300px">
+        <div id="indexTab" class="easyui-tabs" style="width:1364px;height:617px;">
             
         </div>
     </div>
