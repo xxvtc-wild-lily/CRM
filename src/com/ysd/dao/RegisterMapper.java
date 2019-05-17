@@ -27,11 +27,11 @@ public interface RegisterMapper {
     Integer selectIsTodayHaveCheckOut(EmployeeCheck employeeCheck);
     
     /**
-     * 添加员工签退记录
+     * 签退时修改员工签退时间
      * @param employee 包含签到信息的员工类
      * @return 受影响的行数
      */
-    Integer updateEmployeeCheck(Employee employee);
+    Integer updateEmployeeCheck(EmployeeCheck employeeCheck);
     
     /**
      * 签到时更改用户的签到状态

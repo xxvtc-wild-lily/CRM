@@ -19,7 +19,7 @@
 	})
 	function a(){
 	  $.post("../selectEmployeeInfo",{
-		  e_loginName:${ employee.e_loginName}
+		  e_loginName:${employee.e_loginName }
 	  },function(res){
 		  $('#updateForms').form('load',res[0]);	// 读取表单的URL
 	  },"json")

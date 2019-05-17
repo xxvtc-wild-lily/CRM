@@ -3,23 +3,24 @@
 <mapper namespace="com.ysd.dao.RegisterMapper">
     
     <insert id="insertEmployeeCheck" parameterType="employee">
-        insert into employeecheck(e_name,ec_checkInTime,ec_checkStatus) values(#{e_loginName},now(),1);
+        insert into employeecheck(e_id,e_name,ec_checkInTime,ec_checkStatus) 
+        values((select e_id from employee where e_loginName = #{e_loginName}),#{e_loginName},now(),1);
     </insert>
     
-    <select id="selectIsTodayHaveCheckIn" parameterType="employeeCheck" resultType="_int">
-        select count(1) from employeecheck
-        where ec_checkInTime &gt; #{ec_checkInTime} and e_name = #{e_name}
+    <select id="selectIsTodayHaveCheckIn" parameterType="employeeCheck" resultType="_int">   
+        select count(1) from employee e inner join employeecheck ec on e.e_loginName = ec.e_name 
+        where e.e_loginName = #{e_name} and ec_checkInTime BETWEEN #{ec_checkInTime} AND #{ec_checkOutTime}
     </select>
     
     <select id="selectIsTodayHaveCheckOut" parameterType="employeeCheck" resultType="_int">
         select count(1) from employeecheck
-        where ec_checkOutTime &lt; #{ec_checkOutTime} and #{ec_ext1} &lt; NOW() and e_name = #{e_name}
+        where e_name = #{e_name} and ec_checkOutTime BETWEEN #{ec_checkInTime} AND #{ec_checkOutTime}
     </select>
     
-    <update id="updateEmployeeCheck" parameterType="employee">
+    <update id="updateEmployeeCheck" parameterType="employeeCheck">
         update employeecheck
         set ec_checkOutTime = now()
-        where e_name = #{e_loginName}
+        where e_name = #{e_name} and ec_CheckInTime BETWEEN #{ec_checkInTime} AND #{ec_checkOutTime}
     </update>
     
     <update id="updateEmployeeCheckStatus" parameterType="employee">

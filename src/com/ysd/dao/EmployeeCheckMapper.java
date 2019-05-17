@@ -8,18 +8,32 @@ import com.ysd.entity.Pagination;
 public interface EmployeeCheckMapper {
     
     /**
-     * 分页查询签到记录
+     * 不查询是否签到的分页查询签到记录
      * @param pagination 包含查询信息的分页类
      * @return 查询到的签到记录list集合
      */
-    List<EmployeeCheck> selectAllEmployeeCheck(Pagination<EmployeeCheck> pagination);
+    List<EmployeeCheck> selectAllEmployeeCheckA(Pagination<EmployeeCheck> pagination);
     
     /**
-     * 查询出的总条数
+     * 查询是否签到的分页查询签到记录
+     * @param pagination 包含查询信息的分页类
+     * @return 查询到的签到记录list集合
+     */
+    List<EmployeeCheck> selectAllEmployeeCheckB(Pagination<EmployeeCheck> pagination);
+    
+    /**
+     * 不查询是否签到的分页查询签到记录
      * @param pagination 包含查询信息的分页类
      * @return 查询到的总条数
      */
-    Integer selectAllEmployeeCheckCount(Pagination<EmployeeCheck> pagination);
+    Integer selectAllEmployeeCheckCountA(Pagination<EmployeeCheck> pagination);
+    
+    /**
+     * 不查询是否签到的分页查询签到记录
+     * @param pagination 包含查询信息的分页类
+     * @return 查询到的总条数
+     */
+    Integer selectAllEmployeeCheckCountB(Pagination<EmployeeCheck> pagination);
     
     /**
      * 查询今天没签到且没判断日期的人

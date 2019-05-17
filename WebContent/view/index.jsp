@@ -94,7 +94,7 @@ pageContext.setAttribute("path",request.getContextPath());
     	            e_loginName:e_loginName
     	        },function(res){
     	            if (res == "1") {
-    	                $.messager.alert("提示","您今天目前尚未签到！","error");
+    	                $.messager.alert("提示","您今天尚未签到！","error");
     	            } else if (res == "2") {
     	                $.messager.alert("提示","您今天已经签退过了！","error");
     	            } else if (res == "3") {
