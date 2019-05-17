@@ -19,7 +19,6 @@
 			url:'../selectStudent',
 			method:'post',
 			pagination:true,
-			singleSelect:true,
 			toolbar:"#studentTb",
 			queryParams:{
 				s_name:$("#s_name").val(),
@@ -56,9 +55,17 @@
 	function saveStudent(index){
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
+		$("#s_sex").textbox('setValue',row.s_sex == 0? '女':'男');
+		$("#s_isValid").textbox('setValue',row.s_isValid == 0? '无效':'有效');
+		$("#s_isReturnVisit").textbox('setValue',row.s_isReturnVisit == 0? '未回访':'已回访');
+		$("#s_isHome").textbox('setValue',row.s_isHome == 0? '未上门':'已上门');
+		$("#s_isPay").textbox('setValue',row.s_isPay == 0? '未付费':'已付费');
+		$("#s_isReturnMoney").textbox('setValue',row.s_isReturnMoney == 0? '否':'是');
+		$("#s_isInClass").textbox('setValue',row.s_isInClass == 0? '未进班':'已进班');
+		$("#s_isReport").textbox('setValue',row.s_isReport == 0? '未报备':'已报备');
 		$("#detailForm").form("load",row);
 		$("#detailDialog").dialog("open");
-	}
+	} 
 	function detailClose(){
 		$("#detailDialog").dialog("close");
 	}
@@ -71,11 +78,11 @@
 	<table id="stuTab" class="easyui-datagrid" data-options="fitColumns:true,checkbox: true" >  
 		<thead>
 			<tr>
-			
+				<th data-options="field:'ck',checkbox:true "></th>
 				<th data-options="field:'s_id',title:'编号'  "></th>
 				<th data-options="field:'s_name',title:'姓名'  "></th>
 				<th data-options="field:'s_age',title:'年龄'  "></th>
-				<th data-options="field:'s_askerId',title:'咨询师'  ,formatter:formattera_name"></th>
+				<th data-options="field:'asker.a_name',title:'咨询师'  ,formatter:formattera_name"></th>
 				<th data-options="field:'s_sex',title:'性别'  ,formatter:formattresex"></th>
 				<th data-options="field:'s_phone',title:'电话'  "></th>
 				<th data-options="field:'s_eduStatus',title:'学历状态'  "></th>
@@ -142,7 +149,7 @@
 				</tr>
 				<tr>
 					<td><label>性别：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_sex" name="s_sex" /></td>
+					<td><input class="easyui-textbox" type="text" id="s_sex" /></td>
 				</tr>
 				<tr>
 					<td><label>电话：</label></td>
@@ -173,7 +180,8 @@
 					<td><input class="easyui-textbox" type="text" id="s_address" name="s_address" /></td>
 				</tr><tr>
 					<td><label>咨询师：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_askerId" name="s_askerId" /></td>
+					<td>
+						<input class="easyui-textbox" type="text" id="asker.a_name" value="a_name"/></td>
 				</tr>
 				<tr>
 					<td><label>QQ：</label></td>
@@ -197,7 +205,7 @@
 				</tr>
 				<tr>
 					<td><label>是否有效：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isValid" name="s_isValid" /></td>
+					<td><input class="easyui-textbox" type="text" id="s_isValid" /></td>
 				</tr>
 				<tr>
 					<td><label>打分：</label></td>
@@ -205,7 +213,7 @@
 				</tr>
 				<tr>
 					<td><label>是否回访：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isReturnVisit" name="s_isReturnVisit" /></td>
+					<td><input class="easyui-textbox" type="text" id="s_isReturnVisit" /></td>
 				</tr>
 				<tr>
 					<td><label>首次回访时间：</label></td>
@@ -213,7 +221,7 @@
 				</tr>
 				<tr>
 					<td><label>是否上门：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isHome" name="s_isHome" /></td>
+					<td><input class="easyui-textbox" type="text" id="s_isHome" /></td>
 				</tr>
 				<tr>
 					<td><label>上门时间：</label></td>
@@ -225,7 +233,7 @@
 				</tr>
 				<tr>
 					<td><label>是否付费：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isPay" name="s_isPay" /></td>
+					<td><input class="easyui-textbox" type="text" id="s_isPay" /></td>
 				</tr>
 				<tr>
 					<td><label>付费时间：</label></td>
@@ -237,11 +245,11 @@
 				</tr>
 				<tr>
 					<td><label>是否退费：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isReturnMoney" name="s_isReturnMoney" /></td>
+					<td><input class="easyui-textbox" type="text" id="s_isReturnMoney" /></td>
 				</tr>
 				<tr>
 					<td><label>是否进班：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isInClass" name="s_isInClass" /></td>
+					<td><input class="easyui-textbox" type="text" id="s_isInClass" /></td>
 				</tr>
 				<tr>
 					<td><label>进班时间：</label></td>
@@ -265,7 +273,7 @@
 				</tr>
 				<tr>
 					<td><label>是否报备：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isReport" name="s_isReport" /></td>
+					<td><input class="easyui-textbox" type="text" id="s_isReport" /></td>
 				</tr>
 				<tr>
 					<td><label>录入人：</label></td>

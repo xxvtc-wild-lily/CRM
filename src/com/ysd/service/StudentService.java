@@ -11,4 +11,5 @@ public interface StudentService {
 	Integer deleteStudent(Integer s_id);
 	
 	Integer updateStudent(Student student);
+	
 }
