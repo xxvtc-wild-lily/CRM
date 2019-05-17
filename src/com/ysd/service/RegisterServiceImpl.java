@@ -1,69 +1,149 @@
 package com.ysd.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ysd.dao.RegisterMapper;
 import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeCheck;
+import com.ysd.util.RegisterTime;
 
 @Service
 public class RegisterServiceImpl implements RegisterService {
     
     @Autowired
     private RegisterMapper registerMapper;
+    
+    @Autowired
+    private RegisterTime registerTime;
+    
+    @Autowired
+    private EmployeeCheck employeeCheck;
 
     @Override
     public Integer insertEmployeeCheck(Employee employee) {
         // TODO Auto-generated method stub
         
-        Integer i = registerMapper.insertEmployeeCheck(employee);
+        // 判断当前签到状态的状态码
+        Integer statusCode = 0;
         
-        return i;
-    }
-
-    @Override
-    public Integer selectIsTodayHaveCheckIn(EmployeeCheck employeeCheck) {
-        // TODO Auto-generated method stub
+        // 获取今天0点的字符串类型数据
+        String stringZero = registerTime.getStringTime(0);
+        // 获取今天0点的日期类型数据
+        Date dateZero = registerTime.getDateTime(0);
+        // 获取今天10点的字符串类型数据
+        String stringTen = registerTime.getStringTime(10);
+        // 获取今天10点的日期类型数据
+        Date dateTen = registerTime.getDateTime(10);
+        // 获取今天24点的字符串类型数据
+        String stringTwentyFour = registerTime.getStringTime(24);
+        // 获取今天24点的日期类型数据
+        Date dateTwentyFour = registerTime.getDateTime(24);
+        // 获取当前时间的字符串类型数据
+        String stringNow = registerTime.getNowString();
+        // 获取当前时间的日期类型数据
+        Date dateNow = registerTime.getNowDate();
         
-        Integer i = registerMapper.selectIsTodayHaveCheckIn(employeeCheck);
+        String e_name = employee.getE_loginName();
+        employeeCheck.setE_name(e_name);
+        employeeCheck.setEc_checkInTime(stringZero);
+        employeeCheck.setEc_checkOutTime(stringTwentyFour);
         
-        return i;
-    }
-
-    @Override
-    public Integer selectIsTodayHaveCheckOut(EmployeeCheck employeeCheck) {
-        // TODO Auto-generated method stub
+        // 查询今天是否签到
+        Integer isTodayCheckIn = registerMapper.selectIsTodayHaveCheckIn(employeeCheck);
         
-        Integer i = registerMapper.selectIsTodayHaveCheckOut(employeeCheck);
+        // 如果等于0说明今天没签到
+        if (isTodayCheckIn == 0) {
+            // 判断是否在今天早上10点以前打的卡  
+            if (dateTen.getTime() < dateNow.getTime() && dateNow.getTime() < dateTen.getTime()) {
+                // 添加用户签到表里的记录
+                Integer i = registerMapper.insertEmployeeCheck(employee);
+                // 修改用户表里的签到状态
+                registerMapper.updateEmployeeCheckStatus(employee);
+                // 如果大于0则修改成功
+                if (i > 0) {
+                    statusCode = 3;
+                } else {
+                    statusCode = 4;
+                }
+            } else {
+                statusCode = 2;
+            }
+        } else {
+            statusCode = 1;
+        }
         
-        return i;
+        return statusCode;
     }
 
     @Override
     public Integer updateEmployeeCheck(Employee employee) {
         // TODO Auto-generated method stub
         
-        Integer i = registerMapper.updateEmployeeCheck(employee);
+        // 判断当前签到状态的状态码
+        Integer statusCode = 0;
         
-        return i;
+        // 获取今天0点的字符串类型数据
+        String stringZero = registerTime.getStringTime(0);
+        // 获取今天0点的日期类型数据
+        Date dateZero = registerTime.getDateTime(0);
+        // 获取今天18点的字符串类型数据
+        String stringTen = registerTime.getStringTime(18);
+        // 获取今天18点的日期类型数据
+        Date dateTen = registerTime.getDateTime(18);
+        // 获取今天22点的字符串类型数据
+        String stringTwentyTwo = registerTime.getStringTime(22);
+        // 获取今天22点的日期类型数据
+        Date dateTwentyTwo = registerTime.getDateTime(22);
+        // 获取今天24点的字符串类型数据
+        String stringTwentyFour = registerTime.getStringTime(24);
+        // 获取今天24点的日期类型数据
+        Date dateTwentyFour = registerTime.getDateTime(24);
+        // 获取现在时间的字符串类型数据
+        String stringNow = registerTime.getNowString();
+        // 获取现在时间的日期类型数据
+        Date dateNow = registerTime.getNowDate();
+        
+        // 赋值给签到类
+        String e_name = employee.getE_loginName();
+        employeeCheck.setE_name(e_name);
+        employeeCheck.setEc_checkInTime(stringZero);
+        employeeCheck.setEc_checkOutTime(stringTwentyFour);
+        
+        // 查询今天是否签到
+        Integer isTodayCheckIn = registerMapper.selectIsTodayHaveCheckIn(employeeCheck);
+        
+        // 不等于0说明已经签到了
+        if (isTodayCheckIn != 0) {
+            // 查询今天是否已经签退
+            Integer isTodayCheckOut  = registerMapper.selectIsTodayHaveCheckOut(employeeCheck);
+            // 如果等于0说明没有签退
+            if (isTodayCheckOut == 0) {
+                // 如果大于晚上6点才能签退
+                if (dateTen.getTime() < dateNow.getTime() && dateNow.getTime() < dateTwentyTwo.getTime()) {
+                    // 修改用户签退时间
+                    Integer i = registerMapper.updateEmployeeCheck(employeeCheck);
+                    // 修改用户表里的签到状态
+                    registerMapper.updateEmployeeCheckOutStatus(employee);
+                    // 如果大于0则修改成功
+                    if (i > 0) {
+                        statusCode = 4;
+                    } else {
+                        statusCode = 5;
+                    }
+                } else {
+                    statusCode = 3;
+                }
+            } else {
+                statusCode = 2;
+            }
+        } else {
+            statusCode = 1;
+        }
+        
+        return statusCode;
     }
     
-    @Override
-    public Integer updateEmployeeCheckStatus(Employee employee) {
-        // TODO Auto-generated method stub
-        
-        Integer i = registerMapper.updateEmployeeCheckStatus(employee);
-        
-        return i;
-    }
-
-    @Override
-    public Integer updateEmployeeCheckOutStatus(Employee employee) {
-        // TODO Auto-generated method stub
-        
-        Integer i = registerMapper.updateEmployeeCheckOutStatus(employee);
-        
-        return i;
-    }
 }
