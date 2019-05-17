@@ -33,4 +33,18 @@ public interface RegisterMapper {
      */
     Integer updateEmployeeCheck(Employee employee);
     
+    /**
+     * 签到时更改用户的签到状态
+     * @param employee 包含签到信息的员工类
+     * @return 受影响的行数
+     */
+    Integer updateEmployeeCheckStatus(Employee employee);
+    
+    /**
+     * 签退时更改用户的签到状态
+     * @param employee 包含签到信息的员工类
+     * @return 受影响的行数
+     */
+    Integer updateEmployeeCheckOutStatus(Employee employee);
+    
 }

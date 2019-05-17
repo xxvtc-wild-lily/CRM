@@ -34,28 +34,27 @@
     }
     
     function formatterimg(value,row,index){
-        if(row.employee.e_photo != null && row.employee.e_photo != ''){
+        if(row.e_name != null && row.employee.e_photo != null && row.employee.e_photo != ''){
             return "<img style='width:40px;height:50px;' src='../image/"+row.employee.e_photo+"'>"
         }
     }
     
     function formatterSex (value,row,index) {
-        var sex = "";
         if (row.employee.e_sex == "0") {
-            sex = "女";
+            return "女";
         } else if (row.employee.e_sex == "1") {
-            sex = "男";
-        } else {
-            sex = "未填";
+            return "男";
         }
-        return sex;
     }
     
     function checkStatus (value,row,index) {
-    	var checkStatus = "";
     	
-    	if (row.ec_checkStatus == "1") {
+    	if (row.employee.e_ext4 == "1") {
     		return "已签到"
+    	} else if (row.employee.e_ext4 == "3") {
+    		return "未签到"
+    	} else if (row.employee.e_ext4 == "2") {
+    		return "已签退"
     	}
     }
     
@@ -71,10 +70,38 @@
     	var age = row.employee.e_age;
     	if (age != null) {
     		return age;
-    	} else {
-    		age = "未填";
-    		return age;
     	}
+    }
+    
+    function formatterName (value,row,index) {
+    	return row.employee.e_loginName;
+    }
+    
+    function doSomething (value,row,index) {
+    	return "<a href='javascript:void(0);' onclick='checkOut("+index+")'>签退</a>";
+    }
+    
+    function checkOut (index) {
+    	var data = $("#empTab").datagrid("getData");
+    	var e_name = data.rows[index].e_name;
+    	$.messager.confirm("确认对话框","您确定要签退‘"+e_name+"’吗？", function(r){
+    	    if (r){
+    	    	$.post("../signOut",{
+    	    		e_loginName:e_name
+    	    	},function(res){
+    	    		if (res == "1") {
+                        $.messager.alert("提示",""+e_name+"今天目前尚未签到！","error");
+                    } else if (res == "2") {
+                        $.messager.alert("提示",""+e_name+"今天已经签退过了！","error");
+                    } else if (res == "4") {
+                        $.messager.alert("提示","签退成功！","info");
+                        $("#empTab").datagrid("reload");
+                    } else if (res == "3") {
+                        $.messager.alert("提示","签退失败！","error");
+                    }
+    	    	},"json")
+    	    }
+    	});
     }
     
 </script>
@@ -83,7 +110,7 @@
     <table id="empTab" class="easyui-datagrid">
         <thead>
             <tr>
-                <th data-options="field:'e_name',title:'姓名'  "></th>
+                <th data-options="field:'e_name',title:'姓名' ,formatter:formatterName"></th>
                 <th data-options="field:'e_sex',title:'性别 ',formatter:formatterSex"></th>
                 <th data-options="field:'e_protectEmail',title:'密保邮箱 ',formatter:formatterEmail"></th>
                 <th data-options="field:'e_protectMTel',title:'密保手机' ,formatter:formatterMTel"></th>
@@ -92,6 +119,7 @@
                 <th data-options="field:'ec_checkStatus',title:'签到状态' ,formatter:checkStatus"></th>
                 <th data-options="field:'ec_checkInTime',title:'签到时间' "></th>
                 <th data-options="field:'ec_checkOutTime',title:'签退时间' "></th>
+                <th data-options="field:'doSomething',title:'操作' ,formatter:doSomething"></th>
             </tr>
         </thead>
     </table>
@@ -102,8 +130,9 @@
             <label for="name">签到状态：</label>
             <select class="easyui-combobox" id="ec_checkStatus" style="width:100px;">   
                 <option value="">--请选择--</option>   
-                <option value="0">未签到</option>   
+                <option value="3">未签到</option>   
                 <option value="1">已签到</option>   
+                <option value="2">已签退</option>   
             </select>
             <label for="name">签到时间：</label>   
             <input class="easyui-datebox" type="text"  id="startCheckInTime"/>~
