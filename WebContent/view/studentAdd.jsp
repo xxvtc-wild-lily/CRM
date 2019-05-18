@@ -41,13 +41,53 @@
 		return row.asker.a_name;
 	}
 	function formattersfff(value,row,index) {
-		return value==0? '未付费':'已付费';
-	} 
+		var s_isPay = "";
+		if (row.s_isPay == "0") {
+			s_isPay = "未付费";
+		} else if (row.s_isPay == "1") {
+			s_isPay = "已付费";
+		} else {
+			s_isPay = "未付费";
+		}
+		
+		return s_isPay;
+		
+	}
 	function formattersfyx(value,row,index) {
-		return value==0? '无效':'有效';
+		var s_isValid=""
+		if (row.s_isValid == "0") {
+			s_isValid = "无效";
+		} else if (row.s_isValid == "1") {
+			s_isValid = "有效";
+		} else {
+			s_isValid = "无效";
+		}
+			
+		return s_isValid;
 	} 
 	function formattersfhf(value,row,index) {
-		return value==0? '未回访':'已回访';
+		var s_isReturnVisit=""
+		if (row.s_isReturnVisit == "0") {
+			s_isReturnVisit = "未回访";
+		} else if (row.s_isReturnVisit == "1") {
+			s_isReturnVisit = "已回访";
+		} else {
+			s_isReturnVisit = "未回访";
+		}
+				
+		return s_isReturnVisit;
+	}
+	function formattresex(value,row,index) {
+		var sex = "";
+		if (row.s_sex == "0") {
+			sex = "女";
+		} else if (row.s_sex == "1") {
+			sex = "男";
+		} else {
+			sex = "";
+		}
+		
+		return sex;
 	}
 	function addStudent(){
 		$("#addDialog").dialog("open");
@@ -71,7 +111,8 @@
 			s_QQ:$("#adds_QQ").val(),
 			s_weiXin:$("#adds_weiXin").val(),
 			s_isReport:$("#adds_isReport").val(),
-			s_remarks:$("#adds_remarks").val()
+			s_remarks:$("#adds_remarks").val(),
+			s_importEmployee:$("#adds_importEmployee").val()
 		},function(res){
 			if(res>0){
 				$.messager.alert("提示","添加成功！！！","info");
@@ -87,9 +128,7 @@
 	function addClose(){
 		$("#addDialog").dialog("close");
 	}
-	function formattresex(value,row,index) {
-		return value==0? '女':'男';
-	}
+	
 	function saveStudent(index){
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
@@ -164,6 +203,7 @@
 	        
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0)" onclick="addStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
+			<a href="javascript:void(0);" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
 		</form>
 	</div>
 	
@@ -173,11 +213,11 @@
 			<table>
 			    <tr>
 			        <td><label>姓名：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adds_name" name="s_name"/></td>
+			        <td><input class="easyui-textbox" type="text" id="adds_name" name="s_name" data-options="required:true"/></td>
 			   
 			        <td><label>性别：</label></td>
 			        <td>
-				        <select class="easyui-combobox" style="width:100px;" id="adds_sex" name="s_sex">   
+				        <select class="easyui-combobox" style="width:100px;" id="adds_sex" name="s_sex" data-options="required:true">   
 						    <option value="">--请选择--</option>   
 						    <option value="0">女</option>   
 						    <option value="1">男</option>     
@@ -185,35 +225,28 @@
 					</td> 
 			    
 			        <td><label>年龄：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adds_age" name="s_age"/></td>
+			        <td><input class="easyui-textbox" type="text" id="adds_age" name="s_age"  data-options="required:true"/></td>
 			    </tr>
 			    <tr>
 			        <td><label>咨询师：</label></td>
 			        <td>
-			        	<select class="easyui-combobox" style="width:100px;" id="adds_askerId" name="s_askerId">   
+			        	<select class="easyui-combobox" style="width:100px;" id="adds_askerId" name="s_askerId"  data-options="required:true">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">1234</option> 
-						    <option value="1">12345</option>
-						    <option value="2">1231231</option>
-						    <option value="3">12312311</option> 
-						    <option value="4">123123123131</option>    
+						    <option value="1">1234</option> 
+						    <option value="2">12345</option>
+						    <option value="3">1231231</option>
+						    <option value="4">12312311</option> 
+						    <option value="5">123123123131</option>    
 						</select><br/>
 						<input type="checkbox" id="isAuto" />自动分配
 			        </td>
-			   
+			  
 			        <td><label>电话：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_phone" name="s_phone"/></td>
-			   
-			        <td><label>学历：</label></td>
-			        <td>
-			        	<select class="easyui-combobox" style="width:100px;" id="adds_eduStatus" name="s_eduStatus">   
-						    <option value="">--请选择--</option>      
-						    <option value="0">初中</option> 
-						    <option value="1">高中</option>
-						    <option value="2">大专</option>
-						    <option value="3">本科</option>    
-						</select>
-			        </td>
+			   		
+			        <td><label>录入人：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="adds_importEmployee" name="s_importEmployee" data-options="required:true"/></td>
+			        
 			    </tr>
 			    <tr>
 			        <td><label>状态：</label></td>
@@ -236,11 +269,23 @@
 			        <td><input class="easyui-textbox" type="text" id="adds_weiXin" name="s_weiXin"/></td>
 			    </tr>
 			    <tr>
+			    	<td><label>学历：</label></td>
+			        <td>
+			        	<select class="easyui-combobox" style="width:100px;" id="adds_eduStatus" name="s_eduStatus">   
+						    <option value="">--请选择--</option>      
+						    <option value="0">初中</option> 
+						    <option value="1">高中</option>
+						    <option value="2">大专</option>
+						    <option value="3">本科</option>    
+						</select>
+			        </td>
+			        
 			        <td><label>是否报备：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_isReport" name="s_isReport"/></td>
 			    
 			        <td><label>在线备注：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_remarks" name="s_remarks"/></td>
+			        
 			    </tr>
 			    
 			    <tr Style="text-align:right">
@@ -250,7 +295,7 @@
 			    	<td></td>
 			    	<td></td>
 			    	<td >
-			    		<a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="addClose()">关闭</a>
+			    		<a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="addSave()">添加</a><a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="addClose()">关闭</a>
 			    	</td>
 			    </tr>
 		    </table>
@@ -297,7 +342,7 @@
 				
 					<td><label>咨询师：</label></td>
 					<td>
-						<input class="easyui-textbox" type="text" id="asker.a_name" value="a_name" data-options="readonly:true" /></td>
+						<input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
 				</tr>
 				<tr>
 					<td><label>QQ：</label></td>
@@ -401,5 +446,58 @@
 			</table>
 		</form>
 	</div>
+	<script type="text/javascript">
+
+	
+	function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
+		//如果jsondata不是对象，那么json.parse将分析对象中的json字符串。
+		var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData)
+				: JSONData;
+		var CSV = '';
+		//在第一行拼接标题
+		CSV += ReportTitle + '\r\n\n';
+		//产生数据标头
+		if (ShowLabel) {
+			var row = "";
+			//此循环将从数组的第一个索引中提取标签
+			for ( var index in arrData[0]) {
+				//现在将每个值转换为字符串和逗号分隔
+				row += index + ',';
+			}
+			row = row.slice(0, -1);
+			//添加带换行符的标签行
+			CSV += row + '\r\n';
+		}
+		//第一个循环是提取每一行
+		for (var i = 0; i < arrData.length; i++) {
+			var row = "";
+			for ( var index in arrData[i]) {
+				row += '"' + arrData[i][index] + '",';
+			}
+			row.slice(0, row.length - 1);
+			CSV += row + '\r\n';
+		}
+		if (CSV == '') {
+			alert("Invalid data");
+			return;
+		}
+		var fileName = "我的学生_";
+		fileName += ReportTitle.replace(/ /g, "_");
+		var uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURI(CSV);
+		var link = document.createElement("a");
+		link.href = uri;
+		link.style = "visibility:hidden";
+		link.download = fileName + ".csv";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}
+	$("#btnExport").click(function() {
+		var data = JSON.stringify($('#stuTab').datagrid('getData').rows);
+		if (data == '')
+			return;
+		JSONToCSVConvertor(data, "数据信息", true);
+	});
+</script>
 </body>
 </html>

@@ -41,17 +41,54 @@
 		return row.asker.a_name;
 	}
 	function formattersfff(value,row,index) {
-		return value==0? '未付费':'已付费';
-	} 
-	function formattersfhf(value,row,index) {
-		return value==0? '未回访':'已回访';
+		var s_isPay = "";
+		if (row.s_isPay == "0") {
+			s_isPay = "未付费";
+		} else if (row.s_isPay == "1") {
+			s_isPay = "已付费";
+		} else {
+			s_isPay = "未付费";
+		}
+		
+		return s_isPay;
+		
 	}
 	function formattersfyx(value,row,index) {
-		return value==0? '无效':'有效';
+		var s_isValid=""
+		if (row.s_isValid == "0") {
+			s_isValid = "无效";
+		} else if (row.s_isValid == "1") {
+			s_isValid = "有效";
+		} else {
+			s_isValid = "无效";
+		}
+			
+		return s_isValid;
 	} 
+	function formattersfhf(value,row,index) {
+		var s_isReturnVisit=""
+		if (row.s_isReturnVisit == "0") {
+			s_isReturnVisit = "未回访";
+		} else if (row.s_isReturnVisit == "1") {
+			s_isReturnVisit = "已回访";
+		} else {
+			s_isReturnVisit = "未回访";
+		}
+				
+		return s_isReturnVisit;
+	}
 	function formattresex(value,row,index) {
-		return value==0? '女':'男';
-	} 
+		var sex = "";
+		if (row.s_sex == "0") {
+			sex = "女";
+		} else if (row.s_sex == "1") {
+			sex = "男";
+		} else {
+			sex = "";
+		}
+		
+		return sex;
+	}
 	function saveStudent(index){
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
@@ -173,7 +210,7 @@
 				
 					<td><label>咨询师：</label></td>
 					<td>
-						<input class="easyui-textbox" type="text" id="asker.a_name" value="a_name" data-options="readonly:true" /></td>
+						<input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
 				</tr>
 				<tr>
 					<td><label>QQ：</label></td>
