@@ -20,38 +20,39 @@ public class EmployeeCheckServiceImpl implements EmployeeCheckService {
     private EmployeeCheckMapper employeeCheckMapper;
 
     @Override
-    public List<EmployeeCheck> selectAllEmployeeCheck(Pagination<EmployeeCheck> pagination) {
+    public List<EmployeeCheck> selectAllEmployeeCheckA(Pagination<EmployeeCheck> pagination) {
         // TODO Auto-generated method stub
         
-        List<EmployeeCheck> list = employeeCheckMapper.selectAllEmployeeCheck(pagination);
+        List<EmployeeCheck> list = employeeCheckMapper.selectAllEmployeeCheckA(pagination);
+        
+        return list;
+    }
+    
+    @Override
+    public List<EmployeeCheck> selectAllEmployeeCheckB(Pagination<EmployeeCheck> pagination) {
+        // TODO Auto-generated method stub
+        
+        List<EmployeeCheck> list = employeeCheckMapper.selectAllEmployeeCheckB(pagination);
         
         return list;
     }
 
     @Override
-    public Integer selectAllEmployeeCheckCount(Pagination<EmployeeCheck> pagination) {
+    public Integer selectAllEmployeeCheckCountA(Pagination<EmployeeCheck> pagination) {
         // TODO Auto-generated method stub
         
-        Integer i = employeeCheckMapper.selectAllEmployeeCheckCount(pagination);
+        Integer i = employeeCheckMapper.selectAllEmployeeCheckCountA(pagination);
         
         return i;
     }
 
     @Override
-    public List<EmployeeCheck> selectAllNotCheckEmployee(Pagination<EmployeeCheck> pagination) {
+    public Integer selectAllEmployeeCheckCountB(Pagination<EmployeeCheck> pagination) {
         // TODO Auto-generated method stub
         
-        List<EmployeeCheck> list = employeeCheckMapper.selectAllNotCheckEmployee(pagination);
-        
-        return list;
-    }
-
-    @Override
-    public Integer selectAllNotCheckEmployeeCount(Pagination<EmployeeCheck> pagination) {
-        // TODO Auto-generated method stub
-        
-        Integer i = employeeCheckMapper.selectAllNotCheckEmployeeCount(pagination);
+        Integer i = employeeCheckMapper.selectAllEmployeeCheckCountB(pagination);
         
         return i;
     }
+    
 }

@@ -22,27 +22,44 @@
         
     </resultMap>
     
-    <select id="selectAllEmployeeCheck" parameterType="pagination" resultMap="employeeCheckMap">
-        select e.*,ec.* from employee e left join employeecheck ec on e.e_loginName = ec.e_name 
+    <select id="selectAllEmployeeCheckA" parameterType="pagination" resultMap="employeeCheckMap">
+        select ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,
+        e.e_protectMTel,e.e_photo,e.e_ext4 
+        from employeecheck ec left join employee e on ec.e_name = e.e_loginName
         <where>
             <if test="e_name != null and e_name !=''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>
-            <if test="ec_checkStatus != null and ec_checkStatus !=''">
-                and e.e_ext4 = #{ec_checkStatus}
-            </if>
-            <if test="startCheckInTime != null and startCheckInTime !=''">
+            <if test="startCheckInTime != null and startCheckInTime != ''">
                 and ec.ec_checkInTime &gt;= #{startCheckInTime}
             </if>
-            <if test="endCheckInTime != null and endCheckInTime !=''">
-                and ec.ec_checkInTime &lt;= #{endCheckInTime}
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkOutTime &lt;= #{endCheckInTime}
             </if>
         </where>
         limit #{page},#{pageSize}
     </select>
     
-    <select id="selectAllEmployeeCheckCount" parameterType="pagination" resultType="_int">
-        select count(e.e_loginName) from employee e left join employeecheck ec on e.e_loginName = ec.e_name 
+    <select id="selectAllEmployeeCheckCountA" parameterType="pagination" resultType="_int">
+        select count(1)
+        from employeecheck ec left join employee e on ec.e_name = e.e_loginName
+        <where>
+            <if test="e_name != null and e_name !=''">
+                and ec.e_name like "%"#{e_name}"%"
+            </if>
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt;= #{startCheckInTime}
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkOutTime &lt;= #{endCheckInTime}
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectAllEmployeeCheckB" parameterType="pagination" resultMap="employeeCheckMap">
+        select ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,
+        e.e_protectMTel,e.e_photo,e.e_ext4 
+        from employee e left join employeecheck ec on e.e_loginName = ec.e_name
         <where>
             <if test="e_name != null and e_name !=''">
                 and ec.e_name like "%"#{e_name}"%"
@@ -50,11 +67,31 @@
             <if test="ec_checkStatus != null and ec_checkStatus !=''">
                 and e.e_ext4 = #{ec_checkStatus}
             </if>
-            <if test="startCheckInTime != null and startCheckInTime !=''">
+            <if test="startCheckInTime != null and startCheckInTime != ''">
                 and ec.ec_checkInTime &gt;= #{startCheckInTime}
             </if>
-            <if test="endCheckInTime != null and endCheckInTime !=''">
-                and ec.ec_checkInTime &lt;= #{endCheckInTime}
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkOutTime &lt;= #{endCheckInTime}
+            </if>
+        </where>
+        limit #{page},#{pageSize}
+    </select>
+    
+    <select id="selectAllEmployeeCheckCountB" parameterType="pagination" resultType="_int">
+        select count(1)
+        from employee e left join employeecheck ec on e.e_loginName = ec.e_name
+        <where>
+            <if test="e_name != null and e_name !=''">
+                and ec.e_name like "%"#{e_name}"%"
+            </if>
+            <if test="ec_checkStatus != null and ec_checkStatus !=''">
+                and e.e_ext4 = #{ec_checkStatus}
+            </if>
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt;= #{startCheckInTime}
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkOutTime &lt;= #{endCheckInTime}
             </if>
         </where>
     </select>
