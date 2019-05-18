@@ -83,8 +83,11 @@
 			</if>
 			<if test="student.s_createTime != null and student.s_createTime != ''">
 				and s.s_createTime =#{student.s_createTime}
-			</if>		
+			</if>
+			
+			and	s.s_askerId=a.a_id and s.s_importEmployee=a.a_name	
 		</where>
+		
 		limit #{page},#{pageSize}
 	</select>
 	<select id="selectStudentCount" parameterType="pagination" resultType="int">
@@ -118,7 +121,8 @@
 			</if>
 			<if test="student.s_createTime != null and student.s_createTime != ''">
 				and s.s_createTime =#{student.s_createTime}
-			</if>		
+			</if>
+			and	s.s_askerId=a.a_id and s.s_importEmployee=a.a_name		
 		</where>
 	</select>
 	<insert id="insertStudent" parameterType="student">
