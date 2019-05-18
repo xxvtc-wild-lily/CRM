@@ -1,6 +1,7 @@
 package com.ysd.service;
 
 import com.ysd.entity.Employee;
+import com.ysd.entity.EmployeeCheck;
 
 public interface RegisterService {
     

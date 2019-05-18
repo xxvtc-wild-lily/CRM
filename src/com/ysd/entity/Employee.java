@@ -1,5 +1,7 @@
 package com.ysd.entity;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,8 +35,10 @@ public class Employee {
 	private Integer e_ext6;			//
 	
 	private EmployeeRole employeeRole;
+	
+	private List<EmployeeCheck> employeeCheck;
 
-	public Integer getE_id() {
+    public Integer getE_id() {
 		return e_id;
 	}
 
@@ -257,6 +261,14 @@ public class Employee {
 	public void setEmployeeRole(EmployeeRole employeeRole) {
 		this.employeeRole = employeeRole;
 	}
+	
+	public List<EmployeeCheck> getEmployeeCheck() {
+        return employeeCheck;
+    }
+
+    public void setEmployeeCheck(List<EmployeeCheck> employeeCheck) {
+        this.employeeCheck = employeeCheck;
+    }
 
     @Override
     public String toString() {
@@ -269,7 +281,7 @@ public class Employee {
                 + ", e_eduStatus=" + e_eduStatus + ", e_weiXin=" + e_weiXin + ", e_inCompanyTime=" + e_inCompanyTime
                 + ", e_leaveCompanyTime=" + e_leaveCompanyTime + ", e_ext1=" + e_ext1 + ", e_ext2=" + e_ext2
                 + ", e_ext3=" + e_ext3 + ", e_ext4=" + e_ext4 + ", e_ext5=" + e_ext5 + ", e_ext6=" + e_ext6
-                + ", employeeRole=" + employeeRole + "]";
+                + ", employeeRole=" + employeeRole + ", employeeCheck=" + employeeCheck + "]";
     }
     
 }

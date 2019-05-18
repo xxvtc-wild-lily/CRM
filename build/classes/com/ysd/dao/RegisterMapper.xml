@@ -31,4 +31,10 @@
         update employee set e_ext4 = 2 where e_loginName = #{e_loginName}
     </update>
     
+    <update id="updateEmployeeCheckCheckOutStatus" parameterType="employeeCheck">
+        update employeecheck
+        set ec_checkStatus = 2
+        where e_name = #{e_name} and ec_CheckInTime BETWEEN #{ec_checkInTime} AND #{ec_checkOutTime}
+    </update>
+    
 </mapper>

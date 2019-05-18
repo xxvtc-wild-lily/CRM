@@ -127,6 +127,8 @@ public class RegisterServiceImpl implements RegisterService {
                     Integer i = registerMapper.updateEmployeeCheck(employeeCheck);
                     // 修改用户表里的签到状态
                     registerMapper.updateEmployeeCheckOutStatus(employee);
+                    // 修改签到表里的签到状态
+                    registerMapper.updateEmployeeCheckCheckOutStatus(employeeCheck);
                     // 如果大于0则修改成功
                     if (i > 0) {
                         statusCode = 4;

@@ -48,13 +48,19 @@
     }
     
     function checkStatus (value,row,index) {
-    	
-    	if (row.employee.e_ext4 == "1") {
-    		return "已签到"
-    	} else if (row.employee.e_ext4 == "3") {
-    		return "未签到"
-    	} else if (row.employee.e_ext4 == "2") {
-    		return "已签退"
+    	// 查询所有签到记录的判断
+    	if (row.ec_ext5 == 1) {
+    		if (row.ec_checkStatus == 1) {
+    			return "已签到";
+    		} else if (row.ec_checkStatus == 2) {
+    			return "已签退";
+    		}
+    	} else if (row.ec_ext5 == 2) {
+    		return "未签到";
+    	} else if (row.ec_ext5 == 3) {
+    		return "已签到";
+    	} else if (row.ec_ext5 == 4) {
+    		return "已签退";
     	}
     }
     
@@ -110,15 +116,15 @@
     <table id="empTab" class="easyui-datagrid">
         <thead>
             <tr>
-                <th data-options="field:'e_name',title:'姓名' ,formatter:formatterName"></th>
+                <th data-options="field:'e_name',title:'姓名'"></th>
                 <th data-options="field:'e_sex',title:'性别 ',formatter:formatterSex"></th>
                 <th data-options="field:'e_protectEmail',title:'密保邮箱 ',formatter:formatterEmail"></th>
-                <th data-options="field:'e_protectMTel',title:'密保手机' ,formatter:formatterMTel"></th>
-                <th data-options="field:'e_age',title:'年龄' ,formatter:formatterAge"></th>
+                <th data-options="field:'e_protectMTel',title:'密保手机',formatter:formatterMTel"></th>
+                <th data-options="field:'e_age',title:'年龄',formatter:formatterAge"></th>
                 <th data-options="field:'e_photo',title:'照片' ,formatter:formatterimg"></th>
                 <th data-options="field:'ec_checkStatus',title:'签到状态' ,formatter:checkStatus"></th>
-                <th data-options="field:'ec_checkInTime',title:'签到时间' "></th>
-                <th data-options="field:'ec_checkOutTime',title:'签退时间' "></th>
+                <th data-options="field:'ec_checkInTime',title:'最新签到时间' "></th>
+                <th data-options="field:'ec_checkOutTime',title:'最新签退时间' "></th>
                 <th data-options="field:'doSomething',title:'操作' ,formatter:doSomething"></th>
             </tr>
         </thead>
