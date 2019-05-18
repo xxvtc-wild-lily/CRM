@@ -20,6 +20,7 @@
 			</if>
 			 
 		</where>
+		order by e_createTime desc,e_lastLoginTime desc
 		limit #{page},#{pageSize}
 	</select>
 	<select id="selectEmployeeCount" parameterType="pagination" resultType="int">
@@ -38,6 +39,7 @@
 				and e_isLockOut=#{employee.e_isLockOut} or e_isLockOut is null
 			</if>
 		</where>
+		order by e_createTime desc,e_lastLoginTime desc
 	</select>
 	<delete id="deleteEmployee" parameterType="int">
 		delete from employee where e_id=#{e_id}
@@ -53,6 +55,7 @@
 			</if>
 		</set>
 		<where>
+			
 			e_loginName=#{e_loginName}
 		</where>
 	</update>

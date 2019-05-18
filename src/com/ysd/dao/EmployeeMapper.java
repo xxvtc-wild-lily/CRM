@@ -8,14 +8,30 @@ import com.ysd.entity.Pagination;
 import com.ysd.entity.Role;
 
 public interface EmployeeMapper {
-	
+	/**
+	 * 分页查询所有员工
+	 * @param pagination
+	 * @return
+	 */
 	List<Employee> selectEmployeeAll(Pagination<Employee> pagination);
-	
+	/**
+	 * 分页查询员工总数
+	 * @param pagination
+	 * @return
+	 */
 	Integer selectEmployeeCount(Pagination<Employee> pagination);
 	
-	
+	/**
+	 * 根据ID删除员工信息
+	 * @param e_id
+	 * @return
+	 */
 	Integer deleteEmployee(Integer e_id);
-	
+	/**
+	 * 根据ID修改员工信息
+	 * @param employee
+	 * @return
+	 */
 	Integer updateEmployee(Employee employee);
 	
 	/**
