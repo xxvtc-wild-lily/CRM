@@ -8,31 +8,59 @@ import com.ysd.entity.Pagination;
 public interface EmployeeCheckService {
     
     /**
-     * 不查询是否签到的分页查询签到记录
+     * 查询所有签到记录
      * @param pagination 包含查询信息的分页类
      * @return 查询到的签到记录list集合
      */
-    List<EmployeeCheck> selectAllEmployeeCheckA(Pagination<EmployeeCheck> pagination);
+    List<EmployeeCheck> selectAllEmployeeCheck(Pagination<EmployeeCheck> pagination);
     
     /**
-     * 查询是否签到的分页查询签到记录
-     * @param pagination 包含查询信息的分页类
-     * @return 查询到的签到记录list集合
-     */
-    List<EmployeeCheck> selectAllEmployeeCheckB(Pagination<EmployeeCheck> pagination);
-    
-    /**
-     * 不查询是否签到的分页查询签到记录
+     * 查询所有签到记录的总数
      * @param pagination 包含查询信息的分页类
      * @return 查询到的总条数
      */
-    Integer selectAllEmployeeCheckCountA(Pagination<EmployeeCheck> pagination);
+    Integer selectAllEmployeeCheckCount(Pagination<EmployeeCheck> pagination);
     
     /**
-     * 不查询是否签到的分页查询签到记录
+     * 查询所有没签到的人的记录
+     * @param pagination 包含查询信息的分页类
+     * @return 查询到的没签到的人的签到记录list集合
+     */
+    List<EmployeeCheck> selectAllNotCheckEmployee(Pagination<EmployeeCheck> pagination);
+    
+    /**
+     * 查询所有没签到的人的记录条数
      * @param pagination 包含查询信息的分页类
      * @return 查询到的总条数
      */
-    Integer selectAllEmployeeCheckCountB(Pagination<EmployeeCheck> pagination);
+    Integer selectAllNotCheckEmployeeCount(Pagination<EmployeeCheck> pagination);
+    
+    /**
+     * 查询所有签到的人的记录条数
+     * @param pagination 包含查询信息的分页类
+     * @return 查询到的所有签到的人的签到记录list集合
+     */
+    List<EmployeeCheck> selectAllHasCheckInEmployee(Pagination<EmployeeCheck> pagination);
+    
+    /**
+     * 查询所有签到的人的记录条数
+     * @param pagination 包含查询信息的分页类
+     * @return 查询到的总条数
+     */
+    Integer selectAllHasCheckInEmployeeCount(Pagination<EmployeeCheck> pagination);
+    
+    /**
+     * 查询所有签退的人的记录
+     * @param pagination 包含查询信息的分页类
+     * @return 查询到的所有签退的人的签到记录list集合
+     */
+    List<EmployeeCheck> selectAllHasCheckOutEmployee(Pagination<EmployeeCheck> pagination);
+    
+    /**
+     * 查询所有签退的人的记录条数
+     * @param pagination 包含查询信息的分页类
+     * @return 查询到的总条数
+     */
+    Integer selectAllHasCheckOutEmployeeCount(Pagination<EmployeeCheck> pagination);
     
 }
