@@ -244,7 +244,7 @@
 			   
 			        <td><label>性别：</label></td>
 			        <td>
-				        <select class="easyui-combobox" style="width:100px;" id="adds_sex" name="s_sex" data-options="required:true">   
+				        <select class="easyui-combobox" style="width:100px;" id="adds_sex" name="s_sex">   
 						    <option value="">--请选择--</option>   
 						    <option value="0">女</option>   
 						    <option value="1">男</option>     
@@ -252,7 +252,7 @@
 					</td> 
 			    
 			        <td><label>年龄：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adds_age" name="s_age"  data-options="required:true"/></td>
+			        <td><input class="easyui-textbox" type="text" id="adds_age" name="s_age" /></td>
 			    </tr>
 			    <tr>
 			        
