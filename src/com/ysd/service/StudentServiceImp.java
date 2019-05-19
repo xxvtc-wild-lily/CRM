@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ysd.dao.StudentMapper;
+import com.ysd.entity.NetFollow;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
 @Service
@@ -40,6 +41,12 @@ public class StudentServiceImp implements StudentService {
 	public Integer updateStudent(Student student) {
 		// TODO Auto-generated method stub
 		return studentMapper.updateStudent(student);
+	}
+
+	@Override
+	public Integer insertNetFollow(NetFollow netfollow) {
+		
+		return studentMapper.insertNetFollow(netfollow);
 	}
 
 

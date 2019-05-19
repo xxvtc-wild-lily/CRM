@@ -16,8 +16,6 @@ $(function(){
 })
 
 function init() {
-	
-	
 	$('#dg').datagrid({
 	    url:'../NetFollowSer',
 	    method:"post",
@@ -49,6 +47,7 @@ function init() {
 	    ]]
 	});
 }
+
 function lookNetFollow(index){
 	var data=$("#dg").datagrid("getData");
 	var row=data.rows[index];
@@ -93,7 +92,7 @@ function addsave(){
 		n_followTime:$("#n_followTimeq").val(),
 		n_nextFollowTime:$("#n_nextFollowTimeq").val(),
 		n_context:$("#n_contextq").val(),
-		e_id:$("#e_idq").val(),
+		/* e_id:$("#e_idq").val(), */
 		n_followType:$("#n_followTypeq").val(),
 		n_createTime:$("#n_createTimeq").val(),
 		n_followStatus:$("#n_followStatusq").val()
@@ -129,17 +128,15 @@ function addsave(){
 						    		
 						    	</select>
 						    <div> 
-				跟踪方式：<input class="easyui-textbox" name="aname" id="n_followType" style="width:180px">
-				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="init()">搜索</a>
-				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addnetfollow()">添加</a>
+								跟踪方式：<input class="easyui-textbox" name="aname" id="n_followType" style="width:180px">
+								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="init()">搜索</a>
+								<a href="javascript:void(0)"  onclick="addnetfollow()"></a>
 	
+							</div>
 		</div>
-		
-		<div id="looknet" class="easyui-dialog" title="查看" data-options="modal:true,closed:true,
-			buttons:[{
-				text:'关闭',
-				handler:function(){closeUpdat();}
-			}]">  
+
+			<div id="looknet" class="easyui-dialog" title="查看信息"  style="width:400px; height:400px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
+			
 		<form id="looknetfollow" method="post">   
 			<table>
 				<tr>
@@ -181,14 +178,14 @@ function addsave(){
 			    </tr>
 		    </table>
 		</form>  
-		</div>
+	</div>
 		
 		
-	<!-- --添加日志- -->
+	<!-- 
 	<div id="win" class="easyui-window" title="添加" data-options="closed:true" style="width:600px;height:400px"   
         data-options="iconCls:'icon-save'">   
 	    <div class="easyui-layout" data-options="fit:true">   
-		             学生编号：<input id="n_stuIdq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
+		      	学生编号：<input id="n_stuIdq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
 		             学生姓名：<input id="n_stuNameq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
 		             跟踪时间：<input id="n_followTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
 	                    下次跟踪时间：<input id="n_nextFollowTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
@@ -198,19 +195,13 @@ function addsave(){
 	                    创建时间：<input id="n_createTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
 	                    跟随状态：<input id="n_followStatusq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/> 
 	                   
-	           <!--  学生编号：<input class="easyui-textbox" data-options="" style="width:180px" ><br/>
-	             学生编号：<input class="easyui-textbox" data-options="" style="width:180px" ><br/>
-	              学生编号：<input class="easyui-textbox" data-options="" style="width:180px" ><br/>
-	               学生编号：<input class="easyui-textbox" data-options="" style="width:180px" ><br/>
-	                学生编号：<input class="easyui-textbox" data-options="" style="width:180px" ><br/>
-	                 学生编号：<input class="easyui-textbox" data-options="" style="width:180px" ><br/>
-	                  学生编号：<input class="easyui-textbox" data-options="" style="width:180px" ><br/>   -->      
+	               
 	                   
 	           <a href="javascript:void(0)" onclick="addsave()" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">提交</a>
 	           <a href="javascript:void(0)" onclick="cancel()" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true">取消</a>
 	            
 	    </div>   
-	</div>
+	</div> -->
 
 </body>
 </html>

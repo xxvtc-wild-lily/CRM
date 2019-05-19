@@ -192,5 +192,12 @@
 			s.s_id=#{s_id}
 		</where>
 	</update>
+	
+	<!-- 添加一条跟踪记录 -->
+	<insert id="insertNetFollow" parameterType="netfollow">
+		insert INTO 
+		netfollow(n_stuId,n_stuName,n_followTime,n_nextFollowTime,n_context,e_id,n_followType,n_followStatus)
+		VALUES(#{n_stuId},#{n_stuName},#{n_followTime},#{n_nextFollowTime},#{n_context},#{e_id},#{n_followType},#{n_followStatus})
+	</insert>
 </mapper>
 

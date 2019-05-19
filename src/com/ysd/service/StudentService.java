@@ -1,6 +1,7 @@
 package com.ysd.service;
 
 
+import com.ysd.entity.NetFollow;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
 public interface StudentService {
@@ -11,5 +12,8 @@ public interface StudentService {
 	Integer deleteStudent(Integer s_id);
 	
 	Integer updateStudent(Student student);
+	
+	
+	Integer insertNetFollow(NetFollow netfollow);
 	
 }

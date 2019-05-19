@@ -76,8 +76,8 @@
     </select>
     
     <insert id="insertNetFollow" parameterType="netFollow">
-    				insert into netfollow(n_stuId,n_stuName,n_followTime,n_nextFollowTime,n_context,e_id,n_followType,n_createTime,n_followStatus)
-    			     values(#{n_stuId},#{n_stuName},#{n_followTime},#{n_nextFollowTime},#{n_context},#{e_id},#{n_followType},#{n_createTime},#{n_followStatus})
+    				insert into netfollow(n_stuId,n_stuName,n_followTime,n_nextFollowTime,n_context,n_followType,n_createTime,n_followStatus)
+    			     values(#{n_stuId},#{n_stuName},#{n_followTime},#{n_nextFollowTime},#{n_context},#{n_followType},#{n_createTime},#{n_followStatus})    
     </insert>
     
     

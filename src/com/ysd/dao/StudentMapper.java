@@ -2,6 +2,7 @@ package com.ysd.dao;
 
 import java.util.List;
 
+import com.ysd.entity.NetFollow;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
 
@@ -15,4 +16,10 @@ public interface StudentMapper {
 	Integer deleteStudent(Integer s_id);
 	
 	Integer updateStudent(Student student);
+	/**
+	 * 添加一条跟踪记录
+	 * @param netfollow
+	 * @return
+	 */
+	Integer insertNetFollow(NetFollow netfollow);
 }

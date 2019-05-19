@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ysd.entity.NetFollow;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
 import com.ysd.service.StudentService;
@@ -16,6 +17,8 @@ public class StudentController {
 	private StudentService studentService;
 	@Autowired
 	private Pagination<Student> pagination;
+	@Autowired
+	private NetFollow netfollow;
 	@RequestMapping(value="/selectStudent",method=RequestMethod.POST)
 	@ResponseBody
 	public Pagination<Student> selectStudent(Integer rows,Integer page,Student student){
@@ -56,5 +59,15 @@ public class StudentController {
 		return studentService.updateStudent(student);
 		
 	}
+	
+	
+	@RequestMapping(value="/insertNetFollow",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer insertNetFollow(Integer n_stuId,String n_stuName, String n_followTime, String n_nextFollowTime, String n_context,Integer e_id, String n_followType,String n_followStatus) {
+		
+		return studentService.insertNetFollow(netfollow);
+		
+	}
+	
 	
 }

@@ -20,6 +20,8 @@
 			method:'post',
 			pagination:true,
 			toolbar:"#studentTb",
+			fitColumns:true,
+			checkbox: true,
 			queryParams:{
 				s_name:$("#s_name").val(),
 				s_phone:$("#s_phone").val(),
@@ -28,13 +30,41 @@
 				s_isValid:$("#s_isValid").combobox('getValue'),
 				s_QQ:$("#s_QQ").val(),
 				s_createTime:$("#s_createTime").val()
-			}
+			},
+			 columns:[[
+			        {field:'ck',checkbox:true,width:100},
+			        {field:'s_id',title:'编号' ,width:100},
+			        {field:'s_name',title:'姓名' ,width:100},
+			        {field:'s_age',title:'年龄' ,width:100},
+			        {field:'asker.a_name',title:'咨询师'  ,formatter:formattera_name,width:100},
+			        {field:'s_sex',title:'性别'  ,formatter:formattresex,width:100},
+			        {field:'s_phone',title:'电话'  ,width:100},
+			        {field:'s_eduStatus',title:'学历状态',width:100},
+			        {field:'s_perStatus',title:'个人状态' ,width:100},
+			        {field:'s_comeWay',title:'来源渠道',width:100},
+			        {field:'s_comeSite',title:'来源网站' ,width:100},
+			        {field:'s_sourceKeyWord',title:'来源关键词' ,width:100},
+			        {field:'s_QQ',title:'QQ' ,width:100},
+			        {field:'s_weiXin',title:'微信' ,width:100},
+			        {field:'s_remarks',title:'在线备注' ,width:100},
+			        {field:'s_createTime',title:'创建时间',width:100},
+			        {field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:100},
+			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:100},
+			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:100},
+			        {field:'s_isReport',title:'是否报备' ,width:100},
+			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:100}
+			       	
+			        
+			   
+			        
+			     
+			    ]]
 		});
 		$('#tabfrm').form('clear');
 	}
 	function formattercaozuo(value,row,index){
 		
-		return "<a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a>"
+		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a><a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a>"
 	}
 	
 	function formattera_name(value,row,index){
@@ -66,42 +96,68 @@
 		$("#detailForm").form("load",row);
 		$("#detailDialog").dialog("open");
 	} 
+	function netfollowStudent(){
+		$("#win").dialog("open")
+	}
+	
+	//跟踪添加
+	function addsave(){
+		$.post("../insertNetFollow",{
+			n_stuId:$("#n_stuIdq").val(),
+			n_stuName:$("#n_stuNameq").val(),
+			n_followTime:$("#n_followTimeq").val(),
+			n_nextFollowTime:$("#n_nextFollowTimeq").val(),
+			n_context:$("#n_contextq").val(),
+			e_id:${employee.e_id},
+			n_followType:$("#n_followTypeq").val(),
+			n_followStatus:$("#n_followStatusq").val()
+			
+		},function(res){
+			if(res>0){
+				$.messager.alert("提示","添加成功！！！","info");
+				$("#win").dialog("close");
+				$("#stuTab").datagrid("reload");
+				
+			}else{
+				$.messager.alert("提示","添加失败！！！","error");
+			}
+		},"json")
+		$("#win").form("clear");
+	}
 	function detailClose(){
 		$("#detailDialog").dialog("close");
 	}
 </script>
 </head>
 <body>
+	<!-- --添加日志- -->
+	<div id="win" class="easyui-dialog" title="添加" data-options="closed:true" style="width:600px;height:400px"   
+        data-options="iconCls:'icon-save'">   
+	    <div class="easyui-layout" data-options="fit:true">   
+		      	学生编号：<input id="n_stuIdq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
+		             学生姓名：<input id="n_stuNameq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
+		             跟踪时间：<input id="n_followTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
+	                    下次跟踪时间：<input id="n_nextFollowTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
+	                    跟踪内容：<input id="n_contextq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
+	           	员工编号：<input id="e_idq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
+	                    跟随方式：<input id="n_followTypeq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
+	                  
+	                    跟随状态：<input id="n_followStatusq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/> 
+	                   
+	               
+	                   
+	           <a href="javascript:void(0)" onclick="addsave()" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">提交</a>
+	           <a href="javascript:void(0)" onclick="cancel()" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true">取消</a>
+	            
+	    </div>   
+	</div>
+
+
+
 	<!-- <table id="stuTab" class="easyui-datagrid">
 		<thead>
 			<tr> -->
-	<table id="stuTab" class="easyui-datagrid" data-options="fitColumns:true,checkbox: true" >  
-		<thead>
-			<tr>
-				<th data-options="field:'ck',checkbox:true "></th>
-				<th data-options="field:'s_id',title:'编号'  "></th>
-				<th data-options="field:'s_name',title:'姓名'  "></th>
-				<th data-options="field:'s_age',title:'年龄'  "></th>
-				<th data-options="field:'asker.a_name',title:'咨询师'  ,formatter:formattera_name"></th>
-				<th data-options="field:'s_sex',title:'性别'  ,formatter:formattresex"></th>
-				<th data-options="field:'s_phone',title:'电话'  "></th>
-				<th data-options="field:'s_eduStatus',title:'学历状态'  "></th>
-				<th data-options="field:'s_perStatus',title:'个人状态'  "></th> 
-				<th data-options="field:'s_comeWay',title:'来源渠道'  "></th>
-				<th data-options="field:'s_comeSite',title:'来源网站'  "></th>
-				<th data-options="field:'s_sourceKeyWord',title:'来源关键词'  "></th>
-				<th data-options="field:'s_QQ',title:'QQ' "></th>
-				<th data-options="field:'s_weiXin',title:'微信'  "></th>
-				<th data-options="field:'s_remarks',title:'在线备注'  "></th>
-				<th data-options="field:'s_createTime',title:'创建时间'  "></th>
-				<th data-options="field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx"></th>
-				<th data-options="field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf "></th>
-				<th data-options="field:'s_isPay',title:'是否付费'  ,formatter:formattersfff"></th>
-				<th data-options="field:'s_isReport',title:'是否报备'  "></th>
-				<th data-options="field:'caozuo',title:'操作'  ,formatter:formattercaozuo"></th>
-			</tr>
-		</thead>
-	</table>
+	<table id="stuTab"></table>
 	<div id="studentTb">
 		<form  id="tabfrm" class="easyui-form">
 	        <label for="name">姓名:</label>   
