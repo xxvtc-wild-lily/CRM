@@ -7,14 +7,35 @@ import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
 
 public interface StudentMapper {
+	/**
+	 * 查询所有学生的信息
+	 * @param pagination 分页类
+	 * @return 学生信息
+	 */
 	List<Student> selectStudentAll(Pagination<Student> pagination);
-	
+	/**
+	 * 查询总条数
+	 * @param pagination 分页
+	 * @return 条数
+	 */
 	Integer selectStudentCount(Pagination<Student> pagination);
-	
+	/**
+	 * 添加学生信息
+	 * @param student 
+	 * @return
+	 */
 	Integer insertStudent(Student student);
-	
+	/**
+	 * 删除学生信息
+	 * @param s_id 获取到该行ID
+	 * @return 一条记录
+	 */
 	Integer deleteStudent(Integer s_id);
-	
+	/**
+	 * 修改学生信息
+	 * @param student
+	 * @return
+	 */
 	Integer updateStudent(Student student);
 	/**
 	 * 添加一条跟踪记录
