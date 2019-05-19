@@ -311,12 +311,12 @@
 			        <td><label>录入人：</label></td>
 			        <td><input class="easyui-textbox" data-options="disabled: true" type="text" id="updates_importEmployee" name="s_importEmployee"/></td>
 			    </tr> -->
-			    <tr>
+			    <!-- <tr>
 
 			    
 			        <td><label>录入人：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="updates_importEmployee" name="s_importEmployee"/></td>
-			    </tr>
+			    </tr> -->
 			    <tr Style="text-align:right">
 			    	<td></td>
 			    	<td></td>
