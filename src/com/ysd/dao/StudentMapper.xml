@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -64,10 +64,17 @@
 	
 	<select id="selectStudentByRole" parameterType="pagination" resultMap="resultStu">
 	   select s.*,a.a_name from student s inner join asker a on
+
 	   <if test="e_importEmployee == '咨询师' ">
 	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
 	   </if>
 	   <if test="e_importEmployee == '网络咨询师' " > 
+
+	   <if test="e_importEmployee == '咨询师'">
+	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
+	   </if>
+	   <if test="e_importEmployee == '网络咨询师'">
+
 	       s.s_importEmployee = a.a_name where a.a_name = #{e_name}
        </if>
             <if test="student.s_id != null and student.s_id != ''">
@@ -104,10 +111,17 @@
 	
 	<select id="selectStudentCountByRole" parameterType="pagination" resultMap="resultStu">
        select count(1) from student s inner join asker a on
+
        <if test="e_importEmployee == '咨询师' ">
            s.s_askerid = a.a_id where a.a_id = #{a_aid}
        </if>
        <if test="e_importEmployee == '网络咨询师' " >
+
+       <if test="e_importEmployee == '咨询师'">
+           s.s_askerid = a.a_id where a.a_id = #{a_aid}
+       </if>
+       <if test="e_importEmployee == '网络咨询师'">
+
            s.s_importEmployee = a.a_name where a.a_name = #{e_name}
        </if>
             <if test="student.s_id != null and student.s_id != ''">
