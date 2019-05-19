@@ -112,11 +112,6 @@ public class SignInController {
                             loginName.setPath("/");
                             //添加Cookie
                             response.addCookie(loginName);
-                            // 以下操作同上
-                            Cookie password = new Cookie("password", notMD5Password);
-                            password.setMaxAge(60 * 60 * 24 * 7);
-                            password.setPath("/");
-                            response.addCookie(password);
                         }
                         
                         // 将登录信息赋到session里避免拦截
