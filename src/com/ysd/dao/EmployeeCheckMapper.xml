@@ -88,7 +88,7 @@
                       and ec.ec_checkInTime &gt; #{startCheckInTime} 
                   </if>
                   <if test="endCheckInTime != null and endCheckInTime != ''">
-                      and ec.ec_checkInTime &lt; #{endCheckInTime} and 
+                      and ec.ec_checkInTime &lt; #{endCheckInTime} 
                   </if>
               </where>
             )
