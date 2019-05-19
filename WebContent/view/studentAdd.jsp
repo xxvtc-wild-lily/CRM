@@ -19,8 +19,12 @@
 			url:'../selectStudent',
 			method:'post',
 			pagination:true,
+			singleSelect:true,
 			toolbar:"#studentTb",
+			fitColumns:true,
+			checkbox: true,
 			queryParams:{
+				e_loginName:${employee.e_loginName},
 				s_name:$("#s_name").val(),
 				s_phone:$("#s_phone").val(),
 				a_name:$("#asker.a_name").val(),
@@ -28,14 +32,38 @@
 				s_isValid:$("#s_isValid").combobox('getValue'),
 				s_QQ:$("#s_QQ").val(),
 				s_createTime:$("#s_createTime").val()
-			}
+			},
+			 columns:[[
+			        {field:'ck',checkbox:true,width:100},
+			        {field:'s_id',title:'编号' ,width:100},
+			        {field:'s_name',title:'姓名' ,width:100},
+			        {field:'s_age',title:'年龄' ,width:100},
+			        {field:'asker.a_name',title:'咨询师'  ,formatter:formattera_name,width:100},
+			        {field:'s_sex',title:'性别'  ,formatter:formattresex,width:100},
+			        {field:'s_phone',title:'电话'  ,width:100},
+			        {field:'s_eduStatus',title:'学历状态',width:100},
+			        {field:'s_perStatus',title:'个人状态' ,width:100},
+			        {field:'s_comeWay',title:'来源渠道',width:100},
+			        {field:'s_comeSite',title:'来源网站' ,width:100},
+			        {field:'s_sourceKeyWord',title:'来源关键词' ,width:100},
+			        {field:'s_QQ',title:'QQ' ,width:100},
+			        {field:'s_weiXin',title:'微信' ,width:100},
+			        {field:'s_remarks',title:'在线备注' ,width:100},
+			        {field:'s_createTime',title:'创建时间',width:100},
+			        {field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:100},
+			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:100},
+			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:100},
+			        {field:'s_isReport',title:'是否报备' ,width:100},
+			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:100}
+			    ]]
 		});
 		$('#tabfrm').form('clear');
 	}
 	function formattercaozuo(value,row,index){
-		
+	
 		return "<a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a>"
 	}
+
 	
 	function formattera_name(value,row,index){
 		return row.asker.a_name;
@@ -111,8 +139,7 @@
 			s_QQ:$("#adds_QQ").val(),
 			s_weiXin:$("#adds_weiXin").val(),
 			s_isReport:$("#adds_isReport").val(),
-			s_remarks:$("#adds_remarks").val(),
-			s_importEmployee:$("#adds_importEmployee").val()
+			s_remarks:$("#adds_remarks").val()
 		},function(res){
 			if(res>0){
 				$.messager.alert("提示","添加成功！！！","info");

@@ -14,7 +14,7 @@ import com.ysd.service.StudentService;
 @Controller
 public class StudentController {
 	@Autowired
-	private StudentService studentService;
+	private StudentSevice studentService;
 	@Autowired
 	private Pagination<Student> pagination;
 	
@@ -33,7 +33,7 @@ public class StudentController {
 	@RequestMapping(value="/insertStudent",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer insertStudent(Student student,@RequestParam(value="isAutoAllot") boolean isAutoAllot) {
-	    
+	    System.out.println(student.toString()+"=============================================123123123");
 	    Integer i = studentService.insertStudent(student);
 	    
 		return i;
@@ -54,7 +54,11 @@ public class StudentController {
 	}
 	
 	
+
 	@RequestMapping(value="/insertNetFoll",method=RequestMethod.POST)
+
+	@RequestMapping(value="/insertNetFollowB",method=RequestMethod.POST)
+
 	@ResponseBody
 	public Integer insertNetFoll(NetFollow netfollow) {
 		
