@@ -60,7 +60,7 @@
 			s_name:$("#adds_name").val(),
 			s_sex:$("#adds_sex").combobox("getValue"),
 			s_age:$("#adds_age").val(),
-			s_askerId:$("#adds_askerId").val(),
+			s_importEmployee:${employee.e_loginName},
 			isAutoAllot:isAutoAllot,
 			s_phone:$("#adds_phone").val(),
 			s_eduStatus:$("#adds_eduStatus").combobox("getValue"),
@@ -188,18 +188,7 @@
 			        <td><input class="easyui-textbox" type="text" id="adds_age" name="s_age"/></td>
 			    </tr>
 			    <tr>
-			        <td><label>咨询师：</label></td>
-			        <td>
-			        	<select class="easyui-combobox" style="width:100px;" id="adds_askerId" name="s_askerId">   
-						    <option value="">--请选择--</option>      
-						    <option value="0">1234</option> 
-						    <option value="1">12345</option>
-						    <option value="2">1231231</option>
-						    <option value="3">12312311</option> 
-						    <option value="4">123123123131</option>    
-						</select><br/>
-						<input type="checkbox" id="isAuto" />自动分配
-			        </td>
+			        
 			   
 			        <td><label>电话：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_phone" name="s_phone"/></td>
@@ -250,7 +239,7 @@
 			    	<td></td>
 			    	<td></td>
 			    	<td >
-			    		<a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="addClose()">关闭</a>
+			    		<a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="addSave()">添加</a><a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="addClose()">关闭</a>
 			    	</td>
 			    </tr>
 		    </table>
