@@ -62,6 +62,14 @@ public class RegisterServiceImpl implements RegisterService {
                 Integer i = registerMapper.insertEmployeeCheck(employee);
                 // 修改用户表里的签到状态
                 registerMapper.updateEmployeeCheckStatus(employee);
+                // 查询当前用户是存在于咨询师表里，即是否是咨询师
+                Integer isAsker = registerMapper.selectIsAsker(employee);
+                if (isAsker != 0 && isAsker != null && !isAsker.equals("null")) {
+                    // 更改签到时间
+                    registerMapper.updateAskerCheckInTime(employee);
+                    // 更改签到状态
+                    registerMapper.updateAskerCheckInStatus(employee);
+                }
                 // 如果大于0则修改成功
                 if (i > 0) {
                     statusCode = 3;
@@ -129,6 +137,14 @@ public class RegisterServiceImpl implements RegisterService {
                     registerMapper.updateEmployeeCheckOutStatus(employee);
                     // 修改签到表里的签到状态
                     registerMapper.updateEmployeeCheckCheckOutStatus(employeeCheck);
+                    // 查询当前用户是存在于咨询师表里，即是否是咨询师
+                    Integer isAsker = registerMapper.selectIsAsker(employee);
+                    if (isAsker != null && isAsker != 0 && !isAsker.equals("null")) {
+                        // 更改签退时间
+                        registerMapper.updateAskerCheckOutTime(employee);
+                        // 更改签退状态
+                        registerMapper.updateAskerCheckOutStatus(employee);
+                    }
                     // 如果大于0则修改成功
                     if (i > 0) {
                         statusCode = 4;

@@ -165,6 +165,15 @@ public class EmployeeCheckServiceImpl implements EmployeeCheckService {
                 registerMapper.updateEmployeeCheckOutStatus(employee);
                 // 修改签到表里的签到状态
                 registerMapper.updateEmployeeCheckCheckOutStatus(employeeCheck);
+                // 查询当前用户是存在于咨询师表里，即是否是咨询师
+                Integer isAsker = registerMapper.selectIsAsker(employee);
+                System.out.println("================"+isAsker);
+                if (isAsker != null && isAsker != 0 && !isAsker.equals("null")) {
+                    // 更改签退时间
+                    registerMapper.updateAskerCheckOutTime(employee);
+                    // 更改签退状态
+                    registerMapper.updateAskerCheckOutStatus(employee);
+                }
                 // 如果大于0则修改成功
                 if (i > 0) {
                     statusCode = 4;

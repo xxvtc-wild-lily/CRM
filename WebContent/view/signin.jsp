@@ -24,13 +24,10 @@ pageContext.setAttribute("path",request.getContextPath());
     $(function(){
     	// 获取cookie的值
     	var loginName = getCookie("loginName");
-    	var password = getCookie("password");
     	
     	// 当cookie有值才进行赋值操作
-    	if (loginName != null && loginName != "" && loginName != undefined &&
-    		password != null && password != "" && password != undefined) {
+    	if (loginName != null && loginName != "" && loginName != undefined) {
 	    	$("#e_loginName").textbox("setValue",loginName);
-	    	$("#e_passWord").passwordbox("setValue",password);
     	}
     })
     
