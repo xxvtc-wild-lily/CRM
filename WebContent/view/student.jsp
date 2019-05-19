@@ -55,11 +55,6 @@
 			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:100},
 			        {field:'s_isReport',title:'是否报备' ,width:100},
 			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:100}
-			       	
-			        
-			   
-			        
-			     
 			    ]]
 		});
 		$('#tabfrm').form('clear');
@@ -162,6 +157,9 @@
 		
 		return sex;
 	}
+	
+	
+	
 	function saveStudent(index){
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
@@ -180,7 +178,7 @@
 	
 	//跟踪添加
 	function addsave(){
-		$.post("../insertNetFollow",{
+		$.post("../insertNetFollowB",{
 			n_stuId:$("#n_stuIdq").val(),
 			n_stuName:$("#n_stuNameq").val(),
 			n_followTime:$("#n_followTimeq").val(),
@@ -258,7 +256,7 @@
 								<td><input type="checkbox" value="s_QQ"/>QQ</td>
 								<td><input type="checkbox" value="s_weiXin"/>微信</td>
 								<td><input type="checkbox" value="s_remarks"/>在线备注</td>
-								</tr>
+							</tr>
 							<tr>
 								<td><input type="checkbox" value="s_createTime"/>创建时间</td>
 								<td><input type="checkbox" value="s_learnForward"/>课程方向</td>
@@ -359,9 +357,8 @@
 			</tr>
 		</thead>
 	</table>
-    </div>   
-</div>  
-
+    </div>
+    
 
 
 
