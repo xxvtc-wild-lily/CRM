@@ -21,7 +21,7 @@ public interface StudentMapper {
 	 * @param netfollow
 	 * @return
 	 */
-	Integer insertNetFollow(NetFollow netfollow);
+	Integer insertNetFoll(NetFollow netfollow);
 	
 	/**
 	 * 查询是不是咨询经理

@@ -65,9 +65,9 @@ public class StudentServiceImp implements StudentService {
 	}
 
 	@Override
-	public Integer insertNetFollow(NetFollow netfollow) {
+	public Integer insertNetFoll(NetFollow netfollow) {
 		
-		return studentMapper.insertNetFollow(netfollow);
+		return studentMapper.insertNetFoll(netfollow);
 	}
 
 

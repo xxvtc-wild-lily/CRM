@@ -17,8 +17,7 @@ public class StudentController {
 	private StudentService studentService;
 	@Autowired
 	private Pagination<Student> pagination;
-	@Autowired
-	private NetFollow netfollow;
+	
 	@RequestMapping(value="/selectStudent",method=RequestMethod.POST)
 	@ResponseBody
 	public Pagination<Student> selectStudent(Integer rows,Integer page,Student student,String e_loginName){
@@ -55,11 +54,11 @@ public class StudentController {
 	}
 	
 	
-	@RequestMapping(value="/insertNetFollow",method=RequestMethod.POST)
+	@RequestMapping(value="/insertNetFoll",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer insertNetFollow(Integer n_stuId,String n_stuName, String n_followTime, String n_nextFollowTime, String n_context,Integer e_id, String n_followType,String n_followStatus) {
+	public Integer insertNetFoll(NetFollow netfollow) {
 		
-		return studentService.insertNetFollow(netfollow);
+		return studentService.insertNetFoll(netfollow);
 		
 	}
 	

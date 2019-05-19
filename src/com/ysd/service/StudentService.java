@@ -14,6 +14,6 @@ public interface StudentService {
 	Integer updateStudent(Student student);
 	
 	
-	Integer insertNetFollow(NetFollow netfollow);
+	Integer insertNetFoll(NetFollow netfollow);
 	
 }

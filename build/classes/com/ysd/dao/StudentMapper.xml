@@ -68,8 +68,6 @@
 	   <if test="e_importEmployee == '咨询师' ">
 	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
 	   </if>
-	   <if test="e_importEmployee == '网络咨询师' " > 
-
 	   <if test="e_importEmployee == '咨询师'">
 	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
 	   </if>
@@ -115,8 +113,6 @@
        <if test="e_importEmployee == '咨询师' ">
            s.s_askerid = a.a_id where a.a_id = #{a_aid}
        </if>
-       <if test="e_importEmployee == '网络咨询师' " >
-
        <if test="e_importEmployee == '咨询师'">
            s.s_askerid = a.a_id where a.a_id = #{a_aid}
        </if>
@@ -304,7 +300,7 @@
 	
 
 	
-	<insert id="insertNetFollow" parameterType="netfollow">
+	<insert id="insertNetFoll" parameterType="netfollow">
 		insert INTO 
 		netfollow(n_stuId,n_stuName,n_followTime,n_nextFollowTime,n_context,e_id,n_followType,n_followStatus)
 		VALUES(#{n_stuId},#{n_stuName},#{n_followTime},#{n_nextFollowTime},#{n_context},#{e_id},#{n_followType},#{n_followStatus})
