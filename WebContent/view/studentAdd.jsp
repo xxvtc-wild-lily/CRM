@@ -228,49 +228,35 @@
 			        <td><input class="easyui-textbox" type="text" id="adds_age" name="s_age"  data-options="required:true"/></td>
 			    </tr>
 			    <tr>
-			        <td><label>咨询师：</label></td>
-			        <td>
-			        	<select class="easyui-combobox" style="width:100px;" id="adds_askerId" name="s_askerId"  data-options="required:true">   
-						    <option value="">--请选择--</option>      
-						    <option value="1">1234</option> 
-						    <option value="2">12345</option>
-						    <option value="3">1231231</option>
-						    <option value="4">12312311</option> 
-						    <option value="5">123123123131</option>    
-						</select><br/>
-						<input type="checkbox" id="isAuto" />自动分配
-			        </td>
+			        
 			  
 			        
 			   
 			        <td><label>电话：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_phone" name="s_phone"/></td>
-			   		
-			        <td><label>录入人：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adds_importEmployee" name="s_importEmployee" data-options="required:true"/></td>
+
 			        
-			    </tr>
-			    <tr>
+			   
 			        <td><label>状态：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_perStatus" name="s_perStatus"/></td>
 			   
 			        <td><label>来源渠道：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_comeWay" name="s_comeWay"/></td>
-			   
-			        <td><label>来源网站：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adds_comeSite" name="s_comeSite"/></td>
 			    </tr>
 			    <tr>
+			        <td><label>来源网站：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="adds_comeSite" name="s_comeSite"/></td>
+			   
 			        <td><label>来源关键词：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_sourceKeyWord" name="s_sourceKeyWord"/></td>
 			   
 			        <td><label>学员QQ：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_QQ" name="s_QQ"/></td>
-			    
+			     </tr>
+			    <tr>
 			        <td><label>微信号：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_weiXin" name="s_weiXin"/></td>
-			    </tr>
-			    <tr>
+			    
 			    	<td><label>学历：</label></td>
 			        <td>
 			        	<select class="easyui-combobox" style="width:100px;" id="adds_eduStatus" name="s_eduStatus">   
@@ -284,7 +270,8 @@
 			        
 			        <td><label>是否报备：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_isReport" name="s_isReport"/></td>
-			    
+			    </tr>
+			    <tr>
 			        <td><label>在线备注：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_remarks" name="s_remarks"/></td>
 			        
