@@ -64,10 +64,10 @@
 	
 	<select id="selectStudentByRole" parameterType="pagination" resultMap="resultStu">
 	   select s.*,a.a_name from student s inner join asker a on
-	   <if test="e_importEmployee == '咨询�?">
+	   <if test="e_importEmployee == '咨询师'">
 	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
 	   </if>
-	   <if test="e_importEmployee == '网络咨询�?">
+	   <if test="e_importEmployee == '网络咨询师'">
 	       s.s_importEmployee = a.a_name where a.a_name = #{e_name}
        </if>
             <if test="student.s_id != null and student.s_id != ''">
@@ -104,10 +104,10 @@
 	
 	<select id="selectStudentCountByRole" parameterType="pagination" resultMap="resultStu">
        select count(1) from student s inner join asker a on
-       <if test="e_importEmployee == '咨询�?">
+       <if test="e_importEmployee == '咨询师'">
            s.s_askerid = a.a_id where a.a_id = #{a_aid}
        </if>
-       <if test="e_importEmployee == '网络咨询�?">
+       <if test="e_importEmployee == '网络咨询师'">
            s.s_importEmployee = a.a_name where a.a_name = #{e_name}
        </if>
             <if test="student.s_id != null and student.s_id != ''">
