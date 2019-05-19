@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeCheck;
 import com.ysd.entity.Pagination;
 import com.ysd.service.EmployeeCheckService;
@@ -50,6 +51,12 @@ public class EmployeeCheckController {
         } else if (pagination.getEc_checkStatus() == 1) {
             // 已签到的判断
             
+            // 为时间未填时设置时间
+            if (pagination.getStartCheckInTime() == "" && pagination.getStartCheckInTime() == "") {
+                pagination.setStartCheckInTime(registerTime.getStringTime(0));
+                pagination.setEndCheckInTime(registerTime.getStringTime(24));
+            }
+            
             list = employeeCheckService.selectAllHasCheckInEmployee(pagination);
             i = employeeCheckService.selectAllHasCheckInEmployeeCount(pagination);
             
@@ -79,6 +86,15 @@ public class EmployeeCheckController {
         System.out.println(pagination.getRows().toString());
         
         return pagination;
+    }
+    
+    @RequestMapping(value="/signOut",method=RequestMethod.POST)
+    @ResponseBody
+    public Integer signBack(Employee employee) {
+        
+        Integer i = employeeCheckService.updateEmployeeCheck(employee);
+        
+        return i;
     }
     
 }

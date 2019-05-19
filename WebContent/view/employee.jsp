@@ -23,8 +23,8 @@
 	})
 	function init(){
 		$("#empTab").datagrid({
-			url:'../selectEmployee',
-			method:'post',
+			url:"../selectEmployee",
+			method:"post",
 			pagination:true,
 			singleSelect:true,
 			toolbar:"#tb",
@@ -33,8 +33,21 @@
 				in_e_createTime:$("#in_e_createTime").val(),
 				en_e_createTime:$("#en_e_createTime").val(),
 				e_isLockOut:$("#e_isLockOut").val()
-			}
-		
+			},
+			columns:[[    
+		        {field:"e_id",title:"编号",width:30},
+		        {field:"e_loginName",title:"登录名",width:100},
+		        {field:"e_isLockOut",title:"是否锁定",width:60,formatter:formatterIsLock},
+		        {field:"e_lastLoginTime",title:"最后一次登录时间",width:170},
+		        {field:"e_createTime",title:"创建时间",width:170},
+		        {field:"e_protectEmail",title:"密保邮箱",width:170},
+		        {field:"e_protectMTel",title:"密保手机号",width:100},
+		        {field:"e_sex",title:"员工性别",width:65,formatter:formatterSex},
+		        {field:"e_age",title:"员工年龄",width:65},
+		        {field:"e_photo",title:"员工照片",width:70,formatter:formatterImg},
+		        {field:"e_inCompanyTime",title:"入职时间",width:180},
+		        {field:"caozuo",title:"操作",width:130,formatter:formattercaozuo}
+		    ]]
 		});
 		$('#tabfrm').form('clear');
 	}
@@ -42,12 +55,12 @@
 		
 		return "<a href='javascript:void(0)' onclick='detail("+index+")'>查看</a> <a href='javascript:void(0)' onclick='updateEmployee("+index+")'>修改</a> <a href='javascript:void(0)' onclick='openUpdateRoleDialog("+index+")'>修改角色</a>"
 	}
-	function formatterimg(value,row,index){
+	function formatterImg(value,row,index){
 		if(value != null && value != ''){
 			return "<img style='width:40px;height:50px;' src='../image/"+value+"'>"
 		}
 	}
-	function formattersfsd(value,row,index) {
+	function formatterIsLock(value,row,index) {
 		var e_isLockOut = row.e_isLockOut;
 		var status = "";
 		if (e_isLockOut == null) {
@@ -80,21 +93,42 @@
 		$("#updateDialog").dialog("open");
 	}
 	function saveUpdat(){
-		$.post("../updateEmployee",{
-			e_loginName:$("#updatee_loginName").val(),
-			e_protectEmail:$("#updatee_protectEmail").val(),
-			e_protectMTel:$("#updatee_protectMTel").val(),
-		},function(res){
-			
-			if(res>0){
-				$.messager.alert("提示","修改成功！","info");
-				$("#updateDialog").dialog("close");
-				$("#empTab").datagrid("reload");
-			}else{
-				$.messager.alert("提示","修改失败！","error");
-				
-			}
-		},"json")
+		
+		// 判断手机号的正则表达式
+        var regMTel=/^[1][3,4,5,7,8][0-9]{9}$/;
+        // 判断邮箱的正则表达式
+        var regEmail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+        
+        var e_protectMTel = $("#updatee_protectMTel").val();
+        var e_protectEmail = $("#updatee_protectEmail").val();
+        
+        // 判断手机号是否正确
+        if (regMTel.test(e_protectMTel)) {
+            // 判断邮箱是否正确
+            if (regEmail.test(e_protectEmail)) {
+            	
+            	$.post("../updateEmployee",{
+                    e_loginName:$("#updatee_loginName").val(),
+                    e_protectEmail:e_protectEmail,
+                    e_protectMTel:e_protectMTel
+                },function(res){
+                    if(res>0){
+                        $.messager.alert("提示","修改成功！","info");
+                        $("#updateDialog").dialog("close");
+                        $("#empTab").datagrid("reload");
+                    }else{
+                        $.messager.alert("提示","修改失败！","error");
+                        
+                    }
+                },"json")
+            	
+            } else {
+            	$.messager.alert("提示","请输入正确的邮箱！","error");
+            }
+        } else {
+            $.messager.alert("提示","请输入正确的手机号！","error");
+        }
+        
 	}
 	function closeUpdat(){
 		$("#updateDialog").dialog("close");
@@ -490,24 +524,8 @@
 </script>
 </head>
 <body>
-	<table id="empTab" class="easyui-datagrid">
-		<thead>
-			<tr>
-				<th data-options="field:'e_id',title:'编号'  "></th>
-				<th data-options="field:'e_loginName',title:'登录名'  "></th>
-				<th data-options="field:'e_isLockOut',title:'是否锁定'  ,formatter:formattersfsd"></th>
-				<th data-options="field:'e_lastLoginTime',title:'最后一次登录时间'  "></th>
-				<th data-options="field:'e_createTime',title:'创建时间'  "></th>
-				<th data-options="field:'e_protectEmail',title:'密保邮箱'  "></th>
-				<th data-options="field:'e_protectMTel',title:'密保手机号'  " ></th>
-				<th data-options="field:'e_sex',title:'员工性别'  ,formatter:formatterSex"></th>
-				<th data-options="field:'e_age',title:'员工年龄'  "></th>
-				<th data-options="field:'e_photo',title:'员工照片' , formatter:formatterimg"></th>
-				<th data-options="field:'e_inCompanyTime',title:'入职时间'  "></th>
-				<th data-options="field:'caozuo',title:'操作',formatter:formattercaozuo"></th>
-			</tr>
-		</thead>
-	</table>
+	<table id="empTab"></table>
+	
 	<div id="tb">
 		<form  id="tabfrm" class="easyui-form">
 	        <label for="name">用户名:</label>   

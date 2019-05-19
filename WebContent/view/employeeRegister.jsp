@@ -96,13 +96,15 @@
     	    		e_loginName:e_name
     	    	},function(res){
     	    		if (res == "1") {
-                        $.messager.alert("提示",""+e_name+"今天目前尚未签到！","error");
+                        $.messager.alert("提示",""+e_name+"今天尚未签到！","error");
                     } else if (res == "2") {
                         $.messager.alert("提示",""+e_name+"今天已经签退过了！","error");
                     } else if (res == "4") {
                         $.messager.alert("提示","签退成功！","info");
                         $("#empTab").datagrid("reload");
                     } else if (res == "3") {
+                        $.messager.alert("提示","签退失败！","error");
+                    } else if (res == "5") {
                         $.messager.alert("提示","签退失败！","error");
                     }
     	    	},"json")

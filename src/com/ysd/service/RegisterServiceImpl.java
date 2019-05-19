@@ -57,7 +57,7 @@ public class RegisterServiceImpl implements RegisterService {
         // 如果等于0说明今天没签到
         if (isTodayCheckIn == 0) {
             // 判断是否在今天早上10点以前打的卡  
-            if (dateTen.getTime() < dateNow.getTime() && dateNow.getTime() < dateTen.getTime()) {
+            if (dateZero.getTime() < dateNow.getTime() && dateNow.getTime() < dateTen.getTime()) {
                 // 添加用户签到表里的记录
                 Integer i = registerMapper.insertEmployeeCheck(employee);
                 // 修改用户表里的签到状态

@@ -2,6 +2,7 @@ package com.ysd.service;
 
 import java.util.List;
 
+import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeCheck;
 import com.ysd.entity.Pagination;
 
@@ -62,5 +63,7 @@ public interface EmployeeCheckService {
      * @return 查询到的总条数
      */
     Integer selectAllHasCheckOutEmployeeCount(Pagination<EmployeeCheck> pagination);
+    
+    Integer updateEmployeeCheck(Employee employee);
     
 }

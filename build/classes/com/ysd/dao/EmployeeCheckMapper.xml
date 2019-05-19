@@ -100,7 +100,7 @@
     <select id="selectAllHasCheckInEmployee" parameterType="pagination" resultMap="employeeCheckMap">
         select e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,e.e_protectMTel,e.e_photo,e.e_ext4,ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,ec.ec_ext4
         from employee e left join employeecheck ec on ec.e_name = e.e_loginName
-        where ec.e_id not in(
+        where ec.e_id in(
               select ec.e_id from employeecheck ec 
               <where>
                   <if test="startCheckInTime != null and startCheckInTime != ''">
@@ -122,7 +122,7 @@
     <select id="selectAllHasCheckInEmployeeCount" parameterType="pagination" resultType="_int">
         select count(1)
         from employee e left join employeecheck ec on ec.e_name = e.e_loginName
-        where ec.e_id not in(
+        where ec.e_id in(
               select ec.e_id from employeecheck ec 
               <where>
                   <if test="startCheckInTime != null and startCheckInTime != ''">

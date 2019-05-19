@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.ysd.dao.StudentMapper">
+    
 	<resultMap type="student" id="resultStu">
 		<id column="s_id" property="s_id"/>
 		<result column="s_name" property="s_name"/>
@@ -52,6 +53,94 @@
 		<result column="a_id" property="asker.a_id"/>
 		<result column="a_name" property="asker.a_name"/>
 	</resultMap>
+	
+	<select id="selectIsAskerManager" parameterType="pagination" resultType="_int">
+	   select a.a_id from asker a where a.a_name = #{e_name}
+	</select>
+	
+	<select id="selectAskerRoleNameByAid" parameterType="_int" resultType="string">
+	   select a.a_roleName from asker a where a.a_id = #{a_aid}
+	</select>
+	
+	<select id="selectStudentByRole" parameterType="pagination" resultMap="resultStu">
+	   select s.*,a.a_name from student s inner join asker a on
+	   <if test="e_importEmployee == '咨询�?">
+	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
+	   </if>
+	   <if test="e_importEmployee == '网络咨询�?">
+	       s.s_importEmployee = a.a_name where a.a_name = #{e_name}
+       </if>
+            <if test="student.s_id != null and student.s_id != ''">
+                and s.s_id =#{student.s_id}
+            </if>
+            <if test=" student.s_name != null and student.s_name != ''">
+                and s.s_name like "%"#{student.s_name}"%"
+            </if>
+            <if test="student.s_phone != null and student.s_phone != ''">
+                and s.s_phone like "%"#{student.s_phone}"%"
+            </if>
+            <if test="asker != null ">
+                <if test="asker.a_name != null and asker.a_name != ''">
+                    and a.a_name like "%"#{asker.a_name}"%"
+                </if>
+            </if>
+            <if test="student.s_isPay != null">
+                and s.s_isPay =#{student.s_isPay}
+            </if>
+            <if test="student.s_isValid != null">
+                and s.s_isValid =#{student.s_isValid}
+            </if>
+            <if test="student.s_isReturnVisit != null and student.s_isReturnVisit != ''">
+                and s.s_isReturnVisit =#{student.s_isReturnVisit}
+            </if>
+            <if test=" student.s_QQ != null and student.s_QQ != ''">
+                and s.s_QQ like "%"#{student.s_QQ}"%"
+            </if>
+            <if test="student.s_createTime != null and student.s_createTime != ''">
+                and s.s_createTime =#{student.s_createTime}
+            </if>
+        limit #{page},#{pageSize}
+	</select>
+	
+	<select id="selectStudentCountByRole" parameterType="pagination" resultMap="resultStu">
+       select count(1) from student s inner join asker a on
+       <if test="e_importEmployee == '咨询�?">
+           s.s_askerid = a.a_id where a.a_id = #{a_aid}
+       </if>
+       <if test="e_importEmployee == '网络咨询�?">
+           s.s_importEmployee = a.a_name where a.a_name = #{e_name}
+       </if>
+            <if test="student.s_id != null and student.s_id != ''">
+                and s.s_id =#{student.s_id}
+            </if>
+            <if test=" student.s_name != null and student.s_name != ''">
+                and s.s_name like "%"#{student.s_name}"%"
+            </if>
+            <if test="student.s_phone != null and student.s_phone != ''">
+                and s.s_phone like "%"#{student.s_phone}"%"
+            </if>
+            <if test="asker != null ">
+                <if test="asker.a_name != null and asker.a_name != ''">
+                    and a.a_name like "%"#{asker.a_name}"%"
+                </if>
+            </if>
+            <if test="student.s_isPay != null">
+                and s.s_isPay =#{student.s_isPay}
+            </if>
+            <if test="student.s_isValid != null">
+                and s.s_isValid =#{student.s_isValid}
+            </if>
+            <if test="student.s_isReturnVisit != null and student.s_isReturnVisit != ''">
+                and s.s_isReturnVisit =#{student.s_isReturnVisit}
+            </if>
+            <if test=" student.s_QQ != null and student.s_QQ != ''">
+                and s.s_QQ like "%"#{student.s_QQ}"%"
+            </if>
+            <if test="student.s_createTime != null and student.s_createTime != ''">
+                and s.s_createTime =#{student.s_createTime}
+            </if>
+    </select>
+	
 	<select id="selectStudentAll" parameterType="pagination" resultMap="resultStu">
 		select s.*,a.a_name from student s inner join asker a on s.s_askerId=a.a_id
 		<where>
@@ -88,6 +177,7 @@
 		
 		limit #{page},#{pageSize}
 	</select>
+	
 	<select id="selectStudentCount" parameterType="pagination" resultType="int">
 		select count(s.s_id) from student s inner join asker a on s.s_askerId=a.a_id
 		<where>
@@ -122,13 +212,17 @@
 			</if>
 		</where>
 	</select>
+	
 	<insert id="insertStudent" parameterType="student">
-		insert into student(s_name,s_sex,s_age,s_askerId,s_phone,s_eduStatus,s_perStatus,s_comeWay,s_comeSite,s_sourceKeyWord,s_QQ,s_weiXin,s_isReport,s_remarks) 
-		values(#{s_name},#{s_sex},#{s_age},#{s_askerId},#{s_phone},#{s_eduStatus},#{s_perStatus},#{s_comeWay},#{s_comeSite},#{s_sourceKeyWord},#{s_QQ},#{s_weiXin},#{s_isReport},#{s_remarks})
+		insert into student(s_name,s_sex,s_age,s_askerId,s_phone,s_eduStatus,s_perStatus,s_comeWay,s_comeSite,s_sourceKeyWord,s_QQ,s_weiXin,s_isReport,s_remarks,s_importEmployee) 
+		values(#{s_name},#{s_sex},#{s_age},#{s_askerId},#{s_phone},#{s_eduStatus},#{s_perStatus},#{s_comeWay},#{s_comeSite},#{s_sourceKeyWord},#{s_QQ},#{s_weiXin},#{s_isReport},#{s_remarks},#{s_importEmployee})
+
 	</insert>
+	
 	<delete id="deleteStudent" parameterType="int">
 		delete from student where s_id=#{s_id} 
 	</delete>
+	
 	<update id="updateStudent" parameterType="student">
 		update student s join asker a on s.s_askerId=a.a_id
 		<set>
@@ -194,7 +288,8 @@
 		</where>
 	</update>
 	
-	<!-- 添加一条跟踪记录 -->
+
+	
 	<insert id="insertNetFollow" parameterType="netfollow">
 		insert INTO 
 		netfollow(n_stuId,n_stuName,n_followTime,n_nextFollowTime,n_context,e_id,n_followType,n_followStatus)

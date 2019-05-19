@@ -21,27 +21,21 @@ public class StudentController {
 	private NetFollow netfollow;
 	@RequestMapping(value="/selectStudent",method=RequestMethod.POST)
 	@ResponseBody
-	public Pagination<Student> selectStudent(Integer rows,Integer page,Student student){
+	public Pagination<Student> selectStudent(Integer rows,Integer page,Student student,String e_loginName){
 		pagination.setPage((page-1)*rows);
 		pagination.setPageSize(rows);
 		pagination.setStudent(student);
-		pagination=studentService.selectStudentAll(pagination);		
+		System.out.println(e_loginName);
+		pagination.setE_name(e_loginName);
+		System.out.println(pagination.getE_name()+"===========");
+		pagination=studentService.selectStudentAll(pagination);
 		return pagination;
 	} 
 	@RequestMapping(value="/insertStudent",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer insertStudent(Student student,@RequestParam(value="isAutoAllot") boolean isAutoAllot) {
 	    
-	    Integer i = 0;
-	    
-	    // 判断是否自动分量
-	    if(isAutoAllot) {
-	        
-	        
-	        
-	    } else {
-	        i = studentService.insertStudent(student);
-	    }
+	    Integer i = studentService.insertStudent(student);
 	    
 		return i;
 		// 

@@ -34,7 +34,7 @@ public class IndexTree {
                 treeData.add(map);
             }
         }
-        System.out.println(treeData);
+        
         return treeData;
     }
     
