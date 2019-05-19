@@ -349,10 +349,10 @@
 				</tr>
 				<tr>
 
-					<td><input class="easyui-textbox" type="text" id="s_id" name="s_id" data-options="readonly:true" /></td>
+					<td><input class="easyui-textbox" data-options="disabled: true" type="text" id="s_id" name="s_id" data-options="readonly:true" /></td>
 				
 					<td><label>学生姓名：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_name" name="s_name" data-options="readonly:true" /></td>
+					<td><input class="easyui-textbox"data-options="disabled: true" type="text" id="s_name" name="s_name" data-options="readonly:true" /></td>
 				
 					<td><label>年龄：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_age" name="s_age" data-options="readonly:true" /></td>
