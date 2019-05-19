@@ -1,9 +1,5 @@
 package com.ysd.service;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,37 +16,89 @@ public class EmployeeCheckServiceImpl implements EmployeeCheckService {
     private EmployeeCheckMapper employeeCheckMapper;
 
     @Override
-    public List<EmployeeCheck> selectAllEmployeeCheckA(Pagination<EmployeeCheck> pagination) {
+    public List<EmployeeCheck> selectAllEmployeeCheck(Pagination<EmployeeCheck> pagination) {
         // TODO Auto-generated method stub
         
-        List<EmployeeCheck> list = employeeCheckMapper.selectAllEmployeeCheckA(pagination);
+        List<EmployeeCheck> list = employeeCheckMapper.selectAllEmployeeCheck(pagination);
         
-        return list;
-    }
-    
-    @Override
-    public List<EmployeeCheck> selectAllEmployeeCheckB(Pagination<EmployeeCheck> pagination) {
-        // TODO Auto-generated method stub
-        
-        List<EmployeeCheck> list = employeeCheckMapper.selectAllEmployeeCheckB(pagination);
+        for (int i = 0;i < list.size();i++) {
+            list.get(i).setEc_ext5(1);
+        }
         
         return list;
     }
 
     @Override
-    public Integer selectAllEmployeeCheckCountA(Pagination<EmployeeCheck> pagination) {
+    public Integer selectAllEmployeeCheckCount(Pagination<EmployeeCheck> pagination) {
         // TODO Auto-generated method stub
         
-        Integer i = employeeCheckMapper.selectAllEmployeeCheckCountA(pagination);
+        Integer i = employeeCheckMapper.selectAllEmployeeCheckCount(pagination);
         
         return i;
     }
 
     @Override
-    public Integer selectAllEmployeeCheckCountB(Pagination<EmployeeCheck> pagination) {
+    public List<EmployeeCheck> selectAllNotCheckEmployee(Pagination<EmployeeCheck> pagination) {
         // TODO Auto-generated method stub
         
-        Integer i = employeeCheckMapper.selectAllEmployeeCheckCountB(pagination);
+        List<EmployeeCheck> list = employeeCheckMapper.selectAllNotCheckEmployee(pagination);
+        
+        for (int i = 0;i < list.size();i++) {
+            list.get(i).setEc_ext5(2);
+        }
+        
+        return list;
+    }
+
+    @Override
+    public Integer selectAllNotCheckEmployeeCount(Pagination<EmployeeCheck> pagination) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeCheckMapper.selectAllNotCheckEmployeeCount(pagination);
+        
+        return i;
+    }
+
+    @Override
+    public List<EmployeeCheck> selectAllHasCheckInEmployee(Pagination<EmployeeCheck> pagination) {
+        // TODO Auto-generated method stub
+        
+        List<EmployeeCheck> list = employeeCheckMapper.selectAllHasCheckInEmployee(pagination);
+        
+        for (int i = 0;i < list.size();i++) {
+            list.get(i).setEc_ext5(3);
+        }
+        
+        return list;
+    }
+
+    @Override
+    public Integer selectAllHasCheckInEmployeeCount(Pagination<EmployeeCheck> pagination) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeCheckMapper.selectAllHasCheckInEmployeeCount(pagination);
+        
+        return i;
+    }
+
+    @Override
+    public List<EmployeeCheck> selectAllHasCheckOutEmployee(Pagination<EmployeeCheck> pagination) {
+        // TODO Auto-generated method stub
+        
+        List<EmployeeCheck> list = employeeCheckMapper.selectAllHasCheckOutEmployee(pagination);
+        
+        for (int i = 0;i < list.size();i++) {
+            list.get(i).setEc_ext5(4);
+        }
+        
+        return list;
+    }
+
+    @Override
+    public Integer selectAllHasCheckOutEmployeeCount(Pagination<EmployeeCheck> pagination) {
+        // TODO Auto-generated method stub
+        
+        Integer i = employeeCheckMapper.selectAllHasCheckOutEmployeeCount(pagination);
         
         return i;
     }

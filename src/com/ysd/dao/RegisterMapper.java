@@ -47,4 +47,11 @@ public interface RegisterMapper {
      */
     Integer updateEmployeeCheckOutStatus(Employee employee);
     
+    /**
+     * 签退时更改签退表数据的签退状态
+     * @param employee 包含签到信息的员工类
+     * @return 受影响的行数
+     */
+    Integer updateEmployeeCheckCheckOutStatus(EmployeeCheck employeeCheck);
+    
 }

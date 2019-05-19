@@ -22,7 +22,7 @@ pageContext.setAttribute("path",request.getContextPath());
 </style>
 <script type="text/javascript">
     $(function(){
-    	//获取cookie的值
+    	// 获取cookie的值
     	var loginName = getCookie("loginName");
     	var password = getCookie("password");
     	
@@ -57,70 +57,6 @@ pageContext.setAttribute("path",request.getContextPath());
         }
         return value;
     }
-    
-    // ajax登录的方法
-    /* function signIn() {
-    	var e_loginName = $("#e_loginName").val();
-    	var e_passWord = $("#e_passWord").val();
-    	var verifyCode = $("#verifyCode").val();
-    	var passLogin = $("input[type='checkbox']").is(':checked');
-    	// 是否记住密码的判断值
-    	var checkStatus = 0;
-    	// 获取验证码图片元素
-        var verifyCodeImage = document.getElementById("verifyCodeImage");
-    	
-    	if (e_loginName != null && e_loginName != "" && e_loginName != undefined) {
-    		if (e_passWord != null && e_passWord != "" && e_passWord != undefined) {
-    			if (verifyCode != null && verifyCode != "" && verifyCode != undefined) {
-    				// 验证图片验证码是否正确
-    				$.post("verifiAction",{
-    					verifyCode:verifyCode
-    				},function(res){
-    					if (res==1){
-    						// 判断是否勾选7天免登录，赋值给勾选状态，然后传给后台进行判断
-    						if (passLogin) {
-    							checkStatus = 1;
-    						} else {
-    							checkStatus = 0;
-    						}
-    						// 登录的post提交
-    						$.post("signin",{
-    							e_loginName:e_loginName,
-    							e_passWord:e_passWord,
-    							checkStatus:checkStatus
-    						},function (res) {
-    							if (res.loginStatusCode == 1) {
-    								$.messager.alert("提示","登陆成功！","info");
-    							} else if (res.loginStatusCode == 2) {
-    								$.messager.alert("提示","用户名不存在！","error");
-    								verifyCodeImage.click();
-    							} else if (res.loginStatusCode == 3) {
-    								$.messager.alert("提示","密码错误，剩余尝试次数："+res.lastLoginChance,"error");
-    								verifyCodeImage.click();
-    							} else if (res.loginStatusCode == 4) {
-    								$.messager.alert("提示","账号已锁定！","error");
-    								verifyCodeImage.click();
-    							}
-    						},"json")
-    						
-    					} else {
-    						$.messager.alert("提示","验证码错误，请重新输入！","error");
-    						// 执行click以触发更换图片操作
-    						verifyCodeImage.click();
-    					}
-    				},"json")
-    				
-    			} else {
-    				$.messager.alert("提示","验证码不能为空！","error");
-    			}
-    		} else {
-    			$.messager.alert("提示","密码不能为空！","error");
-    		}
-    	} else {
-    		$.messager.alert("提示","用户名不能为空！","error");
-    	}
-    	
-    } */
     
     function forgetPassword() {
     	alert("忘记密码");

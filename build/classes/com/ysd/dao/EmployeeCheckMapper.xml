@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ysd.dao.EmployeeCheckMapper">
-
+    
     <resultMap type="employeeCheck" id="employeeCheckMap">
         <id column="ec_id" property="ec_id" />
         <result column="e_name" property="e_name"/>
@@ -11,19 +11,19 @@
         
         <association property="employee" javaType="employee">
             <id column="e_id" property="e_id" />
-	        <result column="e_loginName" property="e_loginName" />
-	        <result column="e_sex" property="e_sex" />
-	        <result column="e_age" property="e_age" />
-	        <result column="e_protectEmail" property="e_protectEmail" />
-	        <result column="e_protectMTel" property="e_protectMTel" />
-	        <result column="e_photo" property="e_photo" />
-	        <result column="e_ext4" property="e_ext4"/>
+            <result column="e_loginName" property="e_loginName" />
+            <result column="e_sex" property="e_sex" />
+            <result column="e_age" property="e_age" />
+            <result column="e_protectEmail" property="e_protectEmail" />
+            <result column="e_protectMTel" property="e_protectMTel" />
+            <result column="e_photo" property="e_photo" />
+            <result column="e_ext4" property="e_ext4"/>
         </association>
         
     </resultMap>
     
-    <select id="selectAllEmployeeCheckA" parameterType="pagination" resultMap="employeeCheckMap">
-        select ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,
+    <select id="selectAllEmployeeCheck" parameterType="pagination" resultMap="employeeCheckMap">
+        select ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,ec.ec_ext4,e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,
         e.e_protectMTel,e.e_photo,e.e_ext4 
         from employeecheck ec left join employee e on ec.e_name = e.e_loginName
         <where>
@@ -37,10 +37,11 @@
                 and ec.ec_checkOutTime &lt;= #{endCheckInTime}
             </if>
         </where>
+        order by ec.ec_checkInTime desc
         limit #{page},#{pageSize}
     </select>
     
-    <select id="selectAllEmployeeCheckCountA" parameterType="pagination" resultType="_int">
+    <select id="selectAllEmployeeCheckCount" parameterType="pagination" resultType="_int">
         select count(1)
         from employeecheck ec left join employee e on ec.e_name = e.e_loginName
         <where>
@@ -56,44 +57,128 @@
         </where>
     </select>
     
-    <select id="selectAllEmployeeCheckB" parameterType="pagination" resultMap="employeeCheckMap">
-        select ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,
-        e.e_protectMTel,e.e_photo,e.e_ext4 
-        from employee e left join employeecheck ec on e.e_loginName = ec.e_name
-        <where>
-            <if test="e_name != null and e_name !=''">
+    <select id="selectAllNotCheckEmployee" parameterType="pagination" resultMap="employeeCheckMap">
+        select e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,e.e_protectMTel,e.e_photo,e.e_ext4,ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,ec.ec_ext4
+		from employee e left join employeecheck ec on ec.e_name = e.e_loginName
+		where ec.e_id not in(
+		      select ec.e_id from employeecheck ec 
+		      <where>
+		          <if test="startCheckInTime != null and startCheckInTime != ''">
+		              and ec.ec_checkInTime &gt; #{startCheckInTime}
+		          </if>
+		          <if test="endCheckInTime != null and endCheckInTime != ''">
+		              and ec.ec_checkInTime &lt; #{endCheckInTime} 
+		          </if>
+		      </where>
+		    )
+			<if test="e_name != null and e_name != ''">
+			    and ec.e_name like "%"#{e_name}"%"
+			</if>
+		order by ec.ec_checkInTime desc
+		limit #{page},#{pageSize}
+    </select>
+    
+    <select id="selectAllNotCheckEmployeeCount" parameterType="pagination" resultType="_int">
+        select count(1)
+        from employee e left join employeecheck ec on ec.e_name = e.e_loginName
+        where ec.e_id not in(
+              select ec.e_id from employeecheck ec 
+              <where>
+                  <if test="startCheckInTime != null and startCheckInTime != ''">
+                      and ec.ec_checkInTime &gt; #{startCheckInTime} 
+                  </if>
+                  <if test="endCheckInTime != null and endCheckInTime != ''">
+                      and ec.ec_checkInTime &lt; #{endCheckInTime} 
+                  </if>
+              </where>
+            )
+            <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>
-            <if test="ec_checkStatus != null and ec_checkStatus !=''">
-                and e.e_ext4 = #{ec_checkStatus}
+    </select>
+    
+    <select id="selectAllHasCheckInEmployee" parameterType="pagination" resultMap="employeeCheckMap">
+        select e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,e.e_protectMTel,e.e_photo,e.e_ext4,ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,ec.ec_ext4
+        from employee e left join employeecheck ec on ec.e_name = e.e_loginName
+        where ec.e_id not in(
+              select ec.e_id from employeecheck ec 
+              <where>
+                  <if test="startCheckInTime != null and startCheckInTime != ''">
+                      and ec.ec_checkInTime &gt; #{startCheckInTime}
+                  </if>
+                  <if test="endCheckInTime != null and endCheckInTime != ''">
+                      and ec.ec_checkInTime &lt; #{endCheckInTime}
+                  </if>
+              </where>
+            )
+            <if test="e_name != null and e_name != ''">
+                and ec.e_name like "%"#{e_name}"%"
             </if>
-            <if test="startCheckInTime != null and startCheckInTime != ''">
-                and ec.ec_checkInTime &gt;= #{startCheckInTime}
-            </if>
-            <if test="endCheckInTime != null and endCheckInTime != ''">
-                and ec.ec_checkOutTime &lt;= #{endCheckInTime}
-            </if>
-        </where>
+            and ec.ec_checkStatus = 1 
+        order by ec.ec_checkInTime desc
         limit #{page},#{pageSize}
     </select>
     
-    <select id="selectAllEmployeeCheckCountB" parameterType="pagination" resultType="_int">
+    <select id="selectAllHasCheckInEmployeeCount" parameterType="pagination" resultType="_int">
         select count(1)
-        from employee e left join employeecheck ec on e.e_loginName = ec.e_name
-        <where>
-            <if test="e_name != null and e_name !=''">
+        from employee e left join employeecheck ec on ec.e_name = e.e_loginName
+        where ec.e_id not in(
+              select ec.e_id from employeecheck ec 
+              <where>
+                  <if test="startCheckInTime != null and startCheckInTime != ''">
+                      and ec.ec_checkInTime &gt; #{startCheckInTime} 
+                  </if>
+                  <if test="endCheckInTime != null and endCheckInTime != ''">
+                      and ec.ec_checkInTime &lt; #{endCheckInTime} 
+                  </if>
+              </where>
+            )
+            <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>
-            <if test="ec_checkStatus != null and ec_checkStatus !=''">
-                and e.e_ext4 = #{ec_checkStatus}
+            and ec.ec_checkStatus = 1 
+    </select>
+    
+    <select id="selectAllHasCheckOutEmployee" parameterType="pagination" resultMap="employeeCheckMap">
+        select e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,e.e_protectMTel,e.e_photo,e.e_ext4,ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,ec.ec_ext4
+        from employee e left join employeecheck ec on ec.e_name = e.e_loginName
+        where ec.e_id in(
+              select ec.e_id from employeecheck ec 
+              <where>
+                  <if test="startCheckInTime != null and startCheckInTime != ''">
+                      and ec.ec_checkInTime &gt; #{startCheckInTime}
+                  </if>
+                  <if test="endCheckInTime != null and endCheckInTime != ''">
+                      and ec.ec_checkInTime &lt; #{endCheckInTime} 
+                  </if>
+              </where>
+            )
+            <if test="e_name != null and e_name != ''">
+                and ec.e_name like "%"#{e_name}"%"
             </if>
-            <if test="startCheckInTime != null and startCheckInTime != ''">
-                and ec.ec_checkInTime &gt;= #{startCheckInTime}
+            and ec.ec_checkStatus = 2 
+        order by ec.ec_checkInTime desc
+        limit #{page},#{pageSize}
+    </select>
+    
+    <select id="selectAllHasCheckOutEmployeeCount" parameterType="pagination" resultType="_int">
+        select count(1)
+        from employee e left join employeecheck ec on ec.e_name = e.e_loginName
+        where ec.e_id in(
+              select ec.e_id from employeecheck ec 
+              <where>
+                  <if test="startCheckInTime != null and startCheckInTime != ''">
+                      and ec.ec_checkInTime &gt; #{startCheckInTime}
+                  </if>
+                  <if test="endCheckInTime != null and endCheckInTime != ''">
+                      and ec.ec_checkInTime &lt; #{endCheckInTime} 
+                  </if>
+              </where>
+            )
+            <if test="e_name != null and e_name != ''">
+                and ec.e_name like "%"#{e_name}"%"
             </if>
-            <if test="endCheckInTime != null and endCheckInTime != ''">
-                and ec.ec_checkOutTime &lt;= #{endCheckInTime}
-            </if>
-        </where>
+            and ec.ec_checkStatus = 2 
     </select>
     
 </mapper>
