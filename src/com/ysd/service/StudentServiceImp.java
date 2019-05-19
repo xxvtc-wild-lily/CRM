@@ -17,10 +17,31 @@ public class StudentServiceImp implements StudentService {
 	
 	@Override
 	public Pagination<Student> selectStudentAll(Pagination<Student> pagination) {
-		List<Student> selectStudentAll = studentMapper.selectStudentAll(pagination);
-		Integer selectStudentCount = studentMapper.selectStudentCount(pagination);
-		pagination.setTotal(selectStudentCount);
-		pagination.setRows(selectStudentAll);
+	    
+	    Integer isAskerManager = studentMapper.selectIsAskerManager(pagination);
+	    pagination.setA_aid(isAskerManager);
+	    
+	    System.out.println(isAskerManager+"=====================");
+	    
+	    if (isAskerManager != null && isAskerManager != 0 && !isAskerManager.equals("null")) {
+	        
+	        String askerRoleName = studentMapper.selectAskerRoleNameByAid(isAskerManager);
+	        System.out.println(askerRoleName);
+	        pagination.setE_importEmployee(askerRoleName);
+	        
+	        List<Student> list = studentMapper.selectStudentByRole(pagination);
+	        Integer i = studentMapper.selectStudentCountByRole(pagination);
+	        pagination.setTotal(i);
+            pagination.setRows(list);
+	        
+	    } else {
+	        List<Student> selectStudentAll = studentMapper.selectStudentAll(pagination);
+	        Integer selectStudentCount = studentMapper.selectStudentCount(pagination);
+	        pagination.setTotal(selectStudentCount);
+	        pagination.setRows(selectStudentAll);
+	    }
+	    
+		
 		return pagination;
 	}
 

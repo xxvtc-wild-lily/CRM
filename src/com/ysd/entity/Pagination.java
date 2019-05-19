@@ -17,6 +17,8 @@ public class Pagination<T> {
 	private String en_e_createTime;
 	private Student student;
 	private Asker asker;
+	private String e_importEmployee;
+	private Integer a_aid;
 	
 	private String n_stuName;
 	private Integer e_id;
@@ -144,13 +146,25 @@ public class Pagination<T> {
     public void setEndCheckInTime(String endCheckInTime) {
         this.endCheckInTime = endCheckInTime;
     }
-    
+    public String getE_importEmployee() {
+        return e_importEmployee;
+    }
+    public void setE_importEmployee(String e_importEmployee) {
+        this.e_importEmployee = e_importEmployee;
+    }
+    public Integer getA_aid() {
+        return a_aid;
+    }
+    public void setA_aid(Integer a_aid) {
+        this.a_aid = a_aid;
+    }
     @Override
     public String toString() {
         return "Pagination [page=" + page + ", pageSize=" + pageSize + ", total=" + total + ", rows=" + rows
                 + ", employee=" + employee + ", in_e_createTime=" + in_e_createTime + ", en_e_createTime="
-                + en_e_createTime + ", student=" + student + ", asker=" + asker + ", n_stuName=" + n_stuName + ", e_id="
-                + e_id + ", startn_followTime=" + startn_followTime + ", endn_followTime=" + endn_followTime
+                + en_e_createTime + ", student=" + student + ", asker=" + asker + ", e_importEmployee="
+                + e_importEmployee + ", a_aid=" + a_aid + ", n_stuName=" + n_stuName + ", e_id=" + e_id
+                + ", startn_followTime=" + startn_followTime + ", endn_followTime=" + endn_followTime
                 + ", s_isReturnVisit=" + s_isReturnVisit + ", n_followType=" + n_followType + ", e_name=" + e_name
                 + ", ec_checkStatus=" + ec_checkStatus + ", startCheckInTime=" + startCheckInTime + ", endCheckInTime="
                 + endCheckInTime + "]";
