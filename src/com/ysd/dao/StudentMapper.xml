@@ -84,8 +84,8 @@
 			<if test="student.s_createTime != null and student.s_createTime != ''">
 				and s.s_createTime =#{student.s_createTime}
 			</if>
-			
-			and	s.s_askerId=a.a_id and s.s_importEmployee=a.a_name	
+	
+			and s.s_importEmployee=a.a_name	
 		</where>
 		
 		limit #{page},#{pageSize}
@@ -122,6 +122,7 @@
 			<if test="student.s_createTime != null and student.s_createTime != ''">
 				and s.s_createTime =#{student.s_createTime}
 			</if>
+			
 			and	s.s_askerId=a.a_id and s.s_importEmployee=a.a_name		
 		</where>
 	</select>
@@ -129,6 +130,10 @@
 		insert into student(s_name,s_sex,s_age,s_askerId,s_phone,s_eduStatus,s_perStatus,s_comeWay,s_comeSite,s_sourceKeyWord,s_QQ,s_weiXin,s_isReport,s_remarks,s_importEmployee) 
 		values(#{s_name},#{s_sex},#{s_age},#{s_askerId},#{s_phone},#{s_eduStatus},#{s_perStatus},#{s_comeWay},#{s_comeSite},#{s_sourceKeyWord},#{s_QQ},#{s_weiXin},#{s_isReport},#{s_remarks},#{s_importEmployee})
 		
+
+		insert into student(s_name,s_sex,s_age,s_phone,s_eduStatus,s_perStatus,s_comeWay,s_comeSite,s_sourceKeyWord,s_QQ,s_weiXin,s_isReport,s_remarks,s_importEmployee) 
+		values(#{s_name},#{s_sex},#{s_age},#{s_phone},#{s_eduStatus},#{s_perStatus},#{s_comeWay},#{s_comeSite},#{s_sourceKeyWord},#{s_QQ},#{s_weiXin},#{s_isReport},#{s_remarks},#{s_importEmployee})
+
 	</insert>
 	<delete id="deleteStudent" parameterType="int">
 		delete from student where s_id=#{s_id} 

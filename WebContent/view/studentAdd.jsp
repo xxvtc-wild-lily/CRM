@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -100,7 +100,7 @@
 			s_name:$("#adds_name").val(),
 			s_sex:$("#adds_sex").combobox("getValue"),
 			s_age:$("#adds_age").val(),
-			s_askerId:$("#adds_askerId").val(),
+			s_importEmployee:${employee.e_loginName},
 			isAutoAllot:isAutoAllot,
 			s_phone:$("#adds_phone").val(),
 			s_eduStatus:$("#adds_eduStatus").combobox("getValue"),
@@ -241,6 +241,8 @@
 						<input type="checkbox" id="isAuto" />自动分配
 			        </td>
 			  
+			        
+			   
 			        <td><label>电话：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_phone" name="s_phone"/></td>
 			   		
