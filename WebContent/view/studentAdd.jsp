@@ -19,10 +19,9 @@
 			url:'../selectStudent',
 			method:'post',
 			pagination:true,
-			singleSelect:true,
 			toolbar:"#studentTb",
 			fitColumns:true,
-			checkbox: true,
+			checkbox:true,
 			queryParams:{
 				e_loginName:${employee.e_loginName},
 				s_name:$("#s_name").val(),
@@ -128,7 +127,7 @@
 			s_name:$("#adds_name").val(),
 			s_sex:$("#adds_sex").combobox("getValue"),
 			s_age:$("#adds_age").val(),
-			s_importEmployee:${employee.e_loginName},
+			s_importEmployee:${employee.e_loginName}, 
 			isAutoAllot:isAutoAllot,
 			s_phone:$("#adds_phone").val(),
 			s_eduStatus:$("#adds_eduStatus").combobox("getValue"),
@@ -244,7 +243,7 @@
 			   
 			        <td><label>性别：</label></td>
 			        <td>
-				        <select class="easyui-combobox" style="width:100px;" id="adds_sex" name="s_sex" data-options="required:true">   
+				        <select class="easyui-combobox" style="width:100px;" id="adds_sex" name="s_sex">   
 						    <option value="">--请选择--</option>   
 						    <option value="0">女</option>   
 						    <option value="1">男</option>     
@@ -252,7 +251,7 @@
 					</td> 
 			    
 			        <td><label>年龄：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adds_age" name="s_age"  data-options="required:true"/></td>
+			        <td><input class="easyui-textbox" type="text" id="adds_age" name="s_age" /></td>
 			    </tr>
 			    <tr>
 			        

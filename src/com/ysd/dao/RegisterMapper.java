@@ -54,4 +54,39 @@ public interface RegisterMapper {
      */
     Integer updateEmployeeCheckCheckOutStatus(EmployeeCheck employeeCheck);
     
+    /**
+     * 查询咨询师表里是否有该用户
+     * @param employee 包含签到信息的员工类
+     * @return 查询到的咨询师id
+     */
+    Integer selectIsAsker(Employee employee);
+    
+    /**
+     * 更改咨询师表的签到时间
+     * @param employee 包含签到信息的员工类
+     * @return 受影响的行数
+     */
+    Integer updateAskerCheckInTime(Employee employee);
+    
+    /**
+     * 更改咨询师表的签到状态为已签到
+     * @param employee 包含签到信息的员工类
+     * @return 受影响的行数
+     */
+    Integer updateAskerCheckInStatus(Employee employee);
+    
+    /**
+     * 更改咨询师表的签退时间
+     * @param employee 包含签到信息的员工类
+     * @return 受影响的行数
+     */
+    Integer updateAskerCheckOutTime(Employee employee);
+    
+    /**
+     * 更改咨询师表的签到状态为已签退
+     * @param employee 包含签到信息的员工类
+     * @return 受影响的行数
+     */
+    Integer updateAskerCheckOutStatus(Employee employee);
+    
 }

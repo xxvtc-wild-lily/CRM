@@ -37,4 +37,24 @@
         where e_name = #{e_name} and ec_CheckInTime BETWEEN #{ec_checkInTime} AND #{ec_checkOutTime}
     </update>
     
+    <select id="selectIsAsker" parameterType="employee" resultType="_int">
+        select a.a_id from asker a where a.a_name = #{e_loginName}
+    </select>
+    
+    <update id="updateAskerCheckInTime" parameterType="employee">
+        update asker set a_checkInTime = now() where a_name = #{e_loginName}
+    </update>
+    
+    <update id="updateAskerCheckInStatus" parameterType="employee">
+        update asker set a_checkStatus = 1 where a_name = #{e_loginName}
+    </update>
+    
+    <update id="updateAskerCheckOutTime" parameterType="employee">
+        update asker set a_checkOutTime = now() where a_name = #{e_loginName}
+    </update>
+    
+    <update id="updateAskerCheckOutStatus" parameterType="employee">
+        update asker set a_checkStatus = 2 where a_name = #{e_loginName}
+    </update>
+    
 </mapper>

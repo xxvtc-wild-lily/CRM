@@ -24,13 +24,10 @@ pageContext.setAttribute("path",request.getContextPath());
     $(function(){
     	// 获取cookie的值
     	var loginName = getCookie("loginName");
-    	var password = getCookie("password");
     	
     	// 当cookie有值才进行赋值操作
-    	if (loginName != null && loginName != "" && loginName != undefined &&
-    		password != null && password != "" && password != undefined) {
+    	if (loginName != null && loginName != "" && loginName != undefined) {
 	    	$("#e_loginName").textbox("setValue",loginName);
-	    	$("#e_passWord").passwordbox("setValue",password);
     	}
     })
     
@@ -100,7 +97,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	               <b>${msg }</b>
                 </div>
 	            <div style="margin-left:40px">
-	               <input type="submit" id="signin" value="登录"/>
+	               <input type="submit" id="signin" value="登录" style="width:70px;height:30px;color:#6699FF;"/>
 	            </div>
 	            <!-- <div style="margin-left:140px;margin-top:20px;">
                     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-help'" onclick="forgetPassword()">忘记密码?</a>

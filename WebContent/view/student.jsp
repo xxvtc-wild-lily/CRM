@@ -12,14 +12,18 @@
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function(){
-		init()
+		init();
+		$('#lie_window').window({
+			onBeforeClose:function(){
+				$("#lie_window").dialog("clear");
+			}
+		});
 	})
 	function init(){
 		$("#stuTab").datagrid({
 			url:'../selectStudent',
 			method:'post',
 			pagination:true,
-			singleSelect:true,
 			toolbar:"#studentTb",
 			fitColumns:true,
 			checkbox: true,
@@ -205,6 +209,35 @@
 	function detailClose(){
 		$("#detailDialog").dialog("close");
 	}
+	
+	function show(){
+        var datagridTitle = new Array();
+        var shuxing = new Array();
+        var fields = $("#stuTab").datagrid('getColumnFields');
+        var option;
+             for (var i = 0; i < fields.length; i++) {
+                option = $("#stuTab").datagrid('getColumnOption', fields[i]);
+                datagridTitle.push(option.title);
+                shuxing.push(option.field);
+               if (option.field != "checkItem" && option.hidden != true) { 
+                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+"  name='ch'>"+datagridTitle[i]+"</br>");
+                    $("input[name='ch']").get(i).checked=true;
+                }else{
+                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+" name='ch' >"+datagridTitle[i]+"</br>");
+                } 
+            }
+        $("#lie_window").window("open");
+        $("input[name='ch']").click(function(){
+                if($(this).is(":checked")){
+                    var p = $(this).val();
+                    $("#stuTab").datagrid('showColumn',p);
+                }else{
+                    var q = $(this).val();
+                    $("#stuTab").datagrid('hideColumn',q);
+                }
+        })
+    }
+	
 </script>
 </head>
 
@@ -419,9 +452,13 @@
 	        
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0);" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
+			<a type="button" href="javascript:void(0)" onclick="show()" class="easyui-linkbutton">动态设置</a>
 			
 		</form>
 	</div>
+	<div id="lie_window" class="easyui-dialog" title="列设置" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:500px;height:300px;padding:10px;">
+         
+    </div>
 	<div id="detailDialog" class="easyui-dialog" title="查看信息"  style="width:1000px; height:440px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
 		<form id="detailForm" method="post">
 			<table>
@@ -436,9 +473,7 @@
 					<td><input class="easyui-textbox" type="text" id="s_age" name="s_age" data-options="readonly:true" /></td>
 				
 					<td><label>性别：</label></td>
-
 					<td><input class="easyui-textbox" type="text" id="s_sex" data-options="readonly:true" /></td>
-
 
 				</tr>
 				<tr>
@@ -465,7 +500,12 @@
 					<td><input class="easyui-textbox" type="text" id="s_address" name="s_address" data-options="readonly:true" /></td>
 				
 					<td><label>咨询师：</label></td>
+
 					<td><input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
+
+					<td>
+						<input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
+
 				</tr>
 				<tr>
 					<td><label>QQ：</label></td>
@@ -485,10 +525,14 @@
 					<td><input class="easyui-textbox" type="text" id="s_learnForward" name="s_learnForward" data-options="readonly:true" /></td>
 					<td><label>是否有效：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isValid" data-options="readonly:true" /></td>
+
+
 					<td><label>打分：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_record" name="s_record" data-options="readonly:true" /></td>
 					<td><label>是否回访：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isReturnVisit" data-options="readonly:true" /></td>
+
+
 
 				</tr>
 				<tr>
@@ -496,6 +540,7 @@
 					<td><input class="easyui-textbox" type="text" id="s_firstVisitTime" name="s_firstVisitTime" data-options="readonly:true" /></td>
 					<td><label>是否上门：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isHome" data-options="readonly:true" /></td>
+
 					<td><label>上门时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_homeTime" name="s_homeTime" data-options="readonly:true" /></td>
 					<td><label>无效原因：</label></td>
@@ -504,6 +549,7 @@
 				<tr>
 					<td><label>是否付费：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isPay" data-options="readonly:true" /></td>
+
 					<td><label>付费时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_payTime" name="s_payTime" data-options="readonly:true" /></td>
 					<td><label>金额：</label></td>
@@ -515,8 +561,11 @@
 					<td><label>是否进班：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isInClass" data-options="readonly:true" /></td>
 
+
 					<td><label>是否进班：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isInClass" name="s_isInClass" /></td>
+
+		
 
 					<td><label>进班时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_inClassTime" name="s_inClassTime" data-options="readonly:true" /></td>
@@ -533,8 +582,10 @@
 					<td><input class="easyui-textbox" type="text" id="s_focus" name="s_focus" data-options="readonly:true" /></td>
 					<td><label>是否报备：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isReport" data-options="readonly:true" /></td>
+
 				</tr>
 				<tr>
+
 					<td><label>录入人：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_importEmployee" name="s_importEmployee" data-options="readonly:true" /></td>
 					<td><label>退费原因：</label></td>
@@ -544,7 +595,7 @@
 					<td><label>定金时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_preMoneyTime" name="s_preMoneyTime" data-options="readonly:true" /></td>
 				</tr>
-				<tr><td></td></tr>
+				<tr></tr>
 				<tr Style="text-align:right">
 					<td></td>
 					<td></td>
