@@ -71,4 +71,6 @@ public interface StudentMapper {
 	 * @return 查询到的学生数量
 	 */
 	Integer selectStudentCountByRole(Pagination<Student> pagination);
+	
+	
 }
