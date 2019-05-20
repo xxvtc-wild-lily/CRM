@@ -26,7 +26,7 @@
 			pagination:true,
 			toolbar:"#studentTb",
 			fitColumns:true,
-			checkbox: true,
+			checkbox: true, 
 			queryParams:{
 				e_loginName:${employee.e_loginName},
 				s_name:$("#s_name").val(),
@@ -68,7 +68,7 @@
 		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a> <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a> <a href='javascript:void(0)' onclick='updateStudent("+index+")'>修改</a>"
 	}
 	
-	function updateStudent(index){
+	/* function updateStudent(index){
         var data=$("#stuTab").datagrid("getData");
         var row=data.rows[index];
         $('#updateForm').form('load',row);
@@ -107,7 +107,7 @@
             }
         },"json")
         $('#updateForm').form('clear');
-    }
+    } */
 	
 	function formattera_name(value,row,index){
 		return row.asker.a_name;
@@ -274,151 +274,6 @@
 <body style="margin:0px">
 
 
-<div id="cc" class="easyui-layout" style="width:1350px;height:572px;">   
-    <div data-options="region:'north',title:'控制显示',split:true,collapsed:true" style="height:200px;">
-    		<!-- 设置隐藏列 -->
-				<div>
-					<form id="hiddenColumn_form" class="easyui-form">
-					<a href="javascript:void()"  class="easyui-linkbutton" id="isQuanXuan" onclick="ChooseAll()" data-options="iconCls:'icon-edit'">全选</a>
-					<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="saveColumn()()">保存</a> 
-						<table>
-							<tr>
-								<td><input type="checkbox" value="s_id"/>编号</td>
-								<td><input type="checkbox" value="s_name"/>姓名</td>
-								<td><input type="checkbox" value="s_age"/>年龄</td>
-								<td><input type="checkbox" value="s_sex"/>性别</td>
-								<td><input type="checkbox" value="s_phone"/>电话</td>
-								<td><input type="checkbox" value="s_eduStatus"/>学历</td>
-								<td><input type="checkbox" value="s_perStatus"/>状态</td>
-								<td><input type="checkbox" value="s_comeWay"/>来源渠道</td>
-								<td><input type="checkbox" value="s_comeSite"/>来源网站</td>
-								<td><input type="checkbox" value="s_sourceKeyWord"/>来源关键字</td>
-								<td><input type="checkbox" value="s_address"/>地址</td>
-								<td><input type="checkbox" value="s_askerId"/>咨询师</td>
-								<td><input type="checkbox" value="s_QQ"/>QQ</td>
-								<td><input type="checkbox" value="s_weiXin"/>微信</td>
-								<td><input type="checkbox" value="s_remarks"/>在线备注</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" value="s_createTime"/>创建时间</td>
-								<td><input type="checkbox" value="s_learnForward"/>课程方向</td>
-							
-								<td><input type="checkbox" value="s_isValid"/>是否有效</td>
-								<td><input type="checkbox" value="s_record"/>打分</td>
-								<td><input type="checkbox" value="s_isReturnVisit"/>是否回访</td>
-								<td><input type="checkbox" value="s_firstVisitTime"/>首次回访时间</td>
-								<td><input type="checkbox" value="s_isHome"/>是否上门</td>
-								<td><input type="checkbox" value="s_homeTime"/>上门时间</td>
-								<td><input type="checkbox" value="s_lostReason"/>无效原因</td>
-								<td><input type="checkbox" value="s_isPay"/>是否付费</td>
-								<td><input type="checkbox" value="s_payTime"/>付费时间</td>
-								<td><input type="checkbox" value="s_payMoney"/>付费金额</td>
-								<td><input type="checkbox" value="s_isReturnMoney"/>是否退费</td>
-								<td><input type="checkbox" value="s_isInClass"/>是否进班</td>
-								<td><input type="checkbox" value="s_inClassTime"/>进班时间</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" value="s_inClassRemarks"/>进班备注</td>
-							
-								<td><input type="checkbox" value="s_askerRemarks"/>咨询师备注</td>
-								<td><input type="checkbox" value="s_fromPart"/>来源部门</td>
-							
-								<td><input type="checkbox" value="s_focus"/>学员关注</td>
-								<td><input type="checkbox" value="s_isReport"/>是否报备</td>
-							
-								<td><input type="checkbox" value="s_importEmployee"/>录入人</td>
-								<td><input type="checkbox" value="s_returnMoneyReason"/>退费原因</td>
-							
-								<td><input type="checkbox" value="s_preMoney"/>定金金额</td>
-								<td><input type="checkbox" value="s_preMoneyTime"/>定金时间</td>
-							
-								
-							</tr>
-							<tr style="display: none">
-								<td><input type="checkbox" value="s_ext1"/>备注</td>
-								<td><input type="checkbox" value="s_ext2"/>备注</td>
-							
-								<td><input type="checkbox" value="s_ext3"/>备注</td>
-							</tr>
-							<tr style="display: none">
-								<td><input type="checkbox" value="s_ext4"/>备注</td>
-							
-								<td><input type="checkbox" value="s_ext5"/>备注</td>
-							</tr>
-							<tr style="display: none">
-								<td><input type="checkbox" value="s_ext6"/>备注</td>
-							</tr>
-						</table>
-					</form>
-				</div>
-    </div>   
-    <div data-options="region:'center'" style="padding:5px;background:#eee;height:400px">
-    					<table id="stuTab" class="easyui-datagrid" data-options="fitColumns:true,checkbox: true" >  
-		<thead>
-			<tr>
-				<th data-options="field:'s_id',title:'编号'  "></th>
-				<th data-options="field:'s_name',title:'姓名'  "></th>
-				<th data-options="field:'s_age',title:'年龄'  "></th>
-				<th data-options="field:'s_askerId',title:'咨询师'  ,formatter:formattera_name"></th>
-				<th data-options="field:'s_sex',title:'性别'  ,formatter:formattresex"></th>
-				<th data-options="field:'s_phone',title:'电话'  "></th>
-				<th data-options="field:'s_eduStatus',title:'学历状态'  "></th>
-				<th data-options="field:'s_perStatus',title:'个人状态'  "></th> 
-				<th data-options="field:'s_comeWay',hidden:true,title:'来源渠道'  "></th>
-				<th data-options="field:'s_comeSite',hidden:true,title:'来源网站'  "></th>
-				<th data-options="field:'s_sourceKeyWord',hidden:true,title:'来源关键词'  "></th>
-				<th data-options="field:'s_address',hidden:true,title:'地址' "></th>
-				<th data-options="field:'s_QQ',title:'QQ' "></th>
-				<th data-options="field:'s_weiXin',title:'微信'  "></th>
-				<th data-options="field:'s_remarks',hidden:true,title:'在线备注'  "></th>
-				<th data-options="field:'s_createTime',title:'创建时间'  "></th>
-				<th data-options="field:'s_learnForward',hidden:true,title:'课程方向'  "></th>
-				<th data-options="field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx"></th>
-				<th data-options="field:'s_record',hidden:true,title:'打分'  "></th>
-				<th data-options="field:'s_isReturnVisit',hidden:true,title:'是否回访'  ,formatter:formattersfhf "></th>
-				<th data-options="field:'s_firstVisitTime',hidden:true,title:'首次回访时间'  "></th>
-				<th data-options="field:'s_isHome',hidden:true,title:'是否上门'  "></th>
-				<th data-options="field:'s_homeTime',hidden:true,title:'上门时间'  "></th>
-				<th data-options="field:'s_lostReason',hidden:true,title:'无效原因'  "></th>
-				<th data-options="field:'s_isPay',title:'是否付费'  ,formatter:formattersfff"></th>
-				<th data-options="field:'s_payTime',hidden:true,title:'付费时间'  "></th>
-				<th data-options="field:'s_payMoney',hidden:true,title:'金额'  "></th>
-				<th data-options="field:'s_isReturnMoney',hidden:true,title:'是否退费'  "></th>
-				<th data-options="field:'s_isInClass',hidden:true,title:'是否进班'  "></th>
-				<th data-options="field:'s_inClassTime',hidden:true,title:'进班时间'  "></th>
-				<th data-options="field:'s_inClassRemarks',hidden:true,title:'进班备注'  "></th>
-				<th data-options="field:'s_askerRemarks',hidden:true,title:'咨询师备注'  "></th>
-				<th data-options="field:'s_fromPart',hidden:true,title:'来源部门'  "></th>
-				<th data-options="field:'s_focus',hidden:true,title:'学员关注'  "></th>
-				<th data-options="field:'s_isReport',hidden:true,title:'是否报备'  "></th>
-				<th data-options="field:'s_importEmployee',hidden:true,title:'录入人'  "></th>
-				<th data-options="field:'s_returnMoneyReason',hidden:true,title:'退费原因'  "></th>
-				<th data-options="field:'s_preMoney',hidden:true,title:'定金'  "></th>
-				<th data-options="field:'s_preMoneyTime',title:'定金时间'  "></th>
-				<th data-options="field:'caozuo',title:'操作'  ,formatter:formattercaozuo"></th>
-			</tr>
-		</thead>
-	</table>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	<!-- <table id="stuTab" class="easyui-datagrid">
@@ -474,7 +329,6 @@
 				
 					<td><label>性别：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_sex" data-options="readonly:true" /></td>
-
 				</tr>
 				<tr>
 					<td><label>电话：</label></td>
@@ -500,12 +354,8 @@
 					<td><input class="easyui-textbox" type="text" id="s_address" name="s_address" data-options="readonly:true" /></td>
 				
 					<td><label>咨询师：</label></td>
-
-					<td><input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
-
 					<td>
 						<input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
-
 				</tr>
 				<tr>
 					<td><label>QQ：</label></td>
@@ -523,75 +373,75 @@
 				<tr>
 					<td><label>课程方向：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_learnForward" name="s_learnForward" data-options="readonly:true" /></td>
+				
 					<td><label>是否有效：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isValid" data-options="readonly:true" /></td>
-
-
+				
 					<td><label>打分：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_record" name="s_record" data-options="readonly:true" /></td>
+				
 					<td><label>是否回访：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isReturnVisit" data-options="readonly:true" /></td>
-
-
-
 				</tr>
 				<tr>
 					<td><label>首次回访时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_firstVisitTime" name="s_firstVisitTime" data-options="readonly:true" /></td>
+				
 					<td><label>是否上门：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isHome" data-options="readonly:true" /></td>
-
+				
 					<td><label>上门时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_homeTime" name="s_homeTime" data-options="readonly:true" /></td>
+				
 					<td><label>无效原因：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_lostReason" name="s_lostReason" data-options="readonly:true" /></td>
 				</tr>
 				<tr>
 					<td><label>是否付费：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isPay" data-options="readonly:true" /></td>
-
+				
 					<td><label>付费时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_payTime" name="s_payTime" data-options="readonly:true" /></td>
+				
 					<td><label>金额：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_payMoney" name="s_payMoney" data-options="readonly:true" /></td>
+				
 					<td><label>是否退费：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isReturnMoney" data-options="readonly:true" /></td>
 				</tr>
 				<tr>
 					<td><label>是否进班：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isInClass" data-options="readonly:true" /></td>
-
-
-					<td><label>是否进班：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isInClass" name="s_isInClass" /></td>
-
-		
-
+				
 					<td><label>进班时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_inClassTime" name="s_inClassTime" data-options="readonly:true" /></td>
 				
 					<td><label>进班备注：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_inClassRemarks" name="s_inClassRemarks" data-options="readonly:true" /></td>
-				</tr>
-				<tr>
+				
 					<td><label>咨询师备注：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_askerRemarks" name="s_askerRemarks" data-options="readonly:true" /></td>
-					<td><label>来源部门：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_fromPart" name="s_fromPart" data-options="readonly:true" /></td>
-					<td><label>学员关注：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_focus" name="s_focus" data-options="readonly:true" /></td>
-					<td><label>是否报备：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isReport" data-options="readonly:true" /></td>
-
 				</tr>
 				<tr>
-
+					<td><label>来源部门：</label></td>
+					<td><input class="easyui-textbox" type="text" id="s_fromPart" name="s_fromPart" data-options="readonly:true" /></td>
+				
+					<td><label>学员关注：</label></td>
+					<td><input class="easyui-textbox" type="text" id="s_focus" name="s_focus" data-options="readonly:true" /></td>
+				
+					<td><label>是否报备：</label></td>
+					<td><input class="easyui-textbox" type="text" id="s_isReport" data-options="readonly:true" /></td>
+				
 					<td><label>录入人：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_importEmployee" name="s_importEmployee" data-options="readonly:true" /></td>
+				</tr>
+				<tr>
 					<td><label>退费原因：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_returnMoneyReason" name="s_returnMoneyReason" data-options="readonly:true" /></td>
+				
 					<td><label>定金：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_preMoney" name="s_preMoney" data-options="readonly:true" /></td>
+				
 					<td><label>定金时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_preMoneyTime" name="s_preMoneyTime" data-options="readonly:true" /></td>
 				</tr>
@@ -610,7 +460,7 @@
 		</form>
 	</div>
 	
-	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	<!-- <div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
         <form id="updateForm" method="post">   
             <table>
                 <tr>
@@ -714,7 +564,7 @@
                 </tr>
             </table>
         </form>  
-    </div>
+    </div> -->
 	
 </body>
 <script type="text/javascript">

@@ -250,6 +250,7 @@
 						</table>
 					</form>
 				</div>
+				
     </div> 
     <div data-options="region:'center'" style="padding:5px;background:#eee;height:400px">
     					<table id="stuTab" class="easyui-datagrid" data-options="fitColumns:true,checkbox: true" >  
@@ -345,116 +346,141 @@
 			<a href="javascript:void(0);" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
 		</form>
 	</div>
-	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	
+	
+	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:850px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
 		<form id="updateForm" method="post">   
 			<table>
 				<tr>
 			        <td><label>学生编号：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_id" name="s_id" data-options="disabled:true"/></td>
+			        <td><input class="easyui-textbox" style="width:130px;" type="text" id="updates_id" name="s_id" data-options="disabled:true"/></td>
 			   
 			        <td><label>学生姓名：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="updates_name" name="s_name" /></td>
 			    
-			        <td><label>性别：</label></td>
-			        <td>
-				        <select class="easyui-combobox" style="width:100px;" id="updates_sex" name="s_sex">   
-						    <option value="">--请选择--</option>   
-						    <option value="0">女</option>   
-						    <option value="1">男</option>     
-						</select> 
-					</td> 
-			    </tr>
-			 	<tr>
-			        <td><label>年龄：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_age" name="s_age"/></td>
-			    
-			        <td><label>电话：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_phone" name="s_phone"/></td>
-
-			    </tr>
-			   <!--  <tr>
-
-			    
-
-			        <td><label>咨询师：</label></td>
-			        <td>
-			        	<select class="easyui-combobox" data-options="disabled: true" style="width:100px;" id="updatea_name" name="a_name">   
+			    	<td><label>课程方向：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_learnForward" name="s_learnForward" /></td>
+			    	
+			    	<td><label>打分：</label></td>
+			    	<td>
+			        	<select class="easyui-combobox" style="width:130px;" id="updates_record" name="s_record">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">1234</option> 
-						    <option value="1">12345</option>
-						    <option value="2">1231231</option>
-						    <option value="3">12312311</option> 
-						    <option value="4">123123123131</option>    
+						    <option value="0">近期可报名</option> 
+						    <option value="1">一个月内可报名</option>
+						    <option value="2">长期跟踪</option>
+						    <option value="3">无效</option>    
 						</select>
 			        </td>
-
-			    </tr> -->
+			        
+			    </tr>
+			 	<tr>
+			 		<td><label>是否有效：</label></td>
+			 		<td>
+			        	<select class="easyui-combobox" style="width:130px;" id="updates_isValid" name="s_isValid">   
+						    <option value="">--请选择--</option>      
+						    <option value="0">是</option> 
+						    <option value="1">否</option>
+						    <option value="2">待定</option>
+						</select>
+			        </td>
+			 	
+			        <td><label>无效原因：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_lostReason" name="s_lostReason"/></td>
+			    
+			        <td><label>是否回访：</label></td>
+			        <td>
+			        	<select class="easyui-combobox" style="width:130px;" id="updates_isReturnVisit" name="s_isReturnVisit">   
+						    <option value="">--请选择--</option>      
+						    <option value="0">已回访</option> 
+						    <option value="1">未回访</option>
+						    
+						</select>
+			        </td>
+			        
+			         <td><label>首访时间：</label></td>
+			         <td><input class="easyui-datebox" type="text" id="updates_firstVisitTime" name="s_firstVisitTime"/></td>
+			    
+			        
+			    </tr>
 			    
 
-			    </tr>
-
 			    <tr>
-			        <td><label>学历：</label></td>
+			        <td><label>是否上门：</label></td>
 			        <td>
-			        	<select class="easyui-combobox" style="width:100px;" id="updates_eduStatus" name="s_eduStatus">   
+			        	<select class="easyui-combobox" style="width:130px;" id="updates_isHome" name="s_isHome">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">初中</option> 
-						    <option value="1">高中</option>
-						    <option value="2">大专</option>
-						    <option value="3">本科</option>    
+						    <option value="0">是</option> 
+						    <option value="1">否</option>
+						      
 						</select>
 			        </td>
 			   
-			        <td><label>状态：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_perStatus" name="s_perStatus"/></td>
+			        <td><label>上门时间：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_homeTime" name="s_homeTime"/></td>
 			    
-			        <td><label>来源渠道：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_comeWay" name="s_comeWay"/></td>
+			        <td><label>定金金额：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_preMoney" name="s_preMoney"/></td>
+			        
+			        <td><label>定金时间：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_preMoneyTime" name="s_preMoneyTime"/></td>
+			        
 			    </tr>
 			    <tr>
-			        <td><label>来源网站：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_comeSite" name="s_comeSite"/></td>
-			    
-			        <td><label>来源关键词：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_sourceKeyWord" name="s_sourceKeyWord"/></td>
-			    
-			        <td><label>来源部门：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_fromPart" name="s_fromPart"/></td>
-			    </tr>
-			    <tr>
-			        <td><label>地址：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_address" name="s_address"/></td>
-			    
-			        <td><label>学员关注：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_focus" name="s_focus"/></td>
-			    
-			        <td><label>学员QQ：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_QQ" name="s_QQ"/></td>
-			    </tr>
-			    <tr>
-			        <td><label>微信号：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_weiXin" name="s_weiXin"/></td>
-			    
-			        <td><label>是否报备：</label></td>
+			    	<td><label>是否缴费：</label></td>
 			        <td>
-			    		<select class="easyui-combobox" style="width:100px;" id="updates_isReport" name="s_isReport">   
-						    <option value="">--请选择--</option>   
-						    <option value="0">否</option>   
-						    <option value="1">是</option>     
-						</select> 
-					</td>
-
-			    </tr>
-			   <!--  <tr>
-			        <td><label>录入人：</label></td>
-			        <td><input class="easyui-textbox" data-options="disabled: true" type="text" id="updates_importEmployee" name="s_importEmployee"/></td>
-			    </tr> -->
-			    <!-- <tr>
-
+			        	<select class="easyui-combobox" style="width:130px;" id="updates_isPay" name="s_isPay">   
+						    <option value="">--请选择--</option>      
+						    <option value="0">是</option> 
+						    <option value="1">否</option>
+						      
+						</select>
+			        </td>
 			    
-			        <td><label>录入人：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_importEmployee" name="s_importEmployee"/></td>
-			    </tr> -->
+			        <td><label>缴费时间：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_payTime" name="s_payTime"/></td>
+			    
+			        <td><label>缴费金额：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_payMoney" name="s_payMoney"/></td>
+			    
+			    
+			    	<td><label>是否退费：</label></td>
+			        <td>
+			        	<select class="easyui-combobox" style="width:130px;" id="updates_isReturnMoney" name="s_isReturnMoney">   
+						    <option value="">--请选择--</option>      
+						    <option value="0">是</option> 
+						    <option value="1">否</option>
+						      
+						</select>
+			        </td>
+			    </tr>
+			    
+			    <tr>
+			    	<td><label>是否进班：</label></td>
+			    	<td>
+			        	<select class="easyui-combobox" style="width:100px;" id="updates_isInClass" name="s_isInClass">   
+						    <option value="">--请选择--</option>      
+						    <option value="0">是</option> 
+						    <option value="1">否</option>
+						      
+						</select>
+			        </td>
+			    
+			    
+			        <td><label>进班时间：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_inClassTime" name="s_inClassTime"/></td>
+			    
+			        <td><label>进班备注：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_inClassRemarks" name="s_inClassRemarks"/></td>
+			    
+			        <td><label>咨询师备注：</label></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_askerRemarks" name="s_askerRemarks"/></td>
+			    </tr>
+			    
+			    
+			    
+			    
+			    
+			    
 			    <tr Style="text-align:right">
 			    	<td></td>
 			    	<td></td>
