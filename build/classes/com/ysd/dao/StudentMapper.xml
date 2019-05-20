@@ -63,7 +63,7 @@
 	</select>
 	
 	<select id="selectStudentByRole" parameterType="pagination" resultMap="resultStu">
-	   select s.*,a.a_name from student s inner join asker a on
+	   select s.*,a.a_name from student s inner join asker a on 
 	   <if test="e_importEmployee == '咨询师'">
 	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
 	   </if>
@@ -103,7 +103,7 @@
 	</select>
 	
 	<select id="selectStudentCountByRole" parameterType="pagination" resultMap="resultStu">
-       select count(1) from student s inner join asker a on
+       select count(1) from student s inner join asker a on 
        <if test="e_importEmployee == '咨询师'">
            s.s_askerid = a.a_id where a.a_id = #{a_aid}
        </if>
