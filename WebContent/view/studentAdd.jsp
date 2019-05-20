@@ -13,6 +13,11 @@
 <script type="text/javascript">
 	$(function(){
 		init()
+		$('#lie_window').window({
+			onBeforeClose:function(){
+				$("#lie_window").dialog("clear");
+			}
+		});
 	})
 	function init(){
 		$("#stuTab").datagrid({
@@ -231,7 +236,33 @@
 		
 		return s_eduStatus;
 	}
-	
+	function show(){
+        var datagridTitle = new Array();
+        var shuxing = new Array();
+        var fields = $("#stuTab").datagrid('getColumnFields');
+        var option;
+             for (var i = 0; i < fields.length; i++) {
+                option = $("#stuTab").datagrid('getColumnOption', fields[i]);
+                datagridTitle.push(option.title);
+                shuxing.push(option.field);
+               if (option.field != "checkItem" && option.hidden != true) { 
+                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+"  name='ch'>"+datagridTitle[i]+"</br>");
+                    $("input[name='ch']").get(i).checked=true;
+                }else{
+                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+" name='ch' >"+datagridTitle[i]+"</br>");
+                } 
+            }
+        $("#lie_window").window("open");
+        $("input[name='ch']").click(function(){
+                if($(this).is(":checked")){
+                    var p = $(this).val();
+                    $("#stuTab").datagrid('showColumn',p);
+                }else{
+                    var q = $(this).val();
+                    $("#stuTab").datagrid('hideColumn',q);
+                }
+        })
+    }
 </script>
 </head>
 <body>
@@ -263,10 +294,13 @@
 	        
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0)" onclick="addStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
-			<a href="javascript:void(0);" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
+			<a href="javascript:void(0)" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
+			<a href="javascript:void(0)" onclick="show()" class="easyui-linkbutton">动态设置</a>
 		</form>
 	</div>
-	
+	<div id="lie_window" class="easyui-dialog" title="列设置" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:400px;height:500px;padding:10px;">
+         
+    </div>
 	
 	<div id="addDialog" class="easyui-dialog" title="创建" style="width:700px;height:300px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
 		<form id="addForm" method="post">   
