@@ -14,7 +14,7 @@ import com.ysd.service.StudentService;
 @Controller
 public class StudentController {
 	@Autowired
-	private StudentSevice studentService;
+	private StudentService studentService;
 	@Autowired
 	private Pagination<Student> pagination;
 	
@@ -56,8 +56,6 @@ public class StudentController {
 	
 
 	@RequestMapping(value="/insertNetFoll",method=RequestMethod.POST)
-
-	@RequestMapping(value="/insertNetFollowB",method=RequestMethod.POST)
 
 	@ResponseBody
 	public Integer insertNetFoll(NetFollow netfollow) {

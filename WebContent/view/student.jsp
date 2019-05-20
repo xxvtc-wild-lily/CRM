@@ -180,15 +180,12 @@
 	function addsave(){
 
 		$.post("../insertNetFoll",{
-
-		$.post("../insertNetFollowB",{
-
 			n_stuId:$("#n_stuIdq").val(),
 			n_stuName:$("#n_stuNameq").val(),
 			n_followTime:$("#n_followTimeq").val(),
 			n_nextFollowTime:$("#n_nextFollowTimeq").val(),
 			n_context:$("#n_contextq").val(),
-			e_id:$("#e_id").val(),
+			e_id:$("#e_idq").val(),
 			/* e_id:${employee.e_id}, */
 			n_followType:$("#n_followTypeq").val(),
 			n_followStatus:$("#n_followStatusq").val()
@@ -202,7 +199,7 @@
 			}else{
 				$.messager.alert("提示","添加失败！！！","error");
 			}
-		},"json")
+		},"json");
 		$("#win").form("clear");
 	}
 	function detailClose(){
@@ -212,7 +209,7 @@
 </head>
 
 <body>
-	<!-- --添加日志- -->
+	<!-- --添加跟踪日志- -->
 	<div id="win" class="easyui-dialog" title="添加" data-options="closed:true" style="width:600px;height:400px"   
         data-options="iconCls:'icon-save'">   
 	    <div class="easyui-layout" data-options="fit:true">   
@@ -221,10 +218,18 @@
 		             跟踪时间：<input id="n_followTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
 	                    下次跟踪时间：<input id="n_nextFollowTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
 	                    跟踪内容：<input id="n_contextq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	           	员工编号：<input id="e_idq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
+	           	员工编号：<input id="e_idq" name=""  class="easyui-textbox" data-options="" style="width:100px" ><br/>
 	                    跟随方式：<input id="n_followTypeq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
 	                  
-	                    跟随状态：<input id="n_followStatusq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/> 
+	                    跟随状态：<!-- <input id="n_followStatusq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/> -->
+	                    
+						 		<label for="name" style="width:140px"></label>  
+						    		<select style="width:140px" id="n_followStatusq" name="n_followStatusq" class="easyui-combobox">
+						    			<option value="">--请选择--</option>
+						    			<option value="未跟随">未跟随</option>
+							    		<option value="已跟随">已跟随</option>
+							    		
+							    	</select> <br/>
 	                   
 	               
 	                   
@@ -434,7 +439,6 @@
 
 					<td><input class="easyui-textbox" type="text" id="s_sex" data-options="readonly:true" /></td>
 
-					<td><input class="easyui-textbox" type="text" id="s_sex" name="s_sex" /></td>
 
 				</tr>
 				<tr>
@@ -461,12 +465,7 @@
 					<td><input class="easyui-textbox" type="text" id="s_address" name="s_address" data-options="readonly:true" /></td>
 				
 					<td><label>咨询师：</label></td>
-
-					<td>
-						<input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
-
-					<td><input class="easyui-textbox" type="text" id="s_askerId" name="s_askerId" /></td>
-
+					<td><input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
 				</tr>
 				<tr>
 					<td><label>QQ：</label></td>
@@ -484,113 +483,64 @@
 				<tr>
 					<td><label>课程方向：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_learnForward" name="s_learnForward" data-options="readonly:true" /></td>
-				
 					<td><label>是否有效：</label></td>
-
 					<td><input class="easyui-textbox" type="text" id="s_isValid" data-options="readonly:true" /></td>
-				
-
-					<td><input class="easyui-textbox" type="text" id="s_isValid" name="s_isValid" /></td>
-				</tr>
-				<tr>
-
 					<td><label>打分：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_record" name="s_record" data-options="readonly:true" /></td>
-				
 					<td><label>是否回访：</label></td>
-
 					<td><input class="easyui-textbox" type="text" id="s_isReturnVisit" data-options="readonly:true" /></td>
-
-					<td><input class="easyui-textbox" type="text" id="s_isReturnVisit" name="s_isReturnVisit" /></td>
 
 				</tr>
 				<tr>
 					<td><label>首次回访时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_firstVisitTime" name="s_firstVisitTime" data-options="readonly:true" /></td>
-				
 					<td><label>是否上门：</label></td>
-
 					<td><input class="easyui-textbox" type="text" id="s_isHome" data-options="readonly:true" /></td>
-				
-
-					<td><input class="easyui-textbox" type="text" id="s_isHome" name="s_isHome" /></td>
-				</tr>
-				<tr>
-
 					<td><label>上门时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_homeTime" name="s_homeTime" data-options="readonly:true" /></td>
-				
 					<td><label>无效原因：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_lostReason" name="s_lostReason" data-options="readonly:true" /></td>
 				</tr>
 				<tr>
 					<td><label>是否付费：</label></td>
-
 					<td><input class="easyui-textbox" type="text" id="s_isPay" data-options="readonly:true" /></td>
-				
-
-					<td><input class="easyui-textbox" type="text" id="s_isPay" name="s_isPay" /></td>
-				</tr>
-				<tr>
-
 					<td><label>付费时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_payTime" name="s_payTime" data-options="readonly:true" /></td>
-				
 					<td><label>金额：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_payMoney" name="s_payMoney" data-options="readonly:true" /></td>
-				
 					<td><label>是否退费：</label></td>
-
 					<td><input class="easyui-textbox" type="text" id="s_isReturnMoney" data-options="readonly:true" /></td>
 				</tr>
 				<tr>
 					<td><label>是否进班：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isInClass" data-options="readonly:true" /></td>
-				
 
-					<td><input class="easyui-textbox" type="text" id="s_isReturnMoney" name="s_isReturnMoney" /></td>
-				</tr>
-				<tr>
 					<td><label>是否进班：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isInClass" name="s_isInClass" /></td>
-				</tr>
-				<tr>
 
 					<td><label>进班时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_inClassTime" name="s_inClassTime" data-options="readonly:true" /></td>
 				
 					<td><label>进班备注：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_inClassRemarks" name="s_inClassRemarks" data-options="readonly:true" /></td>
-				
+				</tr>
+				<tr>
 					<td><label>咨询师备注：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_askerRemarks" name="s_askerRemarks" data-options="readonly:true" /></td>
-				</tr>
-				<tr>
 					<td><label>来源部门：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_fromPart" name="s_fromPart" data-options="readonly:true" /></td>
-				
 					<td><label>学员关注：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_focus" name="s_focus" data-options="readonly:true" /></td>
-				
 					<td><label>是否报备：</label></td>
-
 					<td><input class="easyui-textbox" type="text" id="s_isReport" data-options="readonly:true" /></td>
-				
-
-					<td><input class="easyui-textbox" type="text" id="s_isReport" name="s_isReport" /></td>
 				</tr>
 				<tr>
-
 					<td><label>录入人：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_importEmployee" name="s_importEmployee" data-options="readonly:true" /></td>
-				</tr>
-				<tr>
 					<td><label>退费原因：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_returnMoneyReason" name="s_returnMoneyReason" data-options="readonly:true" /></td>
-				
 					<td><label>定金：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_preMoney" name="s_preMoney" data-options="readonly:true" /></td>
-				
 					<td><label>定金时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_preMoneyTime" name="s_preMoneyTime" data-options="readonly:true" /></td>
 				</tr>
