@@ -28,6 +28,12 @@ public interface EmployeeMapper {
 	 */
 	Integer deleteEmployee(Integer e_id);
 	/**
+	 * 根据员工ID查询在跟进的学生数量
+	 * @param e_id
+	 * @return
+	 */
+	Integer selectGenJinStudentCountById(Integer e_id);
+	/**
 	 * 根据ID修改员工信息
 	 * @param employee
 	 * @return

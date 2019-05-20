@@ -139,7 +139,7 @@
 	
 	//跟踪添加
 	function addsave(){
-		$.post("../insertNetFollow",{
+		$.post("../insertNetFollowB",{
 			n_stuId:$("#n_stuIdq").val(),
 			n_stuName:$("#n_stuNameq").val(),
 			n_followTime:$("#n_followTimeq").val(),

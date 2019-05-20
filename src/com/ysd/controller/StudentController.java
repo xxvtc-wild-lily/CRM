@@ -55,7 +55,7 @@ public class StudentController {
 	}
 	
 	
-	@RequestMapping(value="/insertNetFollow",method=RequestMethod.POST)
+	@RequestMapping(value="/insertNetFollowB",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer insertNetFollow(Integer n_stuId,String n_stuName, String n_followTime, String n_nextFollowTime, String n_context,Integer e_id, String n_followType,String n_followStatus) {
 		
