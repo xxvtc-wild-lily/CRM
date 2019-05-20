@@ -20,7 +20,9 @@
             modal:true,
             closed:true
         })
+       
 	})
+	
 	function init(){
 		$("#empTab").datagrid({
 			url:"../selectEmployee",
@@ -37,29 +39,38 @@
 			columns:[[    
 		        {field:"e_id",title:"编号",width:30},
 		        {field:"e_loginName",title:"登录名",width:100},
-		        {field:"e_isLockOut",title:"是否锁定",width:60,formatter:formatterIsLock},
+		        {field:"e_isLockOut",title:"是否锁定",width:70,formatter:formatterIsLock},
 		        {field:"e_lastLoginTime",title:"最后一次登录时间",width:170},
-		        {field:"e_createTime",title:"创建时间",width:170},
+		        {field:"e_createTime",hidden:true,title:"创建时间",width:170},
 		        {field:"e_protectEmail",title:"密保邮箱",width:170},
 		        {field:"e_protectMTel",title:"密保手机号",width:100},
 		        {field:"e_sex",title:"员工性别",width:65,formatter:formatterSex},
 		        {field:"e_age",title:"员工年龄",width:65},
 		        {field:"e_photo",title:"员工照片",width:70,formatter:formatterImg},
 		        {field:"e_inCompanyTime",title:"入职时间",width:180},
-		        {field:"caozuo",title:"操作",width:130,formatter:formattercaozuo}
+		        {field:"caozuo",title:"操作",width:350,formatter:formattercaozuo}
 		    ]]
 		});
 		$('#tabfrm').form('clear');
 	}
 	function formattercaozuo(value,row,index){
-		
-		return "<a href='javascript:void(0)' onclick='detail("+index+")'>查看</a> <a href='javascript:void(0)' onclick='updateEmployee("+index+")'>修改</a> <a href='javascript:void(0)' onclick='openUpdateRoleDialog("+index+")'>修改角色</a>"
+		return "<a href='javascript:void(0)' class='easyui-linkbutton' data-options='iconCls:'icon-search'' onclick='detail("
+				+index+")'>查看</a><a href='javascript:void(0)' onclick='updateEmployee("
+				+index+")'>修改</a><a href='javascript:void(0)' onclick='deleteEmployee("
+				+index+")'>删除</a><a href='javascript:void(0)' onclick='openUpdateRoleDialog("
+				+index+")'>修改角色</a><a href='javascript:void(0)' onclick='openResertPasswordDialog("
+				+index+")'>重置密码</a> <a href='javascript:void(0)' onclick='lockEmployee("
+				+index+")'>锁定用户</a> <a href='javascript:void(0)' onclick='unlockEmployee("
+				+index+")'>解锁用户</a>"
+				
 	}
+	//初始化头像
 	function formatterImg(value,row,index){
 		if(value != null && value != ''){
 			return "<img style='width:40px;height:50px;' src='../image/"+value+"'>"
 		}
 	}
+	//初始化锁定状态
 	function formatterIsLock(value,row,index) {
 		var e_isLockOut = row.e_isLockOut;
 		var status = "";
@@ -72,7 +83,7 @@
 		}
 		return status;
 	}
-	
+	//初始化性别
 	function formatterSex (value,row,index) {
 		var sex = "";
 		if (row.e_sex == "0") {
@@ -92,6 +103,7 @@
 		$('#updateForm').form('load',row);
 		$("#updateDialog").dialog("open");
 	}
+	//修改员工信息
 	function saveUpdat(){
 		
 		// 判断手机号的正则表达式
@@ -133,7 +145,7 @@
 	function closeUpdat(){
 		$("#updateDialog").dialog("close");
 	}
-	
+	//给员工赋予角色
 	function openUpdateRoleDialog(index) {
 		var data = $("#empTab").datagrid("getData");
 		var row = data.rows[index];
@@ -179,7 +191,7 @@
 		
 		$("#updateRoleDialog").dialog("open");
 	}
-
+	//查看员工信息
 	function detail(index){
 		var data=$("#empTab").datagrid("getData");
     	var row=data.rows[index];
@@ -249,12 +261,12 @@
 	// 去除用户角色的方法
 	function removeEmployeeToAll() {
 		var empRole  = $('#employeeRoleDatalist').datalist("getSelections");
-		
 		var arr = "";
-		
+		var zixunshi="";
 		if (JSON.stringify(empRole) != "[]") {
 			for (var i = 0;i < empRole.length;i++) {
 				arr += empRole[i].r_id +",";
+				zixunshi+=empRole[i].r_name+",";
 			}
 		} else {
 			// 没有选择添加的角色的判断
@@ -265,6 +277,7 @@
         if (arr != "") {
         	$.post("../removeEmployeeToAll",{
                 arr:arr,
+                r_name:zixunshi,
                 e_id:empRole[0].id
             },function(res){
                 if (res > 0) {
@@ -272,10 +285,12 @@
                     $("#employeeRoleDatalist").datalist("reload");
                     $("#allRoleDatalist").datagrid("clearSelections");
                     $("#employeeRoleDatalist").datagrid("clearSelections");
+                }else{
+                	 $.messager.alert("提示","该员工有正在跟进的学生咨询师角色移除失败！","info");
+                	 $("#employeeRoleDatalist").datalist("reload");
                 }
             },"json")
         }
-		
 	}
 	
 	
@@ -518,8 +533,91 @@
             message:"两次输入密码不一致！"
         }
     });
+    //删除员工
+    function deleteEmployee(index){
+		var data=$("#empTab").datagrid("getData");
+		var row=data.rows[index];
+		$.messager.confirm('确认','您确认想要删除吗？',function(r){    
+		    if (r){    
+		          $.post("../deleteEmployee",{e_id:row.e_id},function(res){
+		        	  if(res>0){
+		        		  $("#empTab").datagrid("reload");
+		        		  $.messager.alert('确认','删除成功');
+		        	  }else{
+		        		  $.messager.alert('确认','该员工下有在跟进的学生删除失败');
+		        	  }
+		          },"json")  
+		    }    
+		});  
+
+	}
+    //重置密码
+    function openResertPasswordDialog (index) {
+		var data=$("#empTab").datagrid("getData");
+        var row=data.rows[index];
+        var e_loginName = row.e_loginName;
+        
+        $.messager.confirm("确认对话框","您确定要重置密码吗？（重置后的密码为：“ysd123”）", function(r){
+            if (r){
+            	$.post("../resertPassword",{
+            		e_loginName:e_loginName
+            		},function(res){
+            			if (res > 0) {
+                            $.messager.alert("提示","重置密码成功！","info");
+                        } else {
+                            $.messager.alert("提示","重置密码失败！","info");
+                        }
+            		},"json")
+            }
+        });
+        
+	}
+    
+ // 将用户状态更改为锁定的方法
+	function lockEmployee(index) {
+		var data = $("#empTab").datagrid("getData");
+        var row = data.rows[index];
+        var isLock = row.e_isLockOut;
+        var e_loginName = row.e_loginName;
+        
+        if (isLock == "1") {
+        	$.messager.alert("提示","该用户已经锁定，无需再锁定！","info");
+        } else {
+        	$.post("../setEmployeeLock",{
+        		e_loginName:e_loginName
+        	},function(res){
+        		if (res > 0) {
+        			$.messager.alert("提示","该用户已锁定！","info");
+        			$("#empTab").datagrid("reload");
+        		} else {
+        			$.messager.alert("提示","用户锁定失败！","error");
+        		}
+        	},"json")
+        }
+	}
 	
-	
+ // 将用户锁定状态更改为未锁定的方法
+	function unlockEmployee(index) {
+        var data = $("#empTab").datagrid("getData");
+        var row = data.rows[index];
+        var isLock = row.e_isLockOut;
+        var e_loginName = row.e_loginName;
+        
+        if (isLock == "0" || isLock == null) {
+            $.messager.alert("提示","该用户未锁定，无需再解锁！","info");
+        } else {
+            $.post("../setEmployeeUnLock",{
+                e_loginName:e_loginName
+            },function(res){
+                if (res > 0) {
+                    $.messager.alert("提示","该用户已解锁！","info");
+                    $("#empTab").datagrid("reload");
+                } else {
+                    $.messager.alert("提示","用户解锁失败！","error");
+                }
+            },"json")
+        }
+    }
 	
 </script>
 </head>
@@ -682,11 +780,11 @@
 	
 	
 	
-	<div id="signUpDialog">
+	<div id="signUpDialog" >
         <form id="signUpForm" method="post" enctype="multipart/form-data">
-            <table id="signUpTable" style="margin-left:70px;">
+            <table id="signUpTable" style="margin-left:30px;">
                 <tr>
-                    <td style="width:90px;">登录名：</td>
+                    <td style="width:80px;">登录名：</td>
                     <td><input class="easyui-textbox" id="e_loginName" style="width:200px" required="required"></td>
                 </tr>
                 <tr>
@@ -726,7 +824,9 @@
                                            类型图片<br/>
                         <input type="file" id="e_photo" style="width:200px;height:" onchange="fileChange(this)">
                     </td>
-                    <td style="width:90px;">照片预览：</td>
+                </tr>
+                <tr>
+                	<td style="width:90px;">照片预览：</td>
                     <td><img id="previewImage"></td>
                 </tr>
             </table>

@@ -85,16 +85,9 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/removeEmployeeToAll",method=RequestMethod.POST)
     @ResponseBody
-    public Integer removeEmployeeToAll(@RequestParam("arr") String arr,EmployeeRole employeeRole) {
-        
-        String[] ridArr = arr.split(",");
-        Integer code = 0;
-        for (int i = 0;i < ridArr.length;i++) {
-            employeeRole.setR_id(Integer.parseInt(ridArr[i]));
-            code = employeeService.deleteRoleForEmployee(employeeRole);
-        }
-        
-        return code;
+    public Integer removeEmployeeToAll(@RequestParam("arr") String arr,EmployeeRole employeeRole,String r_name) {
+
+        return employeeService.deleteRoleForEmployee(arr,employeeRole,r_name);
     }
 	
 	@RequestMapping(value="/resertPassword",method=RequestMethod.POST)

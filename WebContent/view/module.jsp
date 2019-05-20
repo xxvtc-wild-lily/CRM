@@ -35,7 +35,7 @@
 			    		left:e.pageX,
 			    		top:e.pageY
 		    	})
-		    	}else{
+		    	}else{//当节点为字节点是执行
 		    		var d=$("#dd").tree('getParent',node.target);
 		    		zname=$("#dd").tree('getChildren',d.target);
 		    		fujeidian=node.id;

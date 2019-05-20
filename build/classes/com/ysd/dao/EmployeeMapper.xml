@@ -92,5 +92,7 @@
     <update id="updateEmployeeUnLock" parameterType="employee">
         update employee set e_isLockOut = 0 where e_loginName = #{e_loginName}
     </update>
-	
+	<select id="selectGenJinStudentCountById" parameterType="int" resultType="int">
+			SELECT count(s.s_id) FROM employee e INNER JOIN asker a on e.e_loginName =a.a_name INNER JOIN student s on a.a_id=s.s_askerId where e.e_id=#{id} and s.s_lostReason!='是'
+	</select>
 </mapper>
