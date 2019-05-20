@@ -11,9 +11,20 @@
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
+    // 判断是否开启的判断
+    var flag;
     $(function(){
-    	initTable();
-    	initSwitchButton();
+        $.post("../selectIsOpenAuto",{
+            
+        },function(res){
+            if (res == 1) {
+                flag = true;
+            } else {
+                flag = false;
+            }
+            initTable();
+            initSwitchButton();
+        })
     })
     
     function initTable() {
@@ -41,17 +52,17 @@
     
     function initSwitchButton() {
     	$("#distributionButton").switchbutton({
-    		checked:true,
-    		width:100,
-    		onText:"自动分量",
-    		offText:"手动分量",
+    		checked:flag,
+    		width:120,
+    		onText:"自动分量开启",
+    		offText:"自动分量关闭",
     		onChange:function(checked) {
     			$.messager.confirm("提示","您确定要切换分量状态吗？", function(r){
     			    if (r) {
     			    	if (checked) {
-    			    		alert(1);
+    			    		$.post("../distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
     			    	} else {
-    			    		alert(2);
+    			    		$.post("../closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
     			    	}
     			    }
     			});
