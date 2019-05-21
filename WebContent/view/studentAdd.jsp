@@ -28,7 +28,9 @@
 			fitColumns:true,
 			checkbox:true,
 			queryParams:{
-				e_loginName:"${employee.e_loginName}",
+
+				e_loginName:'${employee.e_loginName}',
+
 				s_name:$("#s_name").val(),
 				s_phone:$("#s_phone").val(),
 				a_name:$("#asker.a_name").val(),
@@ -236,7 +238,8 @@
 			s_name:$("#adds_name").val(),
 			s_sex:$("#adds_sex").combobox("getValue"),
 			s_age:$("#adds_age").val(),
-			s_importEmployee:"${employee.e_loginName}", 
+			s_importEmployee:'${employee.e_loginName}', 
+			isAutoAllot:isAutoAllot,
 			s_phone:$("#adds_phone").val(),
 			s_eduStatus:$("#adds_eduStatus").combobox("getValue"),
 			s_perStatus:$("#adds_perStatus").val(),
@@ -250,7 +253,7 @@
 		},function(res){
 			if(res>0){
 				$.messager.alert("提示","添加成功！！！","info");
-				$("addDialog").dialog("close");
+				$("#addDialog").dialog("close");
 				$("#stuTab").datagrid("reload");
 			}else{
 				$.messager.alert("提示","添加失败！！！","error");
@@ -288,7 +291,8 @@
 			s_QQ:$("#updates_QQ").val(),
 			s_weiXin:$("#updates_weiXin").val(),
 			s_isReport:$("#updates_isReport").val(),
-			s_importEmployee:"${employee.e_loginName}"
+			s_importEmployee:'${employee.e_loginName}'
+
 		},function(res){
 			
 			if(res>0){
@@ -690,11 +694,18 @@
 				: JSONData;
 		
 		var sele=$("#stuTab").datagrid('getSelections');
-
+        
 		var CSV = '';
 		//在第一行拼接标题
 		CSV += ReportTitle + '\r\n\n';
-		
+		/* var datagridTitle = new Array();
+        var fields = $("#datagrid").datagrid('getColumnFields');
+            for (var i = 0; i < fields.length; i++) {
+                var option = $("#datagrid").datagrid('getColumnOption', fields[i]);
+                if (option.field != "checkItem" && option.hidden != true) { //过滤勾选框和隐藏列
+                    datagridTitle.push(option.title);
+                }
+            } */
 		//产生数据标头
 		if (ShowLabel) {
 			var row = "";
