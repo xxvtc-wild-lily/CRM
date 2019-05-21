@@ -310,6 +310,7 @@
     
     // 关闭注册Dialog
     function closeSignUpDialog(){
+    	$("#signUpForm").form("clear");
         $("#signUpDialog").dialog("close");
     }
     
@@ -475,6 +476,9 @@
 	                                    success:function(res){
 	                                        if (res == 0) {
 	                                            $.messager.alert("提示","注册成功！","info");
+	                                            $("#signUpDialog").dialog("close");
+	                                            $("#signUpForm").form("clear");
+                                                $("#empTab").datagrid("reload");
 	                                        } else if (res == 1) {
 	                                            $.messager.alert("提示","注册失败！（原因：图片名重复，请再试一次）","error");
 	                                        } else if (res == 2) {
@@ -508,6 +512,9 @@
 	                                    success:function(res){
 	                                    	if (res == 1) {
                                                 $.messager.alert("提示","注册成功！","info");
+                                                $("#signUpDialog").dialog("close");
+                                                $("#signUpForm").form("clear");
+                                                $("#empTab").datagrid("reload");
                                             } else if (res == 2) {
                                                 $.messager.alert("提示","注册失败！","error");
                                             } else if (res == 3) {
@@ -801,7 +808,7 @@
 	
 	
 	
-	<div id="signUpDialog" >
+	<div id="signUpDialog" data-options="onClose:function(){$('#signUpForm').form('clear')}">
         <form id="signUpForm" method="post" enctype="multipart/form-data">
             <table id="signUpTable" style="margin-left:30px;">
                 <tr>
