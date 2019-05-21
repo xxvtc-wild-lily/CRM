@@ -1,4 +1,4 @@
-package com.ysd.controller;
+﻿package com.ysd.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,30 +71,16 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/removeRoleToEmployee",method=RequestMethod.POST)
     @ResponseBody
-	public Integer removeRoleToEmployee(@RequestParam("arr") String arr,EmployeeRole employeeRole) {
-	    
-	    String[] ridArr = arr.split(",");
-	    Integer code = 0;
-	    for (int i = 0;i < ridArr.length;i++) {
-	        employeeRole.setR_id(Integer.parseInt(ridArr[i]));
-	        code = employeeService.insertRoleForEmployee(employeeRole);
-	    }
-	    
-	    return code;
+	public Integer removeRoleToEmployee(@RequestParam("arr") String arr,EmployeeRole employeeRole,String name,String r_name) {
+	  
+	       return employeeService.insertRoleForEmployee(arr,employeeRole,name,r_name);
 	}
 	
 	@RequestMapping(value="/removeEmployeeToAll",method=RequestMethod.POST)
     @ResponseBody
-    public Integer removeEmployeeToAll(@RequestParam("arr") String arr,EmployeeRole employeeRole) {
-        
-        String[] ridArr = arr.split(",");
-        Integer code = 0;
-        for (int i = 0;i < ridArr.length;i++) {
-            employeeRole.setR_id(Integer.parseInt(ridArr[i]));
-            code = employeeService.deleteRoleForEmployee(employeeRole);
-        }
-        
-        return code;
+    public Integer removeEmployeeToAll(@RequestParam("arr") String arr,EmployeeRole employeeRole,String r_name,String name) {
+
+        return employeeService.deleteRoleForEmployee(arr,employeeRole,r_name,name);
     }
 	
 	@RequestMapping(value="/resertPassword",method=RequestMethod.POST)
@@ -127,15 +113,10 @@ public class EmployeeController {
         return i;
     }
 	
-	
-	
-	@RequestMapping(value="/selectemployeeid",method=RequestMethod.POST)
+	@RequestMapping(value="/selectSuoDingZhaungTaiCounts",method=RequestMethod.POST)
     @ResponseBody
-    public Integer selectemployeeid(Employee employee) {
-        
-       
-        
-        return employeeService.selectemployeeid(employee);
+    public List selectSuoDingZhaungTaiCount(String e_loginName) {
+        return  employeeService.selectTongJiTu(e_loginName);
     }
 	
 }

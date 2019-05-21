@@ -71,4 +71,12 @@ public interface StudentMapper {
 	 * @return 查询到的学生数量
 	 */
 	Integer selectStudentCountByRole(Pagination<Student> pagination);
+	
+	/**
+	 * 查询是否开启自动分量开关
+	 * @return 受影响的行数
+	 */
+	Integer selectIsAutoDistributionOpen();
+	
+	
 }

@@ -38,7 +38,7 @@
 				s_createTime:$("#s_createTime").val()
 			}, 
 			 columns:[[
-			        {field:'ck',checkbox:true,width:100},
+			        {field:'ck',title:'复选框',checkbox:true,width:100},
 			        {field:'s_id',title:'编号' ,width:100},
 			        {field:'s_name',title:'姓名' ,width:100},
 			        {field:'s_age',title:'年龄' ,width:100},
@@ -92,7 +92,7 @@
 		} else if (row.s_isValid == "1") {
 			s_isValid = "有效";
 		} else {
-			s_isValid = "无效";
+			s_isValid = "待定";
 		}
 			
 		return s_isValid;
@@ -175,8 +175,7 @@
 	function detailClose(){
 		$("#detailDialog").dialog("close");
 	}
-	
-	
+
 	function show(){
         var datagridTitle = new Array();
         var shuxing = new Array();
@@ -204,6 +203,7 @@
                 }
         })
     }
+
 	/* 跟踪日志 */
 	function netlog(){
 		$("#").dialog("open");
@@ -352,6 +352,11 @@
 
 
 	
+
+</script>
+</head>
+
+
     
       
 	<table id="stuTab"></table>
@@ -393,6 +398,13 @@
     </div>
 	
 	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:850px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+			<a href="javascript:void(0)" onclick="show()" class="easyui-linkbutton">动态设置</a>
+		</form>
+	</div>
+	<div id="lie_window" class="easyui-dialog" title="列设置" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:400px;height:500px;padding:10px;">
+         
+    </div>
+	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
 		<form id="updateForm" method="post">   
 			<table>
 				<tr>

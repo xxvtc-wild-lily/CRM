@@ -10,4 +10,54 @@
         select count(1) from student s where s.s_askerId is null
     </select>
     
+    <select id="selectAllChcekInAsker" resultType="asker">
+        select a.* from asker a where a.a_checkStatus = 1 and a.a_roleName = '咨询师' order by a.a_weight desc
+    </select>
+    
+    <select id="selectNotDistributionStudent" resultType="student">
+        select s.s_id,s.s_name,s.s_age,s.s_sex,s.s_eduStatus,s_address,s_QQ,s_weiXin
+        from student s 
+        where s.s_askerId is null
+    </select>
+    
+    <select id="selectAllHasDistributionStudentCountByAid" resultType="_int">
+        select count(1) from student s where s.s_isValid = 1 and s.s_askerId = #{aid}
+    </select>
+    
+    <update id="updateStduentAid" parameterType="student">
+        update student s set s.s_askerId = #{s_askerId} where s.s_id = #{s_id}
+    </update>
+    
+    <select id="selectIsHaveStatus" resultType="_int">
+        select count(cs_id) from checkstatus where cs_name = '自动分量'
+    </select>
+    
+    <insert id="insertStatus">
+        insert into checkstatus(cs_name,cs_status) values('自动分量',1)
+    </insert>
+    
+    <update id="updateStatus">
+        update checkstatus set cs_status = '1' where cs_name = '自动分量'
+    </update>
+    
+    <select id="selectStatus" resultType="_int">
+        select cs_status from checkstatus where cs_name = '自动分量'
+    </select>
+    
+    <update id="updateStatusClose">
+        update checkstatus set cs_status = '0' where cs_name = '自动分量'
+    </update>
+    
+    <select id="selectAllAskerOrderByWeight" resultType="asker">
+        select a.* from asker a where a.a_roleName = '咨询师' and a_checkStatus = 1 order by a.a_weight desc
+    </select>
+    
+    <select id="selectAllNotDistributionStudentB" resultType="student">
+        select s.s_id,s_name from student s where s.s_askerId is null
+    </select>
+    
+    <update id="updateStudentAskerId" parameterType="student">
+        update student set s_askerId = #{s_askerId} where s_id = #{s_id}
+    </update>
+    
 </mapper>

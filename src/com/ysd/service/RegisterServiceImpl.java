@@ -64,7 +64,7 @@ public class RegisterServiceImpl implements RegisterService {
                 registerMapper.updateEmployeeCheckStatus(employee);
                 // 查询当前用户是存在于咨询师表里，即是否是咨询师
                 Integer isAsker = registerMapper.selectIsAsker(employee);
-                if (isAsker != 0 && isAsker != null && !isAsker.equals("null")) {
+                if (isAsker != null && isAsker != 0 && !isAsker.equals("null")) {
                     // 更改签到时间
                     registerMapper.updateAskerCheckInTime(employee);
                     // 更改签到状态

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -92,11 +92,46 @@
     <update id="updateEmployeeUnLock" parameterType="employee">
         update employee set e_isLockOut = 0 where e_loginName = #{e_loginName}
     </update>
-	
-	
-	
-	<select id="selectemployeeid" parameterType="employee">
-		select e_id
-		from employee where e_loginName=#{e_loginName}
+	<select id="selectGenJinStudentCountById" parameterType="int" resultType="int">
+			SELECT count(s.s_id) FROM employee e INNER JOIN asker a on e.e_loginName =a.a_name INNER JOIN student s on a.a_id=s.s_askerId where e.e_id=#{id} and s.s_lostReason!='是'
+	</select>
+	<insert id="addAsker" parameterType="asker">
+			insert into asker(a_name,a_roleName) values(#{a_name},#{a_roleName})
+	</insert>
+	<delete id="deleteAskerByName" parameterType="string">
+			delete from asker where  a_name= #{param1} and a_roleName= #{param2} 
+	</delete>
+	<select id="selectWeiSuoDingCount" resultType="int">
+			select count(1) from employee where e_isLockOut=0
+	</select>
+	<select id="selectSuoDingCount" resultType="int">
+			select count(1) from employee where e_isLockOut=1
+	</select>
+	<select id="selectRoleByEmpName" parameterType="string" resultType="string">
+			SELECT r.r_name FROM employee e INNER JOIN employeerole er on  e.e_id=er.e_id INNER JOIN role r on er.r_id=r.r_id WHERE e.e_loginName=#{name}
+	</select>
+	<select id="selectQianDaoRenShu" resultType="int">
+			select count(1) from employee where e_ext4=1 or e_ext4=2
+	</select>
+	<select id="selectWeiQianDaoRenShu" resultType="int">
+			select count(1) from employee where e_ext4=3
+	</select>
+	<select id="selectStudentByEmpName" parameterType="string" resultType="int">
+			select count(s.s_id) from employee e INNER JOIN asker a on e.e_loginName=a.a_name  INNER JOIN student s  on a.a_id=s.s_askerId  WHERE e.e_loginName=#{name}
+	</select>
+	<select id="selectStudentLuiShiByEmpName" parameterType="string" resultType="int">
+			select count(s.s_id) from employee e INNER JOIN asker a on e.e_loginName=a.a_name  INNER JOIN student s  on a.a_id=s.s_askerId  WHERE e.e_loginName=#{name} and s.s_isValid=0
+	</select>
+	<select id="selectStudentLuRuByEmpName" parameterType="string" resultType="int">
+			select count(s.s_id) from employee e INNER JOIN asker a on e.e_loginName=a.a_name  INNER JOIN student s  on a.a_id=s.s_askerId  WHERE e.e_loginName=#{name} and s.s_isPay=1
+	</select>
+	<select id="selectStudentAddByEmpName" parameterType="string" resultType="int">
+			select count(s.s_id) from employee e INNER JOIN  student s  on e.e_loginName=s.s_importEmployee WHERE e.e_loginName=#{name}
+	</select>
+	<select id="selectStudentAddLiuShuByEmpName" parameterType="string" resultType="int">
+			select count(s.s_id) from employee e INNER JOIN  student s  on e.e_loginName=s.s_importEmployee WHERE e.e_loginName=#{name} and s.s_isValid=0
+	</select>
+	<select id="selectStudentAddLuRuByEmpName" parameterType="string" resultType="int">
+			select count(s.s_id) from employee e INNER JOIN  student s  on e.e_loginName=s.s_importEmployee WHERE e.e_loginName=#{name} and s.s_isPay=1
 	</select>
 </mapper>
