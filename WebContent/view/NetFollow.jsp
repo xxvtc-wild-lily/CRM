@@ -130,12 +130,13 @@ function addsave(){
 						    <div> 
 								跟踪方式：<input class="easyui-textbox" name="aname" id="n_followType" style="width:180px">
 								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="init()">搜索</a>
-								<a href="javascript:void(0)"  onclick="addnetfollow()"></a>
+								<a href="studentUpdate.jsp" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">返回上一层</a>
 	
 							</div>
 		</div>
 
 			<div id="looknet" class="easyui-dialog" title="查看信息"  style="width:400px; height:400px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
+			
 			
 		<form id="looknetfollow" method="post">   
 			<table>

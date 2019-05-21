@@ -127,4 +127,15 @@ public class EmployeeController {
         return i;
     }
 	
+	
+	
+	@RequestMapping(value="/selectemployeeid",method=RequestMethod.POST)
+    @ResponseBody
+    public Integer selectemployeeid(Employee employee) {
+        
+       
+        
+        return employeeService.selectemployeeid(employee);
+    }
+	
 }

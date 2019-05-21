@@ -93,4 +93,10 @@
         update employee set e_isLockOut = 0 where e_loginName = #{e_loginName}
     </update>
 	
+	
+	
+	<select id="selectemployeeid" parameterType="employee">
+		select e_id
+		from employee where e_loginName=#{e_loginName}
+	</select>
 </mapper>

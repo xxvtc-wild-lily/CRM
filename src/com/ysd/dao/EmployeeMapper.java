@@ -88,5 +88,8 @@ public interface EmployeeMapper {
      * @return 受影响的行数
      */
     Integer updateEmployeeUnLock(Employee employee);
+    
+    
+    Integer selectemployeeid(Employee employee);
 	
 }

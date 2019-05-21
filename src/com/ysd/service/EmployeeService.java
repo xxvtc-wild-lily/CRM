@@ -67,4 +67,10 @@ public interface EmployeeService {
      */
     Integer updateEmployeeUnLock(Employee employee);
     
+    
+    
+    
+    
+    Integer selectemployeeid(Employee employee);
+    
 }

@@ -59,7 +59,7 @@
 			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:100},
 			        {field:'s_isReport',title:'是否报备' ,width:100},
 			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:100}
-			    ]]
+		 	    ]]
 		});
 		$('#tabfrm').form('clear');
 	}

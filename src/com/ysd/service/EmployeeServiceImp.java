@@ -117,5 +117,12 @@ public class EmployeeServiceImp implements EmployeeService {
         
         return i;
     }
+
+
+	@Override
+	public Integer selectemployeeid(Employee employee) {
+		System.out.println("dsfasfdsfsdafsdfsd"+employeeMapper.selectemployeeid(employee));
+		return employeeMapper.selectemployeeid(employee);
+	}
     
 }
