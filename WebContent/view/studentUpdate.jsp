@@ -513,6 +513,7 @@
 		//如果jsondata不是对象，那么json.parse将分析对象中的json字符串。
 		var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData)
 				: JSONData;
+		var sele=$("#stuTab").datagrid('getSelections');
 		var CSV = '';
 		//在第一行拼接标题
 		CSV += ReportTitle + '\r\n\n';
@@ -529,10 +530,10 @@
 			CSV += row + '\r\n';
 		}
 		//第一个循环是提取每一行
-		for (var i = 0; i < arrData.length; i++) {
+		for (var i = 0; i < sele.length; i++) {
 			var row = "";
-			for ( var index in arrData[i]) {
-				row += '"' + arrData[i][index] + '",';
+			for ( var index in sele[i]) {
+				row += '"' + sele[i][index] + '",';
 			}
 			row.slice(0, row.length - 1);
 			CSV += row + '\r\n';
