@@ -33,7 +33,7 @@
 				s_createTime:$("#s_createTime").val()
 			},
 			 columns:[[
-			        {field:'ck',checkbox:true,width:100},
+			        {field:'ck',title:'复选框',checkbox:true,width:100},
 			        {field:'s_id',title:'编号' ,width:100},
 			        {field:'s_name',title:'姓名' ,width:100},
 			        {field:'s_age',title:'年龄' ,width:100},
@@ -87,7 +87,7 @@
 		} else if (row.s_isValid == "1") {
 			s_isValid = "有效";
 		} else {
-			s_isValid = "无效";
+			s_isValid = "待定";
 		}
 			
 		return s_isValid;
