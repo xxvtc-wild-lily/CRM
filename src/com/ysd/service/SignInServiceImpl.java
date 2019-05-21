@@ -92,4 +92,22 @@ public class SignInServiceImpl implements SignInService {
         
         return i;
     }
+
+    @Override
+    public String selectIsAdmin(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        String r_name = signInMapper.selectIsAdmin(employee);
+        
+        return r_name;
+    }
+
+    @Override
+    public Integer selectEidByloginName(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer e_id = signInMapper.selectEidByloginName(employee);
+        
+        return e_id;
+    }
 }

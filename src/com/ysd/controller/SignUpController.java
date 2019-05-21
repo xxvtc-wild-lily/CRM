@@ -35,7 +35,7 @@ public class SignUpController {
 		Integer isSameProtectMTel = signUpService.selectIsHaveSameProtectMTel(e_protectMTel);
 		// 查询邮箱是否已使用
 		Integer isSameProtectEmail = signUpService.selectIsHaveSameProtectEmail(e_protectEmail);
-		System.out.println(isSame);
+		
 		// 判断是否有重名的
 		if (isSame == 0) {
 		    if (isSameProtectMTel == 0) {
@@ -98,7 +98,7 @@ public class SignUpController {
 	@RequestMapping(value=("/insertSignUpEmployeeNotHaveImage"),method=RequestMethod.POST)
 	@ResponseBody
 	public Integer insertSignUpEmployeeNotHaveImage(Employee employee) throws IllegalStateException, IOException {
-	    System.out.println(employee.toString());
+	    
 	    // 设置前台用来判断的判断值
         Integer statusNum = 0;
 		// 查询是否有相同的用户名
@@ -107,9 +107,6 @@ public class SignUpController {
         Integer isSameProtectMTel = signUpService.selectIsHaveSameProtectMTel(employee.getE_protectMTel());
         // 查询邮箱是否已使用
         Integer isSameProtectEmail = signUpService.selectIsHaveSameProtectEmail(employee.getE_protectEmail());
-		System.out.println(isSame);
-		System.out.println(isSameProtectMTel);
-		System.out.println(isSameProtectEmail);
 		// 判断是否有重名的
 		if (isSame == 0) {
 		    if (isSameProtectMTel == 0) {
@@ -131,7 +128,7 @@ public class SignUpController {
 		} else {
 		    statusNum = 3;
 		}
-		System.out.println(statusNum);
+		
 		return statusNum;
 	}
 	

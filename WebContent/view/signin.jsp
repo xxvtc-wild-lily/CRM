@@ -55,9 +55,6 @@ pageContext.setAttribute("path",request.getContextPath());
         return value;
     }
     
-    function forgetPassword() {
-    	alert("忘记密码");
-    }
 </script>
 </head>
 <body>
@@ -99,9 +96,6 @@ pageContext.setAttribute("path",request.getContextPath());
 	            <div style="margin-left:40px">
 	               <input type="submit" id="signin" value="登录" style="width:70px;height:30px;color:#6699FF;"/>
 	            </div>
-	            <!-- <div style="margin-left:140px;margin-top:20px;">
-                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-help'" onclick="forgetPassword()">忘记密码?</a>
-                </div> -->
 	        </form>
 	    </div>
     </div>
