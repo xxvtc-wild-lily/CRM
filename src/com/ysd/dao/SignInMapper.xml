@@ -49,4 +49,13 @@
         update employee set e_pwdWrongTime = 0 where e_loginName = #{e_loginName}
     </update>
     
+    <select id="selectIsAdmin" parameterType="employee" resultType="string">
+        select r.r_name from employee e inner join employeerole er on e.e_id = er.e_id inner join role r on er.r_id = r.r_id 
+        where e.e_loginName = #{e_loginName} and r.r_name = '管理员'
+    </select>
+    
+    <select id="selectEidByloginName" parameterType="employee" resultType="_int">
+        select e_id from employee where e_loginName = #{e_loginName}
+    </select>
+    
 </mapper>

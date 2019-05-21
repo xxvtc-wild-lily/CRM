@@ -67,4 +67,18 @@ public interface SignInMapper {
      */
     Integer updatePwdWrongTimeWhenSuccess(Employee employee);
     
+    /**
+     * 查询当前登录用户是否为管理员
+     * @param employee 包含员工信息的员工类
+     * @return 查询到的行数
+     */
+    String selectIsAdmin(Employee employee);
+    
+    /**
+     * 根据用户名查询到该用户的eid
+     * @param employee 包含员工信息的员工类
+     * @return 查询到的eid
+     */
+    Integer selectEidByloginName(Employee employee);
+    
 }

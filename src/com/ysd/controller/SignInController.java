@@ -113,7 +113,10 @@ public class SignInController {
                             //添加Cookie
                             response.addCookie(loginName);
                         }
-                        
+                        // 拿到用户的e_id
+                        Integer e_id = signInService.selectEidByloginName(employee);
+                        // 放入用户类
+                        employee.setE_id(e_id);
                         // 将登录信息赋到session里避免拦截
                         session.setAttribute("employee",employee);
                         
@@ -121,24 +124,33 @@ public class SignInController {
                     }
                     
                 } else {
-                    
-                    // 密码错误后更改错误次数
-                    signInService.updatePwdWrongTime(employee);
-                    // 查询目前的错误次数
-                    lastLoginChance = signInService.selectPwdWrongTime(employee);
-                    // 获取剩下的尝试机会
-                    lastLoginChance = 3-lastLoginChance;
-                    
-                    // 设置提示信息为密码错误，并提示剩余尝试次数
-                    model.addAttribute("msg","密码错误，剩余尝试次数："+lastLoginChance);
-                    // 如果错误次数等于3次，就锁定账户
-                    if (lastLoginChance == 0) {
-                        // 修改锁定状态为锁定，修改锁定时间为当前时间
-                        signInService.updateEmployeeIsLockOut(employee);
-                        model.addAttribute("msg","该账号已锁定！");
-                    } else if (lastLoginChance < 0) {
-                        // 超过3次尝试次数
-                        model.addAttribute("msg","该账号已锁定！");
+                    // 查询当前用户是否为管理员
+                    String r_name = signInService.selectIsAdmin(employee);
+                    System.out.println(r_name);
+                    // 如果为管理员就只提示密码错误
+                    if (r_name.equals("管理员")) {
+                        model.addAttribute("msg","密码错误！");
+                    } else {
+                        // 如果不是管理员就更改错误次数
+                        
+                        // 密码错误后更改错误次数
+                        signInService.updatePwdWrongTime(employee);
+                        // 查询目前的错误次数
+                        lastLoginChance = signInService.selectPwdWrongTime(employee);
+                        // 获取剩下的尝试机会
+                        lastLoginChance = 3-lastLoginChance;
+                        
+                        // 设置提示信息为密码错误，并提示剩余尝试次数
+                        model.addAttribute("msg","密码错误，剩余尝试次数："+lastLoginChance);
+                        // 如果错误次数等于3次，就锁定账户
+                        if (lastLoginChance == 0) {
+                            // 修改锁定状态为锁定，修改锁定时间为当前时间
+                            signInService.updateEmployeeIsLockOut(employee);
+                            model.addAttribute("msg","该账号已锁定！");
+                        } else if (lastLoginChance < 0) {
+                            // 超过3次尝试次数
+                            model.addAttribute("msg","该账号已锁定！");
+                        }
                     }
                     
                 }

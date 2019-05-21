@@ -192,6 +192,10 @@ pageContext.setAttribute("path",request.getContextPath());
     
     
     
+    function updatePassword() {
+    	
+    }
+    
 </script>
 </head>
 <body class="easyui-layout">
@@ -200,6 +204,7 @@ pageContext.setAttribute("path",request.getContextPath());
                 欢迎${employee.e_loginName }使用CRM管理系统
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="register()">签到</a>
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="signBack()">签退</a>
+         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="updatePassword()">修改密码</a>
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="safeSignOut()">安全退出</a>
         </div>
     </div>
@@ -224,7 +229,6 @@ pageContext.setAttribute("path",request.getContextPath());
 			</div>
         </div>
     </div>
-<body>
 
 </body>
 </html>
