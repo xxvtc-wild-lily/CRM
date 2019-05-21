@@ -11,9 +11,12 @@ pageContext.setAttribute("path",request.getContextPath());
 <title>Insert title here</title>
 <link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
 <link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
+<link type="text/css" rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<script src="../js/echarts/echarts-all.js"></script>
+<script src="../js/home.js"></script>
 <script type="text/javascript">
     $(function(){
     	$("#tree").tree({    
@@ -108,6 +111,90 @@ pageContext.setAttribute("path",request.getContextPath());
     	    }
     	});
     }
+  
+    
+    
+    
+    
+    
+   
+		//数据统计图
+		$("#rightTab").tabs({
+		       height:250,
+		        border:false
+		})
+    	$(function(){
+        var myChart = echarts.init($("#chart01")[0]);
+//app.title = '堆叠柱状图';
+		$.post("../selectSuoDingZhaungTaiCounts",{
+			e_loginName:"${employee.e_loginName}"
+		},function(res){
+			if(res[2]=='管理员'){
+				var data1=['锁定人数','未锁定人数'];
+				var data2=[
+                    {value:res[0], name:'锁定人数'},
+                    {value:res[1], name:'未锁定人数'}
+                    ];
+			}else if(res[2]=='咨询经理'){
+				var data1=['签到人数','未签到人数'];
+				var data2=[
+                    {value:res[0], name:'签到人数'},
+                    {value:res[1], name:'未签到人数'}
+                    ];
+			}else if(res[2]=='咨询师' || res[2]=='网络咨询师'){
+				var data1=['流失数量','录入数量','正在跟进'];
+				var data2=[
+                    {value:res[0], name:'流失数量'},
+                    {value:res[1], name:'录入数量'},
+                    {value:res[3], name:'正在跟进'}
+                    ];
+			}
+			option = {
+	                tooltip : {
+	                        trigger: 'item',
+	                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+	                },
+	                legend: {
+
+	                        left: 'left',
+	                        data: data1
+	                },
+	                series : [
+	                        {
+	                                name: '数据',
+	                                type: 'pie',
+	                                radius : '55%',
+	                                center: ['50%', '60%'],
+	                                data:data2,
+	                                itemStyle: {
+	                                        emphasis: {
+	                                                shadowBlur: 10,
+	                                                shadowOffsetX: 0,
+	                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+	                                        }
+	                                }
+	                        }
+	                ]
+	               
+	        };
+			 myChart.setOption(option);
+		},"json");
+		 
+        
+        
+});
+    
+    	
+    
+    
+    
+    
+    
+    
+    
+    function updatePassword() {
+    	
+    }
     
 </script>
 </head>
@@ -117,6 +204,7 @@ pageContext.setAttribute("path",request.getContextPath());
                 欢迎${employee.e_loginName }使用CRM管理系统
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="register()">签到</a>
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="signBack()">签退</a>
+         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="updatePassword()">修改密码</a>
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="safeSignOut()">安全退出</a>
         </div>
     </div>
@@ -125,10 +213,22 @@ pageContext.setAttribute("path",request.getContextPath());
     </div>
     <div data-options="region:'center',title:'Center'" style="width:1300px">
         <div id="indexTab" class="easyui-tabs" style="width:1364px;height:617px;">
-            
+            <div class="allBox"  data-options="title:'首页'">
+				    <div class="homeLeft04">
+				        <h5 class="hStyle"><span>数据分析</span></h5>
+				        <p class="stataAny" id="chart01"></p>
+				    </div>
+				    <div class="homeLeft04">
+				        <h5 class="hStyle"><span>交货分析</span></h5>
+				        <p class="stataAny" id="chart02"></p>
+				    </div>
+				    <div class="homeLeft05">
+				        <h5 class="hStyle"><span>交货分析</span></h5>
+				        <p class="stataAny" style="height: 220px" id="chart03"></p>
+				    </div>
+			</div>
         </div>
     </div>
-<body>
 
 </body>
 </html>

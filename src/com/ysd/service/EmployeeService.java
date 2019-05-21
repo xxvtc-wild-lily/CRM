@@ -9,6 +9,11 @@ import com.ysd.entity.Role;
 
 public interface EmployeeService {
 	Pagination<Employee> selectEmployeeAll(Pagination<Employee> pagination);
+	/**
+	 * 根据员工ID删除员工
+	 * @param e_id
+	 * @return
+	 */
 	Integer deleteEmployee(Integer e_id);
 	Integer updateEmployee(Employee employee);
 	
@@ -30,14 +35,14 @@ public interface EmployeeService {
      * @param employeeRole 包含添加信息的用户角色类
      * @return 受影响的行数
      */
-    Integer insertRoleForEmployee(EmployeeRole employeeRole);
+    Integer insertRoleForEmployee(String arr,EmployeeRole employeeRole,String e_name,String r_name);
     
     /**
      * 根据用户id删除角色
      * @param employeeRole 包含删除信息的用户角色类
      * @return 受影响的行数
      */
-    Integer deleteRoleForEmployee(EmployeeRole employeeRole);
+    Integer deleteRoleForEmployee(String arr,EmployeeRole employeeRole,String r_name,String name);
     
     /**
      * 根据用户名重置密码
@@ -66,5 +71,10 @@ public interface EmployeeService {
      * @return 受影响的行数
      */
     Integer updateEmployeeUnLock(Employee employee);
+    /**
+     * 根据员工角色显示统计图
+     * @return
+     */
+    List selectTongJiTu(String e_loginName);
     
 }

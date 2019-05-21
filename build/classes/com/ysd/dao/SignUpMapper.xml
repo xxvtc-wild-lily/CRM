@@ -19,4 +19,12 @@
         select count(e_loginName) from employee where e_loginName=#{e_loginName}
     </select>
     
+    <select id="selectIsHaveSameProtectMTel" parameterType="string" resultType="_int">
+        select count(e_protectMTel) from employee where e_protectMTel = #{e_protectMTel}
+    </select>
+    
+    <select id="selectIsHaveSameProtectEmail" parameterType="string" resultType="_int">
+        select count(e_protectEmail) from employee where e_protectEmail = #{e_protectEmail}
+    </select>
+    
 </mapper>

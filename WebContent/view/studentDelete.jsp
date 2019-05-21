@@ -13,6 +13,11 @@
 	<script type="text/javascript">
 		$(function(){
 			init()
+			$('#lie_window').window({
+				onBeforeClose:function(){
+					$("#lie_window").dialog("clear");
+				}
+			});
 		})
 		
 		function init(){
@@ -22,7 +27,10 @@
 				method:'post',
 				pagination:true,
 				toolbar:"#studentTb",
+				fitColumns:true,
+				checkbox: true,
 				queryParams:{
+					e_loginName:${employee.e_loginName},
 					s_name:$("#s_name").val(),
 					s_phone:$("#s_phone").val(),
 					a_name:$("#asker.a_name").val(),
@@ -30,7 +38,30 @@
 					s_isValid:$("#s_isValid").combobox('getValue'),
 					s_QQ:$("#s_QQ").val(),
 					s_createTime:$("#s_createTime").val()
-				}
+				},
+				 columns:[[
+				        {field:'ck',title:'复选框',checkbox:true,width:100},
+				        {field:'s_id',title:'编号' ,width:100},
+				        {field:'s_name',title:'姓名' ,width:100},
+				        {field:'s_age',title:'年龄' ,width:100},
+				        {field:'asker.a_name',title:'咨询师'  ,formatter:formattera_name,width:100},
+				        {field:'s_sex',title:'性别'  ,formatter:formattresex,width:100},
+				        {field:'s_phone',title:'电话'  ,width:100},
+				        {field:'s_eduStatus',title:'学历状态',width:100},
+				        {field:'s_perStatus',title:'个人状态' ,width:100},
+				        {field:'s_comeWay',title:'来源渠道',width:100},
+				        {field:'s_comeSite',title:'来源网站' ,width:100},
+				        {field:'s_sourceKeyWord',title:'来源关键词' ,width:100},
+				        {field:'s_QQ',title:'QQ' ,width:100},
+				        {field:'s_weiXin',title:'微信' ,width:100},
+				        {field:'s_remarks',title:'在线备注' ,width:100},
+				        {field:'s_createTime',title:'创建时间',width:100},
+				        {field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:100},
+				        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:100},
+				        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:100},
+				        {field:'s_isReport',title:'是否报备' ,width:100},
+				        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:100}
+				    ]]
 			});
 			$('#tabfrm').form('clear');
 		}
@@ -62,7 +93,7 @@
 			} else if (row.s_isValid == "1") {
 				s_isValid = "有效";
 			} else {
-				s_isValid = "无效";
+				s_isValid = "待定";
 			}
 				
 			return s_isValid;
@@ -126,36 +157,38 @@
 		function detailClose(){
 			$("#detailDialog").dialog("close");
 		}
+		
+		function show(){
+	        var datagridTitle = new Array();
+	        var shuxing = new Array();
+	        var fields = $("#stuTab").datagrid('getColumnFields');
+	        var option;
+	             for (var i = 0; i < fields.length; i++) {
+	                option = $("#stuTab").datagrid('getColumnOption', fields[i]);
+	                datagridTitle.push(option.title);
+	                shuxing.push(option.field);
+	               if (option.field != "checkItem" && option.hidden != true) { 
+	                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+"  name='ch'>"+datagridTitle[i]+"</br>");
+	                    $("input[name='ch']").get(i).checked=true;
+	                }else{
+	                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+" name='ch' >"+datagridTitle[i]+"</br>");
+	                } 
+	            }
+	        $("#lie_window").window("open");
+	        $("input[name='ch']").click(function(){
+	                if($(this).is(":checked")){
+	                    var p = $(this).val();
+	                    $("#stuTab").datagrid('showColumn',p);
+	                }else{
+	                    var q = $(this).val();
+	                    $("#stuTab").datagrid('hideColumn',q);
+	                }
+	        })
+	    }
 	</script>
 </head>
 <body>
-	<table id="stuTab" class="easyui-datagrid">
-		<thead>
-			<tr>
-				<th data-options="field:'ck',checkbox:true "></th>
-				<th data-options="field:'s_id',title:'编号'  "></th>
-				<th data-options="field:'s_name',title:'姓名'  "></th>
-				<th data-options="field:'s_age',title:'年龄'  "></th>
-				<th data-options="field:'asker.a_name',title:'咨询师'  ,formatter:formattera_name"></th>
-				<th data-options="field:'s_sex',title:'性别'  ,formatter:formattresex"></th>
-				<th data-options="field:'s_phone',title:'电话'  "></th>
-				<th data-options="field:'s_eduStatus',title:'学历状态'  "></th>
-				<th data-options="field:'s_perStatus',title:'个人状态'  "></th> 
-				<th data-options="field:'s_comeWay',title:'来源渠道'  "></th>
-				<th data-options="field:'s_comeSite',title:'来源网站'  "></th>
-				<th data-options="field:'s_sourceKeyWord',title:'来源关键词'  "></th>
-				<th data-options="field:'s_QQ',title:'QQ' "></th>
-				<th data-options="field:'s_weiXin',title:'微信'  "></th>
-				<th data-options="field:'s_remarks',title:'在线备注'  "></th>
-				<th data-options="field:'s_createTime',title:'创建时间'  "></th>
-				<th data-options="field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx"></th>
-				<th data-options="field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf"></th>
-				<th data-options="field:'s_isPay',title:'是否付费'  ,formatter:formattersfff"></th>
-				<th data-options="field:'s_isReport',title:'是否报备'  "></th>
-				<th data-options="field:'caozuo',title:'操作',formatter:formattercaozuo"></th>
-			</tr>
-		</thead>
-	</table>
+	<table id="stuTab"></table>
 	<div id="studentTb">
 		<form  id="tabfrm" class="easyui-form">
 	        <label for="name">姓名:</label>   
@@ -183,8 +216,13 @@
 	        
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0);" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
+			<a href="javascript:void(0)" onclick="show()" class="easyui-linkbutton">动态设置</a>
 		</form>
 	</div>
+	<div id="lie_window" class="easyui-dialog" title="列设置" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:400px;height:500px;padding:10px;">
+         
+    </div>
+	
 	<div id="detailDialog" class="easyui-dialog" title="查看信息"  style="width:1000px; height:440px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
 		<form id="detailForm" method="post">
 			<table>
