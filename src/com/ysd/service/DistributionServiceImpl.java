@@ -182,5 +182,32 @@ public class DistributionServiceImpl implements DistributionService {
         
         return i;
     }
+
+    @Override
+    public List<Asker> selectAllAskerOrderByWeight() {
+        // TODO Auto-generated method stub
+        
+        List<Asker> list = distributionMapper.selectAllAskerOrderByWeight();
+        
+        return list;
+    }
+
+    @Override
+    public List<Student> selectAllNotDistributionStudentB() {
+        // TODO Auto-generated method stub
+        
+        List<Student> list = distributionMapper.selectAllNotDistributionStudentB();
+        
+        return list;
+    }
+
+    @Override
+    public Integer updateStudentAskerId(Student student) {
+        // TODO Auto-generated method stub
+        
+        Integer i = distributionMapper.updateStudentAskerId(student);
+        
+        return i;
+    }
     
 }
