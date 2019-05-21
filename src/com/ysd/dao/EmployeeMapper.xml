@@ -95,4 +95,16 @@
 	<select id="selectGenJinStudentCountById" parameterType="int" resultType="int">
 			SELECT count(s.s_id) FROM employee e INNER JOIN asker a on e.e_loginName =a.a_name INNER JOIN student s on a.a_id=s.s_askerId where e.e_id=#{id} and s.s_lostReason!='是'
 	</select>
+	<insert id="addAsker" parameterType="asker">
+			insert into asker(a_name,a_roleName) values(#{a_name},#{a_roleName})
+	</insert>
+	<delete id="deleteAskerByName" parameterType="string">
+			delete from asker where  a_name= #{param1} and a_roleName= #{param2} 
+	</delete>
+	<select id="selectWeiSuoDingCount" resultType="int">
+			select count(1) from employee where e_isLockOut=0
+	</select>
+	<select id="selectSuoDingCount" resultType="int">
+			select count(1) from employee where e_isLockOut=1
+	</select>
 </mapper>

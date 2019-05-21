@@ -1,5 +1,6 @@
 package com.ysd.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.jspsmart.upload.Request;
 import com.ysd.dao.EmployeeMapper;
+import com.ysd.entity.Asker;
 import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeRole;
 import com.ysd.entity.Pagination;
@@ -16,7 +18,8 @@ public class EmployeeServiceImp implements EmployeeService {
 	
 	@Autowired
 	private EmployeeMapper employeeMapper;
-	
+	@Autowired
+	private Asker asker;
 	@Override
 	public Pagination<Employee> selectEmployeeAll(Pagination<Employee> pagination) {
 		List<Employee> selectEmployeeAll = employeeMapper.selectEmployeeAll(pagination);
@@ -67,17 +70,31 @@ public class EmployeeServiceImp implements EmployeeService {
 
 
     @Override
-    public Integer insertRoleForEmployee(EmployeeRole employeeRole) {
+    public Integer insertRoleForEmployee(String arr,EmployeeRole employeeRole,String e_name,String r_name) {
         // TODO Auto-generated method stub
         
-        Integer i = employeeMapper.insertRoleForEmployee(employeeRole);
-        
-        return i;
+    	String[] ridArr = arr.split(",");
+    	String[] rname=r_name.split(",");
+	    Integer code = 0;
+	    for (int i = 0;i < ridArr.length;i++) {
+	    	if(rname[i].equals("咨询师") || rname[i].equals("网络咨询师")) {
+	    		employeeRole.setR_id(Integer.parseInt(ridArr[i]));
+	    		asker.setA_name(e_name);
+	    		asker.setA_roleName(rname[i]);
+	    		employeeMapper.addAsker(asker);
+		        code=employeeMapper.insertRoleForEmployee(employeeRole);
+	    	}else {
+	    		employeeRole.setR_id(Integer.parseInt(ridArr[i]));
+	    		code=employeeMapper.insertRoleForEmployee(employeeRole);
+	    	}
+	    }
+
+        return code;
     }
 
 
     @Override
-    public Integer deleteRoleForEmployee(String arr,EmployeeRole employeeRole,String r_name) {
+    public Integer deleteRoleForEmployee(String arr,EmployeeRole employeeRole,String r_name,String name) {
          String[] rname=r_name.split(",");
     	 String[] ridArr = arr.split(",");
 		 Integer coun=0; 
@@ -91,24 +108,35 @@ public class EmployeeServiceImp implements EmployeeService {
     	 }
     	 if(sizes==ridArr.length) {
     		 for(int i = 0;i < ridArr.length;i++) {
-    			 employeeRole.setR_id(Integer.parseInt(ridArr[i])); 
-    			 coun=employeeMapper.deleteRoleForEmployee(employeeRole);
+    			 if(rname[i].equals("网络咨询师")) {
+    				 employeeMapper.deleteAskerByName(name, rname[i]);
+    				 employeeRole.setR_id(Integer.parseInt(ridArr[i])); 
+        			 coun=employeeMapper.deleteRoleForEmployee(employeeRole);
+    			 }else {
+    				 employeeRole.setR_id(Integer.parseInt(ridArr[i])); 
+        			 coun=employeeMapper.deleteRoleForEmployee(employeeRole);
+    			 }
     		 }
     	 }else {
     		 for(int i = 0;i < rname.length;i++) {
     			 if(rname[i].equals("咨询师")) { 
-    				 System.out.println(Integer.parseInt(ridArr[i]));
    				  Integer selectGenJinStudentCountById =employeeMapper.selectGenJinStudentCountById(employeeRole.getE_id());
-   				  System.out.println(selectGenJinStudentCountById);
    				  	if(selectGenJinStudentCountById>0){ 
    					  coun= 0; 
    				  	}else{
+   				  	employeeMapper.deleteAskerByName(name, rname[i]);
    				  	employeeRole.setR_id(Integer.parseInt(ridArr[i])); 
    				  	coun= employeeMapper.deleteRoleForEmployee(employeeRole);
    				  	}
     			 }else {
-       	    		employeeRole.setR_id(Integer.parseInt(ridArr[i])); 
-       	    		employeeMapper.deleteRoleForEmployee(employeeRole);
+    				 if(rname[i].equals("网络咨询师")) {
+    					 employeeMapper.deleteAskerByName(name, rname[i]);
+    					 employeeRole.setR_id(Integer.parseInt(ridArr[i])); 
+    	       	    	 employeeMapper.deleteRoleForEmployee(employeeRole);
+    				 }else {
+    					 employeeRole.setR_id(Integer.parseInt(ridArr[i])); 
+    	       	    	 employeeMapper.deleteRoleForEmployee(employeeRole);
+    				 }
     			 }
     	 }
     	}
@@ -155,5 +183,17 @@ public class EmployeeServiceImp implements EmployeeService {
         
         return i;
     }
+
+
+	@Override
+	public List selectSuoDingZhaungTaiDeCount() {
+		Integer selectSuoDingCount = employeeMapper.selectSuoDingCount();
+		Integer selectWeiSuoDingCount = employeeMapper.selectWeiSuoDingCount();
+		List list=new ArrayList();
+		list.add(selectSuoDingCount);
+		list.add(selectWeiSuoDingCount);
+		System.out.println(list);
+		return list;
+	}
     
 }

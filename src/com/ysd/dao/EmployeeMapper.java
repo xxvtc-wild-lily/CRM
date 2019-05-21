@@ -2,6 +2,7 @@ package com.ysd.dao;
 
 import java.util.List;
 
+import com.ysd.entity.Asker;
 import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeRole;
 import com.ysd.entity.Pagination;
@@ -39,6 +40,18 @@ public interface EmployeeMapper {
 	 * @return
 	 */
 	Integer updateEmployee(Employee employee);
+	/**
+	 * 根据用户名字添加咨询师
+	 * @param name
+	 * @return
+	 */
+	Integer addAsker(Asker asker);
+	/**
+	 * 根据用户名字删除咨询师
+	 * @param name
+	 * @return
+	 */
+	Integer deleteAskerByName(String name,String rname);
 	
 	/**
 	 * 查询所有的角色
@@ -94,5 +107,15 @@ public interface EmployeeMapper {
      * @return 受影响的行数
      */
     Integer updateEmployeeUnLock(Employee employee);
-	
+    
+    /**
+     * 查询未锁定的员工数量
+     * @return
+     */
+    Integer selectWeiSuoDingCount();
+    /**
+     * 查询锁定的员工数量
+     * @return
+     */
+	Integer selectSuoDingCount();
 }

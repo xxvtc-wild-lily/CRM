@@ -20,7 +20,7 @@
             modal:true,
             closed:true
         })
-       
+        $.parser.parse($('#empTab').parent());
 	})
 	
 	function init(){
@@ -51,18 +51,18 @@
 		        {field:"caozuo",title:"操作",width:350,formatter:formattercaozuo}
 		    ]]
 		});
+		$.parser.parse();
 		$('#tabfrm').form('clear');
 	}
 	function formattercaozuo(value,row,index){
 		return "<a href='javascript:void(0)' class='easyui-linkbutton' data-options='iconCls:'icon-search'' onclick='detail("
-				+index+")'>查看</a><a href='javascript:void(0)' onclick='updateEmployee("
-				+index+")'>修改</a><a href='javascript:void(0)' onclick='deleteEmployee("
-				+index+")'>删除</a><a href='javascript:void(0)' onclick='openUpdateRoleDialog("
-				+index+")'>修改角色</a><a href='javascript:void(0)' onclick='openResertPasswordDialog("
-				+index+")'>重置密码</a> <a href='javascript:void(0)' onclick='lockEmployee("
-				+index+")'>锁定用户</a> <a href='javascript:void(0)' onclick='unlockEmployee("
-				+index+")'>解锁用户</a>"
-				
+		+index+")'>查看</a><a href='javascript:void(0)' onclick='updateEmployee("
+		+index+")'>修改</a><a href='javascript:void(0)' onclick='deleteEmployee("
+		+index+")'>删除</a><a href='javascript:void(0)' onclick='openUpdateRoleDialog("
+		+index+")'>修改角色</a><a href='javascript:void(0)' onclick='openResertPasswordDialog("
+		+index+")'>重置密码</a> <a href='javascript:void(0)' onclick='lockEmployee("
+		+index+")'>锁定用户</a> <a href='javascript:void(0)' onclick='unlockEmployee("
+		+index+")'>解锁用户</a>"			
 	}
 	//初始化头像
 	function formatterImg(value,row,index){
@@ -163,6 +163,7 @@
 		    	if (row.text == null) {
 		    		row.text = "checked";
 		    		row.id = e_id;
+		    		row.name=e_loginName;
 		    	} else {
 		    		row.text = null;
 		    	}
@@ -183,6 +184,7 @@
             	if (row.text == null) {
                     row.text = "checked";
                     row.id = e_id;
+                    row.name=e_loginName;
                 } else {
                     row.text = null;
                 }
@@ -209,7 +211,7 @@
         // 查询用户已有的角色
         var employeeData = $("#employeeRoleDatalist").datalist("getData");
         var arr = "";
-        
+        var rname="";
         // 判断必须选择角色
         if (JSON.stringify(roleData) != "[]") {
             // 判断用户的已有的角色不能为空
@@ -224,6 +226,7 @@
                     // 如果本次循环的角色id与用户拥有的都不一样，说明用户没有此id，遂添加进数组
                     if(a==employeeData.total){
                     	arr += roleData[i].r_id +","
+                    	rname+=roleData[i].r_name+",";
                     }
                 }
             } else {
@@ -232,6 +235,7 @@
                 // 循环拿到选中的角色id
                 for (var i = 0;i < roleData.length;i++) {
                     arr += roleData[i].r_id +","
+                    rname+=roleData[i].r_name+",";
                 }
             }
         } else {
@@ -245,7 +249,9 @@
         } else {
         	$.post("../removeRoleToEmployee",{
                 arr:arr,
-                e_id:roleData[0].id
+                e_id:roleData[0].id,
+                name:roleData[0].name,
+                r_name:rname
             },function(res){
                 if (res > 0) {
                     $.messager.alert("提示","添加成功！","info");
@@ -278,7 +284,8 @@
         	$.post("../removeEmployeeToAll",{
                 arr:arr,
                 r_name:zixunshi,
-                e_id:empRole[0].id
+                e_id:empRole[0].id,
+                name:empRole[0].name,
             },function(res){
                 if (res > 0) {
                     $.messager.alert("提示","移除角色成功！","info");

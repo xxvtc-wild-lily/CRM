@@ -35,14 +35,14 @@ public interface EmployeeService {
      * @param employeeRole 包含添加信息的用户角色类
      * @return 受影响的行数
      */
-    Integer insertRoleForEmployee(EmployeeRole employeeRole);
+    Integer insertRoleForEmployee(String arr,EmployeeRole employeeRole,String e_name,String r_name);
     
     /**
      * 根据用户id删除角色
      * @param employeeRole 包含删除信息的用户角色类
      * @return 受影响的行数
      */
-    Integer deleteRoleForEmployee(String arr,EmployeeRole employeeRole,String r_name);
+    Integer deleteRoleForEmployee(String arr,EmployeeRole employeeRole,String r_name,String name);
     
     /**
      * 根据用户名重置密码
@@ -71,5 +71,10 @@ public interface EmployeeService {
      * @return 受影响的行数
      */
     Integer updateEmployeeUnLock(Employee employee);
+    /**
+     * 查询锁定用户和未锁定用户的数量
+     * @return
+     */
+    List selectSuoDingZhaungTaiDeCount();
     
 }
