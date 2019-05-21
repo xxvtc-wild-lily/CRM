@@ -72,9 +72,9 @@ public interface EmployeeService {
      */
     Integer updateEmployeeUnLock(Employee employee);
     /**
-     * 查询锁定用户和未锁定用户的数量
+     * 根据员工角色显示统计图
      * @return
      */
-    List selectSuoDingZhaungTaiDeCount();
+    List selectTongJiTu(String e_loginName);
     
 }
