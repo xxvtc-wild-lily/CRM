@@ -115,8 +115,8 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/selectSuoDingZhaungTaiCounts",method=RequestMethod.POST)
     @ResponseBody
-    public List selectSuoDingZhaungTaiCount() {
-        return  employeeService.selectSuoDingZhaungTaiDeCount();
+    public List selectSuoDingZhaungTaiCount(String e_loginName) {
+        return  employeeService.selectTongJiTu(e_loginName);
     }
 	
 }

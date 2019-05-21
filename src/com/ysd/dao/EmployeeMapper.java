@@ -118,4 +118,56 @@ public interface EmployeeMapper {
      * @return
      */
 	Integer selectSuoDingCount();
+	/**
+	 * 根据员工名字查询员工角色
+	 * @param name
+	 * @return
+	 */
+	String selectRoleByEmpName(String name);
+	/**
+	 * 查询今天签到人数
+	 * @return
+	 */
+	Integer selectQianDaoRenShu();
+	/**
+	 * 查询未签到人数
+	 * @return
+	 */
+	Integer selectWeiQianDaoRenShu();
+	/**
+	 * 根据员工名字查询所属学生数量
+	 * @param string
+	 * @return
+	 */
+	Integer selectStudentByEmpName(String string);
+	/**
+	 * 根据员工名字查询所属学生的流失数量
+	 * @param string
+	 * @return
+	 */
+	Integer selectStudentLuiShiByEmpName(String string);
+	/**
+	 * 根据员工姓名查询所属学生的录入数量
+	 * @param string
+	 * @return
+	 */
+	Integer selectStudentLuRuByEmpName(String string);
+	/**
+	 * 根据员工名字查询自己添加的学生数量
+	 * @param string
+	 * @return
+	 */
+	Integer selectStudentAddByEmpName(String string);
+	/**
+	 * 根据员工姓名查询自己添加的学生流失的数量
+	 * @param string
+	 * @return
+	 */
+	Integer selectStudentAddLiuShuByEmpName(String string);
+	/**
+	 * 根据员工姓名查询自己添加的学生录入的数量
+	 * @param string
+	 * @return
+	 */
+	Integer selectStudentAddLuRuByEmpName(String string);
 }

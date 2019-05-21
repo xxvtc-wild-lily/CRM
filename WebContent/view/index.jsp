@@ -127,7 +127,28 @@ pageContext.setAttribute("path",request.getContextPath());
         var myChart = echarts.init($("#chart01")[0]);
 //app.title = '堆叠柱状图';
 		$.post("../selectSuoDingZhaungTaiCounts",{
+			e_loginName:"${employee.e_loginName}"
 		},function(res){
+			if(res[2]=='管理员'){
+				var data1=['锁定人数','未锁定人数'];
+				var data2=[
+                    {value:res[0], name:'锁定人数'},
+                    {value:res[1], name:'未锁定人数'}
+                    ];
+			}else if(res[2]=='咨询经理'){
+				var data1=['签到人数','未签到人数'];
+				var data2=[
+                    {value:res[0], name:'签到人数'},
+                    {value:res[1], name:'未签到人数'}
+                    ];
+			}else if(res[2]=='咨询师' || res[2]=='网络咨询师'){
+				var data1=['流失数量','录入数量','正在跟进'];
+				var data2=[
+                    {value:res[0], name:'流失数量'},
+                    {value:res[1], name:'录入数量'},
+                    {value:res[3], name:'正在跟进'}
+                    ];
+			}
 			option = {
 	                tooltip : {
 	                        trigger: 'item',
@@ -136,19 +157,15 @@ pageContext.setAttribute("path",request.getContextPath());
 	                legend: {
 
 	                        left: 'left',
-	                        data: ['锁定人数','未锁定人数']
+	                        data: data1
 	                },
 	                series : [
 	                        {
-	                                name: '访问来源',
+	                                name: '数据',
 	                                type: 'pie',
 	                                radius : '55%',
 	                                center: ['50%', '60%'],
-	                                data:[
-	                                        {value:res[0], name:'锁定人数'},
-	                                        {value:res[1], name:'未锁定人数'}
-	                                        
-	                                ],
+	                                data:data2,
 	                                itemStyle: {
 	                                        emphasis: {
 	                                                shadowBlur: 10,
@@ -167,9 +184,7 @@ pageContext.setAttribute("path",request.getContextPath());
         
 });
     
-    	 function init(){
-    	    	
-    	    }
+    	
     
     
     
@@ -196,7 +211,7 @@ pageContext.setAttribute("path",request.getContextPath());
         <div id="indexTab" class="easyui-tabs" style="width:1364px;height:617px;">
             <div class="allBox"  data-options="title:'首页'">
 				    <div class="homeLeft04">
-				        <h5 class="hStyle"><span>锁定状态</span></h5>
+				        <h5 class="hStyle"><span>数据分析</span></h5>
 				        <p class="stataAny" id="chart01"></p>
 				    </div>
 				    <div class="homeLeft04">
