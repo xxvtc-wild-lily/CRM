@@ -48,4 +48,16 @@
         update checkstatus set cs_status = '0' where cs_name = '自动分量'
     </update>
     
+    <select id="selectAllAskerOrderByWeight" resultType="asker">
+        select a.* from asker a where a.a_roleName = '咨询师' and a_checkStatus = 1 order by a.a_weight desc
+    </select>
+    
+    <select id="selectAllNotDistributionStudentB" resultType="student">
+        select s.s_id,s_name from student s where s.s_askerId is null
+    </select>
+    
+    <update id="updateStudentAskerId" parameterType="student">
+        update student set s_askerId = #{s_askerId} where s_id = #{s_id}
+    </update>
+    
 </mapper>

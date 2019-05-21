@@ -125,8 +125,8 @@
                 <th data-options="field:'e_age',title:'年龄',formatter:formatterAge"></th>
                 <th data-options="field:'e_photo',title:'照片' ,formatter:formatterimg"></th>
                 <th data-options="field:'ec_checkStatus',title:'签到状态' ,formatter:checkStatus"></th>
-                <th data-options="field:'ec_checkInTime',title:'最新签到时间' "></th>
-                <th data-options="field:'ec_checkOutTime',title:'最新签退时间' "></th>
+                <th data-options="field:'ec_checkInTime',title:'签到时间' "></th>
+                <th data-options="field:'ec_checkOutTime',title:'签退时间' "></th>
                 <th data-options="field:'doSomething',title:'操作' ,formatter:doSomething"></th>
             </tr>
         </thead>

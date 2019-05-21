@@ -57,17 +57,71 @@
     		onText:"自动分量开启",
     		offText:"自动分量关闭",
     		onChange:function(checked) {
-    			$.messager.confirm("提示","您确定要切换分量状态吗？", function(r){
-    			    if (r) {
-    			    	if (checked) {
-    			    		$.post("../distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
-    			    	} else {
-    			    		$.post("../closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
-    			    	}
-    			    }
-    			});
+    			if (checked) {
+    				$.post("../distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    			} else {
+    				$.post("../closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    			}
     		}
-    	})
+        })
+    }
+    
+    function openHandDistributionDialog() {
+    	// 加载所有咨询师的datalist
+        $("#allAsker").datalist({ 
+            url:"../getAllAsker",
+            singleSelect:true,
+            textFormatter:function (value,row,index) {
+                return row.a_name;
+            }
+        });
+    	
+    	// 加载所有未分配学生的datalist
+        $("#allNotDistributionStudent").datalist({ 
+            url:"../allNotDistributionStudent",
+            singleSelect:false,
+            textFormatter:function (value,row,index) {
+                return row.s_name;f
+            }
+        });
+        $("#handDistributionDialog").dialog("open");
+    }
+    
+    function distributionStudent() {
+    	// 获取选中的咨询师数据
+    	var askerData = $("#allAsker").datalist("getSelections");
+    	// 获取选中的学生数据
+    	var studentData = $("#allNotDistributionStudent").datalist("getSelections");
+    	// 判断是否选择咨询师
+    	if (askerData != null && askerData != "") {
+    		// 判断是否选择学生
+    		if (studentData != null && studentData != "") {
+    			// 获取选中的咨询师id
+    	        var askerId = askerData[0].a_id;
+    			// 声明存放学生id的数组
+    	        var studentIdArr = [];
+    			// 循环将学生id放入数组
+    	        for (var i = 0;i < studentData.length;i++) {
+    	        	studentIdArr += studentData[i].s_id+","
+    	        }
+    	        $.post("../handDistributionStudent",{
+    	        	s_askerId:askerId,
+    	        	studentIdArr:studentIdArr
+    	        },function(res){
+    	        	if (res > 0) {
+    	        		$.messager.alert("提示","分配成功！","info");
+    	        		$("#dg").datagrid("reload");
+    	        	} else {
+    	        		$.messager.alert("提示","分配失败！","error");
+    	        	}
+    	        },"json")
+    		} else {
+    			$.messager.alert("提示","请选择至少一个学生！","error");
+    		}
+    	} else {
+    		$.messager.alert("提示","请选择咨询师！","error");
+    	}
+    	
     }
     
 </script>
@@ -76,6 +130,23 @@
     <table id="dg"></table>
     <div id="tb">
         <input id="distributionButton" style="width:200px;height:30px">
+        <a href="javascript:void(0);" id="handDistribution"  class="easyui-linkbutton" data-options="iconCls:'icon-sum'" onclick="openHandDistributionDialog()">手动分配</a>
 	</div>
+	<div class="easyui-dialog" id="handDistributionDialog" title="手动分配学生" style="width:500px;height:2  90px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	   <table>
+            <tr>
+                <td>请选择要分配的咨询师（单选）</td>
+                <td></td>
+                <td>请选择要为咨询师分配的学生（多选）</td>
+            </tr>
+            <tr>
+                <td><div id="allAsker" style="height:200px;width:200px;"></div></td>
+                <td>
+                    <button id="dl_add" class="easyui-linkbutton" style="width:50px;margin:5px;" onclick="distributionStudent()">确定</button><br />
+                </td>
+                <td><div id="allNotDistributionStudent" style="height:200px;width:200px;"></div></td>
+            </tr>
+       </table>
+    </div>
 </body>
 </html>
