@@ -11,9 +11,12 @@ pageContext.setAttribute("path",request.getContextPath());
 <title>Insert title here</title>
 <link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
 <link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
+<link type="text/css" rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<script src="../js/echarts/echarts-all.js"></script>
+<script src="../js/home.js"></script>
 <script type="text/javascript">
     $(function(){
     	$("#tree").tree({    
@@ -108,6 +111,72 @@ pageContext.setAttribute("path",request.getContextPath());
     	    }
     	});
     }
+  
+    
+    
+    
+    
+    
+   
+		//数据统计图
+		$("#rightTab").tabs({
+		       height:250,
+		        border:false
+		})
+    	$(function(){
+        var myChart = echarts.init($("#chart01")[0]);
+//app.title = '堆叠柱状图';
+		$.post("../selectSuoDingZhaungTaiCounts",{
+		},function(res){
+			option = {
+	                tooltip : {
+	                        trigger: 'item',
+	                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+	                },
+	                legend: {
+
+	                        left: 'left',
+	                        data: ['锁定人数','未锁定人数']
+	                },
+	                series : [
+	                        {
+	                                name: '访问来源',
+	                                type: 'pie',
+	                                radius : '55%',
+	                                center: ['50%', '60%'],
+	                                data:[
+	                                        {value:res[0], name:'锁定人数'},
+	                                        {value:res[1], name:'未锁定人数'}
+	                                        
+	                                ],
+	                                itemStyle: {
+	                                        emphasis: {
+	                                                shadowBlur: 10,
+	                                                shadowOffsetX: 0,
+	                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+	                                        }
+	                                }
+	                        }
+	                ]
+	               
+	        };
+			 myChart.setOption(option);
+		},"json");
+		 
+        
+        
+});
+    
+    	 function init(){
+    	    	
+    	    }
+    
+    
+    
+    
+    
+    
+    
     
 </script>
 </head>
@@ -125,7 +194,20 @@ pageContext.setAttribute("path",request.getContextPath());
     </div>
     <div data-options="region:'center',title:'Center'" style="width:1300px">
         <div id="indexTab" class="easyui-tabs" style="width:1364px;height:617px;">
-            
+            <div class="allBox"  data-options="title:'首页'">
+				    <div class="homeLeft04">
+				        <h5 class="hStyle"><span>锁定状态</span></h5>
+				        <p class="stataAny" id="chart01"></p>
+				    </div>
+				    <div class="homeLeft04">
+				        <h5 class="hStyle"><span>交货分析</span></h5>
+				        <p class="stataAny" id="chart02"></p>
+				    </div>
+				    <div class="homeLeft05">
+				        <h5 class="hStyle"><span>交货分析</span></h5>
+				        <p class="stataAny" style="height: 220px" id="chart03"></p>
+				    </div>
+			</div>
         </div>
     </div>
 <body>
