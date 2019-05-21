@@ -28,7 +28,7 @@
 			fitColumns:true,
 			checkbox: true,
 			queryParams:{
-				e_loginName:${employee.e_loginName},
+				e_loginName:"${employee.e_loginName}",
 				s_name:$("#s_name").val(),
 				s_phone:$("#s_phone").val(),
 				a_name:$("#asker.a_name").val(),
