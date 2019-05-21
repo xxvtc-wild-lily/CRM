@@ -51,4 +51,22 @@ public class SignUpServiceImpl implements SignUpService {
 		
 		return i;
 	}
+
+    @Override
+    public Integer selectIsHaveSameProtectMTel(String e_protectMTel) {
+        // TODO Auto-generated method stub
+        
+        Integer i = signUpMapper.selectIsHaveSameProtectMTel(e_protectMTel);
+        
+        return i;
+    }
+
+    @Override
+    public Integer selectIsHaveSameProtectEmail(String e_protectEmail) {
+        // TODO Auto-generated method stub
+        
+        Integer i = signUpMapper.selectIsHaveSameProtectEmail(e_protectEmail);
+        
+        return i;
+    }
 }

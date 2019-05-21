@@ -405,16 +405,19 @@
     
     // 提交注册请求
     function signUp(){
-        var e_loginName = $("#e_loginName").val();
-        var e_passWord = $("#e_passWord").val();
-        var e_retypePassWord = $("#e_retypePassWord").val();
-        var e_protectMTel = $("#e_protectMTel").val();
-        var e_protectEmail = $("#e_protectEmail").val();
+        var e_loginName = $("#e_loginNameSignUp").val();
+        var e_passWord = $("#e_passWordSignUp").val();
+        var e_retypePassWord = $("#e_retypePassWordSignUp").val();
+        var e_protectMTel = $("#e_protectMTelSignUp").val();
+        var e_protectEmail = $("#e_protectEmailSignUp").val();
+        
         
         // 判断手机号的正则表达式
         var regMTel=/^[1][3,4,5,7,8][0-9]{9}$/;
         // 判断邮箱的正则表达式
         var regEmail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+        // 判断密码必须为字母和数字的正则表达式
+        var regPassword = /^(?=.*?[a-z)(?=.*>[A-Z])(?=.*?[0-9])[a-zA_Z0-9]{6,10}$/;
         
         // 设置判断，姓名密码为必填
         if (e_loginName != "" && e_loginName != null && e_loginName != undefined 
@@ -425,98 +428,114 @@
             
             // 判断输入的密码是否为6位或以上
             if (e_passWord.length >= 6) {
-                // 判断两次输入的密码是否一致
-                if (e_passWord==e_retypePassWord) {
-                    // 判断手机号是否正确
-                    if (regMTel.test(e_protectMTel)) {
-                        // 判断邮箱是否正确
-                        if (regEmail.test(e_protectEmail)) {
-                            // 拿到选中的性别，如果没有则为undefined
-                            var e_sex = $('input[name="e_sex"]:checked').val();
-                            var e_age = $("#e_age").val();
-                            
-                            if (e_age != null && e_age != "" && e_age != " " && e_age != undefined) {
-                                 // 判断年龄是否在18~100岁之间
-                                if (e_age >=18 && e_age<=100) {
-                                    e_age = $("#e_age").val();
-                                } else {
-                                    $.messager.alert("提示","年龄应在18~100岁之间！","error");
-                                    return;
-                                }
-                            }
-                            
-                            // 获取拿到的file
-                            var e_photo = $("#e_photo").get(0).files[0];
-                            // 声明FormData对象用来传值
-                            var formData=new FormData();
-                            formData.append("e_loginName",e_loginName);
-                            formData.append("e_passWord",e_passWord);
-                            formData.append("e_protectMTel",e_protectMTel);
-                            formData.append("e_protectEmail",e_protectEmail);
-                            formData.append("e_sex",e_sex);
-                            formData.append("e_age",e_age);
-                            formData.append("e_photo",e_photo);
-                            
-                            // 判断用户是否选择图片
-                            if (e_photo != undefined) {
-                                // 选择图片的ajax
-                                $.ajax({
-                                    url:"../insertSignUpEmployeeHaveImage",
-                                    type:"post",
-                                    data:formData,
-                                    async:false,
-                                    contentType:false,
-                                    processData:false,
-                                    success:function(res){
-                                        if (res == 0){
-                                            $.messager.alert("提示","注册成功！","info");
-                                        } else if(res == 1){
-                                            $.messager.alert("提示","注册失败！（原因：图片名重复，请再试一次）","error");
-                                        } else if(res == 2){
-                                            $.messager.alert("提示","注册失败！","error");
-                                        } else if(res == 3){
-                                            $.messager.alert("提示","注册失败（原因：登录名已存在，请再输入一个不同的）！","error");
-                                        }
-                                    },
-                                    error:function(res){
-                                        $.messager.alert("提示","注册失败！","error");
-                                    }
-                                })
-                            } else {
-                                // 未选择图片的ajax
-                                $.ajax({
-                                    url:"../insertSignUpEmployeeNotHaveImage",
-                                    type:"post",
-                                    data:{
-                                        e_loginName:e_loginName,
-                                        e_passWord:e_passWord,
-                                        e_sex:e_sex,
-                                        e_age:e_age
-                                    },
-                                    success:function(res){
-                                        if(res>0) {
-                                            $.messager.alert("提示","注册成功！","info");
-                                        } else if (res == -1) {
-                                            $.messager.alert("提示","注册失败（原因：登录名已存在，请重新输入一个不同的）！","error");
-                                        } else {
-                                             $.messager.alert("提示","注册失败！","error");
-                                        }
-                                    },
-                                    error:function(res){
-                                        $.messager.alert("提示","注册失败！","error");
-                                    }
-                                })
-                            }
-                            
-                        } else {
-                            $.messager.alert("提示","请输入正确的邮箱！","error");
-                        }
-                    } else {
-                        $.messager.alert("提示","请输入正确的手机号！","error");
-                    }
-                } else {
-                    $.messager.alert("提示","两次输入的密码不一致！","error");
-                }
+            	// 判断密码是否同时包含字母和数字
+            	if (regPassword.test(e_passWord)) {
+	                // 判断两次输入的密码是否一致
+	                if (e_passWord==e_retypePassWord) {
+	                    // 判断手机号是否正确
+	                    if (regMTel.test(e_protectMTel)) {
+	                        // 判断邮箱是否正确
+	                        if (regEmail.test(e_protectEmail)) {
+	                            // 拿到选中的性别，如果没有则为undefined
+	                            var e_sex = $('input[name="e_sexSignUp"]:checked').val();
+	                            var e_age = $("#e_ageSignUp").val();
+	                            
+	                            if (e_age != null && e_age != "" && e_age != " " && e_age != undefined) {
+	                                 // 判断年龄是否在18~100岁之间
+	                                if (e_age >=18 && e_age<=100) {
+	                                    e_age = $("#e_ageSignUp").val();
+	                                } else {
+	                                    $.messager.alert("提示","年龄应在18~100岁之间！","error");
+	                                    return;
+	                                }
+	                            }
+	                            
+	                            // 获取拿到的file
+	                            var e_photo = $("#e_photoSignUp").get(0).files[0];
+	                            // 声明FormData对象用来传值
+	                            var formData=new FormData();
+	                            formData.append("e_loginName",e_loginName);
+	                            formData.append("e_passWord",e_passWord);
+	                            formData.append("e_protectMTel",e_protectMTel);
+	                            formData.append("e_protectEmail",e_protectEmail);
+	                            formData.append("e_sex",e_sex);
+	                            formData.append("e_age",e_age);
+	                            formData.append("e_photo",e_photo);
+	                            
+	                            // 判断用户是否选择图片
+	                            if (e_photo != undefined) {
+	                                // 选择图片的ajax
+	                                $.ajax({
+	                                    url:"../insertSignUpEmployeeHaveImage",
+	                                    type:"post",
+	                                    data:formData,
+	                                    async:false,
+	                                    contentType:false,
+	                                    processData:false,
+	                                    success:function(res){
+	                                        if (res == 0) {
+	                                            $.messager.alert("提示","注册成功！","info");
+	                                        } else if (res == 1) {
+	                                            $.messager.alert("提示","注册失败！（原因：图片名重复，请再试一次）","error");
+	                                        } else if (res == 2) {
+	                                            $.messager.alert("提示","注册失败！","error");
+	                                        } else if (res == 3) {
+	                                            $.messager.alert("提示","注册失败（原因：登录名已存在，请再输入一个不同的）！","error");
+	                                        } else if (res == 4) {
+	                                        	$.messager.alert("提示","注册失败（原因：手机号已存在，请再输入一个不同的）！","error");
+	                                        } else if (res == 5) {
+	                                        	$.messager.alert("提示","注册失败（原因：邮箱已存在，请再输入一个不同的）！","error");
+	                                        }
+	                                    },
+	                                    error:function(res){
+	                                        $.messager.alert("提示","注册失败！","error");
+	                                    }
+	                                })
+	                            } else {
+	                                // 未选择图片的ajax
+	                                alert(1)
+	                                $.ajax({
+	                                    url:"../insertSignUpEmployeeNotHaveImage",
+	                                    type:"post",
+	                                    data:{
+	                                        e_loginName:e_loginName,
+	                                        e_passWord:e_passWord,
+	                                        e_protectMTel:e_protectMTel,
+	                                        e_protectEmail:e_protectEmail,
+	                                        e_sex:e_sex,
+	                                        e_age:e_age
+	                                    },
+	                                    success:function(res){
+	                                    	if (res == 1) {
+                                                $.messager.alert("提示","注册成功！","info");
+                                            } else if (res == 2) {
+                                                $.messager.alert("提示","注册失败！","error");
+                                            } else if (res == 3) {
+                                                $.messager.alert("提示","注册失败（原因：登录名已存在，请再输入一个不同的）！","error");
+                                            } else if (res == 4) {
+                                                $.messager.alert("提示","注册失败（原因：手机号已存在，请再输入一个不同的）！","error");
+                                            } else if (res == 5) {
+                                                $.messager.alert("提示","注册失败（原因：邮箱已存在，请再输入一个不同的）！","error");
+                                            }
+	                                    },
+	                                    error:function(res){
+	                                        $.messager.alert("提示","注册失败！","error");
+	                                    }
+	                                })
+	                            }
+	                            
+	                        } else {
+	                            $.messager.alert("提示","请输入正确的邮箱！","error");
+	                        }
+	                    } else {
+	                        $.messager.alert("提示","请输入正确的手机号！","error");
+	                    }
+	                } else {
+	                    $.messager.alert("提示","两次输入的密码不一致！","error");
+	                }
+	            } else {
+	            	$.messager.alert("提示","密码必须同时包含数字和字母！","error");
+	            }
             } else {
                 $.messager.alert("提示","密码至少为6位！","error");
             }
@@ -525,6 +544,7 @@
         }
     }
     
+    // 密码的验证
     $.extend($.fn.validatebox.defaults.rules, {
         equals: {
             validator: function(value,param){
@@ -533,6 +553,7 @@
             message:"两次输入密码不一致！"
         }
     });
+    
     //删除员工
     function deleteEmployee(index){
 		var data=$("#empTab").datagrid("getData");
@@ -785,35 +806,35 @@
             <table id="signUpTable" style="margin-left:30px;">
                 <tr>
                     <td style="width:80px;">登录名：</td>
-                    <td><input class="easyui-textbox" id="e_loginName" style="width:200px" required="required"></td>
+                    <td><input class="easyui-textbox" id="e_loginNameSignUp" style="width:200px" required="required"></td>
                 </tr>
                 <tr>
                     <td>登录密码：</td>
-                    <td><input type="password" class="easyui-textbox validatebox" id="e_passWord" style="width:200px" required="required"><span>&nbsp;密码应为6位及以上</span></td>
+                    <td><input type="password" class="easyui-textbox validatebox" id="e_passWordSignUp" style="width:200px" required="required"><span>&nbsp;密码最少6位并同时包含字母和数字</span></td>
                 </tr>
                 <tr>
                     <td>确认密码：</td>
-                    <td><input type="password" class="easyui-textbox validatebox" id="e_retypePassWord" style="width:200px" required="required" validType="equals['#e_passWord']" /></td>
+                    <td><input type="password" class="easyui-textbox validatebox" id="e_retypePassWordSignUp" style="width:200px" required="required" validType="equals['#e_passWordSignUp']" /></td>
                 </tr>
                 <tr>
                     <td>手机号：</td>
-                    <td><input class="easyui-textbox" id="e_protectMTel" style="width:200px" required="required"></td>
+                    <td><input class="easyui-textbox" id="e_protectMTelSignUp" style="width:200px" required="required"></td>
                 </tr>
                 <tr>
                     <td>邮箱：</td>
-                    <td><input class="easyui-textbox" id="e_protectEmail" style="width:200px" required="required"></td>
+                    <td><input class="easyui-textbox" id="e_protectEmailSignUp" style="width:200px" required="required"></td>
                 </tr>
                 <tr>
                     <td>性别：</td>
                     <td>
                         <!-- <input class="easyui-textbox" id="e_sex" style="width:200px"> -->
-                        <input name="e_sex" id="e_sex" type="radio" value="1" />男
-                        <input name="e_sex" id="e_sex" type="radio" value="0" />女
+                        <input name="e_sexSignUp" id="e_sexSignUp" type="radio" value="1" />男
+                        <input name="e_sexSignUp" id="e_sexSignUp" type="radio" value="0" />女
                     </td>
                 </tr>
                 <tr>
                     <td>年龄：</td>
-                    <td><input class="easyui-textbox" id="e_age" style="width:200px"></td>
+                    <td><input class="easyui-textbox" id="e_ageSignUp" style="width:200px"></td>
                 </tr>
                 <tr>
                     <td>照片：</td>
@@ -822,7 +843,7 @@
                                             ,不大于<span style="color:red;"><b>2MB</b></span>的
                         <span style="color:red;"><b>.jpg</b></span>或<span style="color:red;"><b>.png</b></span>
                                            类型图片<br/>
-                        <input type="file" id="e_photo" style="width:200px;height:" onchange="fileChange(this)">
+                        <input type="file" id="e_photoSignUp" style="width:200px;height:" onchange="fileChange(this)">
                     </td>
                 </tr>
                 <tr>

@@ -30,4 +30,19 @@ public interface SignUpMapper {
 	 * @return 查询到的行数
 	 */
 	Integer selectIsHaveSameLoginName(String e_loginName);
+	
+	/**
+	 * 查询是否有相同的手机号
+	 * @param MTel 前台传过来的手机号
+	 * @return 查询到的行数
+	 */
+	Integer selectIsHaveSameProtectMTel(String e_protectMTel);
+	
+	/**
+	 * 查询是否有相同的邮箱
+	 * @param e_protectEmail 前台传过来的邮箱
+	 * @return 查询到的行数
+	 */
+	Integer selectIsHaveSameProtectEmail(String e_protectEmail);
+	
 }
