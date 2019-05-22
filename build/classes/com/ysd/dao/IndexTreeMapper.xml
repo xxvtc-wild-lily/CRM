@@ -8,4 +8,20 @@
         inner join modules m on rm.m_id = m.m_id where e.e_loginName = #{e_loginName}
     </select>
     
+    <select id="selectProtectMTelByLoginName" parameterType="employee" resultType="string">
+        select e_protectMTel from employee where e_loginName = #{e_loginName}
+    </select>
+    
+    <select id="selectFingerprintNumByLoginName" parameterType="employee" resultType="string">
+        select e_fingerprintNum from employee where e_loginName = #{e_loginName}
+    </select>
+    
+    <select id="selectIsOldPasswordSame" parameterType="employee" resultType="_int">
+        select count(1) from employee where e_passWord = #{e_passWord} and e_loginName = #{e_loginName}
+    </select>
+    
+    <update id="updatePasswordByLoginName" parameterType="employee">
+        update employee set e_passWord = #{e_passWord} where e_loginName = #{e_loginName}
+    </update>
+    
 </mapper>

@@ -23,4 +23,41 @@ public class IndexTreeServiceImpl implements IndexTreeService {
         
         return list;
     }
+    
+    @Override
+    public String selectProtectMTelByLoginName(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        String phoneNumber = IndexTreeMapper.selectProtectMTelByLoginName(employee);
+        
+        return phoneNumber;
+    }
+    
+    @Override
+    public String selectFingerprintNumByLoginName(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        String fingerPrintnumber = IndexTreeMapper.selectFingerprintNumByLoginName(employee);
+        
+        return fingerPrintnumber;
+    }
+
+    @Override
+    public Integer updatePasswordByLoginName(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = IndexTreeMapper.updatePasswordByLoginName(employee);
+        
+        return i;
+    }
+
+    @Override
+    public Integer selectIsOldPasswordSame(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = IndexTreeMapper.selectIsOldPasswordSame(employee);
+        
+        return i;
+    }
+    
 }
