@@ -28,7 +28,7 @@
 			fitColumns:true,
 			checkbox: true,
 			queryParams:{
-				e_loginName:${employee.e_loginName},
+				e_loginName:"${employee.e_loginName}",
 				s_name:$("#s_name").val(),
 				s_phone:$("#s_phone").val(),
 				a_name:$("#asker.a_name").val(),
@@ -54,18 +54,18 @@
 			        {field:'s_weiXin',title:'微信' ,width:100},
 			        {field:'s_remarks',title:'在线备注' ,width:100},
 			        {field:'s_createTime',title:'创建时间',width:100},
-			        {field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:100},
-			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:100},
-			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:100},
-			        {field:'s_isReport',title:'是否报备' ,width:100},
-			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:150}
+			        {field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:80},
+			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:80},
+			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:80},
+			        {field:'s_isReport',title:'是否报备' ,width:80},
+			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:250}
 			    ]]
 		}); 
 		$('#tabfrm').form('clear');
 	}
 	function formattercaozuo(value,row,index){
 	
-		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a> <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a><a href='javascript:void(0)' onclick='updateStudent("+index+")'>修改</a>"
+		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a> <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a><a href='javascript:void(0)' onclick='updateStudent("+index+")'>&ensp;修改</a><a href='javascript:void(0)' onclick='netfollowlog("+index+")'>&ensp;跟踪日志</a>"
 	}
 	
 	
@@ -147,7 +147,7 @@
 			s_QQ:$("#updates_QQ").val(),
 			s_weiXin:$("#updates_weiXin").val(),
 			s_isReport:$("#updates_isReport").val(),
-			s_importEmployee:${employee.e_loginName}
+			s_importEmployee:"${employee.e_loginName}"
 		},function(res){
 			
 			if(res>0){
@@ -205,8 +205,9 @@
     }
 
 	/* 跟踪日志 */
-	function netlog(){
-		$("#").dialog("open");
+	function netfollowlog(index){
+		$("#InsertNetlog_window").dialog("open");
+		
 	}
 	
 	
@@ -218,8 +219,8 @@
 		
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
-		alert(row.s_id);
-		alert(row.s_name);
+		/* alert(row.s_id);
+		alert(row.s_name); */
 		$('#InsertNetForm').form('load',row);
 		$("#InsertNet_window").dialog("open");
 		
@@ -234,7 +235,7 @@
 			n_followTime:$("#n_followTimeq").val(),
 			n_nextFollowTime:$("#n_nextFollowTimeq").val(),
 			n_context:$("#n_contextq").val(),
-			e_id:$("#e_idq").val(),
+			e_id:${employee.e_id},
 			n_followType:$("#n_followTypeq").val(),
 			n_createTime:$("n_createTime").val(),
 			n_followStatus:$("#n_followStatusq").val()
@@ -246,7 +247,7 @@
 				$("#StuTab").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
 				$("#InsertNetForm").form("clear");
 			}else{
-				alert("添加失败");
+				alert("添加失败"); 
 			}
 		}, "json");
 		
@@ -256,7 +257,7 @@
 	
 </script>
 </head>
-<!-- 添加跟踪日志 -->
+<!-- 添加跟踪 -->
 <body style="margin:0px">
 	<div id="InsertNet_window" class="easyui-window" title="添加信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:500px;padding:10px;">
 	<form id="InsertNetForm" class="easyui-form">
@@ -323,38 +324,11 @@
 </div>
 		
 		
-	
-	<!-- 添加跟踪-1
-	<div id="win" class="easyui-dialog" title="添加" data-options="closed:true" style="width:600px;height:400px"   
-        data-options="iconCls:'icon-save'">   
-	    <form id="addnet">
-	    		跟踪编号：<input id="n_stuIdq" name="s_id" class="easyui-datebox" data-options="" style="width:100px" ><br/>
-	    		跟踪学生：<input id="n_stuNameq" name="s_name" class="easyui-datebox" data-options="" style="width:100px" ><br/>
-		             跟踪时间：<input id="n_followTimeq" name="n_followTime" class="easyui-datebox" data-options="" style="width:100px" ><br/>
-	                    下次跟踪时间：<input id="n_nextFollowTimeq" name="n_nextFollowTime" class="easyui-datebox" data-options="" style="width:100px" ><br/>
-	                    跟踪内容：<input id="n_contextq" name="n_context" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	                     跟踪内容：<input id="e_idq" name="e_id" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	                    跟随方式：<input id="n_followTypeq" name="n_followType" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	                    跟随状态：<input id="n_followStatusq" name="n_followStatus" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	                    
-						 		<label for="name" style="width:140px"></label>  
-						    		<select style="width:140px" id="n_followStatusq" name="n_followStatusq" class="easyui-combobox">
-						    			<option value="">--请选择--</option>
-						    			<option value="未跟随">未跟随</option>
-							    		<option value="已跟随">已跟随</option>
-							    		
-							    	</select> <br/>   
-	           <a href="javascript:void(0)" onclick="addsave()" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">提交</a>
-	           <a href="NetFollow.jsp" onclick="cancel()" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true">取消</a>
-	      </form>
-	</div>
- -->
-
-
+		
 	
 
-</script>
-</head>
+
+
 
 
     
@@ -388,7 +362,7 @@
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0);" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
 			<a type="button" href="javascript:void(0)" onclick="show()" class="easyui-linkbutton">动态设置</a>
-			<a type="button" href="NetFollow.jsp" onclick="netlog()" class="easyui-linkbutton">跟踪日志</a>
+			<a type="button" href="NetFollow.jsp" onclick="netlog()" class="easyui-linkbutton">-跟踪日志</a>
 			
 		</form>
 	</div>

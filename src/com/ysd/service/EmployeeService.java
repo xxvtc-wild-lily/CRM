@@ -80,7 +80,5 @@ public interface EmployeeService {
     
     
     
-    
-    Integer selectemployeeid(Employee employee);
-    
+  
 }
