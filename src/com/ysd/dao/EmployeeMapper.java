@@ -1,4 +1,4 @@
-package com.ysd.dao;
+﻿package com.ysd.dao;
 
 import java.util.List;
 
@@ -170,4 +170,5 @@ public interface EmployeeMapper {
 	 * @return
 	 */
 	Integer selectStudentAddLuRuByEmpName(String string);
+
 }

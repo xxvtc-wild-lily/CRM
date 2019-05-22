@@ -26,7 +26,7 @@
 			pagination:true,
 			toolbar:"#studentTb",
 			fitColumns:true,
-			checkbox: true,
+			checkbox: true, 
 			queryParams:{
 				e_loginName:"${employee.e_loginName}",
 				s_name:$("#s_name").val(),
@@ -59,7 +59,7 @@
 			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:100},
 			        {field:'s_isReport',title:'是否报备' ,width:100},
 			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:100}
-			    ]]
+		 	    ]]
 		});
 		$('#tabfrm').form('clear');
 	}
@@ -68,7 +68,7 @@
 		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a> <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a> <a href='javascript:void(0)' onclick='updateStudent("+index+")'>修改</a>"
 	}
 	
-	function updateStudent(index){
+	/* function updateStudent(index){
         var data=$("#stuTab").datagrid("getData");
         var row=data.rows[index];
         $('#updateForm').form('load',row);
@@ -107,7 +107,7 @@
             }
         },"json")
         $('#updateForm').form('clear');
-    }
+    } */
 	
 	function formattera_name(value,row,index){
 		return row.asker.a_name;
@@ -279,6 +279,11 @@
 	            
 	    </div>   
 	</div>
+
+
+
+
+
 	<!-- <table id="stuTab" class="easyui-datagrid">
 		<thead>
 			<tr> -->
@@ -332,7 +337,6 @@
 				
 					<td><label>性别：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_sex" data-options="readonly:true" /></td>
-
 				</tr>
 				<tr>
 					<td><label>电话：</label></td>
@@ -358,12 +362,8 @@
 					<td><input class="easyui-textbox" type="text" id="s_address" name="s_address" data-options="readonly:true" /></td>
 				
 					<td><label>咨询师：</label></td>
-
-					<td><input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
-
 					<td>
 						<input class="easyui-textbox" type="text" id="asker.a_name" data-options="readonly:true" /></td>
-
 				</tr>
 				<tr>
 					<td><label>QQ：</label></td>
@@ -381,75 +381,75 @@
 				<tr>
 					<td><label>课程方向：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_learnForward" name="s_learnForward" data-options="readonly:true" /></td>
+				
 					<td><label>是否有效：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isValid" data-options="readonly:true" /></td>
-
-
+				
 					<td><label>打分：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_record" name="s_record" data-options="readonly:true" /></td>
+				
 					<td><label>是否回访：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isReturnVisit" data-options="readonly:true" /></td>
-
-
-
 				</tr>
 				<tr>
 					<td><label>首次回访时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_firstVisitTime" name="s_firstVisitTime" data-options="readonly:true" /></td>
+				
 					<td><label>是否上门：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isHome" data-options="readonly:true" /></td>
-
+				
 					<td><label>上门时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_homeTime" name="s_homeTime" data-options="readonly:true" /></td>
+				
 					<td><label>无效原因：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_lostReason" name="s_lostReason" data-options="readonly:true" /></td>
 				</tr>
 				<tr>
 					<td><label>是否付费：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isPay" data-options="readonly:true" /></td>
-
+				
 					<td><label>付费时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_payTime" name="s_payTime" data-options="readonly:true" /></td>
+				
 					<td><label>金额：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_payMoney" name="s_payMoney" data-options="readonly:true" /></td>
+				
 					<td><label>是否退费：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isReturnMoney" data-options="readonly:true" /></td>
 				</tr>
 				<tr>
 					<td><label>是否进班：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_isInClass" data-options="readonly:true" /></td>
-
-
-					<td><label>是否进班：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isInClass" name="s_isInClass" /></td>
-
-		
-
+				
 					<td><label>进班时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_inClassTime" name="s_inClassTime" data-options="readonly:true" /></td>
 				
 					<td><label>进班备注：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_inClassRemarks" name="s_inClassRemarks" data-options="readonly:true" /></td>
-				</tr>
-				<tr>
+				
 					<td><label>咨询师备注：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_askerRemarks" name="s_askerRemarks" data-options="readonly:true" /></td>
-					<td><label>来源部门：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_fromPart" name="s_fromPart" data-options="readonly:true" /></td>
-					<td><label>学员关注：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_focus" name="s_focus" data-options="readonly:true" /></td>
-					<td><label>是否报备：</label></td>
-					<td><input class="easyui-textbox" type="text" id="s_isReport" data-options="readonly:true" /></td>
-
 				</tr>
 				<tr>
-
+					<td><label>来源部门：</label></td>
+					<td><input class="easyui-textbox" type="text" id="s_fromPart" name="s_fromPart" data-options="readonly:true" /></td>
+				
+					<td><label>学员关注：</label></td>
+					<td><input class="easyui-textbox" type="text" id="s_focus" name="s_focus" data-options="readonly:true" /></td>
+				
+					<td><label>是否报备：</label></td>
+					<td><input class="easyui-textbox" type="text" id="s_isReport" data-options="readonly:true" /></td>
+				
 					<td><label>录入人：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_importEmployee" name="s_importEmployee" data-options="readonly:true" /></td>
+				</tr>
+				<tr>
 					<td><label>退费原因：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_returnMoneyReason" name="s_returnMoneyReason" data-options="readonly:true" /></td>
+				
 					<td><label>定金：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_preMoney" name="s_preMoney" data-options="readonly:true" /></td>
+				
 					<td><label>定金时间：</label></td>
 					<td><input class="easyui-textbox" type="text" id="s_preMoneyTime" name="s_preMoneyTime" data-options="readonly:true" /></td>
 				</tr>
@@ -468,7 +468,7 @@
 		</form>
 	</div>
 	
-	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	<!-- <div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
         <form id="updateForm" method="post">   
             <table>
                 <tr>
@@ -572,7 +572,7 @@
                 </tr>
             </table>
         </form>  
-    </div>
+    </div> -->
 	
 </body>
 <script type="text/javascript">

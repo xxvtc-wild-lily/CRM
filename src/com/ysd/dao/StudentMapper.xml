@@ -65,9 +65,7 @@
 	<select id="selectStudentByRole" parameterType="pagination" resultMap="resultStu">
 
 	   select s.*,a.a_name from student s inner join asker a on
-	  <if test="e_importEmployee == '咨询师'">
 
-	   select s.*,a.a_name from student s inner join asker a on 
 	   <if test="e_importEmployee == '咨询师'">
 
 	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
@@ -111,20 +109,15 @@
 	<select id="selectStudentCountByRole" parameterType="pagination" resultMap="resultStu">
 
        select count(1) from student s inner join asker a on
-      <if test="e_importEmployee == '咨询师'">
-	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
-	   </if>
+
 	   <if test="e_importEmployee == '网络咨询师'">
 	       s.s_importEmployee = a.a_name where a.a_name = #{e_name}
-
-       select count(1) from student s inner join asker a on 
+		</if>
+      
        <if test="e_importEmployee == '咨询师'">
            s.s_askerid = a.a_id where a.a_id = #{a_aid}
        </if>
-       <if test="e_importEmployee == '网络咨询师'">
-           s.s_importEmployee = a.a_name where a.a_name = #{e_name}
 
-       </if>
 
             <if test="student.s_id != null and student.s_id != ''">
                 and s.s_id =#{student.s_id}
@@ -308,8 +301,8 @@
 	
 	<insert id="insertNetFoll" parameterType="netfollow">
 		insert INTO 
-		netfollow(n_stuId,n_stuName,n_followTime,n_nextFollowTime,n_context,e_id,n_followType,n_followStatus)
-		VALUES(#{n_stuId},#{n_stuName},#{n_followTime},#{n_nextFollowTime},#{n_context},#{e_id},#{n_followType},#{n_followStatus})
+		netfollow(n_stuId,n_stuName,n_followTime,n_nextFollowTime,n_context,e_id,n_followType,n_followStatus,n_createTime)
+		VALUES(#{n_stuId},#{n_stuName},#{n_followTime},#{n_nextFollowTime},#{n_context},#{e_id},#{n_followType},#{n_followStatus},#{n_createTime})
 	</insert>
 	
 	<select id="selectIsAutoDistributionOpen" resultType="_int">
