@@ -54,8 +54,10 @@
 			        {field:'s_weiXin',title:'微信' ,width:100},
 			        {field:'s_remarks',title:'在线备注' ,width:100},
 			        {field:'s_createTime',title:'创建时间',width:100},
-			        {field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:100},
-			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:100},
+			        /*{field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:100},
+			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:100}, */
+			        {field:'s_focus',title:'学员关注'  ,formatter:formatterxygz,width:100},
+			        {field:'s_fromPart',title:'来源部门'  ,formatter:formatterlybm,width:100},
 			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:100},
 			        {field:'s_isReport',title:'是否报备' ,formatter:formattersfbb,width:100},
 			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:100}
@@ -65,7 +67,7 @@
 	}
 	function formattercaozuo(value,row,index){
 	
-		return "<a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a><a href='javascript:void(0)' onclick='updateStudent("+index+")'>编辑</a>"
+		return "<a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a>"
 	}
 
 	
@@ -167,29 +169,47 @@
 		
 	}
 	
-	function formattersfyx(value,row,index) {
-		var s_isValid=""
-		if (row.s_isValid == "0") {
-			s_isValid = "无效";
-		} else if (row.s_isValid == "1") {
-			s_isValid = "有效";
+	function formatterxygz(value,row,index) {
+		var s_focus=""
+		if (row.s_focus == "课程") {
+			s_focus = "课程";
+		} else if (row.s_focus == "学费") {
+			s_focus = "学费";
+		} else if (row.s_focus == "学时") {
+			s_focus = "学时";
+		} else if (row.s_focus == "学历") {
+			s_focus = "学历";
+		} else if (row.s_focus == "师资") {
+			s_focus = "师资";
+		} else if (row.s_focus == "就业") {
+			s_focus = "就业";
+		} else if (row.s_focus == "环境") {
+			s_focus = "环境";
+		} else if (row.s_focus == "其他") {
+			s_focus = "其他";
 		} else {
-			s_isValid = "待定";
+			s_focus = "";
 		}
 			
-		return s_isValid;
+		return s_focus;
 	} 
-	function formattersfhf(value,row,index) {
-		var s_isReturnVisit=""
-		if (row.s_isReturnVisit == "0") {
-			s_isReturnVisit = "未回访";
-		} else if (row.s_isReturnVisit == "1") {
-			s_isReturnVisit = "已回访";
+	function formatterlybm(value,row,index) {
+		var s_fromPart=""
+		if (row.s_fromPart == "网络") {
+			s_fromPart = "网络";
+		} else if (row.s_fromPart == "市场") {
+			s_fromPart = "市场";
+		} else if (row.s_fromPart == "教质") {
+			s_fromPart = "教质";
+		} else if (row.s_fromPart == "学术") {
+			s_fromPart = "学术";
+		} else if (row.s_fromPart == "就业") {
+			s_fromPart = "就业";
 		} else {
-			s_isReturnVisit = "未回访";
+			s_fromPart = "";
 		}
 				
-		return s_isReturnVisit;
+		return s_fromPart;
 	}
 	function formattresex(value,row,index) {
 		var sex = "";
@@ -265,48 +285,6 @@
 		$("#addDialog").dialog("close");
 	}
 	
-	function updateStudent(index){
-		var data=$("#stuTab").datagrid("getData");
-		var row=data.rows[index];
-		$('#updateForm').form('load',row);
-		$("#updateDialog").dialog("open");
-	}
-	function updateSave(){
-		$.post("../updateStudent",{
-			s_id:$("#updates_id").val(),
-			s_name:$("#updates_name").val(),
-			s_sex:$("#updates_sex").val(),
-			s_age:$("#updates_age").val(),
-			s_phone:$("#updates_phone").val(),
-			a_name:$("#updatea_name").val(),
-			s_eduStatus:$("#updates_eduStatus").combobox("getValue"),
-			s_perStatus:$("#updates_perStatus").val(),
-			s_comeWay:$("#updates_comeWay").val(),
-			s_comeSite:$("#updates_comeSite").val(),
-			s_sourceKeyWord:$("#updates_sourceKeyWord").val(),
-			s_fromPart:$("#updates_fromPart").val(),
-			s_address:$("#updates_address").val(),
-			s_focus:$("#updates_focus").val(),
-			s_QQ:$("#updates_QQ").val(),
-			s_weiXin:$("#updates_weiXin").val(),
-			s_isReport:$("#updates_isReport").val(),
-			s_importEmployee:'${employee.e_loginName}'
-		},function(res){
-			
-			if(res>0){
-				$.messager.alert("提示","修改成功！","info");
-				$("#updateDialog").dialog("close");
-				$("#stuTab").datagrid("reload");
-			}else{
-				$.messager.alert("提示","修改失败！","error");
-				
-			}
-		},"json")
-		$('#updateForm').form('clear');
-	}
-	function updateClose(){
-		$("#updateDialog").dialog("close");
-	}
 	function saveStudent(index){
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
@@ -360,8 +338,6 @@
 	        <input class="easyui-textbox" type="text"  id="s_name"/>  
 	        <label for="name">电话:</label>   
 	        <input class="easyui-textbox" type="text"  id="s_phone"/>
-	        <label for="name">咨询师:</label>   
-	        <input class="easyui-textbox" type="text"  id="asker.a_name"/>
 	        <label for="name">是否付费:</label>   
 	        <select id="s_isPay" class="easyui-combobox" style="width:100px;">   
 			    <option value="">--请选择--</option>   
@@ -409,15 +385,10 @@
 			        <td><input class="easyui-textbox" type="text" id="adds_age" name="s_age" /></td>
 			    </tr>
 			    <tr>
-			        
-			  
-			        
-			   
+			
 			        <td><label>电话：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_phone" name="s_phone"/></td>
 
-			        
-			   
 			        <td><label>状态：</label></td>
 			   		<td>
 			        	<select class="easyui-combobox" style="width:100px;" id="adds_perStatus" name="s_perStatus">   
@@ -512,100 +483,7 @@
 		    </table>
 		</form>  
 	</div>
-	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
-		<form id="updateForm" method="post">   
-			<table>
-				<tr>
-			        <td><label>学生编号：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_id" name="s_id" data-options="disabled:true"/></td>
-			   
-			        <td><label>学生姓名：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_name" name="s_name" /></td>
-			    
-			        <td><label>性别：</label></td>
-			        <td>
-				        <select class="easyui-combobox" style="width:100px;" id="updates_sex" name="s_sex">   
-						    <option value="">--请选择--</option>   
-						    <option value="0">女</option>   
-						    <option value="1">男</option>     
-						</select> 
-					</td> 
-			    </tr>
-			 	<tr>
-			        <td><label>年龄：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_age" name="s_age"/></td>
-			    
-			        <td><label>电话：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_phone" name="s_phone"/></td>
-					<td><label>学历：</label></td>
-			        <td>
-			        	<select class="easyui-combobox" style="width:100px;" id="updates_eduStatus">   
-						    <option value="">--请选择--</option>      
-						    <option value="初中">初中</option> 
-						    <option value="高中">高中</option>
-						    <option value="大专">大专</option>
-						    <option value="本科">本科</option>    
-						</select>
-			        </td>
-			    </tr>
-
-			    <tr>
-			        
-			   
-			        <td><label>状态：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_perStatus" name="s_perStatus"/></td>
-			    
-			        <td><label>来源渠道：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_comeWay" name="s_comeWay"/></td>
-			    
-			        <td><label>来源网站：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_comeSite" name="s_comeSite"/></td>
-			    </tr>
-			    <tr>
-			        <td><label>来源关键词：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_sourceKeyWord" name="s_sourceKeyWord"/></td>
-			    
-			        <td><label>来源部门：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_fromPart" name="s_fromPart"/></td>
-			    
-			        <td><label>地址：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_address" name="s_address"/></td>
-			    </tr>
-			    <tr>
-			        <td><label>学员关注：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_focus" name="s_focus"/></td>
-			    
-			        <td><label>学员QQ：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_QQ" name="s_QQ"/></td>
-			    
-			        <td><label>微信号：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_weiXin" name="s_weiXin"/></td>
-			    </tr>
-			    <tr>
-			        <td><label>是否报备：</label></td>
-			        <td>
-			    		<select class="easyui-combobox" style="width:100px;" id="updates_isReport" name="s_isReport">   
-						    <option value="">--请选择--</option>   
-						    <option value="0">否</option>   
-						    <option value="1">是</option>     
-						</select> 
-					</td>
-
-			    </tr>
-			    <tr Style="text-align:right">
-			    	<td></td>
-			    	<td></td>
-			    	<td></td>
-			    	<td></td>
-			    	<td></td>
-
-			    	<td>
-			    		<a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="updateSave()">保存</a><a href="javascript:void(0)" class="easyui-linkbutton" id="btn" onclick="updateClose()">关闭</a>
-			    	</td>
-			    </tr>
-		    </table>
-		</form>  
-	</div>
+	
 	<div id="detailDialog" class="easyui-dialog" title="查看信息"  style="width:700px; height:300px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
 		<form id="detailForm" method="post">
 			<table>
