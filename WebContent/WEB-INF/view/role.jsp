@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$('#dg').datagrid({
-			url : '../role',
+			url : 'role',
 			method : "post",
 			pagination : true,
 			toolbar : "#gjl",
@@ -80,7 +83,7 @@
 				return false;
 			}
 		}
-		$.post("../updates",{
+		$.post("updates",{
 			r_id:$("#r_id").val(),
 			r_name:name
 		},function(res){
@@ -107,7 +110,7 @@
 				return false;
 			}
 		}
-		$.post("../addrol",{
+		$.post("addrol",{
 			r_name:name
 		},function(res){
 			if(res>0){
@@ -127,7 +130,7 @@
 		var row = data.rows[index];
 		$.messager.confirm('提示', '确认删除吗？', function(r) {
 			if (r) {
-				$.post("../deleterole",{
+				$.post("deleterole",{
 					rid:row.r_id
 				},function(res){
 					if(res>0){
@@ -150,7 +153,7 @@
 			title:"您正在设置"+data[index].r_name
 		});
 		$('#dd').tree({    
-		    url: "../modules",
+		    url: "modules",
 		    method : "post",
 		    checkbox : true,
 		    lines : true,
@@ -173,7 +176,7 @@
 				s+=moduleid[i].id;
 			}
 		} 
-		$.post("../updaterolemodule",{
+		$.post("updaterolemodule",{
 			r_id:ridsss,
 			mid:s
 		},function(res){

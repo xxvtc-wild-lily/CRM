@@ -1,15 +1,18 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function(){
 		init()
@@ -21,7 +24,7 @@
 	})
 	function init(){
 		$("#stuTab").datagrid({
-			url:'../selectStudent',
+			url:'selectStudent',
 			method:'post',
 			pagination:true,
 			toolbar:"#studentTb",
@@ -233,7 +236,7 @@
 	function addSave(){
 		var isAutoAllot = $("#isAuto").is(":checked");
 		
-		$.post("../insertStudent",{
+		$.post("insertStudent",{
 			s_name:$("#adds_name").val(),
 			s_sex:$("#adds_sex").combobox("getValue"),
 			s_age:$("#adds_age").val(),
@@ -272,7 +275,7 @@
 		$("#updateDialog").dialog("open");
 	}
 	function updateSave(){
-		$.post("../updateStudent",{
+		$.post("updateStudent",{
 			s_id:$("#updates_id").val(),
 			s_name:$("#updates_name").val(),
 			s_sex:$("#updates_sex").val(),

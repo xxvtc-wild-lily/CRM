@@ -9,18 +9,18 @@ pageContext.setAttribute("path",request.getContextPath());
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-<link type="text/css" rel="stylesheet" href="../css/main.css">
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
-<script src="../js/echarts/echarts-all.js"></script>
-<script src="../js/home.js"></script>
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+<link type="text/css" rel="stylesheet" href="${path }/css/main.css">
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<script src="${path }/js/echarts/echarts-all.js"></script>
+<script src="${path }/js/home.js"></script>
 <script type="text/javascript">
     $(function(){
     	$("#tree").tree({    
-    	    url:"../initTree",
+    	    url:"initTree",
     	    method:"post",
     	    animate:true,
     	    lines:true,
@@ -55,12 +55,12 @@ pageContext.setAttribute("path",request.getContextPath());
     	$.messager.confirm("确认对话框","您想要退出该系统吗？",function(r){
     	    if (r){
     	    	$.ajax({
-    	    		url: "../safeSignOut",
+    	    		url:"safeSignOut",
     	    		async:false,
     	    		method:"post",
     	    		success:function(res) {
     	    			if (res == "1") {
-    	    				window.location.reload();
+    	    				window.location.href="toSignin";
     	    			} else {
     	    				$.messager.alert("提示","退出失败！","error");
     	    			}
@@ -74,7 +74,7 @@ pageContext.setAttribute("path",request.getContextPath());
     function register() {
     	var e_loginName = '${employee.e_loginName}'
     	
-    	$.post("../register",{
+    	$.post("register",{
     		e_loginName:e_loginName
     	},function(res){
     		if (res == "1") {
@@ -127,7 +127,7 @@ pageContext.setAttribute("path",request.getContextPath());
     	$(function(){
         var myChart = echarts.init($("#chart01")[0]);
 //app.title = '堆叠柱状图';
-		$.post("../selectSuoDingZhaungTaiCounts",{
+		$.post("selectSuoDingZhaungTaiCounts",{
 			e_loginName:"${employee.e_loginName}"
 		},function(res){
 			if(res[2]=='管理员'){
@@ -206,7 +206,7 @@ pageContext.setAttribute("path",request.getContextPath());
         var phoneNumber = "";
         
         // 获取验证码的方法
-        $.post("../getPhoneNumber",{
+        $.post("getPhoneNumber",{
         	e_loginName:"${employee.e_loginName}"
         },function(res){
         	// 将后台传过来的值赋给phoneNumber
@@ -215,7 +215,7 @@ pageContext.setAttribute("path",request.getContextPath());
         	if (phoneNumber != null && phoneNumber != "") {
                 var reg =/^[1][3,4,5,7,8][0-9]{9}$/;
                 if (reg.test(phoneNumber)) {
-                    $.post("../getRandomCode",{
+                    $.post("getRandomCode",{
                         phoneNumber:phoneNumber
                     },function(res){
                         code = res;
@@ -265,20 +265,20 @@ pageContext.setAttribute("path",request.getContextPath());
 	                        	// 判断新密码是否与原密码一致
 	                        	if (newPassword != oldPassword) {
 	                        		// 判断原密码是否正确
-	                                $.post("../checkOldPassword",{
+	                                $.post("checkOldPassword",{
 	                                    e_loginName:"${employee.e_loginName}",
 	                                    e_passWord:oldPassword
 	                                },function(res){
 	                                    // 如果大于0则说明原密码正确
 	                                    if (res > 0) {
 	                                    	// 修改密码
-	                                         $.post("../updatePassword",{
+	                                         $.post("updatePassword",{
 	                                             e_loginName:"${employee.e_loginName}",
 	                                             e_passWord:newPassword
 	                                         },function(res){
 	                                             if (res > 0) {
 	                                                 $.messager.alert("提示","修改成功，3秒后自动跳转至登录页面！","info");
-	                                                 $.post("../returnIndex");
+	                                                 $.post("returnIndex");
 	                                                 setTimeout("window.location.reload()",3000);
 	                                             } else {
 	                                                 $.messager.alert("提示","修改失败！","error");
