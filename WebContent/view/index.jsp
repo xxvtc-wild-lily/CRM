@@ -44,6 +44,7 @@ pageContext.setAttribute("path",request.getContextPath());
                 }
     	    }
     	});
+    	
     })
     
     // 安全退出的方法
@@ -109,7 +110,125 @@ pageContext.setAttribute("path",request.getContextPath());
     	});
     }
     
-    function updatePassword() {
+    function openUpdatePasswordDialog() {
+    	$("#updatePasswordDialog").dialog("open");
+    }
+    
+    
+    var code=null;
+    
+    //获取验证码的方法
+    function accountCode() {
+    	// 声明搭载手机号的对象
+        var phoneNumber = "";
+        
+        // 获取验证码的方法
+        $.post("../getPhoneNumber",{
+        	e_loginName:"${employee.e_loginName}"
+        },function(res){
+        	// 将后台传过来的值赋给phoneNumber
+        	phoneNumber = res;
+        	// 如果手机号不为空进入下一步，否则提示手机号获取失败
+        	if (phoneNumber != null && phoneNumber != "") {
+                var reg =/^[1][3,4,5,7,8][0-9]{9}$/;
+                if (reg.test(phoneNumber)) {
+                    $.post("../getRandomCode",{
+                        phoneNumber:phoneNumber
+                    },function(res){
+                        code = res;
+                    })
+                } else {
+                    $.messager.alert("提示","手机号格式错误，请联系管理员解决！","error");
+                }
+            } else {
+                $.messager.alert("提示","手机号获取失败，请联系管理员解决！","error");
+            }
+        	
+        },"json")
+        
+    }
+    
+    // easyui验证是否相同
+    $.extend($.fn.validatebox.defaults.rules, {
+        equals: {
+            validator: function(value,param){
+                return value == $(param[0]).val();
+            },
+            message:"两次输入密码不一致！"
+        }
+    });
+    
+    // 判断密码必须为字母和数字的正则表达式
+    var regPassword = /^(?=.*?[a-z)(?=.*>[A-Z])(?=.*?[0-9])[a-zA_Z0-9]{6,10}$/;
+    
+    function ok() {
+    	var oldPassword = $("#oldPassword").val();
+    	var newPassword = $("#newPassword").val();
+    	var replayPassword = $("#replayPassword").val();
+    	var randomCode = $("#randomCode").val();
+    	alert(newPassword);
+    	
+    	// 判断输入的原密码是否为6位或以上
+        if (oldPassword.length >= 6) {
+        	// 判断原密码是否同时包含字母和数字
+            if (regPassword.test(oldPassword)) {
+            	// 判断输入的新密码是否为6位或以上
+            	alert(newPassword);
+            	alert(newPassword.length);
+                if (newPassword.length >= 6) {
+                	// 判断新密码是否同时包含字母和数字
+                    if (regPassword.test(newPassword)) {
+	                    // 判断两次输入的密码是否一致
+	                    if (newPassword == replayPassword) {
+	                        // 判断验证码是否一致
+	                        if (randomCode == code) {
+	                        	// 判断新密码是否与原密码一致
+	                        	if (newPassword != oldPassword) {
+	                        		// 判断原密码是否正确
+	                                $.post("../checkOldPassword",{
+	                                    e_loginName:"${employee.e_loginName}",
+	                                    e_passWord:oldPassword
+	                                },function(res){
+	                                    // 如果大于0则说明原密码正确
+	                                    if (res > 0) {
+	                                    	// 修改密码
+	                                         $.post("../updatePassword",{
+	                                             e_loginName:"${employee.e_loginName}",
+	                                             e_passWord:newPassword
+	                                         },function(res){
+	                                             if (res > 0) {
+	                                                 $.messager.alert("提示","修改成功，3秒后自动跳转至登录页面！","info");
+	                                                 $.post("../returnIndex");
+	                                                 setTimeout("window.location.reload()",3000);
+	                                             } else {
+	                                                 $.messager.alert("提示","修改失败！","error");
+	                                             }
+	                                         },"json")
+	                                    } else {
+	                                        $.messager.alert("提示","原密码不匹配！","error");
+	                                    }
+	                                },"")
+	                        	} else {
+	                        		$.messager.alert("提示","新密码不能与原密码一致！","error");
+	                        	}
+	                        } else {
+	                            $.messager.alert("提示","验证码错误！","error");
+	                        }
+	                    } else {
+	                        $.messager.alert("提示","两次输入的密码不一致！","error");
+	                    }
+                    } else{
+                    	$.messager.alert("提示","新密码格式错误！","error");
+                    }
+                } else {
+                    $.messager.alert("提示","新密码未在6位以上！","error");
+                }
+            } else {
+            	$.messager.alert("提示","原密码格式错误！","error");
+            }
+        } else {
+        	$.messager.alert("提示","原密码未在6位以上！","error");
+        }
     	
     }
     
@@ -121,7 +240,7 @@ pageContext.setAttribute("path",request.getContextPath());
                 欢迎${employee.e_loginName }使用CRM管理系统
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="register()">签到</a>
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="signBack()">签退</a>
-         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="updatePassword()">修改密码</a>
+         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="openUpdatePasswordDialog()">修改密码</a>
          <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="safeSignOut()">安全退出</a>
         </div>
     </div>
@@ -133,6 +252,29 @@ pageContext.setAttribute("path",request.getContextPath());
             
         </div>
     </div>
-
+    <div id="updatePasswordDialog" class="easyui-dialog" title="修改密码" style="width:400px;height:220px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+        <form id="updatePasswordForm">
+            <table id="updatePasswordTable" style="margin:auto auto">
+                <tr>
+                    <td>请输入原密码：</td>
+                    <td><input class="easyui-passwordbox" id="oldPassword" style="width:200px"></td>
+                </tr>
+                <tr>
+                    <td>请输入新密码：</td>
+                    <td><input class="easyui-passwordbox" id="newPassword" style="width:200px"></td>
+                </tr>
+                <tr>
+                    <td>请重复新密码：</td>
+                    <td><input class="easyui-passwordbox" id="replayPassword" style="width:200px" validType="equals['#newPassword']"></td>
+                </tr>
+                <tr>
+                    <td><a class="easyui-linkbutton" onclick="accountCode()">获取验证码</a></td>
+                    <td><input class="easyui-textbox" id="randomCode" style="width:200px"></td>
+                </tr>
+            </table>
+        </form>
+        <div id="oldPasswordTips" style="margin-left:160px;"></div>
+        <a class="easyui-linkbutton" style="margin-left:190px;margin-top:5px;" onclick="ok()">确定</a>
+    </div>
 </body>
 </html>

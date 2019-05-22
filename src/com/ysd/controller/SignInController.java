@@ -13,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysd.entity.Employee;
 import com.ysd.service.SignInService;
+import com.ysd.util.IndustrySMS;
 import com.ysd.util.PasswordUtil;
 import com.ysd.util.RandomValidateCode;
 
@@ -126,9 +128,8 @@ public class SignInController {
                 } else {
                     // 查询当前用户是否为管理员
                     String r_name = signInService.selectIsAdmin(employee);
-                    System.out.println(r_name);
                     // 如果为管理员就只提示密码错误
-                    if (r_name.equals("管理员")) {
+                    if (r_name != null && r_name.equals("管理员")) {
                         model.addAttribute("msg","密码错误！");
                     } else {
                         // 如果不是管理员就更改错误次数
@@ -167,4 +168,5 @@ public class SignInController {
         
         return "/view/signin";
     }
+    
 }
