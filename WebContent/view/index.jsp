@@ -249,15 +249,12 @@ pageContext.setAttribute("path",request.getContextPath());
     	var newPassword = $("#newPassword").val();
     	var replayPassword = $("#replayPassword").val();
     	var randomCode = $("#randomCode").val();
-    	alert(newPassword);
     	
     	// 判断输入的原密码是否为6位或以上
         if (oldPassword.length >= 6) {
         	// 判断原密码是否同时包含字母和数字
             if (regPassword.test(oldPassword)) {
             	// 判断输入的新密码是否为6位或以上
-            	alert(newPassword);
-            	alert(newPassword.length);
                 if (newPassword.length >= 6) {
                 	// 判断新密码是否同时包含字母和数字
                     if (regPassword.test(newPassword)) {
