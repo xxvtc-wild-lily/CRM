@@ -49,29 +49,27 @@ pageContext.setAttribute("path",request.getContextPath());
 			        {field:'s_sex',title:'性别'  ,formatter:formattresex,width:100},
 			        {field:'s_phone',title:'电话'  ,width:100},
 			        {field:'s_eduStatus',title:'学历状态',width:100},
-			        {field:'s_perStatus',title:'个人状态' ,width:100},
-			        {field:'s_comeWay',title:'来源渠道',width:100},
-			        {field:'s_comeSite',title:'来源网站' ,width:100},
+			        {field:'s_perStatus',title:'个人状态' ,width:80},
+			        {field:'s_comeWay',title:'来源渠道',width:80},
+			        {field:'s_comeSite',title:'来源网站' ,width:80},
 			        {field:'s_sourceKeyWord',title:'来源关键词' ,width:100},
 			        {field:'s_QQ',title:'QQ' ,width:100},
 			        {field:'s_weiXin',title:'微信' ,width:100},
 			        {field:'s_remarks',title:'在线备注' ,width:100},
 			        {field:'s_createTime',title:'创建时间',width:100},
-			        {field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:80},
-			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:80},
-			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:80},
+			        {field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:110},
+			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:110},
+			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:110},
 			        {field:'s_isReport',title:'是否报备' ,width:80},
-			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:250}
+			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:300}
 			    ]]
 		}); 
 		$('#tabfrm').form('clear');
 	}
 	function formattercaozuo(value,row,index){
 	
-		return " <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a><a href='javascript:void(0)' onclick='updateStudent("+index+")'>&ensp;修改</a><a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a><a href='javascript:void(0)' onclick='netfollowlog("+index+")'>&ensp;跟踪日志</a>"
+		return " <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a><a href='javascript:void(0)' onclick='updateStudent("+index+")'>&ensp;修改</a><a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>&ensp;跟踪</a><a href='javascript:void(0)' onclick='netfollowlog("+index+")'>&ensp;跟踪记录</a>"
 	}
-	
-	
 	function formattera_name(value,row,index){
 		return row.asker.a_name;
 	}
@@ -209,34 +207,32 @@ pageContext.setAttribute("path",request.getContextPath());
 
 	/* 跟踪日志 */
 	function netfollowlog(index){
-		$("#stuTab").datagrid({
-			url:'../',
+
+		var data = $("#stuTab").datagrid("getData"); 	
+		var row = data.rows[index];
+		$("#InsertNetLog_window").dialog("open");
+		$("#studialog").datagrid({
+			url:'NetFollowSer',
 			method:'post',
 			pagination:true,
-			toolbar:"#studentTb",
-			
-			checkbox: true,
 			queryParams:{
-				e_loginName:"${employee.e_loginName}",
-				s_name:$("#s_name").val(),
+				n_stuId:row.s_id
+			},
+			columns:[[
 				
-			}, 
-			 columns:[[
-			        {field:'ck',title:'复选框',checkbox:true,width:100},
-			        {field:'s_id',title:'编号' ,width:100},
-			        {field:'s_name',title:'姓名' ,width:100},
-			        {field:'s_age',title:'年龄' ,width:100},
-			        {field:'asker.a_name',title:'咨询师'  ,formatter:formattera_name,width:100},
-			        {field:'s_sex',title:'性别'  ,formatter:formattresex,width:100},
-			        {field:'s_phone',title:'电话'  ,width:100},
-			        {field:'s_eduStatus',title:'学历状态',width:100},
-			        {field:'s_perStatus',title:'个人状态' ,width:100},
-			        {field:'s_comeWay',title:'来源渠道',width:100},
-			        {field:'s_comeSite',title:'来源网站' ,width:100},
+				{field:'n_id',title:'ID',width:100},
+		        {field:'n_stuId',title:'学生ID',width:100},
+		        {field:'n_stuName',title:'学生姓名',width:100},
+		        {field:'n_followTime',title:'跟踪时间',width:100},
+		        {field:'n_nextFollowTime',title:'下次跟踪时间',width:100},
+		        {field:'n_context',title:'跟踪内容',width:100},
+		        {field:'n_followType',title:'跟踪方式',width:100}
+			       
 			   
 			    ]]
-		$("#InsertNetLog_window").dialog("open");
 		
+		
+	}) 
 	}
 	
 	
@@ -291,30 +287,9 @@ pageContext.setAttribute("path",request.getContextPath());
 
 <!--  跟踪那个单个日志-->
  <div id="InsertNetLog_window" title="跟踪记录" class="easyui-dialog" title="日志信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:700px;height:500px;padding:10px;">
-			<div><table id="studialog" class="easyui-datagrid">
-				<thead>
-					<tr>
-						<!-- <th data-options="checkbox:true"></th> -->
-						<th data-options="field:'n_id',title:'ID'"></th>
-						
-						<th data-options="field:'n_studentid'">学生编号</th>
-						
-						<th data-options="field:'n_studentname'">学生名字</th>
-						
-						<th data-options="field:'n_createtime'">下次跟踪时间</th>	
-							
-						<th data-options="field:'n_content'">内容</th>
-						
-						<th data-options="field:'n_followtime'">开始跟踪时间</th>
-						
-						<th data-options="field:'n_nextfollowtime'">结束跟踪时间</th>
-						
-						<th data-options="field:'n_followtype'">操作</th>
-		
-						<!-- <th data-options="field:'look',title:'查看',formatter:formatterlook"></th> -->
-					</tr>
-				</thead>
-			</table></div>
+	
+			<table id="studialog" class="easyui-datagrid">
+			</table>
 		  </div>
 
 
@@ -437,7 +412,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0);" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
 			<a type="button" href="javascript:void(0)" onclick="show()" class="easyui-linkbutton">动态设置</a>
-			<a type="button" href="NetFollow.jsp" onclick="netlog()" class="easyui-linkbutton">-跟踪日志</a>
+			<a type="button" href="inEmployeeWorkLog" class="easyui-linkbutton">跟踪日志</a>
 			
 		</form>
 	</div>

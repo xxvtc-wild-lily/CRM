@@ -32,6 +32,15 @@ public class Pagination<T> {
 	private String startCheckInTime;
 	private String endCheckInTime;
 	
+	private Integer n_stuId;
+	
+	
+	public Integer getN_stuId() {
+		return n_stuId;
+	}
+	public void setN_stuId(Integer n_stuId) {
+		this.n_stuId = n_stuId;
+	}
 	public Integer getPage() {
 		return page;
 	}

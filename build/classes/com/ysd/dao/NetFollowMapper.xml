@@ -7,6 +7,10 @@
 		from netfollow n INNER JOIN employee e ON n.e_id=e.e_id 
 		INNER JOIN student s on n.n_stuId = s.s_id
 		<where>
+			<if test="n_stuId!=null and n_stuId!=''">
+				and n.n_stuId =#{n_stuId}
+			</if>
+			
 			<if test="n_stuName!=null and n_stuName!=''">
 				and n.n_stuName like "%"#{n_stuName}"%"
 			</if>

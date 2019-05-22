@@ -31,7 +31,7 @@ function init() {
 	 		n_followTime:$("#n_followTimeq").val(),
 	 		n_nextFollowTime:$("#n_nextFollowTimeq").val(),
 	 		n_context:$("#n_contextq").val(),
-	 		e_id:${employee.e_id},
+	 		e_id:${employee.e_id}, 
 	 		n_followType:$("#n_followTypeq").val(),
 	 		n_createTime:$("#n_createTimeq").val(),
 	 		n_followStatus:$("#n_followStatusq").val()
@@ -137,7 +137,7 @@ function addsave(){
 						    <div> 
 								跟踪方式：<input class="easyui-textbox" name="aname" id="n_followType" style="width:180px">
 								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="init()">搜索</a>
-								<a href="studentUpdate.jsp" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">返回上一层</a>
+								
 	
 							</div>
 		</div>

@@ -23,7 +23,6 @@ public class NetFollow {
 	
 	private Employee employee;
 	private Student student;
-	
 	public Integer getN_id() {
 		return n_id;
 	}
@@ -132,5 +131,6 @@ public class NetFollow {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
+	
 	
 }
