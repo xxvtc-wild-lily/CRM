@@ -206,6 +206,32 @@
 
 	/* 跟踪日志 */
 	function netfollowlog(index){
+		$("#stuTab").datagrid({
+			url:'../',
+			method:'post',
+			pagination:true,
+			toolbar:"#studentTb",
+			
+			checkbox: true,
+			queryParams:{
+				e_loginName:"${employee.e_loginName}",
+				s_name:$("#s_name").val(),
+				
+			}, 
+			 columns:[[
+			        {field:'ck',title:'复选框',checkbox:true,width:100},
+			        {field:'s_id',title:'编号' ,width:100},
+			        {field:'s_name',title:'姓名' ,width:100},
+			        {field:'s_age',title:'年龄' ,width:100},
+			        {field:'asker.a_name',title:'咨询师'  ,formatter:formattera_name,width:100},
+			        {field:'s_sex',title:'性别'  ,formatter:formattresex,width:100},
+			        {field:'s_phone',title:'电话'  ,width:100},
+			        {field:'s_eduStatus',title:'学历状态',width:100},
+			        {field:'s_perStatus',title:'个人状态' ,width:100},
+			        {field:'s_comeWay',title:'来源渠道',width:100},
+			        {field:'s_comeSite',title:'来源网站' ,width:100},
+			   
+			    ]]
 		$("#InsertNetLog_window").dialog("open");
 		
 	}
