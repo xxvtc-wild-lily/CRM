@@ -1,15 +1,18 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function(){
 		init()
@@ -21,7 +24,7 @@
 	})
 	function init(){
 		$("#stuTab").datagrid({
-			url:'../selectStudent',
+			url:'selectStudent',
 			method:'post',
 			pagination:true,
 			toolbar:"#studentTb",
@@ -129,7 +132,7 @@
 		$("#updateDialog").dialog("open");
 	}
 	function updateSave(){
-		$.post("../updateStudent",{
+		$.post("updateStudent",{
 			s_id:$("#updates_id").val(),
 			s_name:$("#updates_name").val(),
 			s_sex:$("#updates_sex").val(),
@@ -255,7 +258,7 @@
 	//跟踪添加 
 	function submitNetForm(){
 		
-		$.post("../insertNetFoll",{
+		$.post("insertNetFoll",{
 			n_stuId:$("#n_stuIdq").val(),
 			n_stuName:$("#n_stuNameq").val(),
 			n_followTime:$("#n_followTimeq").val(),
@@ -742,6 +745,7 @@
 		//如果jsondata不是对象，那么json.parse将分析对象中的json字符串。
 		var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData)
 				: JSONData;
+		var sele=$("#stuTab").datagrid('getSelections');
 		var CSV = '';
 		//在第一行拼接标题
 		CSV += ReportTitle + '\r\n\n';
@@ -758,10 +762,10 @@
 			CSV += row + '\r\n';
 		}
 		//第一个循环是提取每一行
-		for (var i = 0; i < arrData.length; i++) {
+		for (var i = 0; i < sele.length; i++) {
 			var row = "";
-			for ( var index in arrData[i]) {
-				row += '"' + arrData[i][index] + '",';
+			for ( var index in sele[i]) {
+				row += '"' + sele[i][index] + '",';
 			}
 			row.slice(0, row.length - 1);
 			CSV += row + '\r\n';

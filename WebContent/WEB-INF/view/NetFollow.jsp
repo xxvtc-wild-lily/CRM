@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 $(function(){
 	init();
@@ -17,7 +20,7 @@ $(function(){
 
 function init() {
 	$('#dg').datagrid({
-	    url:'../NetFollowSer',
+	    url:'NetFollowSer',
 	    method:"post",
 	    pagination:true,
 	    singleSelect:true,
@@ -90,7 +93,7 @@ function addnetfollow(){
 
 function addsave(){
 
-	$.post("../insertNetFollow",{
+	$.post("insertNetFollow",{
 		n_stuId:$("#n_stuIdq").val(),
 		n_stuName:$("#n_stuNameq").val(),
 		n_followTime:$("#n_followTimeq").val(),

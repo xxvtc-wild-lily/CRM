@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-	<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-	<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+	<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+	<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+	<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+	<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			init()
@@ -23,7 +26,7 @@
 		function init(){
 				
 			$("#stuTab").datagrid({
-				url:'../selectStudent',
+				url:'selectStudent',
 				method:'post',
 				pagination:true,
 				toolbar:"#studentTb",
@@ -128,7 +131,7 @@
 			var row=data.rows[index];
 			$.messager.confirm('确认','您确认想要删除吗？',function(r){    
 			    if (r){    
-			          $.post("../deleteStudent",{s_id:row.s_id},function(res){
+			          $.post("deleteStudent",{s_id:row.s_id},function(res){
 			        	  if(res>0){
 			        		  $("#stuTab").datagrid("reload");
 			        		  $.messager.alert('确认','删除成功');

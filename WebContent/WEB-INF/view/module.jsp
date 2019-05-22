@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function(){
 		init();
@@ -19,7 +22,7 @@
 	var zname;
 		function init(){
 		$('#dd').tree({    
-		    url: "../module",
+		    url: "module",
 		    method : "post",
 		    lines : true,
 		    animate : true,
@@ -58,7 +61,7 @@
 			deletejds();
 		}
 		if(item.name=="edit"){
-			$.post("../selectmobyid",{
+			$.post("selectmobyid",{
 				mid:jeidian
 			},function(res){
 				$("#ups").form("load", res);
@@ -74,7 +77,7 @@
 			deletejd();
 		}
 		if(item.name=="edits"){
-			$.post("../selectmobyid",{
+			$.post("selectmobyid",{
 				mid:jeidian
 			},function(res){
 				$("#up").form("load", res);
@@ -102,7 +105,7 @@
 				return false;
 			}
 		}
-		$.post("../updatemobyid",{
+		$.post("updatemobyid",{
 			m_id : $("#m_id").val(),
 			m_name : namesss,
 			m_path : $("#m_path").val(),
@@ -137,7 +140,7 @@
 				return false;
 			}
 		}
-		$.post("../updatemobyid",{
+		$.post("updatemobyid",{
 			m_id : $("#m_ids").val(),
 			m_name : upfunames
 		},function(res){
@@ -154,7 +157,7 @@
 	function deletejds(){
 		$.messager.confirm('提示', '确认删除吗？', function(r) {
 			if (r) {
-				$.post("../deletemofu",{
+				$.post("deletemofu",{
 					mfid:jeidian
 				},function(res){
 					if(res>0){
@@ -171,7 +174,7 @@
 	function deletejd(){
 		$.messager.confirm('提示', '确认删除吗？', function(r) {
 			if (r) {
-				$.post("../deletemo",{
+				$.post("deletemo",{
 					mid:jeidian
 				},function(res){
 					if(res>0){
@@ -193,7 +196,7 @@
 					return false;
 				}
 			}
-		$.post("../addmodule",{
+		$.post("addmodule",{
 			m_name:namess,
 			m_weight:$("#m_weightss").val(),
 			m_parentId:fujeidian
@@ -221,7 +224,7 @@
 				return false;
 			}
 		}
-		$.post("../addfu",{
+		$.post("addfu",{
 			m_name:namefu
 		},function(res){
 			if(res>0){

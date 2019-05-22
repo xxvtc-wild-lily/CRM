@@ -6,7 +6,6 @@ $("#rightTab").tabs({
        height:250,
         border:false
 })
-
 $(function(){
         var myChart = echarts.init($("#chart02")[0]);
 //app.title = '堆叠柱状图';
@@ -181,3 +180,4 @@ $(function(){
         };
         myChart.setOption(option);
 });
+

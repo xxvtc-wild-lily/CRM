@@ -13,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysd.entity.Employee;
 import com.ysd.service.SignInService;
+import com.ysd.util.IndustrySMS;
 import com.ysd.util.PasswordUtil;
 import com.ysd.util.RandomValidateCode;
 
@@ -24,6 +26,81 @@ public class SignInController {
 	
 	@Autowired
 	private SignInService signInService;
+	
+	@RequestMapping(value="/inDistribution",method=RequestMethod.GET)
+    public String inDistribution() {
+        return "view/distribution";
+    }
+	
+	@RequestMapping(value="/inEmployee",method=RequestMethod.GET)
+    public String inEmployee() {
+        return "view/employee";
+    }
+	
+	@RequestMapping(value="/inEmployeeDelete",method=RequestMethod.GET)
+    public String inEmployeeDelete() {
+        return "view/employeeDelete";
+    }
+	
+	@RequestMapping(value="/inEmployeeInfo",method=RequestMethod.GET)
+    public String inEmployeeInfo() {
+        return "view/employeeInfo";
+    }
+	
+	@RequestMapping(value="/inEmployeeRegister",method=RequestMethod.GET)
+    public String inEmployeeRegister() {
+        return "view/employeeRegister";
+    }
+	
+	@RequestMapping(value="/inEmployeeWorkLog",method=RequestMethod.GET)
+    public String inEmployeeWorkLog() {
+        return "view/employeeWorkLog";
+    }
+	
+	@RequestMapping(value="/inModule",method=RequestMethod.GET)
+    public String inModule() {
+        return "view/module";
+    }
+	
+	@RequestMapping(value="/inNetFollow",method=RequestMethod.GET)
+    public String inNetFollow() {
+        return "view/NetFollow";
+    }
+	
+	@RequestMapping(value="/inrole",method=RequestMethod.GET)
+	public String inrole() {
+	    return "view/role";
+	}
+	
+	@RequestMapping(value="/inSignin",method=RequestMethod.GET)
+    public String inSignin() {
+        return "view/signin";
+    }
+	
+	@RequestMapping(value="/inSignup",method=RequestMethod.GET)
+    public String inSignup() {
+        return "view/signup";
+    }
+	
+	@RequestMapping(value="/inStudent",method=RequestMethod.GET)
+    public String inStudent() {
+        return "view/student";
+    }
+	
+	@RequestMapping(value="/inStudentAdd",method=RequestMethod.GET)
+    public String inStudentAdd() {
+        return "view/studentAdd";
+    }
+	
+	@RequestMapping(value="/inStudentDelete",method=RequestMethod.GET)
+    public String inStudentDelete() {
+        return "view/studentDelete";
+    }
+	
+	@RequestMapping(value="/inStudentUpdate",method=RequestMethod.GET)
+    public String inStudentUpdate() {
+        return "view/studentUpdate";
+    }
 	
 	// 获取生成验证码显示到 UI 界面
     @RequestMapping(value="/checkCode")
@@ -44,6 +121,11 @@ public class SignInController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    @RequestMapping(value="/toSignin",method=RequestMethod.GET)
+    public String toSignin(Model model,HttpServletRequest request,HttpServletResponse response,Employee employee) {
+        return "/view/signin";
     }
     
     // 登录的方法
@@ -120,15 +202,14 @@ public class SignInController {
                         // 将登录信息赋到session里避免拦截
                         session.setAttribute("employee",employee);
                         
-                        return "redirect:/view/index.jsp";
+                        return "/view/index";
                     }
                     
                 } else {
                     // 查询当前用户是否为管理员
                     String r_name = signInService.selectIsAdmin(employee);
-                    System.out.println(r_name);
                     // 如果为管理员就只提示密码错误
-                    if (r_name.equals("管理员")) {
+                    if (r_name != null && r_name.equals("管理员")) {
                         model.addAttribute("msg","密码错误！");
                     } else {
                         // 如果不是管理员就更改错误次数
@@ -167,4 +248,5 @@ public class SignInController {
         
         return "/view/signin";
     }
+    
 }

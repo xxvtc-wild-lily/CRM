@@ -26,12 +26,31 @@
        
        <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
        	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
-       	<property name="prefix" value="/"></property>
+       	<property name="prefix" value="/WEB-INF/"></property>
        	<property name="suffix" value=".jsp"></property>
        </bean>
        
        <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="2097152"></property>
        </bean>
+       
+       <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 拦截所有URL中的所有请求 -->
+            <mvc:mapping path="/**"/>
+            <!-- 放过的请求 -->
+            <mvc:exclude-mapping path="/toSignin"/>
+            <mvc:exclude-mapping path="/signin"/>
+            <mvc:exclude-mapping path="/checkCode"/>
+            <!-- 放过的静态资源 -->
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/image/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/image/**"/>
+            <bean class="com.ysd.util.LoginInterceptor"></bean>
+        </mvc:interceptor>
+        
+       </mvc:interceptors>
        
 </beans>

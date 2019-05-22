@@ -1,22 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function(){
 		init()
 	})
 	function init(){
 		$("#empTab").datagrid({
-			url:'../selectEmployee',
+			url:'selectEmployee',
 			method:'post',
 			pagination:true,
 			singleSelect:true,
@@ -37,7 +40,7 @@
 	}
 	function formatterimg(value,row,index){
 		if(value != null && value != ''){
-			return "<img style='width:40px;height:50px;' src='../image/"+value+"'>"
+			return "<img style='width:40px;height:50px;' src='${path }/image/"+value+"'>"
 		}
 	}
 	function formattersfsd(value,row,index) {
@@ -71,7 +74,7 @@
 		var row=data.rows[index];
 		$.messager.confirm('确认','您确认想要删除吗？',function(r){    
 		    if (r){    
-		          $.post("../deleteEmployee",{e_id:row.e_id},function(res){
+		          $.post("deleteEmployee",{e_id:row.e_id},function(res){
 		        	  if(res>0){
 		        		  $("#empTab").datagrid("reload");
 		        		  $.messager.alert('确认','删除成功');
@@ -100,7 +103,7 @@
         
         $.messager.confirm("确认对话框","您确定要重置密码吗？（重置后的密码为：“ysd123”）", function(r){
             if (r){
-            	$.post("../resertPassword",{
+            	$.post("resertPassword",{
             		e_loginName:e_loginName
             		},function(res){
             			if (res > 0) {
@@ -124,7 +127,7 @@
         if (isLock == "1") {
         	$.messager.alert("提示","该用户已经锁定，无需再锁定！","info");
         } else {
-        	$.post("../setEmployeeLock",{
+        	$.post("setEmployeeLock",{
         		e_loginName:e_loginName
         	},function(res){
         		if (res > 0) {
@@ -147,7 +150,7 @@
         if (isLock == "0" || isLock == null) {
             $.messager.alert("提示","该用户未锁定，无需再解锁！","info");
         } else {
-            $.post("../setEmployeeUnLock",{
+            $.post("setEmployeeUnLock",{
                 e_loginName:e_loginName
             },function(res){
                 if (res > 0) {

@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
     $(function(){
     	init();
@@ -17,7 +20,7 @@
     
     function init(){
         $("#empTab").datagrid({
-            url:'../init',
+            url:'init',
             method:'post',
             pagination:true,
             singleSelect:true,
@@ -92,7 +95,7 @@
     	var e_name = data.rows[index].e_name;
     	$.messager.confirm("确认对话框","您确定要签退‘"+e_name+"’吗？", function(r){
     	    if (r){
-    	    	$.post("../signOut",{
+    	    	$.post("signOut",{
     	    		e_loginName:e_name
     	    	},function(res){
     	    		if (res == "1") {

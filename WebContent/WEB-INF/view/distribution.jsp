@@ -1,20 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+pageContext.setAttribute("path",request.getContextPath());
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/icon.css">
-<link rel="stylesheet" href="../js/jquery-easyui-1.7.0/themes/default/easyui.css">
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="../js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
+<link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
     // 判断是否开启的判断
     var flag;
     $(function(){
-        $.post("../selectIsOpenAuto",{
+        $.post("selectIsOpenAuto",{
             
         },function(res){
             if (res == 1) {
@@ -29,7 +32,7 @@
     
     function initTable() {
     	$("#dg").datagrid({
-    		url:"../initDistributionTable",
+    		url:"initDistributionTable",
     		method:"post",
     		pagination:true,
     		columns:[[
@@ -58,9 +61,9 @@
     		offText:"自动分量关闭",
     		onChange:function(checked) {
     			if (checked) {
-    				$.post("../distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    				$.post("distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
     			} else {
-    				$.post("../closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    				$.post("closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
     			}
     		}
         })
@@ -69,7 +72,7 @@
     function openHandDistributionDialog() {
     	// 加载所有咨询师的datalist
         $("#allAsker").datalist({ 
-            url:"../getAllAsker",
+            url:"getAllAsker",
             singleSelect:true,
             textFormatter:function (value,row,index) {
                 return row.a_name;
@@ -78,7 +81,7 @@
     	
     	// 加载所有未分配学生的datalist
         $("#allNotDistributionStudent").datalist({ 
-            url:"../allNotDistributionStudent",
+            url:"allNotDistributionStudent",
             singleSelect:false,
             textFormatter:function (value,row,index) {
                 return row.s_name;f
@@ -104,7 +107,7 @@
     	        for (var i = 0;i < studentData.length;i++) {
     	        	studentIdArr += studentData[i].s_id+","
     	        }
-    	        $.post("../handDistributionStudent",{
+    	        $.post("handDistributionStudent",{
     	        	s_askerId:askerId,
     	        	studentIdArr:studentIdArr
     	        },function(res){
