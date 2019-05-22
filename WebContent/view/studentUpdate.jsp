@@ -65,7 +65,7 @@
 	}
 	function formattercaozuo(value,row,index){
 	
-		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a> <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a><a href='javascript:void(0)' onclick='updateStudent("+index+")'>&ensp;修改</a><a href='javascript:void(0)' onclick='netfollowlog("+index+")'>&ensp;跟踪日志</a>"
+		return " <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a><a href='javascript:void(0)' onclick='updateStudent("+index+")'>&ensp;修改</a><a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a><a href='javascript:void(0)' onclick='netfollowlog("+index+")'>&ensp;跟踪日志</a>"
 	}
 	
 	
@@ -206,7 +206,7 @@
 
 	/* 跟踪日志 */
 	function netfollowlog(index){
-		$("#InsertNetlog_window").dialog("open");
+		$("#InsertNetLog_window").dialog("open");
 		
 	}
 	
@@ -257,6 +257,44 @@
 	
 </script>
 </head>
+
+
+
+<!--  跟踪那个单个日志-->
+ <div id="InsertNetLog_window" title="跟踪记录" class="easyui-dialog" title="日志信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:700px;height:500px;padding:10px;">
+			<div><table id="studialog" class="easyui-datagrid">
+				<thead>
+					<tr>
+						<!-- <th data-options="checkbox:true"></th> -->
+						<th data-options="field:'n_id',title:'ID'"></th>
+						
+						<th data-options="field:'n_studentid'">学生编号</th>
+						
+						<th data-options="field:'n_studentname'">学生名字</th>
+						
+						<th data-options="field:'n_createtime'">下次跟踪时间</th>	
+							
+						<th data-options="field:'n_content'">内容</th>
+						
+						<th data-options="field:'n_followtime'">开始跟踪时间</th>
+						
+						<th data-options="field:'n_nextfollowtime'">结束跟踪时间</th>
+						
+						<th data-options="field:'n_followtype'">操作</th>
+		
+						<!-- <th data-options="field:'look',title:'查看',formatter:formatterlook"></th> -->
+					</tr>
+				</thead>
+			</table></div>
+		  </div>
+
+
+
+
+
+
+
+
 <!-- 添加跟踪 -->
 <body style="margin:0px">
 	<div id="InsertNet_window" class="easyui-window" title="添加信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:500px;padding:10px;">
@@ -325,6 +363,14 @@
 		
 		
 		
+		
+		
+		
+		
+
+		
+		
+		
 	
 
 
@@ -367,18 +413,11 @@
 		</form>
 	</div>
 	
-	<div id="lie_window" class="easyui-dialog" title="列设置" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:500px;height:300px;padding:10px;">
-         
-    </div>
 	
-	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:850px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
-			<a href="javascript:void(0)" onclick="show()" class="easyui-linkbutton">动态设置</a>
-		</form>
-	</div>
 	<div id="lie_window" class="easyui-dialog" title="列设置" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:400px;height:500px;padding:10px;">
          
     </div>
-	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:900px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
 		<form id="updateForm" method="post">   
 			<table>
 				<tr>
