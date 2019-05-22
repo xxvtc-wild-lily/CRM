@@ -28,7 +28,7 @@
 			fitColumns:true,
 			checkbox:true,
 			queryParams:{
-				e_loginName:"${employee.e_loginName}",
+				e_loginName:'${employee.e_loginName}',
 				s_name:$("#s_name").val(),
 				s_phone:$("#s_phone").val(),
 				a_name:$("#asker.a_name").val(),
@@ -231,12 +231,14 @@
 	}
 	
 	function addSave(){
+		var isAutoAllot = $("#isAuto").is(":checked");
 		
 		$.post("../insertStudent",{
 			s_name:$("#adds_name").val(),
 			s_sex:$("#adds_sex").combobox("getValue"),
 			s_age:$("#adds_age").val(),
-			s_importEmployee:"${employee.e_loginName}", 
+			s_importEmployee:'${employee.e_loginName}', 
+			isAutoAllot:isAutoAllot,
 			s_phone:$("#adds_phone").val(),
 			s_eduStatus:$("#adds_eduStatus").combobox("getValue"),
 			s_perStatus:$("#adds_perStatus").val(),
@@ -255,9 +257,9 @@
 			}else{
 				$.messager.alert("提示","添加失败！！！","error");
 			}
-		},"json");
+		},"json")
 		
-		
+		$("#addForm").form("clear");
 	}
 	function addClose(){
 		$("#addDialog").dialog("close");
@@ -288,7 +290,7 @@
 			s_QQ:$("#updates_QQ").val(),
 			s_weiXin:$("#updates_weiXin").val(),
 			s_isReport:$("#updates_isReport").val(),
-			s_importEmployee:"${employee.e_loginName}"
+			s_importEmployee:'${employee.e_loginName}'
 		},function(res){
 			
 			if(res>0){
