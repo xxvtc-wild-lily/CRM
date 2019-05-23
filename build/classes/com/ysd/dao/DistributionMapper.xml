@@ -60,4 +60,8 @@
         update student set s_askerId = #{s_askerId} where s_id = #{s_id}
     </update>
     
+    <select id="selectAllCheckInAskerCount" resultType="_int">
+        select count(1) from asker where a_checkStatus = 1
+    </select>
+    
 </mapper>

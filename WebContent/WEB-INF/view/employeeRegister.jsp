@@ -38,7 +38,7 @@ pageContext.setAttribute("path",request.getContextPath());
     
     function formatterimg(value,row,index){
         if(row.e_name != null && row.employee.e_photo != null && row.employee.e_photo != ''){
-            return "<img style='width:40px;height:50px;' src='../image/"+row.employee.e_photo+"'>"
+            return "<img style='width:40px;height:50px;' src='${path }/image/"+row.employee.e_photo+"'>"
         }
     }
     

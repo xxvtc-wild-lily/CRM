@@ -99,4 +99,13 @@ public class DistributionController {
         return i;
     }
     
+    @RequestMapping(value="/checkInAskerCount",method=RequestMethod.POST)
+    @ResponseBody
+    public Integer checkInAskerCount(Student student,String studentIdArr) {
+        
+        Integer i = distributionService.selectAllCheckInAskerCount();
+        
+        return i;
+    }
+    
 }

@@ -209,5 +209,14 @@ public class DistributionServiceImpl implements DistributionService {
         
         return i;
     }
+
+    @Override
+    public Integer selectAllCheckInAskerCount() {
+        // TODO Auto-generated method stub
+        
+        Integer i = distributionMapper.selectAllCheckInAskerCount();
+        
+        return i;
+    }
     
 }
