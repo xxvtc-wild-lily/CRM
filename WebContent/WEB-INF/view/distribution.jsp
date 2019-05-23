@@ -35,13 +35,14 @@ pageContext.setAttribute("path",request.getContextPath());
     		url:"initDistributionTable",
     		method:"post",
     		pagination:true,
+    		singleSelect:true,
     		columns:[[
     			{field:"s_id",title:"学生ID",width:100},
     			{field:"s_name",title:"学生姓名",width:100},
     			{field:"s_age",title:"学生年龄",width:100},
-    			{field:"s_sex",title:"学生性别",width:100},
+    			{field:"s_sex",title:"学生性别",width:100,formatter:formatterSex},
     			{field:"s_phone",title:"学生手机",width:100},
-    			{field:"s_eduStatus",title:"学历状态",width:100},
+    			{field:"s_eduStatus",title:"学历状态",width:100,formatter:formatterstu},
     			{field:"s_perStatus",title:"个人状态",width:100},
     			{field:"s_address",title:"住址",width:100},
     			{field:"s_QQ",title:"学生QQ",width:100},
@@ -61,12 +62,55 @@ pageContext.setAttribute("path",request.getContextPath());
     		offText:"自动分量关闭",
     		onChange:function(checked) {
     			if (checked) {
-    				$.post("distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    				$.post("checkInAskerCount",function(res){
+    					if (res > 0) {
+    						$.post("distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    					} else {
+    						$.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
+    					}
+    				},"json")
     			} else {
     				$.post("closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
     			}
     		}
         })
+    }
+    
+    //初始化性别
+    function formatterSex (value,row,index) {
+        var sex = "";
+        if (row.e_sex == "0") {
+            sex = "女";
+        } else if (row.e_sex == "1") {
+            sex = "男";
+        } else {
+            sex = "未填";
+        }
+        
+        return sex;
+    }
+    
+    function formatterstu(value,row,index) {
+        var s_eduStatus = "";
+        if (row.s_eduStatus == "") {
+            s_eduStatus = "";
+        }else if (row.s_eduStatus == "未知") {
+            s_eduStatus = "未知";
+        }else if (row.s_eduStatus == "初中") {
+            s_eduStatus = "初中";
+        }else if (row.s_eduStatus == "中专") {
+            s_eduStatus = "中专";
+        } else if (row.s_eduStatus == "高中") {
+            s_eduStatus = "高中";
+        }else if (row.s_eduStatus == "大专") {
+            s_eduStatus = "大专";
+        } else if(row.s_eduStatus == "本科"){
+            s_eduStatus = "本科";
+        }else{
+            s_eduStatus = "其他";
+        }
+        
+        return s_eduStatus;
     }
     
     function openHandDistributionDialog() {
@@ -84,7 +128,7 @@ pageContext.setAttribute("path",request.getContextPath());
             url:"allNotDistributionStudent",
             singleSelect:false,
             textFormatter:function (value,row,index) {
-                return row.s_name;f
+                return row.s_name;
             }
         });
         $("#handDistributionDialog").dialog("open");
@@ -113,6 +157,8 @@ pageContext.setAttribute("path",request.getContextPath());
     	        },function(res){
     	        	if (res > 0) {
     	        		$.messager.alert("提示","分配成功！","info");
+    	        		$("#allAsker").datalist("reload");
+    	        		$("#allNotDistributionStudent").datalist("reload");
     	        		$("#dg").datagrid("reload");
     	        	} else {
     	        		$.messager.alert("提示","分配失败！","error");

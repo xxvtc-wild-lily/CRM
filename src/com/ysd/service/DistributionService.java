@@ -61,4 +61,10 @@ public interface DistributionService {
      */
     Integer updateStudentAskerId(Student student);
     
+    /**
+     * 查询所有签到的咨询师数量
+     * @return 查询到的咨询师数量
+     */
+    Integer selectAllCheckInAskerCount();
+    
 }

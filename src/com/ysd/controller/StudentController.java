@@ -26,14 +26,12 @@ public class StudentController {
 		pagination.setStudent(student);
 		System.out.println(e_loginName);
 		pagination.setE_name(e_loginName);
-		System.out.println(pagination.getE_name()+"===========");
 		pagination=studentService.selectStudentAll(pagination);
 		return pagination;
 	} 
 	@RequestMapping(value="/insertStudent",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer insertStudent(Student student,@RequestParam(value="isAutoAllot") boolean isAutoAllot) {
-	    System.out.println(student.toString()+"=============================================123123123");
 	    Integer i = studentService.insertStudent(student);
 	    
 		return i;

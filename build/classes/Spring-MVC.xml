@@ -38,6 +38,7 @@
         <mvc:interceptor>
             <!-- 拦截所有URL中的所有请求 -->
             <mvc:mapping path="/**"/>
+            <mvc:mapping path="/**/**"/>
             <!-- 放过的请求 -->
             <mvc:exclude-mapping path="/toSignin"/>
             <mvc:exclude-mapping path="/signin"/>
@@ -50,7 +51,6 @@
             <mvc:exclude-mapping path="/image/**"/>
             <bean class="com.ysd.util.LoginInterceptor"></bean>
         </mvc:interceptor>
-        
        </mvc:interceptors>
        
 </beans>

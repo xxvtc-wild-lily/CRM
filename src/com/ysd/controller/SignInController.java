@@ -57,6 +57,11 @@ public class SignInController {
         return "view/employeeWorkLog";
     }
 	
+	@RequestMapping(value="/inIndex",method=RequestMethod.GET)
+    public String inIndex() {
+        return "view/index";
+    }
+	
 	@RequestMapping(value="/inModule",method=RequestMethod.GET)
     public String inModule() {
         return "view/module";
@@ -202,7 +207,7 @@ public class SignInController {
                         // 将登录信息赋到session里避免拦截
                         session.setAttribute("employee",employee);
                         
-                        return "/view/index";
+                        return "redirect:inIndex";
                     }
                     
                 } else {

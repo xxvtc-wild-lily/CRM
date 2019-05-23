@@ -101,7 +101,7 @@ pageContext.setAttribute("path",request.getContextPath());
     	
     	$.messager.confirm("确认对话框","您确认要签退吗？", function(r){
     	    if (r){
-    	    	$.post("../signBack",{
+    	    	$.post("signBack",{
     	            e_loginName:e_loginName
     	        },function(res){
     	            if (res == "1") {
