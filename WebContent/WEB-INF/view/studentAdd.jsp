@@ -366,7 +366,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0)" onclick="addStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
 			<a href="javascript:void(0)" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
-			<a href="javascript:void(0)" onclick="show()" class="easyui-linkbutton">动态设置</a>
+			<a href="javascript:void(0)" onclick="show()" class="easyui-linkbutton">设置</a>
 		</form>
 	</div>
 	<div id="lie_window" class="easyui-dialog" title="列设置" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:400px;height:500px;padding:10px;">
