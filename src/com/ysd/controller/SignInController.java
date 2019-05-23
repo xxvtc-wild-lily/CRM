@@ -277,7 +277,9 @@ public class SignInController {
         // 声明application
         ServletContext application = request.getServletContext();
         
+        // 判断当前用户名是否还存在
         if (application.getAttribute(employee.getE_loginName()) != null && application.getAttribute(employee.getE_loginName()).equals(employee.getE_loginName())) {
+            // 从application中移除当前用户
             application.removeAttribute(employee.getE_loginName());
         }
         

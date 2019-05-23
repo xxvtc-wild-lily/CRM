@@ -20,13 +20,15 @@ public class StudentController {
 	
 	@RequestMapping(value="/selectStudent",method=RequestMethod.POST)
 	@ResponseBody
-	public Pagination<Student> selectStudent(Integer rows,Integer page,Student student,String e_loginName){
+	public Pagination<Student> selectStudent(Integer rows,Integer page,Student student,String e_loginName,String in_s_createTime,String en_s_createTime){
 		pagination.setPage((page-1)*rows);
 		pagination.setPageSize(rows);
 		pagination.setStudent(student);
-		System.out.println(e_loginName);
 		pagination.setE_name(e_loginName);
+		pagination.setIn_s_createTime(in_s_createTime);
+		pagination.setEn_s_createTime(en_s_createTime);
 		pagination=studentService.selectStudentAll(pagination);
+		
 		return pagination;
 	} 
 	@RequestMapping(value="/insertStudent",method=RequestMethod.POST)

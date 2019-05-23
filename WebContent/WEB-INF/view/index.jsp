@@ -229,6 +229,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	    }
 	    //连接关闭的回调方法
 	    websocket.onclose = function () {
+	    	// 从application清空当前用户信息
 	    	$.post("errorClose",{
 	    		e_loginName:"${employee.e_loginName}"
 	    	})
@@ -236,10 +237,18 @@ pageContext.setAttribute("path",request.getContextPath());
 	    }
 	    //监听窗口关闭事件，当窗口关闭时，主动去关闭WebSocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
 	    window.onbeforeunload = function () {
+	    	// 从application清空当前用户信息
+	    	$.post("errorClose",{
+                e_loginName:"${employee.e_loginName}"
+            })
 	        closeWebSocket();
 	    }
 	    //关闭WebSocket连接
 	    function closeWebSocket() {
+	    	// 从application清空当前用户信息
+	    	$.post("errorClose",{
+                e_loginName:"${employee.e_loginName}"
+            })
 	        websocket.close();
 	    }  
     

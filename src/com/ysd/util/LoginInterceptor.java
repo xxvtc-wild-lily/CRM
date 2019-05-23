@@ -26,14 +26,15 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
         // TODO Auto-generated method stub
-        System.out.println("拦截器");
-        HttpSession session = request.getSession();
         
+        // 获取session
+        HttpSession session = request.getSession();
+        // 判断session里是否有用户信息
         if (session.getAttribute("employee") != null) {
-            System.out.println("登录");
+            // 如果有就正常执行
             return true;
         } else {
-            System.out.println("没有登录");
+            // 如果没有就跳转至登陆页面
             request.getRequestDispatcher("toSignin").forward(request, response);
         }
         

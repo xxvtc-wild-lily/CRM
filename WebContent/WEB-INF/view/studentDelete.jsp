@@ -70,12 +70,15 @@ pageContext.setAttribute("path",request.getContextPath());
 		}
 		function formattercaozuo(value,row,index){
 			
-			return "<a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a>  <a href='javascript:void(0)' onclick='deleteStudent("+index+")'>删除</a>"
+			return "<a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a>  <a href='javascript:void(0)' onclick='deleteStudent("+index+")'>无效</a>"
 		}
 		
 		function formattera_name(value,row,index){
-			return row.asker.a_name;
-		}
+	        if (row.s_askerId == null) {
+	            return "暂未分配";
+	        }
+	        return row.asker.a_name;
+	    }
 		function formattersfff(value,row,index) {
 			var s_isPay = "";
 			if (row.s_isPay == "0") {
@@ -129,14 +132,14 @@ pageContext.setAttribute("path",request.getContextPath());
 		function deleteStudent(index){
 			var data=$("#stuTab").datagrid("getData");
 			var row=data.rows[index];
-			$.messager.confirm('确认','您确认想要删除吗？',function(r){    
+			$.messager.confirm('确认','您确定要将该学生变为无效状态吗？',function(r){    
 			    if (r){    
 			          $.post("deleteStudent",{s_id:row.s_id},function(res){
 			        	  if(res>0){
 			        		  $("#stuTab").datagrid("reload");
-			        		  $.messager.alert('确认','删除成功');
+			        		  $.messager.alert('确认','修改成功！',"info");
 			        	  }else{
-			        		  $.messager.alert('确认','删除失败');
+			        		  $.messager.alert('确认','修改失败！',"error");
 			        	  }
 			          },"json")  
 			    }    
