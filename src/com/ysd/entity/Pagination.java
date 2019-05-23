@@ -16,6 +16,8 @@ public class Pagination<T> {
 	private String in_e_createTime;
 	private String en_e_createTime;
 	private Student student;
+	private String in_s_createTime;
+	private String en_s_createTime;
 	private Asker asker;
 	private String e_importEmployee;
 	private Integer a_aid;
@@ -79,6 +81,19 @@ public class Pagination<T> {
 	}
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+	
+	public String getIn_s_createTime() {
+		return in_s_createTime;
+	}
+	public void setIn_s_createTime(String in_s_createTime) {
+		this.in_s_createTime = in_s_createTime;
+	}
+	public String getEn_s_createTime() {
+		return en_s_createTime;
+	}
+	public void setEn_s_createTime(String en_s_createTime) {
+		this.en_s_createTime = en_s_createTime;
 	}
 	public Asker getAsker() {
 		return asker;
@@ -158,16 +173,17 @@ public class Pagination<T> {
     public void setA_aid(Integer a_aid) {
         this.a_aid = a_aid;
     }
-    @Override
-    public String toString() {
-        return "Pagination [page=" + page + ", pageSize=" + pageSize + ", total=" + total + ", rows=" + rows
-                + ", employee=" + employee + ", in_e_createTime=" + in_e_createTime + ", en_e_createTime="
-                + en_e_createTime + ", student=" + student + ", asker=" + asker + ", e_importEmployee="
-                + e_importEmployee + ", a_aid=" + a_aid + ", n_stuName=" + n_stuName + ", e_id=" + e_id
-                + ", startn_followTime=" + startn_followTime + ", endn_followTime=" + endn_followTime
-                + ", s_isReturnVisit=" + s_isReturnVisit + ", n_followType=" + n_followType + ", e_name=" + e_name
-                + ", ec_checkStatus=" + ec_checkStatus + ", startCheckInTime=" + startCheckInTime + ", endCheckInTime="
-                + endCheckInTime + "]";
-    }
+	@Override
+	public String toString() {
+		return "Pagination [page=" + page + ", pageSize=" + pageSize + ", total=" + total + ", rows=" + rows
+				+ ", employee=" + employee + ", in_e_createTime=" + in_e_createTime + ", en_e_createTime="
+				+ en_e_createTime + ", student=" + student + ", in_s_createTime=" + in_s_createTime
+				+ ", en_s_createTime=" + en_s_createTime + ", asker=" + asker + ", e_importEmployee=" + e_importEmployee
+				+ ", a_aid=" + a_aid + ", n_stuName=" + n_stuName + ", e_id=" + e_id + ", startn_followTime="
+				+ startn_followTime + ", endn_followTime=" + endn_followTime + ", s_isReturnVisit=" + s_isReturnVisit
+				+ ", n_followType=" + n_followType + ", e_name=" + e_name + ", ec_checkStatus=" + ec_checkStatus
+				+ ", startCheckInTime=" + startCheckInTime + ", endCheckInTime=" + endCheckInTime + "]";
+	}
+   
 	
 }

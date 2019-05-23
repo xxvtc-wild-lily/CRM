@@ -38,7 +38,8 @@ pageContext.setAttribute("path",request.getContextPath());
 				s_isPay:$('#s_isPay').combobox('getValue'),
 				s_isValid:$("#s_isValid").combobox('getValue'),
 				s_QQ:$("#s_QQ").val(),
-				s_createTime:$("#s_createTime").val()
+				in_s_createTime:$("#in_s_createTime").val(),
+				en_s_createTime:$("#en_s_createTime").val(),
 			},
 			 columns:[[
 			        {field:'ck',title:'复选框',checkbox:true,width:100},
@@ -271,6 +272,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			s_QQ:$("#adds_QQ").val(),
 			s_weiXin:$("#adds_weiXin").val(),
 			s_isReport:$("#adds_isReport").val(),
+			s_createTime:$("#adds_createTime").val(),
 			s_remarks:$("#adds_remarks").val()
 		},function(res){
 			if(res>0){
@@ -288,48 +290,8 @@ pageContext.setAttribute("path",request.getContextPath());
 		$("#addDialog").dialog("close");
 	}
 	
-	function updateStudent(index){
-		var data=$("#stuTab").datagrid("getData");
-		var row=data.rows[index];
-		$('#updateForm').form('load',row);
-		$("#updateDialog").dialog("open");
-	}
-	function updateSave(){
-		$.post("updateStudent",{
-			s_id:$("#updates_id").val(),
-			s_name:$("#updates_name").val(),
-			s_sex:$("#updates_sex").val(),
-			s_age:$("#updates_age").val(),
-			s_phone:$("#updates_phone").val(),
-			a_name:$("#updatea_name").val(),
-			s_eduStatus:$("#updates_eduStatus").combobox("getValue"),
-			s_perStatus:$("#updates_perStatus").val(),
-			s_comeWay:$("#updates_comeWay").val(),
-			s_comeSite:$("#updates_comeSite").val(),
-			s_sourceKeyWord:$("#updates_sourceKeyWord").val(),
-			s_fromPart:$("#updates_fromPart").val(),
-			s_address:$("#updates_address").val(),
-			s_focus:$("#updates_focus").val(),
-			s_QQ:$("#updates_QQ").val(),
-			s_weiXin:$("#updates_weiXin").val(),
-			s_isReport:$("#updates_isReport").val(),
-			s_importEmployee:'${employee.e_loginName}'
-		},function(res){
-			
-			if(res>0){
-				$.messager.alert("提示","修改成功！","info");
-				$("#updateDialog").dialog("close");
-				$("#stuTab").datagrid("reload");
-			}else{
-				$.messager.alert("提示","修改失败！","error");
-				
-			}
-		},"json")
-		$('#updateForm').form('clear');
-	}
-	function updateClose(){
-		$("#updateDialog").dialog("close");
-	}
+	
+	
 	function saveStudent(index){
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
@@ -397,8 +359,9 @@ pageContext.setAttribute("path",request.getContextPath());
 			</select>
 	        <label for="name">QQ:</label>   
 	        <input class="easyui-textbox" type="text"  id="s_QQ"/> 
-	         <label for="name">创建时间:</label>   
-	        <input class="easyui-datebox" type="text"  id="s_createTime"/>
+	        <label for="name">创建时间:</label>   
+	        <input class="easyui-datebox" type="text"  id="in_s_createTime"/>~
+	        <input class="easyui-datebox" type="text"  id="en_s_createTime"/>
 	        
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0)" onclick="addStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">创建</a>
@@ -510,6 +473,8 @@ pageContext.setAttribute("path",request.getContextPath());
 			        </td>
 			    </tr>
 			    <tr>
+			    	<td><label>创建时间：</label></td>
+			        <td><input class="easyui-datebox" type="text" id="adds_createTime" name="s_createTime"/></td>
 			        <td><label>在线备注：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_remarks" name="s_remarks"/></td>
 			        
