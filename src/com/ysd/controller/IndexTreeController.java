@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysd.entity.Employee;
 import com.ysd.service.IndexTreeService;
-import com.ysd.service.MyThread;
 import com.ysd.util.IndexTree;
 import com.ysd.util.IndustrySMS;
 import com.ysd.util.PasswordUtil;
@@ -35,7 +34,7 @@ public class IndexTreeController {
     public List<HashMap<String, Object>> initTree(Employee employee) {
         
         List<HashMap<String, Object>> tree = indexTree.getTree(employee);
-       
+        
         return tree;
     }
     
@@ -51,6 +50,16 @@ public class IndexTreeController {
             cookie.setMaxAge(0);
             cookie.setPath("/");
             response.addCookie(cookie);
+        }
+        
+        // 声明application
+        ServletContext application = request.getServletContext();
+        
+        System.out.println(application.getAttribute(employee.getE_loginName())+"====================");
+        
+        // 如果application的里的该用户登录名不为空就移除
+        if (application.getAttribute(employee.getE_loginName()) != null) {
+            application.removeAttribute(employee.getE_loginName());
         }
         
         return "1";
