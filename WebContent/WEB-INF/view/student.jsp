@@ -113,7 +113,10 @@ pageContext.setAttribute("path",request.getContextPath());
     } */
 	
 	function formattera_name(value,row,index){
-		return row.asker.a_name;
+    	if (row.s_askerId == null) {
+    		return "暂未分配";
+    	}
+    	return row.asker.a_name;
 	}
 	function formattersfff(value,row,index) {
 		var s_isPay = "";
