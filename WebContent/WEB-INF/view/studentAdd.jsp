@@ -490,8 +490,6 @@ pageContext.setAttribute("path",request.getContextPath());
 			        </td>
 			    </tr>
 			    <tr>
-			    	<td><label>创建时间：</label></td>
-			        <td><input class="easyui-datebox" type="text" id="adds_createTime" name="s_createTime"/></td>
 			        <td><label>在线备注：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="adds_remarks" name="s_remarks"/></td>
 			        
