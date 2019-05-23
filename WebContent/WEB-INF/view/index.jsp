@@ -18,6 +18,13 @@ pageContext.setAttribute("path",request.getContextPath());
 <script src="${path }/js/echarts/echarts-all.js"></script>
 <script src="${path }/js/home.js"></script>
 <script type="text/javascript">
+    
+    ref = setInterval(function(){
+    	$.post("judgeIsOnline",{
+    		e_loginName:"e_loginName"
+    	})
+    },10000);
+    
     $(function(){
     	chushihua()
     })
@@ -65,6 +72,9 @@ pageContext.setAttribute("path",request.getContextPath());
     	    		url:"safeSignOut",
     	    		async:false,
     	    		method:"post",
+    	    		data:{
+    	    			e_loginName:"${employee.e_loginName}"
+    	    		},
     	    		success:function(res) {
     	    			if (res == "1") {
     	    				window.location.href="toSignin";

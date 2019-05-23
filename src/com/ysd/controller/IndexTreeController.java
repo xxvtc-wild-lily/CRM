@@ -3,6 +3,7 @@
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +41,7 @@ public class IndexTreeController {
     
     @RequestMapping(value="/safeSignOut",method=RequestMethod.POST)
     @ResponseBody
-    public String safeSignOut(HttpServletRequest request,HttpServletResponse response) {
+    public String safeSignOut(HttpServletRequest request,HttpServletResponse response,Employee employee) {
         
         request.getSession().invalidate();
         
