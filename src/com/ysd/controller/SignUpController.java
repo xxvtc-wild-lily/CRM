@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +27,7 @@ public class SignUpController {
 	@RequestMapping(value=("/insertSignUpEmployeeHaveImage"),method=RequestMethod.POST)
 	@ResponseBody
 	public Integer insertSignUpEmployeeHaveImage(@RequestParam(value=("e_photo")) MultipartFile file,String e_loginName,String e_passWord,
-			String e_protectEmail,String e_protectMTel,String e_sex,String e_age) throws IllegalStateException, IOException {
+			String e_protectEmail,String e_protectMTel,String e_sex,String e_age,HttpServletRequest request) throws IllegalStateException, IOException {
 		
 		// 设置前台用来判断的判断值
 		Integer statusNum = 0;
@@ -40,8 +42,8 @@ public class SignUpController {
 		if (isSame == 0) {
 		    if (isSameProtectMTel == 0) {
 		        if (isSameProtectEmail == 0) {
-        			// 判断保存路径
-        			String filePath = "D:\\GithubRepository\\CRM\\WebContent\\image";
+		            // 获取项目的绝对路径
+		            String tomcatAbsolutePath = request.getSession().getServletContext().getRealPath("/image");
         			// 拿到图片名
         			String fileName = file.getOriginalFilename();
         			// 给图片重起一个名字
@@ -50,8 +52,8 @@ public class SignUpController {
         			Integer i=signUpService.selectIsHaveSameEmployeePhotoName(newFileName);
         			// 如果没有就进入该判断，将图片保存到本地
         			if (i<1) {
-        				// 生成File对象
-        				File targetFile = new File(filePath,newFileName);
+        				// 生成Tomcat的File对象
+        				File targetFile = new File(tomcatAbsolutePath,newFileName);
         				// 保存到本地
         				file.transferTo(targetFile);
         				
