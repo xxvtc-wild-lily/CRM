@@ -67,6 +67,7 @@ pageContext.setAttribute("path",request.getContextPath());
     						$.post("distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
     					} else {
     						$.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
+    						$("#distributionButton").switchbutton("checked",false);
     					}
     				},"json")
     			} else {
