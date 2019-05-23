@@ -2,6 +2,7 @@ package com.ysd.controller;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import com.ysd.service.SignInService;
 import com.ysd.util.IndustrySMS;
 import com.ysd.util.PasswordUtil;
 import com.ysd.util.RandomValidateCode;
+import com.ysd.util.SingleLogin;
 
 @Controller
 public class SignInController {
@@ -172,42 +174,51 @@ public class SignInController {
                 // 如果大于0则说明密码正确
                 if (j > 0) {
                     
-                    // 查询用户是否锁定
-                    Integer isLock = signInService.selectIsEmployeeLockOut(employee);
+                    boolean flag = SingleLogin.isAlreadyEnter(session,employee.getE_loginName());
                     
-                    // 如果大于0就是已锁定
-                    if (isLock > 0) {
-                        // 设置提示信息为该账号已锁定
-                        model.addAttribute("msg","该账号已锁定！");
+                    if (flag) {
+                        model.addAttribute("msg","该账号已登录");
+                        return "/view/signin";
                     } else {
-                        // 没有锁定的判断
+                        // 查询用户是否锁定
+                        Integer isLock = signInService.selectIsEmployeeLockOut(employee);
                         
-                        // 设置最后登录时间为当前时间
-                        signInService.updateLastLoginTime(employee);
-                        // 登陆成功后将错误次数归零
-                        signInService.updatePwdWrongTimeWhenSuccess(employee);
-                        
-                        // 判断是否将用户名密码赋给cookie的操作
-                        if (passLogin != null) {
-                            // 记住密码
+                        // 如果大于0就是已锁定
+                        if (isLock > 0) {
+                            // 设置提示信息为该账号已锁定
+                            model.addAttribute("msg","该账号已锁定！");
+                        } else {
+                            // 没有锁定的判断
                             
-                            // 把账号存入Cookie且名字为loginName
-                            Cookie loginName = new Cookie("loginName", employee.getE_loginName());
-                            // 设置过期时间（以秒为单位）
-                            loginName.setMaxAge(60 * 60 * 24 * 7);
-                            // 设置添加到根路径下
-                            loginName.setPath("/");
-                            //添加Cookie
-                            response.addCookie(loginName);
+                            // 设置最后登录时间为当前时间
+                            signInService.updateLastLoginTime(employee);
+                            // 登陆成功后将错误次数归零
+                            signInService.updatePwdWrongTimeWhenSuccess(employee);
+                            
+                            // 判断是否将用户名密码赋给cookie的操作
+                            if (passLogin != null) {
+                                // 记住密码
+                                
+                                // 把账号存入Cookie且名字为loginName
+                                Cookie loginName = new Cookie("loginName", employee.getE_loginName());
+                                // 设置过期时间（以秒为单位）
+                                loginName.setMaxAge(60 * 60 * 24 * 7);
+                                // 设置添加到根路径下
+                                loginName.setPath("/");
+                                //添加Cookie
+                                response.addCookie(loginName);
+                            }
+                            // 拿到用户的e_id
+                            Integer e_id = signInService.selectEidByloginName(employee);
+                            // 放入用户类
+                            employee.setE_id(e_id);
+                            // 将登录信息赋到session里避免拦截
+                            session.setAttribute("employee",employee);
+                            session.setAttribute("e_loginName",employee.getE_loginName());
+                            
+                            return "redirect:inIndex";
                         }
-                        // 拿到用户的e_id
-                        Integer e_id = signInService.selectEidByloginName(employee);
-                        // 放入用户类
-                        employee.setE_id(e_id);
-                        // 将登录信息赋到session里避免拦截
-                        session.setAttribute("employee",employee);
                         
-                        return "redirect:inIndex";
                     }
                     
                 } else {
