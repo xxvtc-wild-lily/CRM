@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 pageContext.setAttribute("path",request.getContextPath());
@@ -47,7 +47,6 @@ pageContext.setAttribute("path",request.getContextPath());
             
             if (cookie_end == -1) {
                 cookie_end = allcookies.length;
-
             }
             //得到想要的cookie的值
             var value = unescape(allcookies.substring(cookie_pos, cookie_end)); 
