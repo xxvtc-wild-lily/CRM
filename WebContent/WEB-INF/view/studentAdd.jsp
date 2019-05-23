@@ -38,8 +38,8 @@ pageContext.setAttribute("path",request.getContextPath());
 				s_isPay:$('#s_isPay').combobox('getValue'),
 				s_isValid:$("#s_isValid").combobox('getValue'),
 				s_QQ:$("#s_QQ").val(),
-				in_s_createTime:$("#in_s_createTime").val(),
-				en_s_createTime:$("#en_s_createTime").val(),
+				in_s_createTime:$("#in_s_createTime").datebox("getValue"),
+				en_s_createTime:$("#en_s_createTime").datebox("getValue")
 			},
 			 columns:[[
 			        {field:'ck',title:'复选框',checkbox:true,width:100},

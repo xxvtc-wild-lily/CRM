@@ -37,6 +37,7 @@ public class StudentServiceImp implements StudentService {
 	        
 	        List<Student> list = studentMapper.selectStudentByRole(pagination);
 	        Integer i = studentMapper.selectStudentCountByRole(pagination);
+	        System.out.println("总人数=========================="+i);
 	        pagination.setTotal(i);
             pagination.setRows(list);
 	        
