@@ -19,7 +19,6 @@ public class WebSocketServlet {
     //用来存放每个客户端对应的MyWebSocket对象。
     private static CopyOnWriteArraySet<WebSocketServlet> webSocketSet = new CopyOnWriteArraySet<WebSocketServlet>();
     private  javax.websocket.Session session=null;
-
     /**
      * @ClassName: onOpen   
      * @Description: 开启连接的操作

@@ -58,10 +58,6 @@ pageContext.setAttribute("path",request.getContextPath());
     	    }
     
 
-    	
-    })
-    
-
     }
 
     // 安全退出的方法
@@ -375,12 +371,27 @@ pageContext.setAttribute("path",request.getContextPath());
 <body class="easyui-layout">
     <div data-options="region:'north',border:false" style="height:50px;padding:10px">
         <div style="font-size:20px;">
-                欢迎${employee.e_loginName }使用CRM管理系统
-         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="register()">签到</a>
-         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="signBack()">签退</a>
-         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="openUpdatePasswordDialog()">修改密码</a>
-         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="safeSignOut()">安全退出</a>
+		                欢迎${employee.e_loginName }使用CRM管理系统
+		         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="register()">签到</a>
+		         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-filter'" onclick="signBack()">签退</a>
+		         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="openUpdatePasswordDialog()">修改密码</a>
+		         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="safeSignOut()">安全退出</a>
+		      
+		       			<div>
+		       				<li class="display">
+			     			<a href="@Url.Action("Index","Contract",new { })" data-toggle="tooltip" data-placement="top" title="消息提示">
+			           		<span class="glyphicon glyphicon-bell" aria-hidden="true" style="font-size:25px;position:relative;"></span>
+			                 <span style="font-size:11px;position:absolute;left:1400px;top:10px;border-radius: 50%;height: 20px;width: 20px;display: inline-block;background: #f20c55;vertical-align: top;">
+			                 <span style="display: block;color: #FFFFFF;height: 20px;line-height: 20px;text-align: center"></span>
+			            	</span>
+			     			</a>
+						</li>
+		       			</div>
+		       			
+		       		
+		       
         </div>
+        
     </div>
     <div data-options="region:'west',split:true,title:'West'" style="width:170px;padding:0px;">
         <ul id="tree"></ul>
@@ -388,6 +399,7 @@ pageContext.setAttribute("path",request.getContextPath());
     <div data-options="region:'center',title:'Center'" style="width:1300px">
         <div id="indexTab" class="easyui-tabs" style="width:1364px;height:617px;">
             <div class="allBox"  data-options="title:'首页'">
+            		
 				    <div class="homeLeft04">
 				        <h5 class="hStyle"><span>数据分析</span></h5>
 				        <p class="stataAny" id="chart01"></p>
@@ -396,6 +408,7 @@ pageContext.setAttribute("path",request.getContextPath());
 				        <h5 class="hStyle"><span>交货分析</span></h5>
 				        <p class="stataAny" id="chart02"></p>
 				    </div>
+				    <div id="cc" class="easyui-calendar" style="width:180px;height:180px;"></div>
 				    <div class="homeLeft05">
 				        <h5 class="hStyle"><span>交货分析</span></h5>
 				        <p class="stataAny" style="height: 220px" id="chart03"></p>
