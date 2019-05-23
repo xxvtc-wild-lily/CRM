@@ -64,15 +64,15 @@
 	
 	<select id="selectStudentByRole" parameterType="pagination" resultMap="resultStu">
 
-	   select s.*,a.a_name from student s inner join asker a on
+	  	select s.*,a.a_name from student s inner join asker a on
 
-	   <if test="e_importEmployee == '咨询师'">
-
-	       s.s_askerid = a.a_id where a.a_id = #{a_aid}
-	   </if>
-	   <if test="e_importEmployee == '网络咨询师'">
-	       s.s_importEmployee = a.a_name where a.a_name = #{e_name}
-       </if>
+		<if test="e_importEmployee == '咨询师'">
+	    	s.s_askerid = a.a_id where a.a_id = #{a_aid}
+	    </if>
+       
+		<if test="e_importEmployee == '网络咨询师'">
+		    s.s_importEmployee = a.a_name where a.a_name = #{e_name}
+		</if>
 
             <if test="student.s_id != null and student.s_id != ''">
                 and s.s_id =#{student.s_id}
@@ -100,25 +100,23 @@
             <if test=" student.s_QQ != null and student.s_QQ != ''">
                 and s.s_QQ like "%"#{student.s_QQ}"%"
             </if>
-            <if test="student.s_createTime != null and student.s_createTime != ''">
-                and s.s_createTime =#{student.s_createTime}
-            </if>
+            <if test="in_s_createTime != null and in_s_createTime != '' and en_s_createTime != null and en_s_createTime != ''">
+				and s.s_createTime between #{in_s_createTime} and #{en_s_createTime}
+			</if>
+
         limit #{page},#{pageSize}
 	</select>
 	
 	<select id="selectStudentCountByRole" parameterType="pagination" resultMap="resultStu">
 
-       select count(1) from student s inner join asker a on
-
-	   <if test="e_importEmployee == '网络咨询师'">
-	       s.s_importEmployee = a.a_name where a.a_name = #{e_name}
-		</if>
-      
-       <if test="e_importEmployee == '咨询师'">
+       select count(1) from student s inner join asker a on		
+	   <if test="e_importEmployee == '咨询师'">
            s.s_askerid = a.a_id where a.a_id = #{a_aid}
        </if>
-
-
+       
+	   <if test="e_importEmployee == '网络咨询师'">
+	       s.s_importEmployee = a.a_name where a.a_name = #{e_name}
+	   </if>
             <if test="student.s_id != null and student.s_id != ''">
                 and s.s_id =#{student.s_id}
             </if>
@@ -145,9 +143,11 @@
             <if test=" student.s_QQ != null and student.s_QQ != ''">
                 and s.s_QQ like "%"#{student.s_QQ}"%"
             </if>
-            <if test="student.s_createTime != null and student.s_createTime != ''">
-                and s.s_createTime =#{student.s_createTime}
-            </if>
+           	<if test="in_s_createTime != null and in_s_createTime != '' and en_s_createTime != null and en_s_createTime != ''">
+				and s.s_createTime between #{in_s_createTime} and #{en_s_createTime}
+			</if>
+			
+
     </select>
 	
 	<select id="selectStudentAll" parameterType="pagination" resultMap="resultStu">
@@ -179,8 +179,8 @@
 			<if test=" student.s_QQ != null and student.s_QQ != ''">
 				and s.s_QQ like "%"#{student.s_QQ}"%"
 			</if>
-			<if test="student.s_createTime != null and student.s_createTime != ''">
-				and s.s_createTime =#{student.s_createTime}
+			<if test="in_s_createTime != null and in_s_createTime != '' and en_s_createTime != null and en_s_createTime != ''">
+				and s.s_createTime between #{in_s_createTime} and #{en_s_createTime}
 			</if>
 		</where>
 		
@@ -216,15 +216,18 @@
 			<if test=" student.s_QQ != null and student.s_QQ != ''">
 				and s.s_QQ like "%"#{student.s_QQ}"%"
 			</if>
-			<if test="student.s_createTime != null and student.s_createTime != ''">
-				and s.s_createTime =#{student.s_createTime}
+			<if test="in_s_createTime != null and in_s_createTime != '' ">
+				and s.s_createTime &gt;= #{in_s_createTime}
+			</if>
+			<if test="en_s_createTime != null and en_s_createTime != ''">
+				and s.s_createTime &lt;= #{en_s_createTime} 
 			</if>
 		</where>
 	</select>
 	
 	<insert id="insertStudent" parameterType="student">
-		insert into student(s_name,s_sex,s_age,s_askerId,s_phone,s_eduStatus,s_perStatus,s_comeWay,s_comeSite,s_sourceKeyWord,s_QQ,s_weiXin,s_isReport,s_remarks,s_importEmployee) 
-		values(#{s_name},#{s_sex},#{s_age},#{s_askerId},#{s_phone},#{s_eduStatus},#{s_perStatus},#{s_comeWay},#{s_comeSite},#{s_sourceKeyWord},#{s_QQ},#{s_weiXin},#{s_isReport},#{s_remarks},#{s_importEmployee})
+		insert into student(s_name,s_sex,s_age,s_askerId,s_phone,s_eduStatus,s_perStatus,s_comeWay,s_comeSite,s_sourceKeyWord,s_QQ,s_weiXin,s_isReport,s_createTime,s_remarks,s_importEmployee) 
+		values(#{s_name},#{s_sex},#{s_age},#{s_askerId},#{s_phone},#{s_eduStatus},#{s_perStatus},#{s_comeWay},#{s_comeSite},#{s_sourceKeyWord},#{s_QQ},#{s_weiXin},#{s_isReport},#{s_createTime},#{s_remarks},#{s_importEmployee})
 
 	</insert>
 	
