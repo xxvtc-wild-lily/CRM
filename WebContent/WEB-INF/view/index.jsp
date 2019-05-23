@@ -49,7 +49,7 @@ pageContext.setAttribute("path",request.getContextPath());
                     }
                 }
     	    }
-    	});
+    
 
     	
     })

@@ -721,6 +721,7 @@ pageContext.setAttribute("path",request.getContextPath());
 		var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData)
 				: JSONData;
 		var sele=$("#stuTab").datagrid('getSelections');
+		if(sele!=""){
 		var CSV = '';
 		//在第一行拼接标题
 		CSV += ReportTitle + '\r\n\n';
@@ -759,6 +760,10 @@ pageContext.setAttribute("path",request.getContextPath());
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
+		
+		}else{
+	       $.messager.alert("提示","请选择需要导出的学生")
+	    }
 	}
 	$("#btnExport").click(function() {
 		var data = JSON.stringify($('#stuTab').datagrid('getData').rows);
