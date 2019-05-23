@@ -71,10 +71,27 @@ pageContext.setAttribute("path",request.getContextPath());
 	}
 	function formattercaozuo(value,row,index){
 	
-		return "<a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a>"
+		return "<a href='javascript:void(0)' onclick='saveStudent("
+				+index+")'>查看</a><a href='javascript:void(0)' onclick='tongzhi("
+				+index+")'>通知</a>"
 	}
-
-	
+	//打开通知对话框
+	int tidsss;
+	function tongzhi(index){
+		var data = $("#stuTab").datagrid("getData");
+		tidsss = data.rows[index].s_id;
+		
+		$("#tongz").dialog("open");
+	}
+	function kuaitongzhi(){
+		$.post("qutongzhi",{
+			tidsss:tidsss,
+			meirong:$("#tongzhiinput").val()
+		},function(res){
+			
+		},"json");
+		$("#tongz").dialog("close");
+	}
 	function formattera_name(value,row,index){
 		return row.asker.a_name;
 	}
@@ -571,6 +588,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			</table>
 		</form>
 	</div>
+	
 	<script type="text/javascript">
 
 	
@@ -633,5 +651,11 @@ pageContext.setAttribute("path",request.getContextPath());
 		JSONToCSVConvertor(data, "数据信息", true);
 	});
 </script>
+<div id="tongz" class="easyui-dialog" title="通知"  style="width:700px; height:300px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
+		<form id="tongzhiForm" >
+				<input class="easyui-textbox" type="text" id="tongzhiinput" name="tongzhiinput" data-options="readonly:true" />
+				<a href="javascript:void(0)" class="easyui-linkbutton"  onclick="kuaitongzhi()" >通知</a>
+		</form>
+</div>
 </body>
 </html>
