@@ -21,95 +21,94 @@ import com.ysd.service.SignInService;
 import com.ysd.util.IndustrySMS;
 import com.ysd.util.PasswordUtil;
 import com.ysd.util.RandomValidateCode;
-import com.ysd.util.SingleLogin;
 
 @Controller
 public class SignInController {
-	
-	@Autowired
-	private SignInService signInService;
-	
-	@RequestMapping(value="/inDistribution",method=RequestMethod.GET)
+    
+    @Autowired
+    private SignInService signInService;
+    
+    @RequestMapping(value="/inDistribution",method=RequestMethod.GET)
     public String inDistribution() {
         return "view/distribution";
     }
-	
-	@RequestMapping(value="/inEmployee",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inEmployee",method=RequestMethod.GET)
     public String inEmployee() {
         return "view/employee";
     }
-	
-	@RequestMapping(value="/inEmployeeDelete",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inEmployeeDelete",method=RequestMethod.GET)
     public String inEmployeeDelete() {
         return "view/employeeDelete";
     }
-	
-	@RequestMapping(value="/inEmployeeInfo",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inEmployeeInfo",method=RequestMethod.GET)
     public String inEmployeeInfo() {
         return "view/employeeInfo";
     }
-	
-	@RequestMapping(value="/inEmployeeRegister",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inEmployeeRegister",method=RequestMethod.GET)
     public String inEmployeeRegister() {
         return "view/employeeRegister";
     }
-	
-	@RequestMapping(value="/inEmployeeWorkLog",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inEmployeeWorkLog",method=RequestMethod.GET)
     public String inEmployeeWorkLog() {
         return "view/employeeWorkLog";
     }
-	
-	@RequestMapping(value="/inIndex",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inIndex",method=RequestMethod.GET)
     public String inIndex() {
         return "view/index";
     }
-	
-	@RequestMapping(value="/inModule",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inModule",method=RequestMethod.GET)
     public String inModule() {
         return "view/module";
     }
-	
-	@RequestMapping(value="/inNetFollow",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inNetFollow",method=RequestMethod.GET)
     public String inNetFollow() {
         return "view/NetFollow";
     }
-	
-	@RequestMapping(value="/inrole",method=RequestMethod.GET)
-	public String inrole() {
-	    return "view/role";
-	}
-	
-	@RequestMapping(value="/inSignin",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inrole",method=RequestMethod.GET)
+    public String inrole() {
+        return "view/role";
+    }
+    
+    @RequestMapping(value="/inSignin",method=RequestMethod.GET)
     public String inSignin() {
         return "view/signin";
     }
-	
-	@RequestMapping(value="/inSignup",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inSignup",method=RequestMethod.GET)
     public String inSignup() {
         return "view/signup";
     }
-	
-	@RequestMapping(value="/inStudent",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inStudent",method=RequestMethod.GET)
     public String inStudent() {
         return "view/student";
     }
-	
-	@RequestMapping(value="/inStudentAdd",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inStudentAdd",method=RequestMethod.GET)
     public String inStudentAdd() {
         return "view/studentAdd";
     }
-	
-	@RequestMapping(value="/inStudentDelete",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inStudentDelete",method=RequestMethod.GET)
     public String inStudentDelete() {
         return "view/studentDelete";
     }
-	
-	@RequestMapping(value="/inStudentUpdate",method=RequestMethod.GET)
+    
+    @RequestMapping(value="/inStudentUpdate",method=RequestMethod.GET)
     public String inStudentUpdate() {
         return "view/studentUpdate";
     }
-	
-	// 获取生成验证码显示到 UI 界面
+    
+    // 获取生成验证码显示到 UI 界面
     @RequestMapping(value="/checkCode")
     public void checkCode(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -161,25 +160,32 @@ public class SignInController {
             Integer i = signInService.selectIsHaveSameLoginName(employee);
             // 如果等于1则存在该登录名的用户
             if (i == 1) {
-                    
-                // 根据登录名获取用户的指纹码
-                String e_fingerprintNum = signInService.selectFingerprintNumByLoginName(employee);
-                // 根据用户数入的密码和获取到的指纹码生成MD5加密的密码
-                String e_passWord = PasswordUtil.generate(employee.getE_passWord(), e_fingerprintNum);
-                // 将密码赋如员工类
-                employee.setE_passWord(e_passWord);
-                // 查询加密过的密码是否是该用户数据库里存入的密码
-                Integer j = signInService.selectIsPasswordRight(employee);
                 
-                // 如果大于0则说明密码正确
-                if (j > 0) {
+                // 声明application
+                ServletContext application = request.getServletContext();
+                
+                // 如果application中存在此用户名则不能登录
+                if (application.getAttribute(employee.getE_loginName()) != null && application.getAttribute(employee.getE_loginName()).equals(employee.getE_loginName())) {
                     
-                    boolean flag = SingleLogin.isAlreadyEnter(session,employee.getE_loginName());
+                    model.addAttribute("msg","该账号已登录！");
                     
-                    if (flag) {
-                        model.addAttribute("msg","该账号已登录");
-                        return "/view/signin";
-                    } else {
+                    return "/view/signin";
+                } else {
+                    
+                    // 根据登录名获取用户的指纹码
+                    String e_fingerprintNum = signInService.selectFingerprintNumByLoginName(employee);
+                    // 根据用户数入的密码和获取到的指纹码生成MD5加密的密码
+                    String e_passWord = PasswordUtil.generate(employee.getE_passWord(), e_fingerprintNum);
+                    // 将密码赋如员工类
+                    employee.setE_passWord(e_passWord);
+                    // 查询加密过的密码是否是该用户数据库里存入的密码
+                    Integer j = signInService.selectIsPasswordRight(employee);
+                    
+                    // 如果大于0则说明密码正确
+                    if (j > 0) {
+                        
+                        // 如果application中没有则可以登录
+                        
                         // 查询用户是否锁定
                         Integer isLock = signInService.selectIsEmployeeLockOut(employee);
                         
@@ -214,40 +220,41 @@ public class SignInController {
                             employee.setE_id(e_id);
                             // 将登录信息赋到session里避免拦截
                             session.setAttribute("employee",employee);
-                            session.setAttribute("e_loginName",employee.getE_loginName());
+                            
+                            // 将用户名放入application中
+                            application.setAttribute(employee.getE_loginName(),employee.getE_loginName());
                             
                             return "redirect:inIndex";
+                            }
                         }
-                        
-                    }
                     
-                } else {
-                    // 查询当前用户是否为管理员
-                    String r_name = signInService.selectIsAdmin(employee);
-                    // 如果为管理员就只提示密码错误
-                    if (r_name != null && r_name.equals("管理员")) {
-                        model.addAttribute("msg","密码错误！");
-                    } else {
-                        // 如果不是管理员就更改错误次数
+                        // 查询当前用户是否为管理员
+                        String r_name = signInService.selectIsAdmin(employee);
+                        // 如果为管理员就只提示密码错误
+                        if (r_name != null && r_name.equals("管理员")) {
+                            model.addAttribute("msg","密码错误！");
+                        } else {
+                            // 如果不是管理员就更改错误次数
+                            
+                            // 密码错误后更改错误次数
+                            signInService.updatePwdWrongTime(employee);
+                            // 查询目前的错误次数
+                            lastLoginChance = signInService.selectPwdWrongTime(employee);
+                            // 获取剩下的尝试机会
+                            lastLoginChance = 3-lastLoginChance;
+                            
+                            // 设置提示信息为密码错误，并提示剩余尝试次数
+                            model.addAttribute("msg","密码错误，剩余尝试次数："+lastLoginChance);
+                            // 如果错误次数等于3次，就锁定账户
+                            if (lastLoginChance == 0) {
+                                // 修改锁定状态为锁定，修改锁定时间为当前时间
+                                signInService.updateEmployeeIsLockOut(employee);
+                                model.addAttribute("msg","该账号已锁定！");
+                            } else if (lastLoginChance < 0) {
+                                // 超过3次尝试次数
+                                model.addAttribute("msg","该账号已锁定！");
+                            }
                         
-                        // 密码错误后更改错误次数
-                        signInService.updatePwdWrongTime(employee);
-                        // 查询目前的错误次数
-                        lastLoginChance = signInService.selectPwdWrongTime(employee);
-                        // 获取剩下的尝试机会
-                        lastLoginChance = 3-lastLoginChance;
-                        
-                        // 设置提示信息为密码错误，并提示剩余尝试次数
-                        model.addAttribute("msg","密码错误，剩余尝试次数："+lastLoginChance);
-                        // 如果错误次数等于3次，就锁定账户
-                        if (lastLoginChance == 0) {
-                            // 修改锁定状态为锁定，修改锁定时间为当前时间
-                            signInService.updateEmployeeIsLockOut(employee);
-                            model.addAttribute("msg","该账号已锁定！");
-                        } else if (lastLoginChance < 0) {
-                            // 超过3次尝试次数
-                            model.addAttribute("msg","该账号已锁定！");
-                        }
                     }
                     
                 }
@@ -263,6 +270,17 @@ public class SignInController {
         }
         
         return "/view/signin";
+    }
+    
+    @RequestMapping(value="errorClose",method=RequestMethod.POST)
+    public void errorClose(HttpServletRequest request,Employee employee) {
+        // 声明application
+        ServletContext application = request.getServletContext();
+        
+        if (application.getAttribute(employee.getE_loginName()) != null && application.getAttribute(employee.getE_loginName()).equals(employee.getE_loginName())) {
+            application.removeAttribute(employee.getE_loginName());
+        }
+        
     }
     
 }
