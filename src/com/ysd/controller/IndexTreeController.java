@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysd.entity.Employee;
+import com.ysd.service.MyThread;
 import com.ysd.util.IndexTree;
 
 @Controller
@@ -27,7 +28,7 @@ public class IndexTreeController {
     public List<HashMap<String, Object>> initTree(Employee employee) {
         
         List<HashMap<String, Object>> tree = indexTree.getTree(employee);
-        
+       
         return tree;
     }
     

@@ -77,8 +77,11 @@ public interface EmployeeService {
      */
     List selectTongJiTu(String e_loginName);
     
-    
-    
+    /**
+     * 查询角色模块中间表数据数量
+     * @return
+     */
+    Integer selectEmployeeroleCount();
     
   
 }

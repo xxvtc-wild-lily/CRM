@@ -170,5 +170,9 @@ public interface EmployeeMapper {
 	 * @return
 	 */
 	Integer selectStudentAddLuRuByEmpName(String string);
-
+	/**
+	 * 查询所有角色模块中间表所有数据
+	 * @return
+	 */
+	Integer selectemployeeroleCount();
 }
