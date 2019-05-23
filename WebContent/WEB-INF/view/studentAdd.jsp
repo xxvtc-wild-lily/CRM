@@ -76,7 +76,7 @@ pageContext.setAttribute("path",request.getContextPath());
 				+index+")'>通知</a>"
 	}
 	//打开通知对话框
-	int tidsss;
+	var tidsss;
 	function tongzhi(index){
 		var data = $("#stuTab").datagrid("getData");
 		tidsss = data.rows[index].s_id;
