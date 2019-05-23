@@ -134,4 +134,7 @@
 	<select id="selectStudentAddLuRuByEmpName" parameterType="string" resultType="int">
 			select count(s.s_id) from employee e INNER JOIN  student s  on e.e_loginName=s.s_importEmployee WHERE e.e_loginName=#{name} and s.s_isPay=1
 	</select>
+	<select id="selectemployeeroleCount" resultType="int">
+			select count(er_id) from employeerole
+	</select>
 </mapper>

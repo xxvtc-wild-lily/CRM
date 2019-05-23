@@ -1,4 +1,4 @@
-package com.ysd.controller;
+﻿package com.ysd.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysd.entity.Employee;
 import com.ysd.service.IndexTreeService;
+import com.ysd.service.MyThread;
 import com.ysd.util.IndexTree;
 import com.ysd.util.IndustrySMS;
 import com.ysd.util.PasswordUtil;
@@ -33,7 +34,7 @@ public class IndexTreeController {
     public List<HashMap<String, Object>> initTree(Employee employee) {
         
         List<HashMap<String, Object>> tree = indexTree.getTree(employee);
-        
+       
         return tree;
     }
     

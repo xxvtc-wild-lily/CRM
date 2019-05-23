@@ -2,19 +2,17 @@
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.jspsmart.upload.Request;
 import com.ysd.dao.EmployeeMapper;
 import com.ysd.entity.Asker;
 import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeRole;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Role;
+import com.ysd.util.SpringContextUtil;
 @Service
-public class EmployeeServiceImp implements EmployeeService {
+public class EmployeeServiceImp implements EmployeeService  {
 	
 	@Autowired
 	private EmployeeMapper employeeMapper;
@@ -189,42 +187,60 @@ public class EmployeeServiceImp implements EmployeeService {
 	public List selectTongJiTu(String e_loginName) {
 		String selectRoleByEmpName = employeeMapper.selectRoleByEmpName(e_loginName);
 		List list=new ArrayList();
-		if(selectRoleByEmpName.equals("管理员")) {
-			Integer selectSuoDingCount = employeeMapper.selectSuoDingCount();
-			Integer selectWeiSuoDingCount = employeeMapper.selectWeiSuoDingCount();
-			list.add(selectSuoDingCount);
-			list.add(selectWeiSuoDingCount);
-			list.add(selectRoleByEmpName);
-		}else if(selectRoleByEmpName.equals("咨询经理")){
-			Integer selectWeiQianDaoRenShu = employeeMapper.selectWeiQianDaoRenShu();
-			Integer selectQianDaoRenShu = employeeMapper.selectQianDaoRenShu();
-			list.add(selectWeiQianDaoRenShu);
-			list.add(selectQianDaoRenShu);
-			list.add(selectRoleByEmpName);
-		}else if(selectRoleByEmpName.equals("咨询师")) {
-			Integer selectStudentByEmpName = employeeMapper.selectStudentByEmpName(e_loginName);
-			Integer selectStudentLuiShiByEmpName = employeeMapper.selectStudentLuiShiByEmpName(e_loginName);
-			Integer selectStudentLuRuByEmpName = employeeMapper.selectStudentLuRuByEmpName(e_loginName);
-			Integer genjin=selectStudentByEmpName-selectStudentLuiShiByEmpName-selectStudentLuRuByEmpName;
-			list.add(selectStudentLuiShiByEmpName);
-			list.add(selectStudentLuRuByEmpName);
-			list.add(selectRoleByEmpName);
-			list.add(genjin);
-		}else if(selectRoleByEmpName.equals("网络咨询师")) {
-			Integer selectStudentAddByEmpName = employeeMapper.selectStudentAddByEmpName(e_loginName);
-			Integer selectStudentAddLiuShuByEmpName = employeeMapper.selectStudentAddLiuShuByEmpName(e_loginName);
-			Integer selectStudentAddLuRuByEmpName = employeeMapper.selectStudentAddLuRuByEmpName(e_loginName);
-			Integer genjin=selectStudentAddByEmpName-selectStudentAddLiuShuByEmpName-selectStudentAddLuRuByEmpName;
-			list.add(selectStudentAddLiuShuByEmpName);
-			list.add(selectStudentAddLuRuByEmpName);
-			list.add(selectRoleByEmpName);
-			list.add(genjin);
+		if(selectRoleByEmpName!=null) {
+			if(selectRoleByEmpName.equals("管理员")) {
+				Integer selectSuoDingCount = employeeMapper.selectSuoDingCount();
+				Integer selectWeiSuoDingCount = employeeMapper.selectWeiSuoDingCount();
+				list.add(selectSuoDingCount);
+				list.add(selectWeiSuoDingCount);
+				list.add(selectRoleByEmpName);
+			}else if(selectRoleByEmpName.equals("咨询经理")){
+				Integer selectWeiQianDaoRenShu = employeeMapper.selectWeiQianDaoRenShu();
+				Integer selectQianDaoRenShu = employeeMapper.selectQianDaoRenShu();
+				list.add(selectWeiQianDaoRenShu);
+				list.add(selectQianDaoRenShu);
+				list.add(selectRoleByEmpName);
+			}else if(selectRoleByEmpName.equals("咨询师")) {
+				Integer selectStudentByEmpName = employeeMapper.selectStudentByEmpName(e_loginName);
+				Integer selectStudentLuiShiByEmpName = employeeMapper.selectStudentLuiShiByEmpName(e_loginName);
+				Integer selectStudentLuRuByEmpName = employeeMapper.selectStudentLuRuByEmpName(e_loginName);
+				Integer genjin=selectStudentByEmpName-selectStudentLuiShiByEmpName-selectStudentLuRuByEmpName;
+				list.add(selectStudentLuiShiByEmpName);
+				list.add(selectStudentLuRuByEmpName);
+				list.add(selectRoleByEmpName);
+				list.add(genjin);
+			}else if(selectRoleByEmpName.equals("网络咨询师")) {
+				Integer selectStudentAddByEmpName = employeeMapper.selectStudentAddByEmpName(e_loginName);
+				Integer selectStudentAddLiuShuByEmpName = employeeMapper.selectStudentAddLiuShuByEmpName(e_loginName);
+				Integer selectStudentAddLuRuByEmpName = employeeMapper.selectStudentAddLuRuByEmpName(e_loginName);
+				Integer genjin=selectStudentAddByEmpName-selectStudentAddLiuShuByEmpName-selectStudentAddLuRuByEmpName;
+				list.add(selectStudentAddLiuShuByEmpName);
+				list.add(selectStudentAddLuRuByEmpName);
+				list.add(selectRoleByEmpName);
+				list.add(genjin);
+			}
+		}else {
+			
+				list.add("未定义角色");
+			
 		}
+		
 		return list;
 			
 		
 		
 	}
+
+
+	@Override
+	public Integer selectEmployeeroleCount() {
+		EmployeeMapper employee= SpringContextUtil.getBean("employeeMapper");
+		Integer selectemployeeroleCount = employee.selectemployeeroleCount();
+		return selectemployeeroleCount;
+	}
+	
+		
+	
 
 
 }
