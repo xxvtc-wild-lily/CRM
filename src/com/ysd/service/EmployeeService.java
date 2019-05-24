@@ -82,6 +82,10 @@ public interface EmployeeService {
      * @return
      */
     Integer selectEmployeeroleCount();
-    
-  
+    /**
+	 * 根据学生id查询所属咨询师姓名
+	 * @param sid
+	 * @return
+	 */
+    String selectStudentByIdEmpName(Integer sid);
 }

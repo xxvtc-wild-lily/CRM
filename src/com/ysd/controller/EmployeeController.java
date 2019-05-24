@@ -118,5 +118,15 @@ public class EmployeeController {
     public List selectSuoDingZhaungTaiCount(String e_loginName) {
         return  employeeService.selectTongJiTu(e_loginName);
     }
-	
+	@RequestMapping(value="/qutongzhi",method=RequestMethod.POST)
+    @ResponseBody
+	public String selectStudentByIdEmpName(Integer tidsss,String meirong) {
+		 WebSocketServlet wbs=new WebSocketServlet();
+		 
+		String name = employeeService.selectStudentByIdEmpName(tidsss);
+		String d=name+","+meirong;
+		wbs.onMessage(d);
+		return null;
+		
+	}
 }

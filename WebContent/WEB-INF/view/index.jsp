@@ -56,9 +56,12 @@ pageContext.setAttribute("path",request.getContextPath());
                     }
                 }
     	    }
+    	})
+    }
+    	
     
 
-    }
+    
 
     // 安全退出的方法
     function safeSignOut() {
@@ -223,12 +226,21 @@ pageContext.setAttribute("path",request.getContextPath());
 	    }
 	    //接收到消息的回调方法
 	    websocket.onmessage = function (event) {
-	        console.log(event.data);
-	        if(event.data=="1"){
-	            console.log("数据更新啦");
-	            chushihua();
-	        }
+	        
+	        var str=event.data;
+	    	var strs= new Array(); //定义一数组
+	    	strs=str.split(","); //字符分割
+	    	if(strs.length>1){
+	    		if(strs[0]=="${employee.e_loginName}"){
+		    		alert(strs[1]);
+		    		
+		    	}
+	    	}else{
+	    		chushihua();
+	    	}
+	        
 	    }
+	    
 	    //连接关闭的回调方法
 	    websocket.onclose = function () {
 	        console.log("WebSocket连接关闭");
@@ -440,5 +452,6 @@ pageContext.setAttribute("path",request.getContextPath());
         <div id="oldPasswordTips" style="margin-left:160px;"></div>
         <a class="easyui-linkbutton" style="margin-left:190px;margin-top:5px;" onclick="ok()">确定</a>
     </div>
+    
 </body>
 </html>
