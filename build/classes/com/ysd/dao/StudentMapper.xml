@@ -239,6 +239,19 @@
 			<if test="s_name != null and s_name != ''">
 				s.s_name = #{s_name},
 			</if>
+			<if test="s_record != null and s_record != ''">
+				s.s_record = #{s_record},
+			</if>
+			<if test="s_isValid != null">
+				s.s_isValid = #{s_isValid},
+			</if>
+			<if test="s_isReturnVisit != null ">
+				s.s_isReturnVisit = #{s_isReturnVisit},
+			</if>
+			<if test="s_isHome != null">
+				s.s_isHome = #{s_isHome},
+			</if>
+			
 			<if test="s_age != null and s_age != ''">
 				s.s_age = #{s_age},
 			</if>
@@ -283,12 +296,25 @@
 			<if test="s_focus != null and s_focus != ''">
 				s.s_focus = #{s_focus},
 			</if>
+			<if test="s_isReturnMoney != null">
+				s.s_isReturnMoney = #{s_isReturnMoney},
+			</if>
+			<if test="s_isInClass != null ">
+				s.s_isInClass = #{s_isInClass},
+			</if>
+			
+			<if test="s_isValid != null ">
+				s.s_isValid = #{s_isValid},
+			</if>
+			<if test="s_isPay != null">
+				s.s_isPay = #{s_isPay},
+			</if>
 			<if test="asker != null and asker != ''">
 				<if test="a_name != null ">
 					a.a_name = #{a_name},
 				</if>
 			</if>
-			<if test="s_importEmployee != null and s_importEmployee != ''">
+			<if test="s_importEmployee != null ">
 				s.s_importEmployee = #{s_importEmployee}
 			</if>	
 		</set>

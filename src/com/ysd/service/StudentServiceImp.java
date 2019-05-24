@@ -104,6 +104,8 @@ public class StudentServiceImp implements StudentService {
 	@Override
 	public Integer updateStudent(Student student) {
 		// TODO Auto-generated method stub
+		
+		
 		return studentMapper.updateStudent(student);
 	}
 

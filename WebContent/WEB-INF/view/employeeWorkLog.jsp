@@ -26,13 +26,15 @@ function init() {
 	    singleSelect:true,
 	     toolbar:'#tb',
 	     queryParams:{
-	    	 n_stuId:$("#n_stuIdq").val(),
 	 		n_stuName:$("#n_stuNameq").val(),
-	 		n_followTime:$("#n_followTimeq").val(),
-	 		n_nextFollowTime:$("#n_nextFollowTimeq").val(),
+	 		n_followTime:$("#startn_followTimeq").val(),
+	 		n_nextFollowTime:$("#endn_followTime").val(),
 	 		n_context:$("#n_contextq").val(),
+	 		s_isReturnVisit:$("#ispayq").val(),
 	 		e_id:${employee.e_id}, 
+	 		e_loginName:"${employee.e_loginName}",
 	 		n_followType:$("#n_followTypeq").val(),
+	 		
 	 		n_createTime:$("#n_createTimeq").val(),
 	 		n_followStatus:$("#n_followStatusq").val()
 		    },
@@ -47,19 +49,19 @@ function init() {
 	        {field:'employee',title:'员工id',width:100,formatter:formatterslnid},
 	        {field:'employee.e_loginName',title:'登录名',width:100,formatter:formattersln},
 	        {field:'studentt',title:'学生编号',width:100,formatter:formattersid},
-	   
 	        {field:'student.s_isReturnVisit',title:'是否回访',width:100,formatter:formattersfhf},
 	        {field:'caozuo',title:'操作',width:100,formatter:formattercaozuo}
 	     
 	    ]]
-	});
+	}); 
 }
 
 function lookNetFollow(index){
 	var data=$("#dg").datagrid("getData");
 	var row=data.rows[index];
-	$('#looknetfollow').form('load',row);
+	$("#lookform").form("load",row);
 	$("#looknet").dialog("open");
+	
 }
 
 function formattercaozuo(value,row,index){
@@ -82,70 +84,40 @@ function formattersfhf(value,row,index) {
 	if (row.student.s_isReturnVisit == "0") {
 		status = "未回访";
 	} else {
-		status = "已回访"
+		status = "已回访";
 	}
 	return status;
 } 
 
-function addnetfollow(){
-	$('#win').window('open');
-}
 
-function addsave(){
-
-	$.post("insertNetFollow",{
-		n_stuId:$("#n_stuIdq").val(),
-		n_stuName:$("#n_stuNameq").val(),
-		n_followTime:$("#n_followTimeq").val(),
-		n_nextFollowTime:$("#n_nextFollowTimeq").val(),
-		n_context:$("#n_contextq").val(),
-		e_id:$("#e_idq").val(),
-		n_followType:$("#n_followTypeq").val(),
-		n_createTime:$("#n_createTimeq").val(),
-		n_followStatus:$("#n_followStatusq").val()
-		
-	},function(res){
-		
-		if(res>0){
-			$.messager.alert("提示","添加成功！！！","info");
-			$("#win").dialog("close");
-			$("#dg").datagrid("reload");
-			
-		}else{
-			$.messager.alert("提示","添加失败！！！","error");
-		}
-	},"json")
-	$("#win").form("clear");
-} 
 </script>
 </head>
 <body>
 	<table id="dg" style="width:100%"> </table>
 
 		<div id="tb">
-				学生名称：<input class="easyui-textbox" name="aname" id="n_stuName" style="width:180px">
-				跟踪者：<input class="easyui-textbox" name="asex" id="e_id" style="width:180px">
-				跟踪开始时间：<input class= "easyui-datebox" name="aage" id="startn_followTime" style="width:180px">-跟踪结束时间：<input class= "easyui-datebox" name="aage" id="endn_followTime" style="width:180px">
+				学生名称：<input class="easyui-textbox" name="aname" id="n_stuNameq" style="width:180px">
+				跟踪者：<input class="easyui-textbox" name="asex" id="e_idq" style="width:180px">
+				跟踪开始时间：<input class= "easyui-datebox" name="aage" id="startn_followTimeq" style="width:180px">-跟踪结束时间：<input class= "easyui-datebox" name="aage" id="endn_followTime" style="width:180px">
 				回访情况：
 						 <label for="name" style="width:140px"></label>  
-					    		<select style="width:140px" id="ispay" name="s_isReturnVisit" class="easyui-combobox">
+					    		<select style="width:140px" id="ispayq" name="s_isReturnVisit" class="easyui-combobox">
 					    			<option value="">--请选择--</option>
 					    			<option value="0">未回访</option>
 						    		<option value="1">已回访</option>
 						    		
 						    	</select>
 						    <div> 
-								跟踪方式：<input class="easyui-textbox" name="aname" id="n_followType" style="width:180px">
+								跟踪方式：<input class="easyui-textbox" name="aname" id="n_followTypeq" style="width:180px">
 								<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="init()">搜索</a>
 								<a href="inStudentUpdate" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">返回上一层</a>
 	
 							</div>
 		</div>
 
-			<div id="looknet" class="easyui-dialog" title="查看信息"  style="width:400px; height:400px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
+<div id="looknet" class="easyui-dialog" title="查看信息"  style="width:400px; height:400px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
 			
-			
-		<form id="looknetfollow" method="post">   
+		<form id="lookform" class="easyui-form">   
 			<table>
 				<tr>
 					<td><label>学生ID：</label></td>
@@ -181,35 +153,43 @@ function addsave(){
 			    </tr>
 			    
 			    <tr>
-			        <td><label>是否回访：</label></td>
-			        <td><input class="easyui-textbox" data-options='disabled:true' type="text" id="s_isReturnVisit" name="s_isReturnVisit" /></td>
+			        <td><label>跟踪状态：</label></td>
+			        <td><input class="easyui-textbox" data-options='disabled:true' type="text" id="n_followStatus" name="n_followStatusq" /></td>
 			    </tr>
 		    </table>
 		</form>  
 	</div>
-		
-		
-	<!-- 
-	<div id="win" class="easyui-window" title="添加" data-options="closed:true" style="width:600px;height:400px"   
-        data-options="iconCls:'icon-save'">   
-	    <div class="easyui-layout" data-options="fit:true">   
-		      	学生编号：<input id="n_stuIdq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-		             学生姓名：<input id="n_stuNameq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-		             跟踪时间：<input id="n_followTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
-	                    下次跟踪时间：<input id="n_nextFollowTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
-	                    跟踪内容：<input id="n_contextq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	                    员工编号：<input id="e_idq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	                    跟随方式：<input id="n_followTypeq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	                    创建时间：<input id="n_createTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
-	                    跟随状态：<input id="n_followStatusq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/> 
-	                   
-	               
-	                   
-	           <a href="javascript:void(0)" onclick="addsave()" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">提交</a>
-	           <a href="javascript:void(0)" onclick="cancel()" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true">取消</a>
-	            
-	    </div>   
-	</div> -->
+<!-- <script type="text/javascript">
+function addnetfollow(){
+	$('#win').window('open');
+}
 
+function addsave(){
+
+	$.post("insertNetFollow",{
+		n_stuId:$("#n_stuIdq").val(),
+		n_stuName:$("#n_stuNameq").val(),
+		n_followTime:$("#n_followTimeq").val(),
+		n_nextFollowTime:$("#n_nextFollowTimeq").val(),
+		n_context:$("#n_contextq").val(),
+		e_id:$("#e_idq").val(),
+		n_followType:$("#n_followTypeq").val(),
+		n_createTime:$("#n_createTimeq").val(),
+		n_followStatus:$("#n_followStatusq").val()
+		
+	},function(res){
+		
+		if(res>0){
+			$.messager.alert("提示","添加成功！！！","info");
+			$("#win").dialog("close");
+			$("#dg").datagrid("reload");
+			
+		}else{
+			$.messager.alert("提示","添加失败！！！","error");
+		}
+	},"json");
+	$("#win").form("clear");
+}  
+</script> -->
 </body>
 </html>
