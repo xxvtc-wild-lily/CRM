@@ -49,6 +49,7 @@ public class StudentController {
 	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer updateStudent(Student student) {
+		
 		return studentService.updateStudent(student);
 		
 	}

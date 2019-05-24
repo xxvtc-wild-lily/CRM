@@ -26,12 +26,12 @@ function init() {
 	    singleSelect:true,
 	     toolbar:'#tb',
 	     queryParams:{
-	    	 n_stuId:$("#n_stuIdq").val(),
+	    	n_stuId:$("#n_stuIdq").val(),
 	 		n_stuName:$("#n_stuNameq").val(),
 	 		n_followTime:$("#n_followTimeq").val(),
 	 		n_nextFollowTime:$("#n_nextFollowTimeq").val(),
 	 		n_context:$("#n_contextq").val(),
-	 		e_id:${employee.e_id}, 
+	 		e_id:"${employee.e_id}", 
 	 		n_followType:$("#n_followTypeq").val(),
 	 		n_createTime:$("#n_createTimeq").val(),
 	 		n_followStatus:$("#n_followStatusq").val()
