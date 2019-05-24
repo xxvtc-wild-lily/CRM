@@ -197,8 +197,8 @@ public class EmployeeServiceImp implements EmployeeService  {
 			}else if(selectRoleByEmpName.equals("咨询经理")){
 				Integer selectWeiQianDaoRenShu = employeeMapper.selectWeiQianDaoRenShu();
 				Integer selectQianDaoRenShu = employeeMapper.selectQianDaoRenShu();
-				list.add(selectWeiQianDaoRenShu);
 				list.add(selectQianDaoRenShu);
+				list.add(selectWeiQianDaoRenShu);
 				list.add(selectRoleByEmpName);
 			}else if(selectRoleByEmpName.equals("咨询师")) {
 				Integer selectStudentByEmpName = employeeMapper.selectStudentByEmpName(e_loginName);

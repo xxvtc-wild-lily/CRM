@@ -507,7 +507,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	                                })
 	                            } else {
 	                                // 未选择图片的ajax
-	                                alert(1)
+	                              
 	                                $.ajax({
 	                                    url:"insertSignUpEmployeeNotHaveImage",
 	                                    type:"post",
