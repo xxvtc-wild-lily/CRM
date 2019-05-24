@@ -31,7 +31,7 @@
        </bean>
        
        <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="2097152"></property>
+        <property name="maxUploadSize" value="4194304"></property>
        </bean>
        
        <mvc:interceptors>

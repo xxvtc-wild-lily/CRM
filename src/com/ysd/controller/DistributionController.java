@@ -41,9 +41,9 @@ public class DistributionController {
     @ResponseBody
     public Integer distributionStudent(Employee employee) {
         
-        distributionService.updateAllNotDistributionStudent(employee);
+        Integer i = distributionService.updateAllNotDistributionStudent(employee);
         
-        return null;
+        return i;
     }
     
     @RequestMapping(value="/closedDistributionStudent",method=RequestMethod.POST)
