@@ -52,9 +52,9 @@ public class DistributionServiceImpl implements DistributionService {
         if (studentList.size() >= askerList.size()) {
             // 循环添加学生
             for (int i = 0;i < studentList.size();i++) {
-                // 当做咨询师id的变量
+                // 当做咨询师list的变量
                 breakTimes++;
-                // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id不是查出来的id
+                // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id越界
                 if (breakTimes == askerList.size()) {
                     breakTimes = 0;
                 }
@@ -101,7 +101,7 @@ public class DistributionServiceImpl implements DistributionService {
                 for (int i = 0;i < studentList.size();i++) {
                     // 当做咨询师id的变量
                     breakTimes2++;
-                    // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id不是查出来的id
+                    // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id越界
                     if (breakTimes2 == askerList.size()) {
                         breakTimes2 = 0;
                     }
@@ -127,7 +127,7 @@ public class DistributionServiceImpl implements DistributionService {
                 for (int i = 0;i < askerList.size();i++) {
                     // 当做咨询师id的变量
                     breakTimes3++;
-                    // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id不是查出来的id
+                    // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id越界
                     if (breakTimes3 == askerList.size()) {
                         breakTimes3 = 0;
                     }

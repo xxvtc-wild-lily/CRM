@@ -61,14 +61,23 @@ pageContext.setAttribute("path",request.getContextPath());
     		onText:"自动分量开启",
     		offText:"自动分量关闭",
     		onChange:function(checked) {
-    			$.messager.confirm("确认对话框","您想要切换状态吗？",function(r){
+    			$.messager.confirm("确认对话框","您确定要切换状态吗？",function(r){
     			    if (r){
     			    	if (checked) {
     			            // 判断今天是否有咨询师签到
     			            $.post("checkInAskerCount",function(res){
     			                // 如果大于0则说明有咨询师签到了
     			                if (res > 0) {
-    			                    $.post("distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    			                    $.post("distributionStudent",{
+    			                    	e_loginName:${employee.e_loginName}
+    			                    },function(res){
+    			                    	if (res > 0) {
+    			                    		$.messager.alert("提示","切换状态成功！","error");
+    			                    		$("#dg").datagrid("reload");
+    			                    	} else {
+    			                    		$.messager.alert("提示","切换状态失败！","error");
+    			                    	}
+    			                    },"json");
     			                } else {
     			                    $.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
     			                }
@@ -82,20 +91,6 @@ pageContext.setAttribute("path",request.getContextPath());
     			});
     		}
         })
-    }
-    
-    if (checked) {
-        // 判断今天是否有咨询师签到
-        $.post("checkInAskerCount",function(res){
-            // 如果大于0则说明有咨询师签到了
-            if (res > 0) {
-                $.post("distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
-            } else {
-                $.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
-            }
-        },"json")
-    } else {
-        $.post("closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
     }
     
     //初始化性别

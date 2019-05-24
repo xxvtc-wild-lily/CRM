@@ -93,7 +93,10 @@ pageContext.setAttribute("path",request.getContextPath());
 		$("#tongz").dialog("close");
 	}
 	function formattera_name(value,row,index){
-		return row.asker.a_name;
+		if (row.s_askerId == null) {
+            return "暂未分配";
+        }
+        return row.asker.a_name;
 	}
 	function formatterlywz(value,row,index) {
 		var s_comeSite = "";
