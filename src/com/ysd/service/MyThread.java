@@ -20,12 +20,13 @@ public class MyThread implements Runnable {
      */
     public void run()  {
     	sum=employeeService.selectEmployeeroleCount();
+    	String sumss=Integer.toString(sum);
         WebSocketServlet wbs=new WebSocketServlet();
         while(true){
         	new_sum=employeeService.selectEmployeeroleCount();
             if(sum!=new_sum){
                 sum=new_sum;
-                wbs.onMessage(sum);
+                wbs.onMessage(sumss);
             }
             try {
                 Thread.sleep(1000);

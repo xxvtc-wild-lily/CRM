@@ -1,6 +1,8 @@
 package com.ysd.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.websocket.OnClose;
@@ -47,15 +49,22 @@ public class WebSocketServlet {
      * @Description: 给服务器发送消息告知数据库发生变化
      */
     @OnMessage
-    public void onMessage(int count) {    
+    public void onMessage(String count) {    
         try {
-            sendMessage();
+        	String[] strs; //定义一数组
+	    	strs=count.split(","); //字符分割
+	    	if(strs.length>1) {
+	    		tongXunMessage(count);
+	    	}else {
+	    		sendMessage();
+	    	}
+            
+            
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-   
   /**
      * @ClassName: OnError
      * @Description: 出错的操作
@@ -74,6 +83,12 @@ public class WebSocketServlet {
         //群发消息
         for(WebSocketServlet item: webSocketSet){
             item.session.getBasicRemote().sendText("1");
+        }
+    }
+    public void tongXunMessage(String i) throws IOException {
+    	
+    	for(WebSocketServlet item: webSocketSet){
+            item.session.getBasicRemote().sendText(i);
         }
     }
 }

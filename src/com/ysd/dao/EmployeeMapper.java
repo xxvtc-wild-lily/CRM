@@ -175,4 +175,10 @@ public interface EmployeeMapper {
 	 * @return
 	 */
 	Integer selectemployeeroleCount();
+	/**
+	 * 根据学生id查询所属咨询师姓名
+	 * @param sid
+	 * @return
+	 */
+	String selectStudentByIdEmpName(Integer sid);
 }

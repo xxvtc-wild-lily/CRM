@@ -651,7 +651,7 @@ pageContext.setAttribute("path",request.getContextPath());
 </script>
 <div id="tongz" class="easyui-dialog" title="通知"  style="width:700px; height:300px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
 		<form id="tongzhiForm" >
-				<input class="easyui-textbox" type="text" id="tongzhiinput" name="tongzhiinput" data-options="readonly:true" />
+				<input class="easyui-textbox" type="text" id="tongzhiinput" name="tongzhiinput"  />
 				<a href="javascript:void(0)" class="easyui-linkbutton"  onclick="kuaitongzhi()" >通知</a>
 		</form>
 </div>

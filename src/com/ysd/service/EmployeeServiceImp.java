@@ -238,6 +238,13 @@ public class EmployeeServiceImp implements EmployeeService  {
 		Integer selectemployeeroleCount = employee.selectemployeeroleCount();
 		return selectemployeeroleCount;
 	}
+
+
+	@Override
+	public String selectStudentByIdEmpName(Integer sid) {
+		
+		return employeeMapper.selectStudentByIdEmpName(sid);
+	}
 	
 		
 	
