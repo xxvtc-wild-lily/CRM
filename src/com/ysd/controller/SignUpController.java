@@ -48,7 +48,7 @@ public class SignUpController {
 		    if (isSameProtectMTel == 0) {
 		        if (isSameProtectEmail == 0) {
 		            // 获取Tomcat项目的绝对路径
-		            String tomcatAbsolutePath = request.getSession().getServletContext().getRealPath("/image");
+		            String tomcatAbsolutePath = request.getSession().getServletContext().getRealPath(File.separator+"image");
 		            // 获取当前class文件的绝对路径
 		            // String projectAbsolutePath = SignUpController.class.getClassLoader().getResource("").getPath();
 		            // 拿到需要拼接的路径
