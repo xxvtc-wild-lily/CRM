@@ -3,11 +3,14 @@ package com.ysd.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,13 +50,13 @@ public class SignUpController {
 		            // 获取Tomcat项目的绝对路径
 		            String tomcatAbsolutePath = request.getSession().getServletContext().getRealPath("/image");
 		            // 获取当前class文件的绝对路径
-		            String projectAbsolutePath = SignUpController.class.getClassLoader().getResource("").getPath();
+		            // String projectAbsolutePath = SignUpController.class.getClassLoader().getResource("").getPath();
 		            // 拿到需要拼接的路径
-		            int end = projectAbsolutePath.length() - "bulid/classes/".length();
-		            // 获取当前项目import的路径
-		            projectAbsolutePath = projectAbsolutePath.substring(1, end);
-		            // 拼接拿到当前项目文件夹的绝对路径
-		            projectAbsolutePath += "WebContent/image";
+		            // int end = projectAbsolutePath.length() - "bulid/classes/".length();
+		            // 获取当前项目的路径
+		            // projectAbsolutePath = projectAbsolutePath.substring(1, end);
+		            // 拼接拿到当前项目image文件夹的绝对路径
+		            // projectAbsolutePath += "/image";
         			// 拿到图片名
         			String fileName = file.getOriginalFilename();
         			// 给图片重起一个名字
@@ -64,17 +67,21 @@ public class SignUpController {
         			if (i<1) {
         				// 生成Tomcat的File对象
         				File tomcattFile = new File(tomcatAbsolutePath,newFileName);
-        				// 生成import导入项目的File对象
+        				// 生成项目image文件夹的File对象
         				// File importFile = new File(projectAbsolutePath,newFileName);
         				// 保存到Tomcat
         				file.transferTo(tomcattFile);
-        				// 保存到import导入地址
+        				// 保存到项目image文件夹
         				// file.transferTo(importFile);
         			    
-        				// 保存到Tomcat
-        				// FileCopyUtils.copy(file.getInputStream(),new FileOutputStream(new File(tomcatAbsolutePath+"\\"+newFileName)));
-        				// 保存到import导入地址
-        				// FileCopyUtils.copy(file.getInputStream(),new FileOutputStream(new File(projectAbsolutePath+"\\"+newFileName)));
+        			    // 被复制到此文件中
+        			    // FileOutputStream tomcatOS = new FileOutputStream(new File(tomcatAbsolutePath+"\\"+newFileName));
+        			    // FileCopyUtils.copy(file.getInputStream(),tomcatOS);
+        			    
+        			    // 被复制到此文件中
+                        // FileOutputStream projectOS = new FileOutputStream(new File(projectAbsolutePath+"\\"+newFileName));
+                        // FileCopyUtils.copy(file.getInputStream(),projectOS);
+        			    
         				
         				// 创建一个employee对象来存放属性值
         				Employee employee = new Employee();

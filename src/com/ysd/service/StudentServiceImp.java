@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ysd.dao.DistributionMapper;
 import com.ysd.dao.StudentMapper;
 import com.ysd.entity.Asker;
+import com.ysd.entity.Employee;
 import com.ysd.entity.NetFollow;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;

@@ -72,14 +72,16 @@ pageContext.setAttribute("path",request.getContextPath());
     			                    	e_loginName:${employee.e_loginName}
     			                    },function(res){
     			                    	if (res > 0) {
-    			                    		$.messager.alert("提示","切换状态成功！","error");
+    			                    		$.messager.alert("提示","切换状态成功！","info");
     			                    		$("#dg").datagrid("reload");
     			                    	} else {
     			                    		$.messager.alert("提示","切换状态失败！","error");
+    			                    		initSwitchButton();
     			                    	}
     			                    },"json");
     			                } else {
     			                    $.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
+    			                    initSwitchButton();
     			                }
     			            },"json")
     			        } else {
