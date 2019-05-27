@@ -278,14 +278,12 @@ pageContext.setAttribute("path",request.getContextPath());
 	}
 	
 	function addSave(){
-		var isAutoAllot = $("#isAuto").is(":checked");
 		
 		$.post("insertStudent",{
 			s_name:$("#adds_name").val(),
 			s_sex:$("#adds_sex").combobox("getValue"),
 			s_age:$("#adds_age").val(),
 			s_importEmployee:'${employee.e_loginName}', 
-			isAutoAllot:isAutoAllot,
 			s_phone:$("#adds_phone").val(),
 			s_eduStatus:$("#adds_eduStatus").combobox("getValue"),
 			s_perStatus:$("#adds_perStatus").val(),

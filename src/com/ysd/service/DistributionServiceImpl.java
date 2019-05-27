@@ -42,6 +42,9 @@ public class DistributionServiceImpl implements DistributionService {
     public Integer updateAllNotDistributionStudent(Employee employee) {
         // TODO Auto-generated method stub
         
+        // 记录是否成功的状态码
+        Integer statusCode = 0;
+        
         // 倒序查询所有今天签到的咨询师信息
         List<Asker> askerList = distributionMapper.selectAllChcekInAsker();
         // 查询所有未分配的学生
@@ -73,6 +76,8 @@ public class DistributionServiceImpl implements DistributionService {
                 // 没有就添加自动分量的开关数据
                 distributionMapper.insertStatus();
             }
+            // 设置成功状态码
+            statusCode = 1;
         } else if (studentList.size() != 0) {
             // 学生数量小于咨询师数量且不等于0的判断
             
@@ -120,6 +125,8 @@ public class DistributionServiceImpl implements DistributionService {
                     // 没有就添加自动分量的开关数据
                     distributionMapper.insertStatus();
                 }
+                // 设置成功状态码
+                statusCode = 1;
             } else if (studentList.size() != 0) {
                 // 跳出判断的变量
                 Integer breakTimes3 = 0;
@@ -146,6 +153,8 @@ public class DistributionServiceImpl implements DistributionService {
                     // 没有就添加自动分量的开关数据
                     distributionMapper.insertStatus();
                 }
+                // 设置成功状态码
+                statusCode = 1;
             }
         } else {
             // 学生数量等于0的判断
@@ -160,9 +169,11 @@ public class DistributionServiceImpl implements DistributionService {
                 // 没有就添加自动分量的开关数据
                 distributionMapper.insertStatus();
             }
+            // 设置成功状态码
+            statusCode = 1;
         }
         
-        return null;
+        return statusCode;
     }
 
     @Override

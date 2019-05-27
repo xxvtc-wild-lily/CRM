@@ -102,15 +102,14 @@
         from employee e left join employeecheck ec on ec.e_name = e.e_loginName
         where ec.e_id in(
               select ec.e_id from employeecheck ec 
-              <where>
-                  <if test="startCheckInTime != null and startCheckInTime != ''">
-                      and ec.ec_checkInTime &gt; #{startCheckInTime}
-                  </if>
-                  <if test="endCheckInTime != null and endCheckInTime != ''">
-                      and ec.ec_checkInTime &lt; #{endCheckInTime}
-                  </if>
-              </where>
+              where ec.ec_checkStatus = 1 or ec.ec_checkStatus = 2
             )
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt; #{startCheckInTime} 
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkInTime &lt; #{endCheckInTime} 
+            </if>
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>
@@ -124,15 +123,14 @@
         from employee e left join employeecheck ec on ec.e_name = e.e_loginName
         where ec.e_id in(
               select ec.e_id from employeecheck ec 
-              <where>
-                  <if test="startCheckInTime != null and startCheckInTime != ''">
-                      and ec.ec_checkInTime &gt; #{startCheckInTime} 
-                  </if>
-                  <if test="endCheckInTime != null and endCheckInTime != ''">
-                      and ec.ec_checkInTime &lt; #{endCheckInTime} 
-                  </if>
-              </where>
+              where ec.ec_checkStatus = 1 or ec.ec_checkStatus = 2
             )
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt; #{startCheckInTime} 
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkInTime &lt; #{endCheckInTime} 
+            </if>
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>

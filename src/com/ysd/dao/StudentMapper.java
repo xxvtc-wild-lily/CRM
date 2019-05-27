@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import com.ysd.entity.Employee;
 import com.ysd.entity.NetFollow;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
@@ -77,6 +78,5 @@ public interface StudentMapper {
 	 * @return 受影响的行数
 	 */
 	Integer selectIsAutoDistributionOpen();
-	
 	
 }
