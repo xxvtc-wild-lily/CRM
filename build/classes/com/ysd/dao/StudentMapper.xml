@@ -188,7 +188,7 @@
 	</select>
 	
 	<select id="selectStudentCount" parameterType="pagination" resultType="int">
-		select count(s.s_id) from student s inner join asker a on s.s_askerId=a.a_id
+		select count(s.s_id) from student s left join asker a on s.s_askerId=a.a_id
 		<where>
 			<if test="student.s_id != null and student.s_id != ''">
 				and s.s_id =#{student.s_id}

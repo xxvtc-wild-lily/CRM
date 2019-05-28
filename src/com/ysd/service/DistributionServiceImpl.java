@@ -128,9 +128,11 @@ public class DistributionServiceImpl implements DistributionService {
                 // 设置成功状态码
                 statusCode = 1;
             } else if (studentList.size() != 0) {
+                // 如果学生数量小于咨询师进行此判断
+                
                 // 跳出判断的变量
                 Integer breakTimes3 = 0;
-                // 如果学生数量小于咨询师进行此判断
+                
                 for (int i = 0;i < askerList.size();i++) {
                     // 当做咨询师id的变量
                     breakTimes3++;

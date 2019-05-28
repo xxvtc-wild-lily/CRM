@@ -113,7 +113,6 @@
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>
-            and ec.ec_checkStatus = 1 
         order by ec.ec_checkInTime desc
         limit #{page},#{pageSize}
     </select>
@@ -134,7 +133,6 @@
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>
-            and ec.ec_checkStatus = 1 
     </select>
     
     <select id="selectAllHasCheckOutEmployee" parameterType="pagination" resultMap="employeeCheckMap">

@@ -394,13 +394,13 @@ pageContext.setAttribute("path",request.getContextPath());
 	                        $.messager.alert("提示","两次输入的密码不一致！","error");
 	                    }
                     } else{
-                    	$.messager.alert("提示","新密码格式错误！","error");
+                    	$.messager.alert("提示","新密码格式错误，应为6位以上字母和数字组成！","error");
                     }
                 } else {
                     $.messager.alert("提示","新密码未在6位以上！","error");
                 }
             } else {
-            	$.messager.alert("提示","原密码格式错误！","error");
+            	$.messager.alert("提示","原密码格式错误，应为6位以上字母和数字组成！","error");
             }
         } else {
         	$.messager.alert("提示","原密码未在6位以上！","error");
