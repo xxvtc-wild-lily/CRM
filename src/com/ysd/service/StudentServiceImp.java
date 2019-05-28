@@ -84,8 +84,11 @@ public class StudentServiceImp implements StudentService {
                     askerList.remove(l);
                 }
             }
-            // 将该学生分配给学生数量小于平均值并且权重最高的咨询师
-            student.setS_askerId(askerList.get(0).getA_id());
+            
+            // 如果今天有咨询师签到将该学生分配给学生数量小于平均值并且权重最高的咨询师，否则不进行分配
+            if (askerList.size() != 0) {
+                student.setS_askerId(askerList.get(0).getA_id());
+            }
             
             status = studentMapper.insertStudent(student);
 	    } else {
