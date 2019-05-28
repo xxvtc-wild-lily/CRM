@@ -141,8 +141,6 @@ public class SignInController {
         // 处理传过来的登录名、密码
         employee.setE_loginName(request.getParameter("e_loginName"));
         employee.setE_passWord(request.getParameter("e_passWord"));
-        // 获取没有MD5加密的值用来存入session
-        String notMD5Password = request.getParameter("e_passWord");
         // 处理传过来的验证码数据以及拿到后台生成的验证码用来比对
         HttpSession session =request.getSession();
         String verificationCode = (String)session.getAttribute("randomcode_key");
@@ -155,7 +153,7 @@ public class SignInController {
         
         // 验证验证码是否输入正确
         if(verifyCode.equalsIgnoreCase(verificationCode)){
-        
+
             // 查询是存在相同登录名的员工
             Integer i = signInService.selectIsHaveSameLoginName(employee);
             // 如果等于1则存在该登录名的用户
@@ -171,6 +169,7 @@ public class SignInController {
                     
                     return "/view/signin";
                 } else {
+                    // 如果用户目前没有被别人登录就接着进行下面的判断
                     
                     // 根据登录名获取用户的指纹码
                     String e_fingerprintNum = signInService.selectFingerprintNumByLoginName(employee);
@@ -183,8 +182,6 @@ public class SignInController {
                     
                     // 如果大于0则说明密码正确
                     if (j > 0) {
-                        
-                        // 如果application中没有则可以登录
                         
                         // 查询用户是否锁定
                         Integer isLock = signInService.selectIsEmployeeLockOut(employee);
@@ -218,7 +215,7 @@ public class SignInController {
                             Integer e_id = signInService.selectEidByloginName(employee);
                             // 放入用户类
                             employee.setE_id(e_id);
-                            // 将登录信息赋到session里避免拦截
+                            // 将登录信息赋到session里
                             session.setAttribute("employee",employee);
                             
                             // 将用户名放入application中
