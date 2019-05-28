@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 pageContext.setAttribute("path",request.getContextPath());
@@ -68,6 +68,7 @@ pageContext.setAttribute("path",request.getContextPath());
     			            $.post("checkInAskerCount",function(res){
     			                // 如果大于0则说明有咨询师签到了
     			                if (res > 0) {
+
     			                    $.post("distributionStudent",{
     			                    	e_loginName:"${employee.e_loginName}"
     			                    },function(res){
@@ -79,6 +80,9 @@ pageContext.setAttribute("path",request.getContextPath());
     			                    		initSwitchButton();
     			                    	}
     			                    },"json");
+
+    			                    $.post("distributionStudent",{e_loginName:"${employee.e_loginName}"},function(res){},"json");
+
     			                } else {
     			                    $.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
     			                    initSwitchButton();
