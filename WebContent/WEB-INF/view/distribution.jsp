@@ -69,7 +69,7 @@ pageContext.setAttribute("path",request.getContextPath());
     			                // 如果大于0则说明有咨询师签到了
     			                if (res > 0) {
     			                    $.post("distributionStudent",{
-    			                    	e_loginName:${employee.e_loginName}
+    			                    	e_loginName:"${employee.e_loginName}"
     			                    },function(res){
     			                    	if (res > 0) {
     			                    		$.messager.alert("提示","切换状态成功！","info");
@@ -85,7 +85,7 @@ pageContext.setAttribute("path",request.getContextPath());
     			                }
     			            },"json")
     			        } else {
-    			            $.post("closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    			            $.post("closedDistributionStudent",{e_loginName:"${employee.e_loginName}"},function(res){},"json");
     			        }
     			    } else {
     			    	initSwitchButton();
