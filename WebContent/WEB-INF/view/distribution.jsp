@@ -68,13 +68,13 @@ pageContext.setAttribute("path",request.getContextPath());
     			            $.post("checkInAskerCount",function(res){
     			                // 如果大于0则说明有咨询师签到了
     			                if (res > 0) {
-    			                    $.post("distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    			                    $.post("distributionStudent",{e_loginName:"${employee.e_loginName}"},function(res){},"json");
     			                } else {
     			                    $.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
     			                }
     			            },"json")
     			        } else {
-    			            $.post("closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
+    			            $.post("closedDistributionStudent",{e_loginName:"${employee.e_loginName}"},function(res){},"json");
     			        }
     			    } else {
     			    	initSwitchButton();
@@ -82,20 +82,6 @@ pageContext.setAttribute("path",request.getContextPath());
     			});
     		}
         })
-    }
-    
-    if (checked) {
-        // 判断今天是否有咨询师签到
-        $.post("checkInAskerCount",function(res){
-            // 如果大于0则说明有咨询师签到了
-            if (res > 0) {
-                $.post("distributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
-            } else {
-                $.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
-            }
-        },"json")
-    } else {
-        $.post("closedDistributionStudent",{e_loginName:${employee.e_loginName}},function(res){},"json");
     }
     
     //初始化性别

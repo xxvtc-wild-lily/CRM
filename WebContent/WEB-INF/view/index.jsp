@@ -20,7 +20,8 @@ pageContext.setAttribute("path",request.getContextPath());
 <script type="text/javascript">
     
     $(function(){
-    	chushihua()
+    	chushihua();
+    	messages();
     })
     function chushihua(){
     	$("#tree").tree({    
@@ -206,8 +207,8 @@ pageContext.setAttribute("path",request.getContextPath());
 	    var websocket = null;
 	    //判断当前浏览器是否支持WebSocket
 	    if ('WebSocket' in window) {
-	        //建立连接，这里的/websocket ，是Servlet中注解中的那个值
-	        websocket = new WebSocket("ws://localhost:8080/CRM/websocket");
+	        //建立连接，这里的/websocket ，是Servlet中注解中的那个值 ws是未加密的
+	        websocket = new WebSocket("ws://localhost:8080/CRM/websocket/${employee.e_loginName}");
 	    }
 	    else {
 	        alert('当前浏览器 Not support websocket');
@@ -222,8 +223,10 @@ pageContext.setAttribute("path",request.getContextPath());
 	    }
 	    //接收到消息的回调方法
 	    websocket.onmessage = function (event) {
-	        
-	        var str=event.data;
+	        if(event.data==1){
+	        	messages();
+	        }
+	        /* var str=event.data;
 	    	var strs= new Array(); //定义一数组
 	    	strs=str.split(","); //字符分割
 	    	if(strs.length>1){
@@ -233,7 +236,8 @@ pageContext.setAttribute("path",request.getContextPath());
 		    	}
 	    	}else{
 	    		chushihua();
-	    	}
+	    	} */
+	    	
 	        
 	    }
 	    
@@ -261,10 +265,28 @@ pageContext.setAttribute("path",request.getContextPath());
             })
 	        websocket.close();
 	    }  
+    	//查询未读信息
+    	function messages(){
+    		$.post("messa",{
+    			e_loginName:"${employee.e_loginName}"
+    		},function(res){
+    			var d=res.length;
+    			document.getElementById("weidu").innerText=d;
+    		},"json")
+    	}
     
-    
-    
-    
+    function selectMessage(){
+    	$.post("messas",{
+			e_loginName:"${employee.e_loginName}"
+		},function(res){
+			var s='';
+			for(var i=0;i<res.length;i++){
+				s+=res[i].m_content;
+			}
+			alert(s);
+			messages()
+		},"json")
+    }
     
     
     function openUpdatePasswordDialog() {
@@ -399,10 +421,10 @@ pageContext.setAttribute("path",request.getContextPath());
 		      
 		       			<div>
 		       				<li class="display">
-			     			<a href="@Url.Action("Index","Contract",new { })" data-toggle="tooltip" data-placement="top" title="消息提示">
+			     			<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="消息提示" onclick="selectMessage()">
 			           		<span class="glyphicon glyphicon-bell" aria-hidden="true" style="font-size:25px;position:relative;"></span>
 			                 <span style="font-size:11px;position:absolute;left:1400px;top:10px;border-radius: 50%;height: 20px;width: 20px;display: inline-block;background: #f20c55;vertical-align: top;">
-			                 <span style="display: block;color: #FFFFFF;height: 20px;line-height: 20px;text-align: center"></span>
+			                 <span style="display: block;color: #FFFFFF;height: 20px;line-height: 20px;text-align: center" id="weidu"></span>
 			            	</span>
 			     			</a>
 						</li>
@@ -460,6 +482,8 @@ pageContext.setAttribute("path",request.getContextPath());
         <div id="oldPasswordTips" style="margin-left:160px;"></div>
         <a class="easyui-linkbutton" style="margin-left:190px;margin-top:5px;" onclick="ok()">确定</a>
     </div>
-    
+    <div id="messag" class="easyui-dialog" title="消息" style="width:400px;height:220px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+    		<span id="xiaox"></span>
+    </div>
 </body>
 </html>

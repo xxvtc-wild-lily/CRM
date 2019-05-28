@@ -1,13 +1,18 @@
 ﻿package com.ysd.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ysd.controller.WebSocketServlet;
 import com.ysd.dao.EmployeeMapper;
 import com.ysd.entity.Asker;
 import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeRole;
+import com.ysd.entity.Message;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Role;
 import com.ysd.util.SpringContextUtil;
@@ -241,13 +246,42 @@ public class EmployeeServiceImp implements EmployeeService  {
 
 
 	@Override
-	public String selectStudentByIdEmpName(Integer sid) {
-		
-		return employeeMapper.selectStudentByIdEmpName(sid);
+	public String selectStudentByIdEmpName(Integer tidsss,String name,String mess) {
+		String names=employeeMapper.selectStudentByIdEmpName(tidsss);
+		String p=name+","+names+","+mess;
+		WebSocketServlet websocket=new WebSocketServlet();
+		websocket.onMessage(p);
+		return names;
 	}
-	
+
+
+	@Override
+	public Integer insertMessage(String messaged) {
+		Message messagesss=new Message();
+		String[] split = messaged.split(",");
+		String name=split[0];
+		messagesss.setE_sendName(name);
+		messagesss.setE_acceptName(split[1]);
+		messagesss.setM_content(split[2]);
+		System.out.println(messagesss.toString());
+		System.out.println(employeeMapper);
+		EmployeeMapper employee= SpringContextUtil.getBean("employeeMapper");
+		Integer i = employee.insertMessage(messagesss);
+		System.out.println(i);
+		return i;
+	}
+
+
+	@Override
+	public List<Message> selectEmpByname(String name) {
+		List<Message> selectEmpByName = employeeMapper.selectEmpByName(name);
+		return selectEmpByName;
+	}
+
+
+	@Override
+	public Integer updateMessByEmpName(String name) {
 		
-	
-
-
+		return employeeMapper.updataMessageByEmpName(name);
+	}
 }

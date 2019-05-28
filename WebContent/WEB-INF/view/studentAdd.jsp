@@ -80,16 +80,25 @@ pageContext.setAttribute("path",request.getContextPath());
 	function tongzhi(index){
 		var data = $("#stuTab").datagrid("getData");
 		tidsss = data.rows[index].s_id;
-		
 		$("#tongz").dialog("open");
 	}
 	function kuaitongzhi(){
 		$.post("qutongzhi",{
 			tidsss:tidsss,
-			meirong:$("#tongzhiinput").val()
+			name:"${employee.e_loginName}",
+			mess:$("#tongzhiinput").val()
 		},function(res){
-			
+			/* alert(123);
+			alert(JSON.stringify(res));
+			alert(res.name);
+			var s=+","+res.name+","+;
+			alert(s);
+			var websocket = new WebSocket("ws://localhost:8080/CRM/websocket");
+			webscoket.send(s);
+			alert("wan") */
 		},"json");
+		//获取后台消息的方法
+			
 		$("#tongz").dialog("close");
 	}
 	function formattera_name(value,row,index){
