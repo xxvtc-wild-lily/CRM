@@ -22,9 +22,10 @@ import com.ysd.service.MyThread;
 
 @ServerEndpoint("/websocket/{name}")
 public class WebSocketServlet {//WebSocket属于服务端推送技术，本质是一种应用层协议，可以实现持久连接的全双工双向通信。
-	/*
-	 * MyThread thread1=new MyThread(); Thread thread=new Thread(thread1);
-	 */
+	
+	 MyThread thread1=new MyThread(); 
+	 Thread thread=new Thread(thread1);
+	 
     //用来存放每个客户端对应的MyWebSocket对象。
     private static Map<String, WebSocketServlet> map=new HashMap<>();
     private Session session=null;
@@ -51,7 +52,7 @@ public class WebSocketServlet {//WebSocket属于服务端推送技术，本质�
 		map.put(name, this);
 		count++;
         //开启一个线程对数据库中的数据进行轮询
-		/* thread.start(); */
+		thread.start(); 
 
     }
    
@@ -61,7 +62,7 @@ public class WebSocketServlet {//WebSocket属于服务端推送技术，本质�
      */
     @OnClose
     public void onClose(){
-		/* thread1.stopMe(); */
+		thread1.stopMe(); 
 		/* webSocketSet.remove(this); */
     	System.out.println("连接退出了");
 		map.remove(name);
@@ -74,20 +75,30 @@ public class WebSocketServlet {//WebSocket属于服务端推送技术，本质�
      */
     @OnMessage
     public void onMessage(String message) {
-		String[] split = message.split(",");
-		String formName=split[0];
-		String tomName=split[1];
-		String content=split[2];
-		if(map.containsKey(tomName)) {
-			//李四在线
-			map.get(tomName).session.getAsyncRemote().sendText("1");
-			employeeService.insertMessage(message);
-		}else {
-			//离线消息
-			employeeService.insertMessage(message);
-		}
-		
-		
+    	if(message.equals("改")) {
+    		try {
+    			for(WebSocketServlet item: map.values()) {
+    				item.session.getBasicRemote().sendText("2");
+    			}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}else {
+    		String[] split = message.split(",");
+    		String formName=split[0];
+    		String tomName=split[1];
+    		String content=split[2];
+    		if(map.containsKey(tomName)) {
+    			//李四在线
+    			map.get(tomName).session.getAsyncRemote().sendText("1");
+    			employeeService.insertMessage(message);
+    		}else {
+    			//离线消息
+    			employeeService.insertMessage(message);
+    		}
+    	}	
 	}
 	/*
 	 * public void onMessage(String count) { try { String[] strs; //定义一数组

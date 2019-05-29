@@ -199,5 +199,5 @@ public interface EmployeeMapper {
 	 * @param name
 	 * @return
 	 */
-	Integer updataMessageByEmpName(String name);
+	Integer updataMessageById(Integer id);
 }

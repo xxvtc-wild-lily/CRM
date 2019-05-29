@@ -20,7 +20,7 @@ public class MyThread implements Runnable {
      */
     public void run()  {
     	sum=employeeService.selectEmployeeroleCount();
-    	String sumss=Integer.toString(sum);
+    	String sumss="改";
         WebSocketServlet wbs=new WebSocketServlet();
         while(true){
         	new_sum=employeeService.selectEmployeeroleCount();
@@ -29,7 +29,7 @@ public class MyThread implements Runnable {
                 wbs.onMessage(sumss);
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
