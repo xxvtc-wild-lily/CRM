@@ -274,8 +274,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			n_context:$("#n_contextq").val(),
 			e_id:${employee.e_id},  
 			n_followType:$("#n_followTypeq").val(),
-			n_createTime:$("n_createTime").val(),
-			n_followStatus:$("#n_followStatusq").val()
+			n_createTime:$("n_createTime").val()
 			
 		},function(res) {
 			if(res>0) {
@@ -364,11 +363,7 @@ pageContext.setAttribute("path",request.getContextPath());
 				<td><input class="easyui-datebox" name="n_createTime"  id="n_createtimeq" data-options="required:true,readonly:true"></input>
 				</td>
 			</tr>
-			<tr>
-				<td>跟踪状态:</td>
-				<td><input class="easyui-textbox" name="n_followstate" id="n_followstate" data-options="required:true"></input>
-				</td>
-			</tr>
+			
 			
 
 		</table>
