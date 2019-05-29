@@ -202,8 +202,8 @@ pageContext.setAttribute("path",request.getContextPath());
 	    var websocket = null;
 	    //判断当前浏览器是否支持WebSocket
 	    if ('WebSocket' in window) {
-	        //建立连接，这里的/websocket ，是Servlet中注解中的那个值 ws是未加密的
-	        websocket = new WebSocket("ws://localhost:8080/CRM/websocket/${employee.e_loginName}");
+	        //建立连接，这里的/websocket ，是Servlet中注解中的那个值
+	        websocket = new WebSocket("ws:/47.100.35.41:8080/CRM/websocket");
 	    }
 	    else {
 	        alert('当前浏览器 Not support websocket');
