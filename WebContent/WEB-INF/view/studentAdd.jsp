@@ -348,11 +348,11 @@ pageContext.setAttribute("path",request.getContextPath());
                 option = $("#stuTab").datagrid('getColumnOption', fields[i]);
                 datagridTitle.push(option.title);
                 shuxing.push(option.field);
-               if (option.field != "checkItem" && option.hidden != true) { 
-                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+"  name='ch'>"+datagridTitle[i]+"</br>");
+               if (option.field != "checked" && option.hidden != true) { 
+            		$("#lie_window").append("<input type='checkbox' value="+shuxing[i]+"  name='ch'>"+datagridTitle[i]+"</br>");
                     $("input[name='ch']").get(i).checked=true;
                 }else{
-                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+" name='ch' >"+datagridTitle[i]+"</br>");
+                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+" name='ch' >"+datagridTitle[i]);
                 } 
             }
         $("#lie_window").window("open");
