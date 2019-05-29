@@ -22,6 +22,7 @@ pageContext.setAttribute("path",request.getContextPath());
     $(function(){
     	chushihua();
     	messages();
+    	tongjitu();
     	
     })
     function chushihua(){
@@ -127,12 +128,9 @@ pageContext.setAttribute("path",request.getContextPath());
     
     
     
-    
-    
-   
-		//数据统计图
-    	$(function(){
-    		//获取初始化对象
+  //数据统计图
+    function tongjitu(){
+    	//获取初始化对象
         var myChart = echarts.init($("#chart01")[0]);
 //app.title = '堆叠柱状图';
 		$.post("selectSuoDingZhaungTaiCounts",{
@@ -195,9 +193,10 @@ pageContext.setAttribute("path",request.getContextPath());
 			 myChart.setOption(option);
 		},"json");
 		 
-        
-        
-});
+    }
+   
+		
+    	
     
     	
 	    var websocket = null;
@@ -223,6 +222,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	        	messages();
 	        }else{
 	        	chushihua();
+	        	tongjitu();
 	        }
 	        /* var str=event.data;
 	    	var strs= new Array(); //定义一数组

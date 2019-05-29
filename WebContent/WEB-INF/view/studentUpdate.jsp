@@ -780,9 +780,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	       $.messager.alert("提示","请选择需要导出的学生")
 	    }
 
-		}else{
-			$.messager.alert("提示","请先选择需要导出的学生")
-		}
+		
 
 	}
 	$("#btnExport").click(function() {

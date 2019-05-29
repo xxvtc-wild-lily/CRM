@@ -68,9 +68,39 @@ pageContext.setAttribute("path",request.getContextPath());
 	}
 	function formattercaozuo(value,row,index){
 		
-		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a> <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a> "
+		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a> <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a><a href='javascript:void(0)' onclick='tongzhi("
+		+index+")'>通知</a> "
 	}
-	
+	//打开通知对话框
+	var tidsss;
+	function tongzhi(index){
+		var data = $("#stuTab").datagrid("getData");
+		tidsss = data.rows[index].s_id;
+		$("#tongz").dialog("open");
+	}
+	//通知
+	function kuaitongzhi(){
+		$.post("qutongzhi",{
+			tidsss:tidsss,
+			name:"${employee.e_loginName}",
+			mess:$("#tongzhiinput").val()
+		},function(res){
+			/* alert(123);
+			alert(JSON.stringify(res));
+			alert(res.name);
+			var s=+","+res.name+","+;
+			alert(s);
+			var websocket = new WebSocket("ws://localhost:8080/CRM/websocket");
+			webscoket.send(s);
+			alert("wan") */
+		},"json");
+
+		$("#tongzhiForm").form("clear")
+
+		//获取后台消息的方法
+
+		$("#tongz").dialog("close");
+	}
 	/* function updateStudent(index){
         var data=$("#stuTab").datagrid("getData");
         var row=data.rows[index];
@@ -529,7 +559,15 @@ pageContext.setAttribute("path",request.getContextPath());
 			</table>
 		</form>
 	</div>
-	
+	<!-- 通知 -->
+	<div id="tongz" class="easyui-dialog" title="通知"  style="width:700px; height:300px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
+		<form id="tongzhiForm" >
+
+				<input class="easyui-textbox" type="text" id="tongzhiinput" name="tongzhiinput" />
+
+				<a href="javascript:void(0)" class="easyui-linkbutton"  onclick="kuaitongzhi()" >通知</a>
+		</form>
+</div>
 	<!-- <div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
         <form id="updateForm" method="post">   
             <table>
