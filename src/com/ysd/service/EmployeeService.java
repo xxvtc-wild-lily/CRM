@@ -102,9 +102,9 @@ public interface EmployeeService {
      */
     List<Message> selectEmpByname(String name);
     /**
-     * 根据员工登录名修改消息状态
+     * 根据消息编号修改消息状态
      * @param name
      * @return
      */
-    Integer updateMessByEmpName(String name);
+    Integer updateMessById(Integer id);
 }

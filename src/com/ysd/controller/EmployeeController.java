@@ -137,8 +137,14 @@ public class EmployeeController {
     @ResponseBody
 	public List<Message> selectEmpByNameMessages(String e_loginName){
 		List<Message> selectEmpByname = employeeService.selectEmpByname(e_loginName);
-		employeeService.updateMessByEmpName(e_loginName);
 		return selectEmpByname;
+		
+	}
+	@RequestMapping(value="/messass",method=RequestMethod.POST)
+    @ResponseBody
+	public Integer updataMessage(Integer m_id){
+		
+		return employeeService.updateMessById(m_id);
 		
 	}
 }

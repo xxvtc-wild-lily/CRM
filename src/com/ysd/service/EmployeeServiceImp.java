@@ -33,7 +33,7 @@ public class EmployeeServiceImp implements EmployeeService  {
 	}
 
 
-	@Override
+	//根据员工id删除角色
 	public Integer deleteEmployee(Integer e_id) {
 		// TODO Auto-generated method stub
 		Integer selectGenJinStudentCountById = employeeMapper.selectGenJinStudentCountById(e_id);
@@ -52,7 +52,7 @@ public class EmployeeServiceImp implements EmployeeService  {
 	}
 
 
-    @Override
+    //查询所有角色
     public List<Role> selectAllRole() {
         // TODO Auto-generated method stub
         
@@ -62,7 +62,7 @@ public class EmployeeServiceImp implements EmployeeService  {
     }
 
 
-    @Override
+    //查询用户已拥有的角色
     public List<Role> selectEmployeeRoleByName(Employee employee) {
         // TODO Auto-generated method stub
         
@@ -72,7 +72,7 @@ public class EmployeeServiceImp implements EmployeeService  {
     }
 
 
-    @Override
+   //根据用户id添加角色
     public Integer insertRoleForEmployee(String arr,EmployeeRole employeeRole,String e_name,String r_name) {
         // TODO Auto-generated method stub
         
@@ -96,7 +96,7 @@ public class EmployeeServiceImp implements EmployeeService  {
     }
 
 
-    @Override
+   //根据用户id删除角色
     public Integer deleteRoleForEmployee(String arr,EmployeeRole employeeRole,String r_name,String name) {
          String[] rname=r_name.split(",");
     	 String[] ridArr = arr.split(",");
@@ -188,7 +188,7 @@ public class EmployeeServiceImp implements EmployeeService  {
     }
 
 
-	@Override
+	//根据登录员工的角色显示不同的统计图
 	public List selectTongJiTu(String e_loginName) {
 		String selectRoleByEmpName = employeeMapper.selectRoleByEmpName(e_loginName);
 		List list=new ArrayList();
@@ -237,7 +237,7 @@ public class EmployeeServiceImp implements EmployeeService  {
 	}
 
 
-	@Override
+	//查询角色模块中间表数量
 	public Integer selectEmployeeroleCount() {
 		EmployeeMapper employee= SpringContextUtil.getBean("employeeMapper");
 		Integer selectemployeeroleCount = employee.selectemployeeroleCount();
@@ -245,7 +245,7 @@ public class EmployeeServiceImp implements EmployeeService  {
 	}
 
 
-	@Override
+	//根据学生id查询所属咨询师
 	public String selectStudentByIdEmpName(Integer tidsss,String name,String mess) {
 		String names=employeeMapper.selectStudentByIdEmpName(tidsss);
 		String p=name+","+names+","+mess;
@@ -255,7 +255,7 @@ public class EmployeeServiceImp implements EmployeeService  {
 	}
 
 
-	@Override
+	//添加消息
 	public Integer insertMessage(String messaged) {
 		Message messagesss=new Message();
 		String[] split = messaged.split(",");
@@ -267,21 +267,20 @@ public class EmployeeServiceImp implements EmployeeService  {
 		System.out.println(employeeMapper);
 		EmployeeMapper employee= SpringContextUtil.getBean("employeeMapper");
 		Integer i = employee.insertMessage(messagesss);
-		System.out.println(i);
 		return i;
 	}
 
 
-	@Override
+	//根据员工登录名查询未读信息
 	public List<Message> selectEmpByname(String name) {
 		List<Message> selectEmpByName = employeeMapper.selectEmpByName(name);
 		return selectEmpByName;
 	}
 
 
-	@Override
-	public Integer updateMessByEmpName(String name) {
+	//根据编号修改消息状态
+	public Integer updateMessById(Integer id) {
 		
-		return employeeMapper.updataMessageByEmpName(name);
+		return employeeMapper.updataMessageById(id);
 	}
 }
