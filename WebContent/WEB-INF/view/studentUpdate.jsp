@@ -320,13 +320,13 @@ pageContext.setAttribute("path",request.getContextPath());
 			
 			<tr>
 				<td>跟踪编号：</td>
-				<td><input id="n_stuIdq" name="s_id" class="easyui-textbox" data-options="" style="width:100px" >
+				<td><input id="n_stuIdq" name="s_id" class="easyui-textbox" data-options="readonly:true" style="width:100px" >
 				</td>
 			</tr>
 			
 			<tr>
 				<td>学生姓名:</td>
-				<td><input id="n_stuNameq" name="s_name" class="easyui-textbox" data-options="" style="width:100px" >
+				<td><input id="n_stuNameq" name="s_name" class="easyui-textbox" data-options="readonly:true" style="width:100px" >
 				
 				</td>
 			</tr>
