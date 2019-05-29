@@ -53,12 +53,9 @@ pageContext.setAttribute("path",request.getContextPath());
     	})
 
     }
-    	
     
-
-
     
-
+    
     // 安全退出的方法
     function safeSignOut() {
     	$.messager.confirm("确认对话框","您想要退出该系统吗？",function(r){
@@ -261,8 +258,6 @@ pageContext.setAttribute("path",request.getContextPath());
             })
 	        websocket.close();
 	    }  
-    
-    
     
     
     

@@ -69,4 +69,22 @@ public class SignUpServiceImpl implements SignUpService {
         
         return i;
     }
+
+    @Override
+    public Integer selectEmployeeByLoginName(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = signUpMapper.selectEmployeeByLoginName(employee);
+        
+        return i;
+    }
+
+    @Override
+    public Integer insertEmployeeCheck(Employee employee) {
+        // TODO Auto-generated method stub
+        
+        Integer i = signUpMapper.insertEmployeeCheck(employee);
+        
+        return i;
+    }
 }
