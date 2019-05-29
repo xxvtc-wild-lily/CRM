@@ -74,6 +74,7 @@
 			<if test="e_name != null and e_name != ''">
 			    and ec.e_name like "%"#{e_name}"%"
 			</if>
+		group by e.e_loginName
 		order by ec.ec_checkInTime desc
 		limit #{page},#{pageSize}
     </select>
@@ -152,6 +153,12 @@
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt; #{startCheckInTime}
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkInTime &lt; #{endCheckInTime} 
+            </if>
             and ec.ec_checkStatus = 2 
         order by ec.ec_checkInTime desc
         limit #{page},#{pageSize}
@@ -173,6 +180,12 @@
             )
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
+            </if>
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt; #{startCheckInTime}
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkInTime &lt; #{endCheckInTime} 
             </if>
             and ec.ec_checkStatus = 2 
     </select>

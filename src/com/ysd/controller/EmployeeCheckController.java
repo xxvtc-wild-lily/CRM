@@ -63,6 +63,12 @@ public class EmployeeCheckController {
         } else if (pagination.getEc_checkStatus() == 2){
             // 以签退的判断
             
+            // 为时间未填时设置时间
+            if (pagination.getStartCheckInTime() == "" && pagination.getStartCheckInTime() == "") {
+                pagination.setStartCheckInTime(registerTime.getStringTime(0));
+                pagination.setEndCheckInTime(registerTime.getStringTime(24));
+            }
+            
             list = employeeCheckService.selectAllHasCheckOutEmployee(pagination);
             i = employeeCheckService.selectAllHasCheckOutEmployeeCount(pagination);
             

@@ -72,6 +72,7 @@ pageContext.setAttribute("path",request.getContextPath());
     			                    $.post("distributionStudent",{
     			                    	e_loginName:"${employee.e_loginName}"
     			                    },function(res){
+    			                    	// 如果大于0就切换成功
     			                    	if (res > 0) {
     			                    		$.messager.alert("提示","切换状态成功！","info");
     			                    		$("#dg").datagrid("reload");
@@ -84,11 +85,13 @@ pageContext.setAttribute("path",request.getContextPath());
     			                    $.post("distributionStudent",{e_loginName:"${employee.e_loginName}"},function(res){},"json");
 
     			                } else {
+    			                	// 没有咨询师签到就给予提示
     			                    $.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
     			                    initSwitchButton();
     			                }
     			            },"json")
     			        } else {
+    			        	// 将开关关闭的提交
     			            $.post("closedDistributionStudent",{e_loginName:"${employee.e_loginName}"},function(res){},"json");
     			        }
     			    } else {
