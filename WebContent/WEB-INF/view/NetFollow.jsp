@@ -26,15 +26,15 @@ function init() {
 	    singleSelect:true,
 	     toolbar:'#tb',
 	     queryParams:{
-	    	n_stuId:$("#n_stuIdq").val(),
-	 		n_stuName:$("#n_stuNameq").val(),
-	 		n_followTime:$("#n_followTimeq").val(),
-	 		n_nextFollowTime:$("#n_nextFollowTimeq").val(),
-	 		n_context:$("#n_contextq").val(),
+	    	n_stuId:$("#n_stuId").val(),
+	 		n_stuName:$("#n_stuName").val(),
+	 		n_followTime:$("#n_followTime").val(),
+	 		n_nextFollowTime:$("#n_nextFollowTime").val(),
+	 		n_context:$("#n_context").val(),
+	 		s_isReturnVisit:$("#s_isReturnVisit").val(),
 	 		e_id:"${employee.e_id}", 
-	 		n_followType:$("#n_followTypeq").val(),
-	 		n_createTime:$("#n_createTimeq").val(),
-	 		n_followStatus:$("#n_followStatusq").val()
+	 		n_createTime:$("#n_createTime").val(),
+	 		n_followStatus:$("#n_followStatus").val()
 		    },
 	     columns:[[
 	        {field:'n_id',title:'ID',width:100},
@@ -58,6 +58,7 @@ function init() {
 function lookNetFollow(index){
 	var data=$("#dg").datagrid("getData");
 	var row=data.rows[index];
+	$("#s_isReturnVisit").textbox('setValue',row.s_isReturnVisit == 0? '未回访':'已回访');
 	$('#looknetfollow').form('load',row);
 	$("#looknet").dialog("open");
 }
@@ -168,6 +169,10 @@ function addsave(){
 			        <td><input class="easyui-textbox"data-options='disabled:true' type="text" id="n_context" name="n_context" /></td>
 			    </tr>
 			    <tr>
+			        <td><label>是否回访：</label></td>
+			        <td><input class="easyui-textbox" data-options='disabled:true' type="text" id="s_isReturnVisit" name="s_isReturnVisit" /></td>
+			    </tr>
+			    <!-- <tr>
 			        <td><label>员工id：</label></td>
 			        <td><input class="easyui-textbox"data-options='disabled:true' type="text" id="e_id" name="e_id" /></td>
 			    </tr>
@@ -178,12 +183,9 @@ function addsave(){
 			    <tr>
 			        <td><label>学生编号：</label></td>
 			        <td><input class= "easyui-textbox"data-options='disabled:true' type= "text" id="s_id" name="s_id" /></td>
-			    </tr>
+			    </tr> -->
 			    
-			    <tr>
-			        <td><label>是否回访：</label></td>
-			        <td><input class="easyui-textbox" data-options='disabled:true' type="text" id="s_isReturnVisit" name="s_isReturnVisit" /></td>
-			    </tr>
+			    
 		    </table>
 		</form>  
 	</div>
