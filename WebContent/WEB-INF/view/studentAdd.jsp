@@ -82,17 +82,28 @@ pageContext.setAttribute("path",request.getContextPath());
 	function tongzhi(index){
 		var data = $("#stuTab").datagrid("getData");
 		tidsss = data.rows[index].s_id;
-		
 		$("#tongz").dialog("open");
 	}
 	function kuaitongzhi(){
 		$.post("qutongzhi",{
 			tidsss:tidsss,
-			meirong:$("#tongzhiinput").val()
+			name:"${employee.e_loginName}",
+			mess:$("#tongzhiinput").val()
 		},function(res){
-			
+			/* alert(123);
+			alert(JSON.stringify(res));
+			alert(res.name);
+			var s=+","+res.name+","+;
+			alert(s);
+			var websocket = new WebSocket("ws://localhost:8080/CRM/websocket");
+			webscoket.send(s);
+			alert("wan") */
 		},"json");
+
 		$("#tongzhiForm").form("clear")
+
+		//获取后台消息的方法
+
 		$("#tongz").dialog("close");
 	}
 	function formattera_name(value,row,index){
@@ -337,11 +348,11 @@ pageContext.setAttribute("path",request.getContextPath());
                 option = $("#stuTab").datagrid('getColumnOption', fields[i]);
                 datagridTitle.push(option.title);
                 shuxing.push(option.field);
-               if (option.field != "checkItem" && option.hidden != true) { 
-                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+"  name='ch'>"+datagridTitle[i]+"</br>");
+               if (option.field != "checked" && option.hidden != true) { 
+            		$("#lie_window").append("<input type='checkbox' value="+shuxing[i]+"  name='ch'>"+datagridTitle[i]+"</br>");
                     $("input[name='ch']").get(i).checked=true;
                 }else{
-                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+" name='ch' >"+datagridTitle[i]+"</br>");
+                    $("#lie_window").append("<input type='checkbox' value="+shuxing[i]+" name='ch' >"+datagridTitle[i]);
                 } 
             }
         $("#lie_window").window("open");

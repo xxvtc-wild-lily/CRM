@@ -16,11 +16,14 @@ pageContext.setAttribute("path",request.getContextPath());
 <script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script src="${path }/js/echarts/echarts-all.js"></script>
-<script src="${path }/js/home.js"></script>
+
 <script type="text/javascript">
     
     $(function(){
-    	chushihua()
+    	chushihua();
+    	messages();
+    	tongjitu();
+    	
     })
     function chushihua(){
     	$("#tree").tree({    
@@ -125,15 +128,9 @@ pageContext.setAttribute("path",request.getContextPath());
     
     
     
-    
-    
-   
-		//数据统计图
-		$("#rightTab").tabs({
-		       height:250,
-		        border:false
-		})
-    	$(function(){
+  //数据统计图
+    function tongjitu(){
+    	//获取初始化对象
         var myChart = echarts.init($("#chart01")[0]);
 //app.title = '堆叠柱状图';
 		$.post("selectSuoDingZhaungTaiCounts",{
@@ -192,12 +189,14 @@ pageContext.setAttribute("path",request.getContextPath());
 	                ]
 	               
 	        };
+			//接受后台数据重新渲染
 			 myChart.setOption(option);
 		},"json");
 		 
-        
-        
-});
+    }
+   
+		
+    	
     
     	
 	    var websocket = null;
@@ -219,8 +218,13 @@ pageContext.setAttribute("path",request.getContextPath());
 	    }
 	    //接收到消息的回调方法
 	    websocket.onmessage = function (event) {
-	        
-	        var str=event.data;
+	        if(event.data==1){
+	        	messages();
+	        }else{
+	        	chushihua();
+	        	tongjitu();
+	        }
+	        /* var str=event.data;
 	    	var strs= new Array(); //定义一数组
 	    	strs=str.split(","); //字符分割
 	    	if(strs.length>1){
@@ -230,7 +234,8 @@ pageContext.setAttribute("path",request.getContextPath());
 		    	}
 	    	}else{
 	    		chushihua();
-	    	}
+	    	} */
+	    	
 	        
 	    }
 	    
@@ -258,9 +263,48 @@ pageContext.setAttribute("path",request.getContextPath());
             })
 	        websocket.close();
 	    }  
-    
-    
-    
+    	//根据登录人查询未读信息的数量
+    	function messages(){
+    		$.post("messa",{
+    			e_loginName:"${employee.e_loginName}"
+    		},function(res){
+    			var d=res.length;
+    			document.getElementById("weidu").innerText=d;
+    			
+    		},"json")
+    	}
+    //根据登录人查看未读信息
+    function selectMessages(){
+    	$('#dg').datagrid({    
+    	    url:'messas', 
+    	    method : "post",
+			singleSelect : true,
+			queryParams: {
+				e_loginName:"${employee.e_loginName}"
+			},
+    	    columns:[[
+    	    	{field:'m_id',title:'编号',width:100,hidden:true},
+    	        {field:'e_sendName',title:'发送人',width:100},
+    	        {field:'e_acceptName',title:'接收人',width:100,hidden:true},
+    	        {field:'m_sendTime',title:'发送时间',width:160},
+    	        {field:'m_content',title:'内容',width:100,hidden:true}
+    	    ]],
+    	    onClickRow:function(index, row){//当点击未读信息时查看详情
+    	    	document.getElementById("xiaoxa").innerText=row.e_sendName;
+    	    	document.getElementById("xiaoxb").innerText=row.m_content;
+    	    	document.getElementById("xiaoxc").innerText=row.m_sendTime;
+    	    	$("#messag").dialog("open");
+    	    	$.post("messass",{
+    				m_id:row.m_id
+    			},function(res){
+    				
+    			},"json");
+    	    	$("#dg").datagrid("reload");
+    	    	messages();
+    	    }    
+    	});
+    	$("#xiaoxs").dialog("open");
+    }
     
     function openUpdatePasswordDialog() {
     	$("#updatePasswordDialog").dialog("open");
@@ -393,14 +437,16 @@ pageContext.setAttribute("path",request.getContextPath());
 		         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="safeSignOut()">安全退出</a>
 		      
 		       			<div>
-		       				<li class="display">
-			     			<a href="@Url.Action("Index","Contract",new { })" data-toggle="tooltip" data-placement="top" title="消息提示">
-			           		<span class="glyphicon glyphicon-bell" aria-hidden="true" style="font-size:25px;position:relative;"></span>
-			                 <span style="font-size:11px;position:absolute;left:1400px;top:10px;border-radius: 50%;height: 20px;width: 20px;display: inline-block;background: #f20c55;vertical-align: top;">
-			                 <span style="display: block;color: #FFFFFF;height: 20px;line-height: 20px;text-align: center"></span>
-			            	</span>
-			     			</a>
-						</li>
+			       				
+					     			<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="消息提示" onclick="selectMessages()">
+						           		<span class="glyphicon glyphicon-bell" aria-hidden="true" style="font-size:25px;position:relative;"></span>
+						                 <span style="font-size:11px;position:absolute;left:1400px;top:10px;border-radius: 50%;height: 20px;width: 20px;display: inline-block;background: #f20c55;vertical-align: top;">
+						                 	<span style="display: block;color: #FFFFFF;height: 20px;line-height: 20px;text-align: center" id="weidu"></span>
+						                 </span>
+					     			</a>
+					  
+					     			
+									
 		       			</div>
 		       			
 		       		
@@ -414,20 +460,14 @@ pageContext.setAttribute("path",request.getContextPath());
     <div data-options="region:'center',title:'Center'" style="width:1300px">
         <div id="indexTab" class="easyui-tabs" style="width:1364px;height:617px;">
             <div class="allBox"  data-options="title:'首页'">
-            		
+            		<!-- 统计图 -->
 				    <div class="homeLeft04">
 				        <h5 class="hStyle"><span>数据分析</span></h5>
 				        <p class="stataAny" id="chart01"></p>
 				    </div>
-				    <div class="homeLeft04">
-				        <h5 class="hStyle"><span>交货分析</span></h5>
-				        <p class="stataAny" id="chart02"></p>
-				    </div>
+				    <!-- 消息 -->
 				    <div id="cc" class="easyui-calendar" style="width:180px;height:180px;"></div>
-				    <div class="homeLeft05">
-				        <h5 class="hStyle"><span>交货分析</span></h5>
-				        <p class="stataAny" style="height: 220px" id="chart03"></p>
-				    </div>
+									   
 			</div>
         </div>
     </div>
@@ -455,6 +495,15 @@ pageContext.setAttribute("path",request.getContextPath());
         <div id="oldPasswordTips" style="margin-left:160px;"></div>
         <a class="easyui-linkbutton" style="margin-left:190px;margin-top:5px;" onclick="ok()">确定</a>
     </div>
-    
+    <!-- 消息详情对话框 -->
+    <div id="messag" class="easyui-dialog" title="消息" style="width:400px;height:220px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+    		发送人：<span id="xiaoxa"></span><br>
+    		内容：<span id="xiaoxb"></span><br>
+    		时间：<span id="xiaoxc"></span>
+    </div>
+    <!-- 消息对话框 -->
+    <div id="xiaoxs" class="easyui-dialog" title="消息" style="width:275px;height:220px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+    		<table id="dg"></table> 
+    </div>
 </body>
 </html>
