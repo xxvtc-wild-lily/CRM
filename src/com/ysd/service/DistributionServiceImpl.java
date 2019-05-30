@@ -45,11 +45,11 @@ public class DistributionServiceImpl implements DistributionService {
         // 记录是否成功的状态码
         Integer statusCode = 0;
         
-        // 倒序查询所有今天签到的咨询师信息
+        // 根据权重倒序查询所有今天签到的咨询师信息
         List<Asker> askerList = distributionMapper.selectAllChcekInAsker();
         // 查询所有未分配的学生
         List<Student> studentList = distributionMapper.selectNotDistributionStudent();
-        // 跳出判断的变量
+        // 跳出循环的变量
         Integer breakTimes = 0;
         // 如果学生数量大于咨询师数量就按权重的从大到小顺序分配
         if (studentList.size() >= askerList.size()) {
