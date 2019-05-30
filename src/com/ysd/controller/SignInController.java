@@ -1,6 +1,7 @@
 package com.ysd.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.ysd.entity.Employee;
 import com.ysd.service.SignInService;
 import com.ysd.util.IndustrySMS;
@@ -136,7 +138,11 @@ public class SignInController {
     
     // 登录的方法
     @RequestMapping(value="/signin",method=RequestMethod.POST)
-    public String signin(Model model,HttpServletRequest request,HttpServletResponse response,Employee employee) {
+    @ResponseBody
+    public String signin(HttpServletRequest request,HttpServletResponse response,Employee employee) {
+        
+        // 传回去的状态码
+        Integer statusCode = 0;
         
         // 处理传过来的登录名、密码
         employee.setE_loginName(request.getParameter("e_loginName"));
@@ -165,9 +171,8 @@ public class SignInController {
                 // 如果application中存在此用户名则不能登录
                 if (application.getAttribute(employee.getE_loginName()) != null && application.getAttribute(employee.getE_loginName()).equals(employee.getE_loginName())) {
                     
-                    model.addAttribute("msg","该账号已登录！");
+                    statusCode = 7;
                     
-                    return "/view/signin";
                 } else {
                     // 如果用户目前没有被别人登录就接着进行下面的判断
                     
@@ -189,7 +194,7 @@ public class SignInController {
                         // 如果大于0就是已锁定
                         if (isLock > 0) {
                             // 设置提示信息为该账号已锁定
-                            model.addAttribute("msg","该账号已锁定！");
+                            statusCode = 4;
                         } else {
                             // 没有锁定的判断
                             
@@ -199,7 +204,8 @@ public class SignInController {
                             signInService.updatePwdWrongTimeWhenSuccess(employee);
                             
                             // 判断是否将用户名密码赋给cookie的操作
-                            if (passLogin != null) {
+                            System.out.println("passLogin========"+passLogin);
+                            if (passLogin.equals("true")) {
                                 // 记住密码
                                 
                                 // 把账号存入Cookie且名字为loginName
@@ -221,52 +227,56 @@ public class SignInController {
                             // 将用户名放入application中
                             application.setAttribute(employee.getE_loginName(),employee.getE_loginName());
                             
-                            return "redirect:inIndex";
+                            statusCode = 1;
+                            }
+                        } else {
+                            // 密码错误进入这里
+                            
+                            // 查询当前用户是否为管理员
+                            String r_name = signInService.selectIsAdmin(employee);
+                            // 如果为管理员就只提示密码错误
+                            if (r_name != null && r_name.equals("管理员")) {
+                                statusCode = 6;
+                            } else {
+                                // 如果不是管理员就更改错误次数
+                                
+                                // 密码错误后更改错误次数
+                                signInService.updatePwdWrongTime(employee);
+                                // 查询目前的错误次数
+                                lastLoginChance = signInService.selectPwdWrongTime(employee);
+                                // 获取剩下的尝试机会
+                                lastLoginChance = 3-lastLoginChance;
+                                
+                                // 设置提示信息为密码错误，并提示剩余尝试次数
+                                statusCode = 3;
+                                // 如果错误次数等于3次，就锁定账户
+                                if (lastLoginChance == 0) {
+                                    // 修改锁定状态为锁定，修改锁定时间为当前时间
+                                    signInService.updateEmployeeIsLockOut(employee);
+                                    statusCode = 4;
+                                } else if (lastLoginChance < 0) {
+                                    // 超过3次尝试次数
+                                    statusCode = 4;
+                                }
+                            
                             }
                         }
-                    
-                        // 查询当前用户是否为管理员
-                        String r_name = signInService.selectIsAdmin(employee);
-                        // 如果为管理员就只提示密码错误
-                        if (r_name != null && r_name.equals("管理员")) {
-                            model.addAttribute("msg","密码错误！");
-                        } else {
-                            // 如果不是管理员就更改错误次数
-                            
-                            // 密码错误后更改错误次数
-                            signInService.updatePwdWrongTime(employee);
-                            // 查询目前的错误次数
-                            lastLoginChance = signInService.selectPwdWrongTime(employee);
-                            // 获取剩下的尝试机会
-                            lastLoginChance = 3-lastLoginChance;
-                            
-                            // 设置提示信息为密码错误，并提示剩余尝试次数
-                            model.addAttribute("msg","密码错误，剩余尝试次数："+lastLoginChance);
-                            // 如果错误次数等于3次，就锁定账户
-                            if (lastLoginChance == 0) {
-                                // 修改锁定状态为锁定，修改锁定时间为当前时间
-                                signInService.updateEmployeeIsLockOut(employee);
-                                model.addAttribute("msg","该账号已锁定！");
-                            } else if (lastLoginChance < 0) {
-                                // 超过3次尝试次数
-                                model.addAttribute("msg","该账号已锁定！");
-                            }
-                        
-                    }
                     
                 }
                 
             } else {
                 // 没有找到相同的用户名
-                model.addAttribute("msg","用户名不存在！");
+                statusCode = 2;
             }
             
         }else{
             // 验证码输入错误进入此判断
-            model.addAttribute("msg","验证码输入错误！");
+            statusCode = 5;
         }
         
-        return "/view/signin";
+        String res = "{"+"loginStatusCode:"+statusCode+","+"lastLoginChance:"+lastLoginChance+"}";
+        
+        return res;
     }
     
     @RequestMapping(value="errorClose",method=RequestMethod.POST)
