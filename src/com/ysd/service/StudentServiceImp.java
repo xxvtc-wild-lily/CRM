@@ -1,4 +1,4 @@
-package com.ysd.service;
+﻿package com.ysd.service;
 
 import java.util.List;
 
@@ -82,7 +82,7 @@ public class StudentServiceImp implements StudentService {
                 // 如果本次循环的咨询师id大于平均值就移除该咨询师
                 System.out.println("studentCount"+studentCount);
                 System.out.println("studentCountAvg"+studentCountAvg);
-                if (studentCount >= studentCountAvg) {
+                if (studentCount > studentCountAvg) {
                     askerList.remove(l);
                 }
             }
