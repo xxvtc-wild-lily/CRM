@@ -93,7 +93,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	               <b>${msg }</b>
                 </div>
 	            <div style="margin-left:40px">
-	               <input type="submit" id="signin" value="登录" style="width:70px;height:30px;color:#6699FF;"/>
+	               <input type="submit" id="signin" value="登录" style="width:70px;height:30px;"/>
 	            </div>
 	        </form>
 	    </div>

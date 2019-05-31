@@ -48,7 +48,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			        {field:'s_id',title:'编号' ,width:100},
 			        {field:'s_name',title:'姓名' ,width:100},
 			        {field:'s_age',title:'年龄' ,width:100},
-			        {field:'asker.a_name',title:'咨询师'  ,formatter:formattera_name,width:100},
+			        {field:'s_importEmployee',title:'录入人'  ,formatter:formattera_name,width:100},
 			        {field:'s_sex',title:'性别'  ,formatter:formattresex,width:100},
 			        {field:'s_phone',title:'电话'  ,width:100},
 			        {field:'s_eduStatus',title:'学历状态',formatter:formatterstu,width:100},
@@ -96,7 +96,7 @@ pageContext.setAttribute("path",request.getContextPath());
 		$("#tongz").dialog("close");
 	}
 	function formattera_name(value,row,index){
-		return row.asker.a_name;
+		return row.s_importEmployee;
 	}
 	function formatterlywz(value,row,index) {
 		var s_comeSite = "";
