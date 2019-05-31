@@ -88,6 +88,7 @@ public class DistributionController {
         
         // 获取传过来的学生id
         String[] arr = studentIdArr.split(",");
+        String[] stu=s_name.split(",");
         // 初始化状态码
         Integer i = 0;
         // 循环放入集合中
@@ -95,7 +96,7 @@ public class DistributionController {
             student.setS_id(Integer.parseInt(arr[j]));
             i = distributionService.updateStudentAskerId(student);
             //添加消息
-            String p=e_loginName+","+a_name+","+s_name+"学生已经分配给你了，快去跟进。";
+            String p=e_loginName+","+a_name+","+stu[j]+"学生已经分配给你了，快去跟进。";
             WebSocketServlet websocket=new WebSocketServlet();
     		websocket.onMessage(p);
         }

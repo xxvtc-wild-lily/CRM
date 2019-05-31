@@ -28,7 +28,7 @@
     </select>
     
     <select id="selectEmployeeByLoginName" parameterType="employee" resultType="_int">
-        select e_id from employee where e_loginName = ${e_loginName}
+        select e_id from employee where e_loginName = '${e_loginName}'
     </select>
     
     <insert id="insertEmployeeCheck" parameterType="employee">

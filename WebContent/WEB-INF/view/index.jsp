@@ -203,7 +203,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	    //判断当前浏览器是否支持WebSocket
 	    if ('WebSocket' in window) {
 	        //建立连接，这里的/websocket ，是Servlet中注解中的那个值
-	        websocket = new WebSocket("ws:/localhost:8080/CRM/websocket");
+	    	websocket = new WebSocket("ws://localhost:8080/CRM/websocket/${employee.e_loginName}");
 	    }
 	    else {
 	        alert('当前浏览器 Not support websocket');
@@ -391,6 +391,10 @@ pageContext.setAttribute("path",request.getContextPath());
 	                                         },function(res){
 	                                             if (res > 0) {
 	                                                 $.messager.alert("提示","修改成功，3秒后自动跳转至登录页面！","info");
+	                                                 // 从application清空当前用户信息
+	                                                 $.post("errorClose",{
+	                                                     e_loginName:"${employee.e_loginName}"
+	                                                 })
 	                                                 $.post("returnIndex");
 	                                                 setTimeout("window.location.reload()",3000);
 	                                             } else {
