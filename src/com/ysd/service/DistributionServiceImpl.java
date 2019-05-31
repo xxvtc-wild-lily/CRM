@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ysd.controller.WebSocketServlet;
 import com.ysd.dao.DistributionMapper;
 import com.ysd.entity.Asker;
 import com.ysd.entity.Employee;
@@ -65,6 +66,12 @@ public class DistributionServiceImpl implements DistributionService {
                 student.setS_askerId(askerList.get(breakTimes).getA_id());
                 student.setS_id(studentList.get(i).getS_id());
                 distributionMapper.updateStduentAid(student);
+                //添加消息
+                String p=employee.getE_loginName()+","+askerList.get(breakTimes).getA_name()+","+studentList.get(i).getS_name()+"学生已经分配给你了，快去跟进。";
+                WebSocketServlet websocket=new WebSocketServlet();
+        		websocket.onMessage(p);
+                ///////////////////
+                
             }
             // 判断数据库里是否有自动分量的开关数据
             Integer i = distributionMapper.selectIsHaveStatus();
@@ -112,6 +119,12 @@ public class DistributionServiceImpl implements DistributionService {
                 student.setS_askerId(askerList.get(breakTimes2).getA_id());
                 student.setS_id(studentList.get(i).getS_id());
                 distributionMapper.updateStduentAid(student);
+                //添加消息
+                String p=employee.getE_loginName()+","+askerList.get(breakTimes).getA_name()+","+studentList.get(i).getS_name()+"学生已经分配给你了，快去跟进。";
+                WebSocketServlet websocket=new WebSocketServlet();
+        		websocket.onMessage(p);
+                /////////////////////
+                
             }
             // 判断数据库里是否有自动分量的开关数据
             Integer i = distributionMapper.selectIsHaveStatus();

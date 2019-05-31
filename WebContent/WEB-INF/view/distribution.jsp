@@ -82,8 +82,6 @@ pageContext.setAttribute("path",request.getContextPath());
     			                    	}
     			                    },"json");
 
-    			                    $.post("distributionStudent",{e_loginName:"${employee.e_loginName}"},function(res){},"json");
-
     			                } else {
     			                	// 没有咨询师签到就给予提示
     			                    $.messager.alert("提示","今天还没有咨询师签到，无法分配！","error");
@@ -179,7 +177,10 @@ pageContext.setAttribute("path",request.getContextPath());
     	        }
     	        $.post("handDistributionStudent",{
     	        	s_askerId:askerId,
-    	        	studentIdArr:studentIdArr
+    	        	studentIdArr:studentIdArr,
+    	        	a_name:askerData[0].a_name,
+    	        	s_name:studentData[i].s_name,
+    	        	e_loginName:"${employee.e_loginName}"
     	        },function(res){
     	        	if (res > 0) {
     	        		$.messager.alert("提示","分配成功！","info");
