@@ -84,7 +84,7 @@ public class DistributionController {
     
     @RequestMapping(value="/handDistributionStudent",method=RequestMethod.POST)
     @ResponseBody
-    public Integer handDistributionStudent(Student student,String studentIdArr) {
+    public Integer handDistributionStudent(Student student,String studentIdArr,String a_name,String s_name,String e_loginName) {
         
         // 获取传过来的学生id
         String[] arr = studentIdArr.split(",");
@@ -94,6 +94,10 @@ public class DistributionController {
         for (int j = 0;j < arr.length;j++) {
             student.setS_id(Integer.parseInt(arr[j]));
             i = distributionService.updateStudentAskerId(student);
+            //添加消息
+            String p=e_loginName+","+a_name+","+s_name+"学生已经分配给你了，快去跟进。";
+            WebSocketServlet websocket=new WebSocketServlet();
+    		websocket.onMessage(p);
         }
         
         return i;
