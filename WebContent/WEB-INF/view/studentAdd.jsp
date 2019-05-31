@@ -287,31 +287,41 @@ pageContext.setAttribute("path",request.getContextPath());
 	
 	function addSave(){
 		
-		$.post("insertStudent",{
-			s_name:$("#adds_name").val(),
-			s_sex:$("#adds_sex").combobox("getValue"),
-			s_age:$("#adds_age").val(),
-			s_importEmployee:'${employee.e_loginName}', 
-			s_phone:$("#adds_phone").val(),
-			s_eduStatus:$("#adds_eduStatus").combobox("getValue"),
-			s_perStatus:$("#adds_perStatus").val(),
-			s_comeWay:$("#adds_comeWay").val(),
-			s_comeSite:$("#adds_comeSite").val(),
-			s_sourceKeyWord:$("#adds_sourceKeyWord").val(),
-			s_QQ:$("#adds_QQ").val(),
-			s_weiXin:$("#adds_weiXin").val(),
-			s_isReport:$("#adds_isReport").val(),
-			s_createTime:$("#adds_createTime").val(),
-			s_remarks:$("#adds_remarks").val()
-		},function(res){
-			if(res>0){
-				$.messager.alert("提示","添加成功！！！","info");
-				$("#addDialog").dialog("close");
-				$("#stuTab").datagrid("reload");
-			}else{
-				$.messager.alert("提示","添加失败！！！","error");
+		if($("#adds_comeWay").val() != null && $("#adds_comeWay").val() != "") {
+			if ($("#adds_QQ").val() != null && $("#adds_QQ").val() != "") {
+				$.post("insertStudent",{
+					s_name:$("#adds_name").val(),
+					s_sex:$("#adds_sex").combobox("getValue"),
+					s_age:$("#adds_age").val(),
+					s_importEmployee:'${employee.e_loginName}', 
+					s_phone:$("#adds_phone").val(),
+					s_eduStatus:$("#adds_eduStatus").combobox("getValue"),
+					s_perStatus:$("#adds_perStatus").val(),
+					s_comeWay:$("#adds_comeWay").val(),
+					s_comeSite:$("#adds_comeSite").val(),
+					s_sourceKeyWord:$("#adds_sourceKeyWord").val(),
+					s_QQ:$("#adds_QQ").val(),
+					s_weiXin:$("#adds_weiXin").val(),
+					s_isReport:$("#adds_isReport").val(),
+					s_createTime:$("#adds_createTime").val(),
+					s_remarks:$("#adds_remarks").val()
+				},function(res){
+					if(res>0){
+						$.messager.alert("提示","添加成功！！！","info");
+						$("#addDialog").dialog("close");
+						$("#stuTab").datagrid("reload");
+					}else{
+						$.messager.alert("提示","添加失败！！！","error");
+					}
+				},"json")
+			} else {
+				$.messager.alert("提示","QQ不能为空！","error");
 			}
-		},"json")
+		} else {
+			$.messager.alert("提示","来源渠道不能为空！","error");
+		}
+		
+		
 		
 		$("#addForm").form("clear");
 	}
@@ -438,7 +448,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			        </td>
 			        <td><label>来源渠道：</label></td>
 			    	<td>
-			        	<select class="easyui-combobox" style="width:100px;" id="adds_comeWay" name="s_comeWay">   
+			        	<select class="easyui-combobox" style="width:100px;" id="adds_comeWay" name="s_comeWay" data-options="required:true">   
 						    <option value="">--请选择--</option> 
 						    <option value="未知">未知</option>     
 						    <option value="百度">百度</option>
@@ -471,7 +481,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			        <td><input class="easyui-textbox" type="text" id="adds_sourceKeyWord" name="s_sourceKeyWord"/></td>
 			   
 			        <td><label>学员QQ：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="adds_QQ" name="s_QQ"/></td>
+			        <td><input class="easyui-textbox" type="text" id="adds_QQ" name="s_QQ" data-options="required:true"/></td>
 			     </tr>
 			    <tr>
 			        <td><label>微信号：</label></td>
