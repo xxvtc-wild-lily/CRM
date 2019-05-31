@@ -38,7 +38,8 @@ pageContext.setAttribute("path",request.getContextPath());
 				s_isPay:$('#s_isPay').combobox('getValue'),
 				s_isValid:$("#s_isValid").combobox('getValue'),
 				s_QQ:$("#s_QQ").val(),
-				s_createTime:$("#s_createTime").val()
+				in_s_createTime:$("#in_s_createTime").datebox("getValue"),
+				en_s_createTime:$("#en_s_createTime").datebox("getValue")
 			},
 			 columns:[[
 			        {field:'ck',title:'复选框',checkbox:true,width:100},
@@ -402,8 +403,9 @@ pageContext.setAttribute("path",request.getContextPath());
 			</select>
 	        <label for="name">QQ:</label>   
 	        <input class="easyui-textbox" type="text"  id="s_QQ"/> 
-	         <label for="name">创建时间:</label>   
-	        <input class="easyui-datebox" type="text"  id="s_createTime"/>
+	        <label for="name">创建时间:</label>   
+	        <input class="easyui-datebox" type="text"  id="in_s_createTime"/>~
+	        <input class="easyui-datebox" type="text"  id="en_s_createTime"/>
 	        
 			<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
 			<a href="javascript:void(0)" id="btnExport" class="easyui-linkbutton" iconCls='icon-print'>导出Excel</a>
