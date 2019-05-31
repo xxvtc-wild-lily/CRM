@@ -54,13 +54,86 @@ pageContext.setAttribute("path",request.getContextPath());
         return value;
     }
     
+    // 回车触发登录
+    document.onkeydown = function (e) {
+    	// 兼容FF和IE和Opera
+    	var theEvent = window.event || e;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+        	signIn();
+        }
+    }
+    
+    
+    // ajax登录的方法
+    function signIn() {
+        var e_loginName = $("#e_loginName").val();
+        var e_passWord = $("#e_passWord").val();
+        var verifyCode = $("#verifyCode").val();
+        var passLogin = $("input[type='checkbox']").is(':checked');
+        // 获取验证码图片元素
+        var verifyCodeImage = document.getElementById("verifyCodeImage");
+        // 验证密码格式的正则表达式
+        var regPassWord = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/;
+        
+        if (e_loginName != null && e_loginName != "" && e_loginName != undefined) {
+            if (e_passWord != null && e_passWord != "" && e_passWord != undefined) {
+            	if (regPassWord.test(e_passWord)) {
+	                if (verifyCode != null && verifyCode != "" && verifyCode != undefined) {
+	                	// 登录的post提交
+	                	$.post("signin",{
+	                		e_loginName:e_loginName,
+	                		e_passWord:e_passWord,
+	                		passLogin:passLogin,
+	                		verifyCode:verifyCode
+	                		},function (res) {
+	                			// 将json解析
+	                			var data = eval("("+res+")");
+	                			
+	                			if (data.loginStatusCode == 1) {
+	                				window.location.href="inIndex";
+	                			} else if (data.loginStatusCode == 2) {
+	                				$.messager.alert("提示","用户名不存在！","error");
+	                				verifyCodeImage.click();
+	                			} else if (data.loginStatusCode == 3) {
+	                				$.messager.alert("提示","密码错误，剩余尝试次数："+data.lastLoginChance,"error");
+	                				verifyCodeImage.click();
+	                			} else if (data.loginStatusCode == 4) {
+	                				$.messager.alert("提示","账号已锁定！","error");
+	                				verifyCodeImage.click();
+	                			} else if (data.loginStatusCode == 5) {
+	                				$.messager.alert("提示","验证码输入错误！","error");
+	                				verifyCodeImage.click();
+	                			} else if (data.loginStatusCode == 6) {
+	                				$.messager.alert("提示","密码错误！","error");
+	                				verifyCodeImage.click();
+	                			} else if (data.loginStatusCode == 7) {
+	                				$.messager.alert("提示","该账号已登录！","error");
+	                				verifyCodeImage.click();
+	                			}
+	                	})
+	                } else {
+	                    $.messager.alert("提示","验证码不能为空！","error");
+	                }
+            	} else {
+            		$.messager.alert("提示","密码格式错误！","error");
+            	}
+            } else {
+                $.messager.alert("提示","密码不能为空！","error");
+            }
+        } else {
+            $.messager.alert("提示","用户名不能为空！","error");
+        }
+        
+    }
+    
 </script>
 </head>
 <body>
     <div style="width:600px;margin:150px 500px;">
 	    <div class="easyui-panel" id="signInPanel" style="width:500px;height:300px;padding:10px;text-align:center;overflow:hidden;">
 	        <span><h3>欢迎使用CRM客户管理系统</h3></span>
-	        <form id="signInForm" action="${path }/signin" method="post">
+	        <form id="signInForm" method="post">
 	            <table id="signInTable" style="margin-top:30px;margin-left:90px;">
 	                <tr>
 	                    <td>登录名：</td>
@@ -93,7 +166,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	               <b>${msg }</b>
                 </div>
 	            <div style="margin-left:40px">
-	               <input type="submit" id="signin" value="登录" style="width:70px;height:30px;color:#6699FF;"/>
+	               <a href="javascript:void(0);" class="easyui-linkbutton" id="signin" style="width:70px;height:30px;color:#6699FF;" onclick="signIn()">登录</a>
 	            </div>
 	        </form>
 	    </div>
