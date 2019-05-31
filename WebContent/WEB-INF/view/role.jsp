@@ -165,6 +165,7 @@ pageContext.setAttribute("path",request.getContextPath());
 		});
 		$("#moduless").dialog("open");
 	}
+	//修改角色模块
 	function addmo(){
 		var moduleid = $("#dd").tree('getChecked',['checked','indeterminate']);//获取选中的值
 		var s = "";

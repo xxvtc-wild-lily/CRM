@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeRole;
+import com.ysd.entity.Message;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Role;
 import com.ysd.service.EmployeeService;
@@ -118,5 +120,31 @@ public class EmployeeController {
     public List selectSuoDingZhaungTaiCount(String e_loginName) {
         return  employeeService.selectTongJiTu(e_loginName);
     }
-	
+	@RequestMapping(value="/qutongzhi",method=RequestMethod.POST)
+    @ResponseBody
+	public void selectStudentByIdEmpName(Integer tidsss,String name,String mess) {
+		employeeService.selectStudentByIdEmpName(tidsss,name,mess);
+		
+	}
+	@RequestMapping(value="/messa",method=RequestMethod.POST)
+    @ResponseBody
+	public List<Message> selectEmpByNameMessage(String e_loginName){
+		
+		return employeeService.selectEmpByname(e_loginName);
+		
+	}
+	@RequestMapping(value="/messas",method=RequestMethod.POST)
+    @ResponseBody
+	public List<Message> selectEmpByNameMessages(String e_loginName){
+		List<Message> selectEmpByname = employeeService.selectEmpByname(e_loginName);
+		return selectEmpByname;
+		
+	}
+	@RequestMapping(value="/messass",method=RequestMethod.POST)
+    @ResponseBody
+	public Integer updataMessage(Integer m_id){
+		
+		return employeeService.updateMessById(m_id);
+		
+	}
 }

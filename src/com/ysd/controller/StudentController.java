@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ysd.entity.Employee;
 import com.ysd.entity.NetFollow;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
@@ -33,7 +34,7 @@ public class StudentController {
 	} 
 	@RequestMapping(value="/insertStudent",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer insertStudent(Student student,@RequestParam(value="isAutoAllot") boolean isAutoAllot) {
+	public Integer insertStudent(Student student) {
 	    Integer i = studentService.insertStudent(student);
 	    
 		return i;
@@ -49,6 +50,7 @@ public class StudentController {
 	@RequestMapping(value="/updateStudent",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer updateStudent(Student student) {
+		
 		return studentService.updateStudent(student);
 		
 	}
@@ -56,13 +58,11 @@ public class StudentController {
 	
 
 	@RequestMapping(value="/insertNetFoll",method=RequestMethod.POST)
-
 	@ResponseBody
 	public Integer insertNetFoll(NetFollow netfollow) {
 		
 		return studentService.insertNetFoll(netfollow);
 		
 	}
-	
 	
 }

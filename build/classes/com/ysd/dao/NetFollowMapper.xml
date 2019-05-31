@@ -23,8 +23,10 @@
 			<if test="endn_followTime != null and endn_followTime != ''">
 				and n.n_followTime &lt;= #{endn_followTime}
 			</if>
-			<if test="s_isReturnVisit!=null and s_isReturnVisit!=''">
-				and s.s_isReturnVisit=#{s_isReturnVisit}
+			<if test="student != null and student != ''">
+				<if test="s_isReturnVisit!=null and s_isReturnVisit!=''">
+					and s.s_isReturnVisit=#{s_isReturnVisit}
+				</if>
 			</if>
 			<if test="n_followType!=null and n_followType!=''">
 				and n.n_followType=#{n_followType}
@@ -44,8 +46,8 @@
     		<association property="employee" javaType="employee">
     			<id property="e_id" column="e_id"/>
     			<result property="e_loginName" column="e_loginName"/>
+    			
     		</association>
-    		
     		<association property="student" javaType="student">
     			<id property="s_id" column="s_id"/>
     			
@@ -70,8 +72,10 @@
 			<if test="endn_followTime != null and endn_followTime != ''">
 				and n.n_followTime &lt;= #{endn_followTime}
 			</if>
-			<if test="s_isReturnVisit!=null and s_isReturnVisit!=''">
-				and s.s_isReturnVisit=#{s_isReturnVisit}
+			<if test="student != null and student != ''">
+				<if test="s_isReturnVisit!=null and s_isReturnVisit!=''">
+					and s.s_isReturnVisit=#{s_isReturnVisit}
+				</if>
 			</if>
 			<if test="n_followType!=null and n_followType!=''">
 				and n.n_followType=#{n_followType}

@@ -1,13 +1,18 @@
 ﻿package com.ysd.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ysd.controller.WebSocketServlet;
 import com.ysd.dao.EmployeeMapper;
 import com.ysd.entity.Asker;
 import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeRole;
+import com.ysd.entity.Message;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Role;
 import com.ysd.util.SpringContextUtil;
@@ -28,7 +33,7 @@ public class EmployeeServiceImp implements EmployeeService  {
 	}
 
 
-	@Override
+	//根据员工id删除角色
 	public Integer deleteEmployee(Integer e_id) {
 		// TODO Auto-generated method stub
 		Integer selectGenJinStudentCountById = employeeMapper.selectGenJinStudentCountById(e_id);
@@ -47,7 +52,7 @@ public class EmployeeServiceImp implements EmployeeService  {
 	}
 
 
-    @Override
+    //查询所有角色
     public List<Role> selectAllRole() {
         // TODO Auto-generated method stub
         
@@ -57,7 +62,7 @@ public class EmployeeServiceImp implements EmployeeService  {
     }
 
 
-    @Override
+    //查询用户已拥有的角色
     public List<Role> selectEmployeeRoleByName(Employee employee) {
         // TODO Auto-generated method stub
         
@@ -67,7 +72,7 @@ public class EmployeeServiceImp implements EmployeeService  {
     }
 
 
-    @Override
+   //根据用户id添加角色
     public Integer insertRoleForEmployee(String arr,EmployeeRole employeeRole,String e_name,String r_name) {
         // TODO Auto-generated method stub
         
@@ -91,7 +96,7 @@ public class EmployeeServiceImp implements EmployeeService  {
     }
 
 
-    @Override
+   //根据用户id删除角色
     public Integer deleteRoleForEmployee(String arr,EmployeeRole employeeRole,String r_name,String name) {
          String[] rname=r_name.split(",");
     	 String[] ridArr = arr.split(",");
@@ -183,8 +188,9 @@ public class EmployeeServiceImp implements EmployeeService  {
     }
 
 
-	@Override
+	//根据登录员工的角色显示不同的统计图
 	public List selectTongJiTu(String e_loginName) {
+		//根据登录名查询拥有的角色
 		String selectRoleByEmpName = employeeMapper.selectRoleByEmpName(e_loginName);
 		List list=new ArrayList();
 		if(selectRoleByEmpName!=null) {
@@ -197,8 +203,8 @@ public class EmployeeServiceImp implements EmployeeService  {
 			}else if(selectRoleByEmpName.equals("咨询经理")){
 				Integer selectWeiQianDaoRenShu = employeeMapper.selectWeiQianDaoRenShu();
 				Integer selectQianDaoRenShu = employeeMapper.selectQianDaoRenShu();
-				list.add(selectWeiQianDaoRenShu);
 				list.add(selectQianDaoRenShu);
+				list.add(selectWeiQianDaoRenShu);
 				list.add(selectRoleByEmpName);
 			}else if(selectRoleByEmpName.equals("咨询师")) {
 				Integer selectStudentByEmpName = employeeMapper.selectStudentByEmpName(e_loginName);
@@ -232,15 +238,50 @@ public class EmployeeServiceImp implements EmployeeService  {
 	}
 
 
-	@Override
+	//查询角色模块中间表数量
 	public Integer selectEmployeeroleCount() {
 		EmployeeMapper employee= SpringContextUtil.getBean("employeeMapper");
 		Integer selectemployeeroleCount = employee.selectemployeeroleCount();
 		return selectemployeeroleCount;
 	}
-	
+
+
+	//根据学生id查询所属咨询师
+	public String selectStudentByIdEmpName(Integer tidsss,String name,String mess) {
+		String names=employeeMapper.selectStudentByIdEmpName(tidsss);
+		String p=name+","+names+","+mess;
+		WebSocketServlet websocket=new WebSocketServlet();
+		websocket.onMessage(p);
+		return names;
+	}
+
+
+	//添加消息
+	public Integer insertMessage(String messaged) {
+		Message messagesss=new Message();
+		String[] split = messaged.split(",");
+		String name=split[0];
+		messagesss.setE_sendName(name);
+		messagesss.setE_acceptName(split[1]);
+		messagesss.setM_content(split[2]);
+		System.out.println(messagesss.toString());
+		System.out.println(employeeMapper);
+		EmployeeMapper employee= SpringContextUtil.getBean("employeeMapper");
+		Integer i = employee.insertMessage(messagesss);
+		return i;
+	}
+
+
+	//根据员工登录名查询未读信息
+	public List<Message> selectEmpByname(String name) {
+		List<Message> selectEmpByName = employeeMapper.selectEmpByName(name);
+		return selectEmpByName;
+	}
+
+
+	//根据编号修改消息状态
+	public Integer updateMessById(Integer id) {
 		
-	
-
-
+		return employeeMapper.updataMessageById(id);
+	}
 }

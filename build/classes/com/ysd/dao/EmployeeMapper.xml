@@ -93,7 +93,7 @@
         update employee set e_isLockOut = 0 where e_loginName = #{e_loginName}
     </update>
 	<select id="selectGenJinStudentCountById" parameterType="int" resultType="int">
-			SELECT count(s.s_id) FROM employee e INNER JOIN asker a on e.e_loginName =a.a_name INNER JOIN student s on a.a_id=s.s_askerId where e.e_id=#{id} and s.s_lostReason!='是'
+			SELECT count(s.s_id) FROM employee e INNER JOIN asker a on e.e_loginName =a.a_name INNER JOIN student s on a.a_id=s.s_askerId where e.e_id=#{id} and s.s_isValid=1 and s.s_isPay =0
 	</select>
 	<insert id="addAsker" parameterType="asker">
 			insert into asker(a_name,a_roleName) values(#{a_name},#{a_roleName})
@@ -108,7 +108,7 @@
 			select count(1) from employee where e_isLockOut=1
 	</select>
 	<select id="selectRoleByEmpName" parameterType="string" resultType="string">
-			SELECT r.r_name FROM employee e INNER JOIN employeerole er on  e.e_id=er.e_id INNER JOIN role r on er.r_id=r.r_id WHERE e.e_loginName=#{name}
+			SELECT r.r_name FROM employee e INNER JOIN employeerole er on  e.e_id=er.e_id INNER JOIN role r on er.r_id=r.r_id WHERE e.e_loginName=#{name} limit 1
 	</select>
 	<select id="selectQianDaoRenShu" resultType="int">
 			select count(1) from employee where e_ext4=1 or e_ext4=2
@@ -136,5 +136,17 @@
 	</select>
 	<select id="selectemployeeroleCount" resultType="int">
 			select count(er_id) from employeerole
+	</select>
+	<select id="selectStudentByIdEmpName" parameterType="int" resultType="string">
+			select e.e_loginName from employee e INNER JOIN asker a on e.e_loginName=a.a_name  INNER JOIN student s  on a.a_id=s.s_askerId  WHERE s.s_id=#{id}
+	</select>
+	<insert id="insertMessage" parameterType="message">
+			insert into message(e_sendName,e_acceptName,m_sendTime,m_content,m_ext1) values(#{e_sendName},#{e_acceptName},now(),#{m_content},'未读')
+	</insert>
+	<select id="selectEmpByName" parameterType="string" resultType="message">
+			select * from message where e_acceptName=#{name} and m_ext1 = "未读"
+	</select>
+	<select id="updataMessageById" parameterType="int">
+			update message set m_ext1 = "已读" where  m_id= #{id}
 	</select>
 </mapper>

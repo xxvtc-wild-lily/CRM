@@ -80,7 +80,7 @@ pageContext.setAttribute("path",request.getContextPath());
 		} else if (row.s_isPay == "1") {
 			s_isPay = "已付费";
 		} else {
-			s_isPay = "未付费";
+			s_isPay = "";
 		}
 		
 		return s_isPay;
@@ -126,29 +126,30 @@ pageContext.setAttribute("path",request.getContextPath());
 	function updateStudent(index){
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
+
 		$('#updateForm').form('load',row);
 		$("#updateDialog").dialog("open");
 	}
+	
 	function updateSave(){
 		$.post("updateStudent",{
 			s_id:$("#updates_id").val(),
 			s_name:$("#updates_name").val(),
-			s_sex:$("#updates_sex").val(),
-			s_age:$("#updates_age").val(),
-			s_phone:$("#updates_phone").val(),
-			a_name:$("#updatea_name").val(),
-			s_eduStatus:$("#updates_eduStatus").val(),
-			s_perStatus:$("#updates_perStatus").val(),
-			s_comeWay:$("#updates_comeWay").val(),
-			s_comeSite:$("#updates_comeSite").val(),
-			s_sourceKeyWord:$("#updates_sourceKeyWord").val(),
-			s_fromPart:$("#updates_fromPart").val(),
-			s_address:$("#updates_address").val(),
+			s_learnForward:$("#updates_learnForward").val(),
+			s_record:$("#updates_record").val(),
+			s_isValid:$("#updates_isValid").combobox("getValue"),
+			s_lostReason:$("#updates_lostReason").val(),
+			s_isReturnVisit:$("#updates_isReturnVisit").combobox("getValue"),
+			s_firstVisitTime:$("#updates_firstVisitTime").val(),
+			s_isHome:$("#updates_isHome").val(),
+			s_homeTime:$("#updates_homeTime").val(),
+			s_preMoney:$("#updates_preMoney").val(),
+			s_preMoneyTime:$("#updates_preMoneyTime").val(),
+			s_isPay:$("#updates_isPay").combobox("getValue"),
+			s_payTime:$("#updates_payTime").val(),
+			s_inClassRemarks:$("#updates_inClassRemarks").val(),
+			s_askerRemarks:$("#updates_askerRemarks").val(),
 			s_focus:$("#updates_focus").val(),
-			s_QQ:$("#updates_QQ").val(),
-			s_weiXin:$("#updates_weiXin").val(),
-			s_isReport:$("#updates_isReport").val(),
-			s_importEmployee:"${employee.e_loginName}"
 		},function(res){
 			
 			if(res>0){
@@ -207,7 +208,7 @@ pageContext.setAttribute("path",request.getContextPath());
 
 	/* 跟踪日志 */
 	function netfollowlog(index){
-
+		var today=new Date();
 		var data = $("#stuTab").datagrid("getData"); 	
 		var row = data.rows[index];
 		$("#InsertNetLog_window").dialog("open");
@@ -226,6 +227,7 @@ pageContext.setAttribute("path",request.getContextPath());
 		        {field:'n_followTime',title:'跟踪时间',width:100},
 		        {field:'n_nextFollowTime',title:'下次跟踪时间',width:100},
 		        {field:'n_context',title:'跟踪内容',width:100},
+		  /*       {field:'s_createTime',title:'创建时间',width:100}, */
 		        {field:'n_followType',title:'跟踪方式',width:100}
 			       
 			   
@@ -249,35 +251,46 @@ pageContext.setAttribute("path",request.getContextPath());
 		$('#InsertNetForm').form('load',row);
 		$("#InsertNet_window").dialog("open");
 		
+		$("#n_createtimeq").datebox("setValue", "2012-01-01");
+		$(function(){
+			   var curr_time = new Date();
+			   var strDate = curr_time.getFullYear()+"-";
+			   strDate += curr_time.getMonth()+1+"-";
+			   strDate += curr_time.getDate()+"-";
+			   strDate += curr_time.getHours()+":";
+			   strDate += curr_time.getMinutes()+":";
+			   strDate += curr_time.getSeconds();
+			   $("#n_createtimeq").datebox("setValue", strDate); 
+			  });
 		
 	}
 	//跟踪添加 
 	function submitNetForm(){
-		
 		$.post("insertNetFoll",{
 			n_stuId:$("#n_stuIdq").val(),
 			n_stuName:$("#n_stuNameq").val(),
 			n_followTime:$("#n_followTimeq").val(),
 			n_nextFollowTime:$("#n_nextFollowTimeq").val(),
 			n_context:$("#n_contextq").val(),
-			e_id:${employee.e_id},
+			e_id:${employee.e_id},  
 			n_followType:$("#n_followTypeq").val(),
-			n_createTime:$("n_createTime").val(),
-			n_followStatus:$("#n_followStatusq").val()
+			n_createTime:$("n_createTime").val()
 			
 		},function(res) {
 			if(res>0) {
-				alert("添加成功");
+				alert("跟踪成功");
 				$("#InsertNet_window").window("close");
 				$("#StuTab").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
 				$("#InsertNetForm").form("clear");
 			}else{
-				alert("添加失败"); 
+				alert("跟踪失败"); 
 			}
 		}, "json");
-		
+		$("#InsertNetForm").form("clear");
 	}
-	
+	function clearNetForm(){
+		$("#InsertNet_window").dialog("close")
+	}
 	
 	
 </script>
@@ -301,19 +314,19 @@ pageContext.setAttribute("path",request.getContextPath());
 
 <!-- 添加跟踪 -->
 <body style="margin:0px">
-	<div id="InsertNet_window" class="easyui-window" title="添加信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:500px;padding:10px;">
+	<div id="InsertNet_window" class="easyui-dialog" title="添加信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:500px;padding:10px;">
 	<form id="InsertNetForm" class="easyui-form">
 		<table cellpadding="5">
 			
 			<tr>
 				<td>跟踪编号：</td>
-				<td><input id="n_stuIdq" name="s_id" class="easyui-textbox" data-options="" style="width:100px" >
+				<td><input id="n_stuIdq" name="s_id" class="easyui-textbox" data-options="readonly:true" style="width:100px" >
 				</td>
 			</tr>
 			
 			<tr>
 				<td>学生姓名:</td>
-				<td><input id="n_stuNameq" name="s_name" class="easyui-textbox" data-options="" style="width:100px" >
+				<td><input id="n_stuNameq" name="s_name" class="easyui-textbox" data-options="readonly:true" style="width:100px" >
 				
 				</td>
 			</tr>
@@ -346,15 +359,11 @@ pageContext.setAttribute("path",request.getContextPath());
 				</td>
 			</tr>
 			<tr>
-				<td>创建时间/回访时间:</td>
-				<td><input class="easyui-datebox" name="n_createTime"  id="n_createtimeq" data-options="required:true"></input>
+				<td>创建时间:</td>
+				<td><input class="easyui-datebox" name="n_createTime"  id="n_createtimeq" data-options="required:true,readonly:true"></input>
 				</td>
 			</tr>
-			<tr>
-				<td>跟踪状态:</td>
-				<td><input class="easyui-textbox" name="n_followstate" id="n_followstate" data-options="required:true"></input>
-				</td>
-			</tr>
+			
 			
 
 		</table>
@@ -421,6 +430,11 @@ pageContext.setAttribute("path",request.getContextPath());
 	<div id="lie_window" class="easyui-dialog" title="列设置" data-options="modal:true,closed:true,iconCls:'icon-add'" style="width:400px;height:500px;padding:10px;">
          
     </div>
+    
+    
+    
+			
+			
 	<div id="updateDialog" class="easyui-dialog" title="修改  " style="width:900px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
 		<form id="updateForm" method="post">   
 			<table>
@@ -429,7 +443,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			        <td><input class="easyui-textbox" style="width:130px;" type="text" id="updates_id" name="s_id" data-options="disabled:true"/></td>
 			   
 			        <td><label>学生姓名：</label></td>
-			        <td><input class="easyui-textbox" type="text" id="updates_name" name="s_name" /></td>
+			        <td><input class="easyui-textbox" type="text" id="updates_name" name="s_name" data-options="disabled:true"/></td>
 			    
 			    	<td><label>课程方向：</label></td>
 			        <td><input class="easyui-textbox" type="text" id="updates_learnForward" name="s_learnForward" /></td>
@@ -451,8 +465,8 @@ pageContext.setAttribute("path",request.getContextPath());
 			 		<td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_isValid" name="s_isValid">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">是</option> 
-						    <option value="1">否</option>
+						    <option value="0">否</option> 
+						    <option value="1">是</option>
 						    <option value="2">待定</option>
 						</select>
 			        </td>
@@ -464,8 +478,8 @@ pageContext.setAttribute("path",request.getContextPath());
 			        <td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_isReturnVisit" name="s_isReturnVisit">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">已回访</option> 
-						    <option value="1">未回访</option>
+						    <option value="0">未回访</option> 
+						    <option value="1">已回访</option>
 						    
 						</select>
 			        </td>
@@ -482,8 +496,8 @@ pageContext.setAttribute("path",request.getContextPath());
 			        <td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_isHome" name="s_isHome">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">是</option> 
-						    <option value="1">否</option>
+						    <option value="0">否</option> 
+						    <option value="1">是</option>
 						      
 						</select>
 			        </td>
@@ -499,12 +513,12 @@ pageContext.setAttribute("path",request.getContextPath());
 			        
 			    </tr>
 			    <tr>
-			    	<td><label>是否缴费：</label></td>
+			    	<td><label>是否付费：</label></td>
 			        <td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_isPay" name="s_isPay">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">是</option> 
-						    <option value="1">否</option>
+						    <option value="0">未付费</option> 
+						    <option value="1">已付费</option>
 						      
 						</select>
 			        </td>
@@ -520,8 +534,8 @@ pageContext.setAttribute("path",request.getContextPath());
 			        <td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_isReturnMoney" name="s_isReturnMoney">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">是</option> 
-						    <option value="1">否</option>
+						    <option value="0">否</option> 
+						    <option value="1">是</option>
 						      
 						</select>
 			        </td>
@@ -532,8 +546,8 @@ pageContext.setAttribute("path",request.getContextPath());
 			    	<td>
 			        	<select class="easyui-combobox" style="width:100px;" id="updates_isInClass" name="s_isInClass">   
 						    <option value="">--请选择--</option>      
-						    <option value="0">是</option> 
-						    <option value="1">否</option>
+						    <option value="0">否</option> 
+						    <option value="1">是</option>
 						      
 						</select>
 			        </td>
@@ -760,10 +774,14 @@ pageContext.setAttribute("path",request.getContextPath());
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
+
 		
 		}else{
 	       $.messager.alert("提示","请选择需要导出的学生")
 	    }
+
+		
+
 	}
 	$("#btnExport").click(function() {
 		var data = JSON.stringify($('#stuTab').datagrid('getData').rows);

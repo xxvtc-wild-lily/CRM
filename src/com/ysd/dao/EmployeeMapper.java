@@ -5,6 +5,7 @@ import java.util.List;
 import com.ysd.entity.Asker;
 import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeRole;
+import com.ysd.entity.Message;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Role;
 
@@ -175,4 +176,28 @@ public interface EmployeeMapper {
 	 * @return
 	 */
 	Integer selectemployeeroleCount();
+	/**
+	 * 根据学生id查询所属咨询师姓名
+	 * @param sid
+	 * @return
+	 */
+	String selectStudentByIdEmpName(Integer sid);
+	/**
+	 * 当咨询师离线时添加离线消息到数据库中
+	 * @param message
+	 * @return
+	 */
+	Integer insertMessage(Message message);
+	/**
+	 * 根据员工登录名查询未读消息
+	 * @param string
+	 * @return
+	 */
+	List<Message> selectEmpByName(String name);
+	/**
+	 * 根据员工登录名修改消息状态
+	 * @param name
+	 * @return
+	 */
+	Integer updataMessageById(Integer id);
 }

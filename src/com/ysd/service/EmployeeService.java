@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ysd.entity.Employee;
 import com.ysd.entity.EmployeeRole;
+import com.ysd.entity.Message;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Role;
 
@@ -82,6 +83,28 @@ public interface EmployeeService {
      * @return
      */
     Integer selectEmployeeroleCount();
-    
-  
+    /**
+	 * 根据学生id查询所属咨询师姓名
+	 * @param sid
+	 * @return
+	 */
+    String selectStudentByIdEmpName(Integer tidsss,String name,String mess);
+    /**
+     * 当咨询师离线时添加离线消息
+     * @param message
+     * @return
+     */
+    Integer insertMessage(String message);
+    /**
+     * 根据员工登录名查询未读消息
+     * @param name
+     * @return
+     */
+    List<Message> selectEmpByname(String name);
+    /**
+     * 根据消息编号修改消息状态
+     * @param name
+     * @return
+     */
+    Integer updateMessById(Integer id);
 }

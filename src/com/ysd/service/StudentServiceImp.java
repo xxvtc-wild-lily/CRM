@@ -1,4 +1,4 @@
-package com.ysd.service;
+﻿package com.ysd.service;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ysd.dao.DistributionMapper;
 import com.ysd.dao.StudentMapper;
 import com.ysd.entity.Asker;
+import com.ysd.entity.Employee;
 import com.ysd.entity.NetFollow;
 import com.ysd.entity.Pagination;
 import com.ysd.entity.Student;
@@ -79,12 +80,17 @@ public class StudentServiceImp implements StudentService {
                 // 拿到本次循环的咨询师id
                 Integer studentCount = distributionMapper.selectAllHasDistributionStudentCountByAid(askerList.get(l).getA_id());
                 // 如果本次循环的咨询师id大于平均值就移除该咨询师
+                System.out.println("studentCount"+studentCount);
+                System.out.println("studentCountAvg"+studentCountAvg);
                 if (studentCount > studentCountAvg) {
                     askerList.remove(l);
                 }
             }
-            // 将该学生分配给学生数量小于平均值并且权重最高的咨询师
-            student.setS_askerId(askerList.get(0).getA_id());
+            
+            // 如果今天有咨询师签到将该学生分配给学生数量小于平均值并且权重最高的咨询师，否则不进行分配
+            if (askerList.size() != 0) {
+                student.setS_askerId(askerList.get(0).getA_id());
+            }
             
             status = studentMapper.insertStudent(student);
 	    } else {
@@ -105,6 +111,8 @@ public class StudentServiceImp implements StudentService {
 	@Override
 	public Integer updateStudent(Student student) {
 		// TODO Auto-generated method stub
+		
+		
 		return studentMapper.updateStudent(student);
 	}
 

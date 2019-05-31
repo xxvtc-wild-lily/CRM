@@ -61,16 +61,46 @@ pageContext.setAttribute("path",request.getContextPath());
 			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:100},
 			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:100},
 			        {field:'s_isReport',title:'是否报备' ,width:100},
-			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:100}
+			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:150}
 		 	    ]]
 		});
 		$('#tabfrm').form('clear');
 	}
 	function formattercaozuo(value,row,index){
 		
-		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a> <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a> <a href='javascript:void(0)' onclick='updateStudent("+index+")'>修改</a>"
+		return "<a href='javascript:void(0)' onclick='netfollowStudent("+index+")'>跟踪</a> <a href='javascript:void(0)' onclick='saveStudent("+index+")'>查看</a><a href='javascript:void(0)' onclick='tongzhi("
+		+index+")'>通知</a> "
 	}
-	
+	//打开通知对话框
+	var tidsss;
+	function tongzhi(index){
+		var data = $("#stuTab").datagrid("getData");
+		tidsss = data.rows[index].s_id;
+		$("#tongz").dialog("open");
+	}
+	//通知
+	function kuaitongzhi(){
+		$.post("qutongzhi",{
+			tidsss:tidsss,
+			name:"${employee.e_loginName}",
+			mess:$("#tongzhiinput").val()
+		},function(res){
+			/* alert(123);
+			alert(JSON.stringify(res));
+			alert(res.name);
+			var s=+","+res.name+","+;
+			alert(s);
+			var websocket = new WebSocket("ws://localhost:8080/CRM/websocket");
+			webscoket.send(s);
+			alert("wan") */
+		},"json");
+
+		$("#tongzhiForm").form("clear")
+
+		//获取后台消息的方法
+
+		$("#tongz").dialog("close");
+	}
 	/* function updateStudent(index){
         var data=$("#stuTab").datagrid("getData");
         var row=data.rows[index];
@@ -185,40 +215,61 @@ pageContext.setAttribute("path",request.getContextPath());
 		$("#detailDialog").dialog("open");
 
 	} 
-	function netfollowStudent(){
-		$("#win").dialog("open")
-
-	}
+	
 	function detailClose(){
 		$("#detailDialog").dialog("close");
 
 	}
-	
-	//跟踪添加
-	function addsave(){
-
+	//跟踪添加打开窗口
+	function netfollowStudent(index){
+		
+		var data=$("#stuTab").datagrid("getData");
+		var row=data.rows[index];
+		/* alert(row.s_id);
+		alert(row.s_name); */
+		$('#InsertNetForm').form('load',row);
+		$("#InsertNet_window").dialog("open");
+		
+		$("#n_createtimeq").datebox("setValue", "2012-01-01");
+		$(function(){
+			   var curr_time = new Date();
+			   var strDate = curr_time.getFullYear()+"-";
+			   strDate += curr_time.getMonth()+1+"-";
+			   strDate += curr_time.getDate()+"-";
+			   strDate += curr_time.getHours()+":";
+			   strDate += curr_time.getMinutes()+":";
+			   strDate += curr_time.getSeconds();
+			   $("#n_createtimeq").datebox("setValue", strDate); 
+			  });
+		
+	}
+	//跟踪添加 
+	function submitNetForm(){
 		$.post("insertNetFoll",{
 			n_stuId:$("#n_stuIdq").val(),
 			n_stuName:$("#n_stuNameq").val(),
 			n_followTime:$("#n_followTimeq").val(),
 			n_nextFollowTime:$("#n_nextFollowTimeq").val(),
 			n_context:$("#n_contextq").val(),
-			e_id:$("#e_idq").val(),
-			/* e_id:${employee.e_id}, */
+			e_id:${employee.e_id},   
 			n_followType:$("#n_followTypeq").val(),
+			n_createTime:$("n_createTime").val(),
 			n_followStatus:$("#n_followStatusq").val()
 			
-		},function(res){
-			if(res>0){
-				$.messager.alert("提示","添加成功！！！","info");
-				$("#win").dialog("close");
-				$("#stuTab").datagrid("reload");
-				
+		},function(res) {
+			if(res>0) {
+				alert("跟踪成功");
+				$("#InsertNet_window").window("close");
+				$("#StuTab").datagrid("reload"); //通过调用reload方法，让datagrid刷新显示数据
+				$("#InsertNetForm").form("clear");
 			}else{
-				$.messager.alert("提示","添加失败！！！","error");
+				alert("跟踪失败"); 
 			}
-		},"json");
-		$("#win").form("clear");
+		}, "json");
+		$("#InsertNetForm").form("clear");
+	}
+	function clearNetForm(){
+		$("#InsertNet_window").dialog("close")
 	}
 	function detailClose(){
 		$("#detailDialog").dialog("close");
@@ -257,34 +308,69 @@ pageContext.setAttribute("path",request.getContextPath());
 
 <body>
 	<!-- --添加跟踪日志- -->
-	<div id="win" class="easyui-dialog" title="添加" data-options="closed:true" style="width:600px;height:400px"   
-        data-options="iconCls:'icon-save'">   
-	    <div class="easyui-layout" data-options="fit:true">   
-		      	学生编号：<input id="n_stuIdq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-		             学生姓名：<input id="n_stuNameq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-		             跟踪时间：<input id="n_followTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
-	                    下次跟踪时间：<input id="n_nextFollowTimeq" name="" class="easyui-datebox" data-options="" style="width:100px" ><br/>
-	                    跟踪内容：<input id="n_contextq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	           	员工编号：<input id="e_idq" name=""  class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	                    跟随方式：<input id="n_followTypeq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/>
-	                  
-	                    跟随状态：<!-- <input id="n_followStatusq" name="" class="easyui-textbox" data-options="" style="width:100px" ><br/> -->
-	                    
-						 		<label for="name" style="width:140px"></label>  
-						    		<select style="width:140px" id="n_followStatusq" name="n_followStatusq" class="easyui-combobox">
-						    			<option value="">--请选择--</option>
-						    			<option value="未跟随">未跟随</option>
-							    		<option value="已跟随">已跟随</option>
-							    		
-							    	</select> <br/>
-	                   
-	               
-	                   
-	           <a href="javascript:void(0)" onclick="addsave()" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">提交</a>
-	           <a href="javascript:void(0)" onclick="cancel()" class="easyui-linkbutton" data-options="iconCls:'icon-clear',plain:true">取消</a>
-	            
-	    </div>   
+	<div id="InsertNet_window" class="easyui-dialog" title="添加信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:500px;padding:10px;">
+	<form id="InsertNetForm" class="easyui-form">
+		<table cellpadding="5">
+			
+			<tr>
+				<td>跟踪编号：</td>
+				<td><input id="n_stuIdq" name="s_id" class="easyui-textbox" data-options="" style="width:100px" >
+				</td>
+			</tr>
+			
+			<tr>
+				<td>学生姓名:</td>
+				<td><input id="n_stuNameq" name="s_name" class="easyui-textbox" data-options="" style="width:100px" >
+				
+				</td>
+			</tr>
+			<tr>
+				<td>开始跟踪时间:</td>
+				<td><input id="n_followTimeq" name="n_followTime" class="easyui-datebox" data-options="required:true" style="width:100px" >
+				</td>
+			</tr>
+			<tr>
+				<td>下次跟踪时间:</td>
+				<td><input id="n_nextFollowTimeq" name="n_nextFollowTime" class="easyui-datebox" data-options="required:true" style="width:100px" >
+				
+				</td>
+			</tr>
+			<tr>
+				<td>跟踪内容：</td>
+				<td><input id="n_contextq" name="n_context" class="easyui-textbox" data-options="required:true" style="width:100px" >
+				
+				</td>
+			</tr>
+			<!-- <tr>
+				<td>用户编号:</td>
+				<td><input id="e_idq" name="e_id" class="easyui-textbox" data-options="required:true" style="width:100px" >
+				</td>
+			</tr> -->
+			<tr>
+				<td>跟踪类型/跟踪方式:</td>
+				<td><input id="n_followTypeq" name="n_followType" class="easyui-textbox" data-options="required:true" style="width:100px" >
+			
+				</td>
+			</tr>
+			<tr>
+				<td>创建时间:</td>
+				<td><input class="easyui-datebox" name="n_createTime"  id="n_createtimeq" data-options="required:true,readonly:true"></input>
+				</td>
+			</tr>
+			<tr>
+				<td>跟踪状态:</td>
+				<td><input class="easyui-textbox" name="n_followstate" id="n_followstate" data-options="required:true"></input>
+				</td>
+			</tr>
+			
+
+		</table>
+	</form>
+	<div style="text-align:center;padding:5px">
+		<a href="javascript:void(0)" class="easyui-linkbutton" type="button" onclick="submitNetForm()">保存</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearNetForm()">取消</a>
 	</div>
+</div>
 
 
 
@@ -473,7 +559,15 @@ pageContext.setAttribute("path",request.getContextPath());
 			</table>
 		</form>
 	</div>
-	
+	<!-- 通知 -->
+	<div id="tongz" class="easyui-dialog" title="通知"  style="width:700px; height:300px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
+		<form id="tongzhiForm" >
+
+				<input class="easyui-textbox" type="text" id="tongzhiinput" name="tongzhiinput" />
+
+				<a href="javascript:void(0)" class="easyui-linkbutton"  onclick="kuaitongzhi()" >通知</a>
+		</form>
+</div>
 	<!-- <div id="updateDialog" class="easyui-dialog" title="修改  " style="width:700px;height:500px;"  data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
         <form id="updateForm" method="post">   
             <table>

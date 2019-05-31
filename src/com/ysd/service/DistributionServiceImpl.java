@@ -42,19 +42,22 @@ public class DistributionServiceImpl implements DistributionService {
     public Integer updateAllNotDistributionStudent(Employee employee) {
         // TODO Auto-generated method stub
         
-        // 倒序查询所有今天签到的咨询师信息
+        // 记录是否成功的状态码
+        Integer statusCode = 0;
+        
+        // 根据权重倒序查询所有今天签到的咨询师信息
         List<Asker> askerList = distributionMapper.selectAllChcekInAsker();
         // 查询所有未分配的学生
         List<Student> studentList = distributionMapper.selectNotDistributionStudent();
-        // 跳出判断的变量
+        // 跳出循环的变量
         Integer breakTimes = 0;
         // 如果学生数量大于咨询师数量就按权重的从大到小顺序分配
         if (studentList.size() >= askerList.size()) {
             // 循环添加学生
             for (int i = 0;i < studentList.size();i++) {
-                // 当做咨询师id的变量
+                // 当做咨询师list的变量
                 breakTimes++;
-                // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id不是查出来的id
+                // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id越界
                 if (breakTimes == askerList.size()) {
                     breakTimes = 0;
                 }
@@ -73,6 +76,8 @@ public class DistributionServiceImpl implements DistributionService {
                 // 没有就添加自动分量的开关数据
                 distributionMapper.insertStatus();
             }
+            // 设置成功状态码
+            statusCode = 1;
         } else if (studentList.size() != 0) {
             // 学生数量小于咨询师数量且不等于0的判断
             
@@ -93,60 +98,34 @@ public class DistributionServiceImpl implements DistributionService {
                     askerList.remove(i);
                 }
             }
-            // 如果目前的学生数量大于咨询师数量就依靠权重进行分配
-            if (studentList.size() > askerList.size()) {
-                // 跳出判断的变量
-                Integer breakTimes2 = 0;
-                // 循环添加学生
-                for (int i = 0;i < studentList.size();i++) {
-                    // 当做咨询师id的变量
-                    breakTimes2++;
-                    // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id不是查出来的id
-                    if (breakTimes2 == askerList.size()) {
-                        breakTimes2 = 0;
-                    }
-                    // 为学生分配咨询师
-                    student.setS_askerId(askerList.get(breakTimes2).getA_id());
-                    student.setS_id(studentList.get(i).getS_id());
-                    distributionMapper.updateStduentAid(student);
+            // 跳出判断的变量
+            Integer breakTimes2 = 0;
+            // 循环添加学生
+            for (int i = 0;i < studentList.size();i++) {
+                // 当做咨询师id的变量
+                breakTimes2++;
+                // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id越界
+                if (breakTimes2 == askerList.size()) {
+                    breakTimes2 = 0;
                 }
-                // 判断数据库里是否有自动分量的开关数据
-                Integer i = distributionMapper.selectIsHaveStatus();
-                // 如果大于0就说明有该条数据
-                if (i > 0) {
-                    // 有的话就修改自动分量的开关数据
-                    distributionMapper.updateStatus();
-                } else {
-                    // 没有就添加自动分量的开关数据
-                    distributionMapper.insertStatus();
-                }
-            } else if (studentList.size() != 0) {
-                // 跳出判断的变量
-                Integer breakTimes3 = 0;
-                // 如果学生数量小于咨询师进行此判断
-                for (int i = 0;i < askerList.size();i++) {
-                    // 当做咨询师id的变量
-                    breakTimes3++;
-                    // 如果当前咨询师id变量等于咨询师长度，就进行归零，防止id不是查出来的id
-                    if (breakTimes3 == askerList.size()) {
-                        breakTimes3 = 0;
-                    }
-                    // 为学生分配咨询师
-                    student.setS_askerId(askerList.get(i).getA_id());
-                    student.setS_id(studentList.get(breakTimes3).getS_id());
-                    distributionMapper.updateStduentAid(student);
-                }
-                // 判断数据库里是否有自动分量的开关数据
-                Integer i = distributionMapper.selectIsHaveStatus();
-                // 如果大于0就说明有该条数据
-                if (i > 0) {
-                    // 有的话就修改自动分量的开关数据
-                    distributionMapper.updateStatus();
-                } else {
-                    // 没有就添加自动分量的开关数据
-                    distributionMapper.insertStatus();
-                }
+                // 为学生分配咨询师
+                student.setS_askerId(askerList.get(breakTimes2).getA_id());
+                student.setS_id(studentList.get(i).getS_id());
+                distributionMapper.updateStduentAid(student);
             }
+            // 判断数据库里是否有自动分量的开关数据
+            Integer i = distributionMapper.selectIsHaveStatus();
+            // 如果大于0就说明有该条数据
+            if (i > 0) {
+                // 有的话就修改自动分量的开关数据
+                distributionMapper.updateStatus();
+            } else {
+                // 没有就添加自动分量的开关数据
+                distributionMapper.insertStatus();
+            }
+            // 设置成功状态码
+            statusCode = 1;
+            
         } else {
             // 学生数量等于0的判断
             
@@ -160,9 +139,11 @@ public class DistributionServiceImpl implements DistributionService {
                 // 没有就添加自动分量的开关数据
                 distributionMapper.insertStatus();
             }
+            // 设置成功状态码
+            statusCode = 1;
         }
         
-        return null;
+        return statusCode;
     }
 
     @Override

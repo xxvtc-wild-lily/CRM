@@ -59,7 +59,7 @@
     
     <select id="selectAllNotCheckEmployee" parameterType="pagination" resultMap="employeeCheckMap">
         select e.e_id,e.e_loginName,e.e_sex,e.e_age,e.e_protectEmail,e.e_protectMTel,e.e_photo,e.e_ext4,ec.ec_id,ec.e_name,ec.ec_checkInTime,ec.ec_checkOutTime,ec.ec_checkStatus,ec.ec_ext4
-		from employee e left join employeecheck ec on ec.e_name = e.e_loginName
+		from employee e right join employeecheck ec on ec.e_name = e.e_loginName
 		where ec.e_id not in(
 		      select ec.e_id from employeecheck ec 
 		      <where>
@@ -74,13 +74,14 @@
 			<if test="e_name != null and e_name != ''">
 			    and ec.e_name like "%"#{e_name}"%"
 			</if>
+		group by e.e_loginName
 		order by ec.ec_checkInTime desc
 		limit #{page},#{pageSize}
     </select>
     
     <select id="selectAllNotCheckEmployeeCount" parameterType="pagination" resultType="_int">
         select count(1)
-        from employee e left join employeecheck ec on ec.e_name = e.e_loginName
+        from employee e right join employeecheck ec on ec.e_name = e.e_loginName
         where ec.e_id not in(
               select ec.e_id from employeecheck ec 
               <where>
@@ -102,19 +103,17 @@
         from employee e left join employeecheck ec on ec.e_name = e.e_loginName
         where ec.e_id in(
               select ec.e_id from employeecheck ec 
-              <where>
-                  <if test="startCheckInTime != null and startCheckInTime != ''">
-                      and ec.ec_checkInTime &gt; #{startCheckInTime}
-                  </if>
-                  <if test="endCheckInTime != null and endCheckInTime != ''">
-                      and ec.ec_checkInTime &lt; #{endCheckInTime}
-                  </if>
-              </where>
+              where ec.ec_checkStatus = 1 or ec.ec_checkStatus = 2
             )
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt; #{startCheckInTime} 
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkInTime &lt; #{endCheckInTime} 
+            </if>
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>
-            and ec.ec_checkStatus = 1 
         order by ec.ec_checkInTime desc
         limit #{page},#{pageSize}
     </select>
@@ -124,19 +123,17 @@
         from employee e left join employeecheck ec on ec.e_name = e.e_loginName
         where ec.e_id in(
               select ec.e_id from employeecheck ec 
-              <where>
-                  <if test="startCheckInTime != null and startCheckInTime != ''">
-                      and ec.ec_checkInTime &gt; #{startCheckInTime} 
-                  </if>
-                  <if test="endCheckInTime != null and endCheckInTime != ''">
-                      and ec.ec_checkInTime &lt; #{endCheckInTime} 
-                  </if>
-              </where>
+              where ec.ec_checkStatus = 1 or ec.ec_checkStatus = 2
             )
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt; #{startCheckInTime} 
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkInTime &lt; #{endCheckInTime} 
+            </if>
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
             </if>
-            and ec.ec_checkStatus = 1 
     </select>
     
     <select id="selectAllHasCheckOutEmployee" parameterType="pagination" resultMap="employeeCheckMap">
@@ -155,6 +152,12 @@
             )
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
+            </if>
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt; #{startCheckInTime}
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkInTime &lt; #{endCheckInTime} 
             </if>
             and ec.ec_checkStatus = 2 
         order by ec.ec_checkInTime desc
@@ -177,6 +180,12 @@
             )
             <if test="e_name != null and e_name != ''">
                 and ec.e_name like "%"#{e_name}"%"
+            </if>
+            <if test="startCheckInTime != null and startCheckInTime != ''">
+                and ec.ec_checkInTime &gt; #{startCheckInTime}
+            </if>
+            <if test="endCheckInTime != null and endCheckInTime != ''">
+                and ec.ec_checkInTime &lt; #{endCheckInTime} 
             </if>
             and ec.ec_checkStatus = 2 
     </select>

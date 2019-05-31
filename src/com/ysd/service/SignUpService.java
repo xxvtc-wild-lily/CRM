@@ -38,4 +38,18 @@ public interface SignUpService {
      */
     Integer selectIsHaveSameProtectEmail(String e_protectEmail);
     
+    /**
+     * 根据用户名查询用户信息
+     * @param employee 包含用户信息的用户类
+     * @return 受影响的行数
+     */
+    Integer selectEmployeeByLoginName(Employee employee);
+    
+    /**
+     * 添加用户签到记录
+     * @param employee 包含用户信息的用户类
+     * @return 受影响的行数
+     */
+    Integer insertEmployeeCheck(Employee employee);
+    
 }
