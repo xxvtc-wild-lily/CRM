@@ -248,7 +248,7 @@
 			<if test="s_isValid != null">
 				s.s_isValid = #{s_isValid},
 			</if>
-			<if test="s_isReturnVisit != null ">
+			<if test="s_isReturnVisit != null">
 				s.s_isReturnVisit = #{s_isReturnVisit},
 			</if>
 			<if test="s_isHome != null">
