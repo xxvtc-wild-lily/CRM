@@ -190,6 +190,7 @@ public class EmployeeServiceImp implements EmployeeService  {
 
 	//根据登录员工的角色显示不同的统计图
 	public List selectTongJiTu(String e_loginName) {
+		//根据登录名查询拥有的角色
 		String selectRoleByEmpName = employeeMapper.selectRoleByEmpName(e_loginName);
 		List list=new ArrayList();
 		if(selectRoleByEmpName!=null) {
