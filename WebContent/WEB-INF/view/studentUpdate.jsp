@@ -60,7 +60,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			        {field:'s_isValid',title:'是否有效'  ,formatter:formattersfyx,width:110},
 			        {field:'s_isReturnVisit',title:'是否回访'  ,formatter:formattersfhf,width:110},
 			        {field:'s_isPay',title:'是否付费'  ,formatter:formattersfff,width:110},
-			        {field:'s_isReport',title:'是否报备' ,width:80},
+			        {field:'s_isReport',title:'是否报备' , formatter:formattersfbb,width:80},
 			        {field:'caozuo',title:'操作'  ,formatter:formattercaozuo,width:300}
 			    ]]
 		}); 
@@ -123,10 +123,35 @@ pageContext.setAttribute("path",request.getContextPath());
 		return sex;
 	}
 	
+	
+	function formattersfbb(value,row,index) {
+		var report = "";
+		if (row.s_isReport == "0") {
+			report = "未报备";
+		} else if (row.s_isReport == "1") {
+			report = "已报备";
+		} else {
+			s_isReport = "";
+		}
+		
+		return report;
+	}
+	
 	function updateStudent(index){
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
-
+		
+		/* if (row.s_isValid == 0) {
+			$("#updates_isValid").combobox('setValue',row.s_isValid);
+			$("#updates_isValid").combobox('setText',"无效");
+		} else {
+			$("#updates_isValid").combobox('setValue',1);
+			$("#updates_isValid").combobox('setText',"有效");
+		} */
+		
+		$("#updates_isReturnVisit").combobox('setValue',row.s_isReturnVisit);
+		
+		
 		$('#updateForm').form('load',row);
 		$("#updateDialog").dialog("open");
 	}
@@ -138,7 +163,9 @@ pageContext.setAttribute("path",request.getContextPath());
 			s_learnForward:$("#updates_learnForward").val(),
 			s_record:$("#updates_record").val(),
 			s_isValid:$("#updates_isValid").combobox("getValue"),
-			s_lostReason:$("#updates_lostReason").val(),
+			s_isInClass:$("#updates_isInClass").combobox("getValue"),
+			s_isReturnMoney:$("#updates_isReturnMoney").combobox("getValue"),
+			
 			s_isReturnVisit:$("#updates_isReturnVisit").combobox("getValue"),
 			s_firstVisitTime:$("#updates_firstVisitTime").val(),
 			s_isHome:$("#updates_isHome").val(),
@@ -458,7 +485,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			    	<td><label>打分：</label></td>
 			    	<td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_record" name="s_record">   
-						    <option value="">--请选择--</option>      
+						    
 						    <option value="0">近期可报名</option> 
 						    <option value="1">一个月内可报名</option>
 						    <option value="2">长期跟踪</option>
@@ -470,10 +497,10 @@ pageContext.setAttribute("path",request.getContextPath());
 			 	<tr>
 			 		<td><label>是否有效：</label></td>
 			 		<td>
-			        	<select class="easyui-combobox" style="width:130px;" id="updates_isValid" name="s_isValid">   
-						    <option value="">--请选择--</option>      
-						    <option value="0">否</option> 
-						    <option value="1">是</option>
+			        	<select class="easyui-combobox" style="width:130px;" id="updates_isValid">   
+						   
+						    <option value="0">无效</option> 
+						    <option value="1">有效</option>
 						    <option value="2">待定</option>
 						</select>
 			        </td>
@@ -484,10 +511,9 @@ pageContext.setAttribute("path",request.getContextPath());
 			        <td><label>是否回访：</label></td>
 			        <td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_isReturnVisit" name="s_isReturnVisit">   
-						    <option value="">--请选择--</option>      
+						    
 						    <option value="0">未回访</option> 
 						    <option value="1">已回访</option>
-						    
 						</select>
 			        </td>
 			        
@@ -502,7 +528,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			        <td><label>是否上门：</label></td>
 			        <td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_isHome" name="s_isHome">   
-						    <option value="">--请选择--</option>      
+						   
 						    <option value="0">否</option> 
 						    <option value="1">是</option>
 						      
@@ -523,7 +549,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			    	<td><label>是否付费：</label></td>
 			        <td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_isPay" name="s_isPay">   
-						    <option value="">--请选择--</option>      
+						    
 						    <option value="0">未付费</option> 
 						    <option value="1">已付费</option>
 						      
@@ -540,9 +566,9 @@ pageContext.setAttribute("path",request.getContextPath());
 			    	<td><label>是否退费：</label></td>
 			        <td>
 			        	<select class="easyui-combobox" style="width:130px;" id="updates_isReturnMoney" name="s_isReturnMoney">   
-						    <option value="">--请选择--</option>      
-						    <option value="0">否</option> 
-						    <option value="1">是</option>
+						       
+						    <option value="0">未退费</option> 
+						    <option value="1">已退费</option>
 						      
 						</select>
 			        </td>
@@ -552,7 +578,7 @@ pageContext.setAttribute("path",request.getContextPath());
 			    	<td><label>是否进班：</label></td>
 			    	<td>
 			        	<select class="easyui-combobox" style="width:100px;" id="updates_isInClass" name="s_isInClass">   
-						    <option value="">--请选择--</option>      
+						    
 						    <option value="0">否</option> 
 						    <option value="1">是</option>
 						      
