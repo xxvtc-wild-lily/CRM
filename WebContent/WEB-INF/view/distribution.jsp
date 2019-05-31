@@ -171,15 +171,17 @@ pageContext.setAttribute("path",request.getContextPath());
     	        var askerId = askerData[0].a_id;
     			// 声明存放学生id的数组
     	        var studentIdArr = [];
+    			var stuName=[];
     			// 循环将学生id放入数组
     	        for (var i = 0;i < studentData.length;i++) {
     	        	studentIdArr += studentData[i].s_id+","
+    	        	stuName+=studentData[i].s_name+","
     	        }
     	        $.post("handDistributionStudent",{
     	        	s_askerId:askerId,
     	        	studentIdArr:studentIdArr,
     	        	a_name:askerData[0].a_name,
-    	        	s_name:studentData[i].s_name,
+    	        	s_name:stuName,
     	        	e_loginName:"${employee.e_loginName}"
     	        },function(res){
     	        	if (res > 0) {
