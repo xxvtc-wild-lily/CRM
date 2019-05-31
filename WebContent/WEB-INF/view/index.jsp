@@ -8,7 +8,7 @@ pageContext.setAttribute("path",request.getContextPath());
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>CRM</title>
 <link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/default/easyui.css">
 <link rel="stylesheet" href="${path }/js/jquery-easyui-1.7.0/themes/icon.css">
 <link type="text/css" rel="stylesheet" href="${path }/css/main.css">
@@ -239,7 +239,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	        
 	    }
 	    
-	  //连接关闭的回调方法
+	    //连接关闭的回调方法
         websocket.onclose = function () {
             // 从application清空当前用户信息
             $.post("errorClose",{
