@@ -170,6 +170,13 @@ pageContext.setAttribute("path",request.getContextPath());
 	function saveStudent(index){
 		var data=$("#stuTab").datagrid("getData");
 		var row=data.rows[index];
+		$("#s_sex").textbox('setValue',row.s_sex == 0? '女':'男');
+		$("#s_isValid").textbox('setValue',row.s_isValid == 0? '无效':'有效');
+		$("#s_isReturnVisit").textbox('setValue',row.s_isReturnVisit == 0? '未回访':'已回访');
+		$("#s_isInClass").textbox('setValue',row.s_isInClass == 0? '未进班':'已进班');
+		$("#s_isReport").textbox('setValue',row.s_isReport == 0? '未报备':'已报备');
+		$("#s_isHome").textbox('setValue',row.s_isHome == 0? '否':'是');
+		$("#s_isValid").textbox('setValue',row.s_isValid == 0? '无效':'有效');
 		$("#detailForm").form("load",row);
 		$("#detailDialog").dialog("open");
 
