@@ -159,7 +159,7 @@ public class SignInController {
         
         // 验证验证码是否输入正确
         if(verifyCode.equalsIgnoreCase(verificationCode)){
-
+            
             // 查询是存在相同登录名的员工
             Integer i = signInService.selectIsHaveSameLoginName(employee);
             // 如果等于1则存在该登录名的用户
@@ -204,7 +204,6 @@ public class SignInController {
                             signInService.updatePwdWrongTimeWhenSuccess(employee);
                             
                             // 判断是否将用户名密码赋给cookie的操作
-                            System.out.println("passLogin========"+passLogin);
                             if (passLogin.equals("true")) {
                                 // 记住密码
                                 
