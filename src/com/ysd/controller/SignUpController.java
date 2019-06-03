@@ -100,12 +100,9 @@ public class SignUpController {
         				
         				Integer j = signUpService.insertSignUpEmployee(employee);
         				
-                        /*
-                         * // 根据用户名查询出用户id Integer e_id =
-                         * signUpService.selectEmployeeByLoginName(employee); // 将用户id放入用户类
-                         * employee.setE_id(e_id); // 添加用户签到记录
-                         * signUpService.insertEmployeeCheck(employee);
-                         */
+                        
+                        // 根据用户名查询出用户id 
+                        
         				
         				// 如果大于0就说明添加成功
         				if (j > 0) {
