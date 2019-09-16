@@ -16,7 +16,6 @@ pageContext.setAttribute("path",request.getContextPath());
 <script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${path }/js/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
 <script src="${path }/js/echarts/echarts-all.js"></script>
-
 <script type="text/javascript">
     
     $(function(){
@@ -203,7 +202,7 @@ pageContext.setAttribute("path",request.getContextPath());
 	    //判断当前浏览器是否支持WebSocket
 	    if ('WebSocket' in window) {
 	        //建立连接，这里的/websocket ，是Servlet中注解中的那个值
-	    	websocket = new WebSocket("ws://localhost:8080/CRM/websocket/${employee.e_loginName}");
+	    	websocket = new WebSocket("ws://47.100.35.41:8080/CRM/websocket/${employee.e_loginName}");
 	    }
 	    else {
 	        alert('当前浏览器 Not support websocket');
@@ -304,6 +303,7 @@ pageContext.setAttribute("path",request.getContextPath());
     	    }    
     	});
     	$("#xiaoxs").dialog("open");
+    	
     }
     
     function openUpdatePasswordDialog() {
@@ -427,8 +427,7 @@ pageContext.setAttribute("path",request.getContextPath());
         	$.messager.alert("提示","原密码未在6位以上！","error");
         }
     	
-    }
-    
+    } 
 </script>
 </head>
 <body class="easyui-layout">
@@ -508,6 +507,6 @@ pageContext.setAttribute("path",request.getContextPath());
     <!-- 消息对话框 -->
     <div id="xiaoxs" class="easyui-dialog" title="消息" style="width:275px;height:220px;" data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
     		<table id="dg"></table> 
-    </div>
+    </div> 
 </body>
 </html>

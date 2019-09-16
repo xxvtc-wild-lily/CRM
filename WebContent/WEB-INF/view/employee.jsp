@@ -59,10 +59,10 @@ pageContext.setAttribute("path",request.getContextPath());
 	}
 	function formattercaozuo(value,row,index){
 		return "<a href='javascript:void(0)' class='easyui-linkbutton' data-options='iconCls:'icon-search'' onclick='detail("
-		+index+")'>查看</a><a href='javascript:void(0)' onclick='updateEmployee("
-		+index+")'>修改</a><a href='javascript:void(0)' onclick='deleteEmployee("
-		+index+")'>删除</a><a href='javascript:void(0)' onclick='openUpdateRoleDialog("
-		+index+")'>修改角色</a><a href='javascript:void(0)' onclick='openResertPasswordDialog("
+		+index+")'>查看</a> <a href='javascript:void(0)' onclick='updateEmployee("
+		+index+")'>修改</a> <a href='javascript:void(0)' onclick='deleteEmployee("
+		+index+")'>删除</a> <a href='javascript:void(0)' onclick='openUpdateRoleDialog("
+		+index+")'>修改角色</a> <a href='javascript:void(0)' onclick='openResertPasswordDialog("
 		+index+")'>重置密码</a> <a href='javascript:void(0)' onclick='lockEmployee("
 		+index+")'>锁定用户</a> <a href='javascript:void(0)' onclick='unlockEmployee("
 		+index+")'>解锁用户</a>"			
